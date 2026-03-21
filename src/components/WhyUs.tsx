@@ -11,7 +11,9 @@ const WhyUs = () => {
   const ref = useScrollReveal(0.12);
 
   return (
-    <section className="py-20" ref={ref}>
+    <section className="section-deep py-20 relative overflow-hidden" ref={ref}>
+      <div className="glow-orb w-[300px] h-[300px] top-0 right-[15%]" style={{ opacity: 0.2, filter: "blur(120px)" }} />
+      <div className="glow-orb glow-orb-b w-[200px] h-[200px] bottom-0 left-[10%]" style={{ opacity: 0.2, filter: "blur(100px)" }} />
       <div className="container mx-auto px-6">
         <span className="reveal-element section-label block mb-4" data-delay="0">DLACZEGO MY</span>
         <h2 className="reveal-element font-display text-[44px] text-foreground mb-10 font-bold" data-delay="0.05">

@@ -5,7 +5,7 @@ const CTASection = () => {
   const ref = useScrollReveal(0.15);
 
   return (
-    <section className="py-20" ref={ref}>
+    <section className="section-deep py-20" ref={ref}>
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Left card */}

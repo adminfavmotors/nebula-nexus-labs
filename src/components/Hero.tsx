@@ -86,14 +86,14 @@ const Hero = () => {
             transition: "all 1s cubic-bezier(0.16,1,0.3,1) 0.8s",
           }}
         >
-          <div className="relative w-full max-w-sm aspect-[3/4]">
+          <div className="relative w-full aspect-[4/3]">
             <div className="glow-orb w-[180px] h-[180px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ opacity: 0.3, filter: "blur(80px)" }} />
             <div
               className="relative w-full h-full rounded-2xl overflow-hidden"
               style={{
                 background: "linear-gradient(135deg, #051650, #0a1f6e)",
                 border: "1px solid rgba(0, 89, 255, 0.3)",
-                boxShadow: "0 0 60px rgba(0, 89, 255, 0.4)",
+                boxShadow: "0 0 80px rgba(0, 89, 255, 0.5)",
               }}
             >
               <span className="absolute bottom-4 left-4 section-label">Image Placeholder</span>

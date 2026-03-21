@@ -36,7 +36,7 @@ const HowWeWork = () => {
               data-delay={String(i * 0.12)}
             >
               <div className="glow-orb w-[100px] h-[100px] -top-4 -right-4" style={{ opacity: 0.25, filter: "blur(60px)" }} />
-              <span className="font-display text-[72px] text-white leading-none font-bold">{step.num}</span>
+              <span className="font-display text-[80px] leading-none font-bold" style={{ color: "#ffffff", opacity: 0.9 }}>{step.num}</span>
               <h3 className="font-body font-semibold text-foreground mt-4 mb-2">{step.title}</h3>
               <p className="font-body font-light text-sm leading-relaxed" style={{ color: "#7a9acc" }}>{step.desc}</p>
             </div>
