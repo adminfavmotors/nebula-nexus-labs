@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useI18n, type Locale } from "@/lib/i18n";
+import { siteConfig } from "@/lib/site-config";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -27,7 +28,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex items-center justify-between py-5 px-6">
         <div className="font-display text-xl text-foreground tracking-tight">
-          {t.brand}<span className="text-primary">.</span>
+          {siteConfig.brandName}<span className="text-primary">.</span>
         </div>
 
         <div className="hidden md:flex items-center gap-8">

@@ -1,4 +1,5 @@
 import { useI18n } from "@/lib/i18n";
+import { siteConfig } from "@/lib/site-config";
 
 const Footer = () => {
   const { t } = useI18n();
@@ -9,7 +10,7 @@ const Footer = () => {
         <div className="glow-divider mb-10" />
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="font-display text-xl text-foreground tracking-tight">
-            {t.brand}<span className="text-primary">.</span>
+            {siteConfig.brandName}<span className="text-primary">.</span>
           </div>
           <div className="flex items-center gap-6">
             {t.nav.links.map((link) => (
@@ -25,7 +26,7 @@ const Footer = () => {
         </div>
         <div className="glow-divider mt-10 mb-6" />
         <p className="font-body text-xs text-muted-foreground text-center">
-          © 2026 {t.brand}. {t.footer.rights}
+          © {siteConfig.currentYear} {siteConfig.brandName}. {t.footer.rights}
         </p>
       </div>
     </footer>

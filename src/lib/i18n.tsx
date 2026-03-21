@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { siteConfig } from "@/lib/site-config";
 
 export type Locale = "pl" | "en";
 
@@ -7,7 +8,6 @@ type TranslationSet = {
     title: string;
     description: string;
   };
-  brand: string;
   nav: {
     links: Array<{ label: string; href: string }>;
     cta: string;
@@ -90,7 +90,6 @@ export const translations: Record<Locale, TranslationSet> = {
       description:
         "Projektujemy szybkie strony internetowe, landing page'e i doświadczenia cyfrowe dla firm, które chcą wyglądać nowocześnie i sprzedawać skuteczniej.",
     },
-    brand: "Nebula Nexus Labs",
     nav: {
       links: [
         { label: "Start", href: "#home" },
@@ -167,7 +166,7 @@ export const translations: Record<Locale, TranslationSet> = {
       eyebrow: "FAQ",
       title: "Najczęstsze pytania",
       email: "Skorzystaj z formularza kontaktowego poniżej.",
-      phone: "+48 579 120 480",
+      phone: siteConfig.businessPhone,
       items: [
         {
           question: "Ile trwa przygotowanie strony internetowej?",
@@ -222,7 +221,6 @@ export const translations: Record<Locale, TranslationSet> = {
       description:
         "We design fast websites, landing pages and digital experiences for companies that want a modern presence and stronger conversion.",
     },
-    brand: "Nebula Nexus Labs",
     nav: {
       links: [
         { label: "Home", href: "#home" },
@@ -299,7 +297,7 @@ export const translations: Record<Locale, TranslationSet> = {
       eyebrow: "FAQ",
       title: "Frequently asked questions",
       email: "Use the contact form below.",
-      phone: "+48 579 120 480",
+      phone: siteConfig.businessPhone,
       items: [
         {
           question: "How long does a website project usually take?",
