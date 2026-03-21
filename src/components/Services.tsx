@@ -7,7 +7,7 @@ const Services = () => {
   const { t } = useI18n();
 
   return (
-    <section id="services" className="section-light py-16 md:py-20" ref={ref}>
+    <section id="services" className="section-light py-12 md:py-16" ref={ref}>
       <div className="container mx-auto px-6">
         <span className="reveal-element section-label block mb-4" data-delay="0">{t.services.eyebrow}</span>
         <h2 className="reveal-element font-display text-[44px] mb-10 font-bold" data-delay="0.05" style={{ color: "#0a0a0a" }}>

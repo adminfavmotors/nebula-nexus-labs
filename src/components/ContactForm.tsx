@@ -54,7 +54,7 @@ const ContactForm = () => {
   };
 
   return (
-    <section id="contact" className="section-light py-24 md:py-32" ref={ref}>
+    <section id="contact" className="section-light py-12 md:py-16" ref={ref}>
       <div className="container mx-auto px-6 max-w-2xl">
         <span className="reveal-element section-label block mb-4 text-center" data-delay="0">{t.contact.eyebrow}</span>
         <h2 className="reveal-element font-display text-[44px] text-foreground text-center mb-10 font-bold" data-delay="0.05">
