@@ -7,7 +7,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { locale, setLocale, t } = useI18n();
+  const { locale, setLocale, isTransitioningLocale, t } = useI18n();
   const closeMenu = () => setMenuOpen(false);
 
   useEffect(() => {
@@ -59,6 +59,11 @@ const Navbar = () => {
             <div
               className="inline-flex items-center rounded-full border border-primary/20 bg-white/5 p-1 backdrop-blur-sm"
               aria-label={t.nav.languageLabel}
+              style={{
+                opacity: isTransitioningLocale ? 0.85 : 1,
+                transform: isTransitioningLocale ? "scale(0.985)" : "scale(1)",
+                transition: "opacity 0.28s cubic-bezier(0.16,1,0.3,1), transform 0.28s cubic-bezier(0.16,1,0.3,1)",
+              }}
             >
               {(["pl", "en"] as Locale[]).map((nextLocale) => {
                 const isActive = locale === nextLocale;
@@ -67,10 +72,13 @@ const Navbar = () => {
                     key={nextLocale}
                     type="button"
                     onClick={() => setLocale(nextLocale)}
-                    className="rounded-full px-3 py-1.5 font-body text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors duration-300"
+                    disabled={isTransitioningLocale}
+                    className="rounded-full px-3 py-1.5 font-body text-[11px] font-semibold uppercase tracking-[0.12em] transition-all duration-300 disabled:cursor-default"
                     style={{
                       background: isActive ? "#0059ff" : "transparent",
                       color: isActive ? "#ffffff" : "#9db7e6",
+                      boxShadow: isActive ? "0 8px 24px rgba(0, 89, 255, 0.22)" : "none",
+                      transform: isActive ? "translateY(0)" : "translateY(0.5px)",
                     }}
                   >
                     {nextLocale}

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, startTransition, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { siteConfig } from "@/lib/site-config";
 
 export type Locale = "pl" | "en";
@@ -351,6 +351,7 @@ export const translations: Record<Locale, TranslationSet> = {
 type I18nContextValue = {
   locale: Locale;
   setLocale: (locale: Locale) => void;
+  isTransitioningLocale: boolean;
   t: TranslationSet;
 };
 
@@ -359,13 +360,40 @@ const I18nContext = createContext<I18nContextValue | null>(null);
 const STORAGE_KEY = "nebula-nexus-labs-locale";
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocale] = useState<Locale>(() => {
+  const [locale, setLocaleState] = useState<Locale>(() => {
     if (typeof window === "undefined") return "pl";
     const stored = window.localStorage.getItem(STORAGE_KEY);
     return stored === "en" ? "en" : "pl";
   });
+  const [isTransitioningLocale, setIsTransitioningLocale] = useState(false);
+  const changeTimerRef = useRef<number | null>(null);
+  const settleTimerRef = useRef<number | null>(null);
 
   const t = translations[locale];
+
+  const setLocale = (nextLocale: Locale) => {
+    if (nextLocale === locale) return;
+
+    if (changeTimerRef.current) {
+      window.clearTimeout(changeTimerRef.current);
+    }
+
+    if (settleTimerRef.current) {
+      window.clearTimeout(settleTimerRef.current);
+    }
+
+    setIsTransitioningLocale(true);
+
+    changeTimerRef.current = window.setTimeout(() => {
+      startTransition(() => {
+        setLocaleState(nextLocale);
+      });
+
+      settleTimerRef.current = window.setTimeout(() => {
+        setIsTransitioningLocale(false);
+      }, 240);
+    }, 110);
+  };
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, locale);
@@ -379,7 +407,19 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", t.meta.description);
   }, [locale, t.meta.description, t.meta.title]);
 
-  return <I18nContext.Provider value={{ locale, setLocale, t }}>{children}</I18nContext.Provider>;
+  useEffect(() => {
+    return () => {
+      if (changeTimerRef.current) {
+        window.clearTimeout(changeTimerRef.current);
+      }
+
+      if (settleTimerRef.current) {
+        window.clearTimeout(settleTimerRef.current);
+      }
+    };
+  }, []);
+
+  return <I18nContext.Provider value={{ locale, setLocale, isTransitioningLocale, t }}>{children}</I18nContext.Provider>;
 }
 
 export function useI18n() {
