@@ -11,7 +11,7 @@ const CTASection = () => {
       : { form: "Open the form", faq: "See FAQ" };
 
   return (
-    <section className="section-deep py-20" ref={ref}>
+    <section className="section-deep py-24 md:py-32" ref={ref}>
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Left card */}

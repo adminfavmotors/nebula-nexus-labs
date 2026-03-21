@@ -6,7 +6,7 @@ const HowWeWork = () => {
   const { t } = useI18n();
 
   return (
-    <section id="process" className="section-deep py-20 relative overflow-hidden" ref={ref}>
+    <section id="process" className="section-deep py-24 md:py-32 relative overflow-hidden" ref={ref}>
       <div className="glow-orb w-[200px] h-[200px] top-[20%] right-[10%]" style={{ opacity: 0.25, filter: "blur(100px)" }} />
       <div className="glow-orb glow-orb-b w-[150px] h-[150px] bottom-[10%] left-[5%]" style={{ opacity: 0.25, filter: "blur(80px)" }} />
 

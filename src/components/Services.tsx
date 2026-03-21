@@ -7,10 +7,10 @@ const Services = () => {
   const { t } = useI18n();
 
   return (
-    <section id="services" className="section-light py-20" ref={ref}>
+    <section id="services" className="section-light py-16 md:py-20" ref={ref}>
       <div className="container mx-auto px-6">
         <span className="reveal-element section-label block mb-4" data-delay="0">{t.services.eyebrow}</span>
-        <h2 className="reveal-element font-display text-[44px] text-foreground mb-10 font-bold" data-delay="0.05">
+        <h2 className="reveal-element font-display text-[44px] mb-10 font-bold" data-delay="0.05" style={{ color: "#0a0a0a" }}>
           {t.services.title}
         </h2>
 
@@ -24,7 +24,7 @@ const Services = () => {
               >
                 <span className="font-body text-[13px] font-semibold" style={{ color: "#2979ff", minWidth: "28px" }}>{s.num}</span>
 
-                <span className="font-body font-semibold text-[18px] text-foreground flex-1">{s.name}</span>
+                <span className="font-body font-semibold text-[18px] flex-1" style={{ color: "#0a0a0a" }}>{s.name}</span>
                 <span className="font-body text-[14px] hidden sm:block" style={{ color: "#4a5568" }}>{s.price}</span>
 
                 <div className="icon-circle group-hover:bg-primary group-hover:shadow-[0_0_16px_rgba(0,89,255,0.6)]">

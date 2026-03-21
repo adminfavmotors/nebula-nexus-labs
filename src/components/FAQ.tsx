@@ -9,7 +9,7 @@ const FAQ = () => {
   const { t } = useI18n();
 
   return (
-    <section id="faq" className="section-light py-20" ref={ref}>
+    <section id="faq" className="section-light py-24 md:py-32" ref={ref}>
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left */}

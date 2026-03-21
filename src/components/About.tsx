@@ -19,7 +19,7 @@ const About = () => {
   const { t } = useI18n();
 
   return (
-    <section id="about" className="section-light py-20" ref={ref}>
+    <section id="about" className="section-light py-24 md:py-32" ref={ref}>
       <div className="container mx-auto px-6">
         <span className="reveal-element section-label block mb-4" data-delay="0">{t.about.eyebrow}</span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
