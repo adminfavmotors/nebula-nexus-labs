@@ -1,10 +1,16 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { Send, MessageCircle } from "lucide-react";
+import { Mail, MessageCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+
+const CONTACT_EMAIL = "yrasike60@gmail.com";
 
 const CTASection = () => {
   const ref = useScrollReveal(0.15);
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
+  const quickActions =
+    locale === "pl"
+      ? { email: "Napisz e-mail", form: "Przejdź do formularza" }
+      : { email: "Send an email", form: "Open the form" };
 
   return (
     <section className="section-deep py-20" ref={ref}>
@@ -45,11 +51,11 @@ const CTASection = () => {
               </p>
             </div>
             <div className="relative z-10 flex gap-4 mt-8">
-              <a href="https://t.me/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-body font-semibold text-sm hover:bg-white/20 transition-all duration-300 active:scale-[0.97]">
-                <Send size={14} /> Telegram
+              <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-body font-semibold text-sm hover:bg-white/20 transition-all duration-300 active:scale-[0.97]">
+                <Mail size={14} /> {quickActions.email}
               </a>
-              <a href="https://wa.me/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-body font-semibold text-sm hover:bg-white/20 transition-all duration-300 active:scale-[0.97]">
-                <MessageCircle size={14} /> WhatsApp
+              <a href="#contact" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-body font-semibold text-sm hover:bg-white/20 transition-all duration-300 active:scale-[0.97]">
+                <MessageCircle size={14} /> {quickActions.form}
               </a>
             </div>
           </div>

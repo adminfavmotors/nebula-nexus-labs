@@ -166,7 +166,7 @@ export const translations: Record<Locale, TranslationSet> = {
     faq: {
       eyebrow: "FAQ",
       title: "Najczęstsze pytania",
-      email: "kontakt@nebulanexuslabs.com",
+      email: "yrasike60@gmail.com",
       phone: "+48 579 120 480",
       items: [
         {
@@ -205,7 +205,7 @@ export const translations: Record<Locale, TranslationSet> = {
       body: "Przygotujemy kierunek, zakres i następne kroki bez zbędnego chaosu. Zacznijmy od krótkiej rozmowy.",
       button: "Umów rozmowę",
       availabilityTitle: "Odpowiadamy szybko",
-      availabilityBody: "Napisz do nas na Telegramie lub WhatsAppie, jeśli chcesz szybko omówić zakres, termin albo wstępny budżet.",
+      availabilityBody: "Napisz do nas mailowo lub zostaw zgłoszenie w formularzu, jeśli chcesz szybko omówić zakres, termin albo wstępny budżet.",
     },
     footer: {
       rights: "Wszelkie prawa zastrzeżone.",
@@ -298,7 +298,7 @@ export const translations: Record<Locale, TranslationSet> = {
     faq: {
       eyebrow: "FAQ",
       title: "Frequently asked questions",
-      email: "contact@nebulanexuslabs.com",
+      email: "yrasike60@gmail.com",
       phone: "+48 579 120 480",
       items: [
         {
@@ -337,7 +337,7 @@ export const translations: Record<Locale, TranslationSet> = {
       body: "We will help define the direction, scope and next steps without unnecessary chaos. Let's start with a short conversation.",
       button: "Book a call",
       availabilityTitle: "We reply fast",
-      availabilityBody: "Message us on Telegram or WhatsApp if you want to quickly discuss scope, timing or a rough budget.",
+      availabilityBody: "Email us or leave a request in the form if you want to quickly discuss scope, timing or a rough budget.",
     },
     footer: {
       rights: "All rights reserved.",
