@@ -11,10 +11,10 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Glow orbs */}
-      <div className="glow-orb w-[300px] h-[300px] opacity-20 -top-20 left-[10%]" />
-      <div className="glow-orb w-[250px] h-[250px] opacity-15 top-[40%] left-[55%]" style={{ animationDelay: "1.5s" }} />
-      <div className="glow-orb w-[200px] h-[200px] opacity-20 bottom-[10%] left-[25%]" style={{ animationDelay: "3s" }} />
+      {/* Glow orbs — large, visible */}
+      <div className="glow-orb w-[350px] h-[350px] -top-20 left-[10%]" style={{ opacity: 0.3, filter: "blur(120px)" }} />
+      <div className="glow-orb glow-orb-b w-[250px] h-[250px] top-[40%] left-[55%]" style={{ opacity: 0.3, filter: "blur(120px)" }} />
+      <div className="glow-orb glow-orb-c w-[200px] h-[200px] bottom-[10%] left-[25%]" style={{ opacity: 0.3, filter: "blur(120px)" }} />
 
       <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-5 gap-12 items-center pt-24">
         {/* Left */}
@@ -34,7 +34,7 @@ const Hero = () => {
           </div>
 
           {/* H1 */}
-          <h1 className="font-display text-[clamp(40px,6vw,80px)] leading-[1.0] tracking-[-0.02em] text-foreground">
+          <h1 className="font-display text-[clamp(48px,6vw,80px)] leading-[1.0] tracking-[-0.03em] text-foreground">
             {words.map((word, i) => (
               <span
                 key={i}
@@ -42,18 +42,19 @@ const Hero = () => {
                 style={{
                   opacity: loaded ? 1 : 0,
                   transform: loaded ? "translateY(0)" : "translateY(30px)",
-                  transition: `all 0.8s cubic-bezier(0.16,1,0.3,1) ${0.65 + i * 0.08}s`,
+                  transition: `all 0.8s cubic-bezier(0.16,1,0.3,1) ${0.65 + i * 0.1}s`,
                 }}
               >
-                {i === 1 ? <span className="text-accent">{word}</span> : word}
+                {i === 1 ? <span style={{ color: "#2979ff" }}>{word}</span> : word}
               </span>
             ))}
           </h1>
 
           {/* Body */}
           <p
-            className="font-body font-light text-[15px] leading-[1.7] text-muted-foreground max-w-md"
+            className="font-body font-light text-[15px] leading-[1.7] max-w-md"
             style={{
+              color: "#7a9acc",
               opacity: loaded ? 1 : 0,
               transform: loaded ? "translateY(0)" : "translateY(20px)",
               transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 1s",
@@ -86,13 +87,13 @@ const Hero = () => {
           }}
         >
           <div className="relative w-full max-w-sm aspect-[3/4]">
-            <div className="glow-orb w-[180px] h-[180px] opacity-25 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+            <div className="glow-orb w-[180px] h-[180px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ opacity: 0.3, filter: "blur(80px)" }} />
             <div
               className="relative w-full h-full rounded-2xl overflow-hidden"
               style={{
-                background: "linear-gradient(135deg, hsl(224 76% 17%), hsl(226 80% 25%))",
-                border: "1px solid hsla(220, 100%, 50%, 0.3)",
-                boxShadow: "0 0 60px hsla(220, 100%, 50%, 0.15)",
+                background: "linear-gradient(135deg, #051650, #0a1f6e)",
+                border: "1px solid rgba(0, 89, 255, 0.3)",
+                boxShadow: "0 0 60px rgba(0, 89, 255, 0.4)",
               }}
             >
               <span className="absolute bottom-4 left-4 section-label">Image Placeholder</span>

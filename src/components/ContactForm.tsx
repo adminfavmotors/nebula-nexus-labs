@@ -4,13 +4,14 @@ const ContactForm = () => {
   const ref = useScrollReveal(0.1);
 
   return (
-    <section className="py-32" ref={ref}>
+    <section className="py-20" ref={ref}>
       <div className="container mx-auto px-6 max-w-2xl">
-        <h2 className="reveal-element font-display text-[clamp(28px,4vw,44px)] text-foreground text-center mb-12" data-delay="0">
+        <span className="reveal-element section-label block mb-4 text-center" data-delay="0">FORMULARZ</span>
+        <h2 className="reveal-element font-display text-[44px] text-foreground text-center mb-10 font-bold" data-delay="0.05">
           Placeholder Contact Title
         </h2>
-        <form className="reveal-element space-y-6" data-delay="0.15" onSubmit={(e) => e.preventDefault()}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <form className="reveal-element space-y-5" data-delay="0.15" onSubmit={(e) => e.preventDefault()}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <input
               type="text"
               placeholder="Imię"
