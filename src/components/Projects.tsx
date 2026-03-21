@@ -13,7 +13,7 @@ const Projects = () => {
       <div className="container mx-auto px-6">
         <span className="reveal-element section-label block mb-4" data-delay="0">{t.projects.eyebrow}</span>
         <div className="flex items-center justify-between mb-10">
-          <h2 className="reveal-element font-display text-[44px] font-bold" data-delay="0.05">
+          <h2 className="reveal-element font-display text-[44px] font-bold" style={{ color: "#0a0a0a" }} data-delay="0.05">
             {t.projects.title}
           </h2>
           <div className="reveal-element flex items-center gap-4" data-delay="0.1">
