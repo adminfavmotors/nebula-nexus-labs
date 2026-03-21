@@ -259,9 +259,9 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.03) 20%,
-      rgba(0, 89, 255, 0.12) 50%,
-      rgba(255, 255, 255, 0.03) 80%,
+      rgba(0, 89, 255, 0) 15%,
+      rgba(0, 89, 255, 0.18) 50%,
+      rgba(0, 89, 255, 0) 85%,
       transparent 100%
     );
     pointer-events: none;
@@ -270,92 +270,38 @@
   .navbar-depth-line::after {
     content: "";
     position: absolute;
-    bottom: -4px;
-    left: 10%;
-    right: 10%;
-    height: 8px;
-    background: radial-gradient(ellipse at center, rgba(0, 89, 255, 0.08) 0%, transparent 70%);
-    filter: blur(4px);
-    pointer-events: none;
-  }
-
-  .logo-wrapper {
-    display: inline-flex;
-    align-items: center;
-    position: relative;
-  }
-
-  .logo-orbit-ring {
-    position: absolute;
-    inset: -6px -12px;
-    border-radius: 10px;
-    border: 1.5px solid transparent;
-    background: transparent;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .logo-orbit-ring::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 1.5px;
-    background: conic-gradient(
-      from var(--angle, 0deg),
-      transparent 0deg,
-      rgba(0, 89, 255, 0.9) 60deg,
-      rgba(41, 121, 255, 0.4) 120deg,
-      transparent 180deg
+    bottom: -6px;
+    left: 15%;
+    right: 15%;
+    height: 10px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(0, 89, 255, 0.1) 0%,
+      transparent 70%
     );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    filter: blur(6px);
+    pointer-events: none;
   }
 
-  .logo-wrapper:hover .logo-orbit-ring {
-    opacity: 1;
-  }
-
-  .nav-pill-link {
-    position: relative;
-    color: #7a9acc;
-    padding: 6px 14px;
-    border-radius: 99px;
-    transition: color 0.25s ease;
-    z-index: 0;
-  }
-
-  .nav-pill-link::before {
-    content: "";
+  .nav-hover-pill {
     position: absolute;
-    inset: 0;
+    top: 50%;
+    left: 0;
+    height: 36px;
+    transform-origin: left center;
+    translate: 0 -50%;
     border-radius: 99px;
-    background: rgba(0, 89, 255, 0.08);
-    border: 1px solid rgba(0, 89, 255, 0);
-    box-shadow: none;
-    opacity: 0;
-    transform: scale(0.85);
-    transition:
-      opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 0.3s ease,
-      box-shadow 0.3s ease;
-    z-index: -1;
-  }
-
-  .nav-pill-link:hover {
-    color: #e8f0ff;
-  }
-
-  .nav-pill-link:hover::before {
-    opacity: 1;
-    transform: scale(1);
-    border-color: rgba(0, 89, 255, 0.25);
+    background: rgba(0, 89, 255, 0.1);
+    border: 1px solid rgba(0, 89, 255, 0.2);
     box-shadow:
-      0 0 12px rgba(0, 89, 255, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      0 0 16px rgba(0, 89, 255, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    pointer-events: none;
+    transition:
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.2s ease;
+    z-index: 0;
   }
 
   .locale-switch-button:hover:not(:disabled) {
@@ -416,16 +362,11 @@
   50% { opacity: 0.4; }
 }
 
-@property --angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
+@keyframes orbit-dash {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -240; }
 }
 
-@keyframes orbit-spin {
-  to { --angle: 360deg; }
-}
-
-.logo-wrapper:hover .logo-orbit-ring::before {
-  animation: orbit-spin 2s linear infinite;
+.logo-orbit-dash {
+  animation: orbit-dash 1.8s linear infinite;
 }

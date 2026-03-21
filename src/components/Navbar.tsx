@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useI18n, type Locale } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site-config";
@@ -7,8 +7,27 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoHovered, setLogoHovered] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [pillStyle, setPillStyle] = useState({ left: 0, width: 0 });
+  const navRef = useRef<HTMLDivElement>(null);
   const { locale, setLocale, isTransitioningLocale, t } = useI18n();
   const closeMenu = () => setMenuOpen(false);
+
+  const handleLinkHover = (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    const nav = navRef.current;
+    const target = event.currentTarget;
+    if (!nav) return;
+
+    const navRect = nav.getBoundingClientRect();
+    const linkRect = target.getBoundingClientRect();
+
+    setPillStyle({
+      left: linkRect.left - navRect.left,
+      width: linkRect.width,
+    });
+    setHoveredLink(href);
+  };
 
   useEffect(() => {
     setVisible(true);
@@ -27,37 +46,101 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50"
+        className="fixed top-0 left-0 right-0 z-50 relative"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateY(0)" : "translateY(-20px)",
-          filter: visible ? "blur(0px)" : "blur(8px)",
-          background: scrolled ? "rgba(0, 5, 30, 0.85)" : "transparent",
-          backdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(0, 89, 255, 0.08)" : "1px solid transparent",
-          boxShadow: scrolled ? "0 1px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.03)" : "none",
+          filter: visible ? "blur(0px)" : "blur(6px)",
+          background: scrolled ? "rgba(0, 4, 24, 0.82)" : "transparent",
+          backdropFilter: scrolled ? "blur(24px) saturate(160%)" : "none",
+          borderBottom: scrolled ? "1px solid rgba(0, 89, 255, 0.1)" : "1px solid transparent",
+          boxShadow: scrolled ? "0 8px 32px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(0,89,255,0.08)" : "none",
           transition: "opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1), filter 0.6s cubic-bezier(0.16,1,0.3,1), background 0.3s ease, backdrop-filter 0.3s ease, border-bottom 0.3s ease, box-shadow 0.3s ease",
         }}
       >
         <div className="container mx-auto flex items-center justify-between py-5 px-6">
-          <div className="logo-wrapper relative cursor-pointer">
+          <div
+            className="relative inline-flex items-center cursor-pointer select-none"
+            onMouseEnter={() => setLogoHovered(true)}
+            onMouseLeave={() => setLogoHovered(false)}
+          >
             <a href="#home" className="inline-flex items-center">
-              <div
-                className="font-display text-2xl text-foreground font-extrabold"
-                style={{ letterSpacing: "-0.03em" }}
+              <svg
+                className="logo-orbit-svg"
+                viewBox="0 0 100 40"
+                preserveAspectRatio="none"
+                style={{
+                  position: "absolute",
+                  inset: "-8px -16px",
+                  width: "calc(100% + 32px)",
+                  height: "calc(100% + 16px)",
+                  opacity: logoHovered ? 1 : 0,
+                  transition: "opacity 0.3s ease",
+                  pointerEvents: "none",
+                  overflow: "visible",
+                }}
               >
-                {siteConfig.brandName}<span className="text-primary">.</span>
-              </div>
+                <rect
+                  x="2"
+                  y="2"
+                  width="96"
+                  height="36"
+                  rx="10"
+                  ry="10"
+                  fill="none"
+                  stroke="url(#orbitGrad)"
+                  strokeWidth="1.5"
+                  strokeDasharray="40 200"
+                  className={logoHovered ? "logo-orbit-dash" : ""}
+                  style={{ transformOrigin: "center" }}
+                />
+                <defs>
+                  <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="rgba(0,89,255,0)" />
+                    <stop offset="50%" stopColor="rgba(0,89,255,0.9)" />
+                    <stop offset="100%" stopColor="rgba(41,121,255,0)" />
+                  </linearGradient>
+                </defs>
+              </svg>
+
+              <span className="font-display text-2xl font-extrabold tracking-[-0.03em] text-foreground">
+                {siteConfig.brandName}
+              </span>
+              <span
+                className="text-primary ml-[1px]"
+                style={{
+                  transition: "text-shadow 0.3s ease, transform 0.3s ease",
+                  display: "inline-block",
+                  textShadow: logoHovered ? "0 0 16px rgba(0,89,255,0.9)" : "none",
+                  transform: logoHovered ? "scale(1.4)" : "scale(1)",
+                }}
+              >
+                .
+              </span>
             </a>
-            <span className="logo-orbit-ring" />
           </div>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div
+            ref={navRef}
+            className="hidden md:flex items-center gap-1 relative"
+            onMouseLeave={() => setHoveredLink(null)}
+          >
+            <div
+              className="nav-hover-pill"
+              style={{
+                opacity: hoveredLink ? 1 : 0,
+                transform: `translateX(${pillStyle.left}px)`,
+                width: `${pillStyle.width}px`,
+              }}
+            />
             {t.nav.links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="nav-pill-link font-body font-bold text-[15px] tracking-[0.04em]"
+                onMouseEnter={(event) => handleLinkHover(event, link.href)}
+                onMouseLeave={() => setHoveredLink(null)}
+                className="relative z-10 font-body font-bold text-[15px] tracking-[0.03em] px-4 py-2 rounded-full transition-colors duration-200"
+                style={{ color: hoveredLink === link.href ? "#e8f0ff" : "#7a9acc" }}
               >
                 {link.label}
               </a>
@@ -121,13 +204,7 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-        <div
-          className="navbar-depth-line"
-          style={{
-            opacity: scrolled ? 0 : 1,
-            transition: "opacity 0.3s ease",
-          }}
-        />
+        <div className="navbar-depth-line" />
       </nav>
 
       <div
