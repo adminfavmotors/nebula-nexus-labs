@@ -11,13 +11,12 @@ const CTASection = () => {
       : { form: "Open the form", faq: "See FAQ" };
 
   return (
-    <section className="section-deep py-12 md:py-16" ref={ref}>
+    <section className="section-deep py-8 md:py-10" ref={ref}>
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Left card */}
           <div className="reveal-element card-surface p-10 flex flex-col justify-between min-h-[280px]" data-delay="0">
             <div>
-              <span className="section-label block mb-4">{t.cta.eyebrow}</span>
               <h2 className="font-display text-[clamp(24px,3vw,36px)] text-foreground mb-4 font-bold">
                 {t.cta.title}
               </h2>

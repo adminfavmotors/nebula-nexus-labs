@@ -6,14 +6,13 @@ const HowWeWork = () => {
   const { t } = useI18n();
 
   return (
-    <section id="process" className="section-deep py-12 md:py-16 relative overflow-hidden" ref={ref}>
+    <section id="process" className="section-deep py-8 md:py-10 relative overflow-hidden" ref={ref}>
       <div className="glow-orb w-[200px] h-[200px] top-[20%] right-[10%]" style={{ opacity: 0.25, filter: "blur(100px)" }} />
       <div className="glow-orb glow-orb-b w-[150px] h-[150px] bottom-[10%] left-[5%]" style={{ opacity: 0.25, filter: "blur(80px)" }} />
 
       <div className="container mx-auto px-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 gap-4">
           <div>
-            <span className="reveal-element section-label block mb-4" data-delay="0">{t.howWeWork.eyebrow}</span>
             <h2 className="reveal-element font-display text-[44px] text-foreground font-bold" data-delay="0.05">
               {t.howWeWork.title}
             </h2>

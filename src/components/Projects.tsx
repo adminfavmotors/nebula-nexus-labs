@@ -9,9 +9,8 @@ const Projects = () => {
   const { t } = useI18n();
 
   return (
-    <section id="projects" className="section-light py-12 md:py-16" ref={ref}>
+    <section id="projects" className="section-light py-8 md:py-10" ref={ref}>
       <div className="container mx-auto px-6">
-        <span className="reveal-element section-label block mb-4" data-delay="0">{t.projects.eyebrow}</span>
         <div className="flex items-center justify-between mb-10">
           <h2 className="reveal-element font-display text-[44px] font-bold" style={{ color: "#0a0a0a" }} data-delay="0.05">
             {t.projects.title}

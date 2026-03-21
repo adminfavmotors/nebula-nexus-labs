@@ -9,12 +9,11 @@ const FAQ = () => {
   const { t } = useI18n();
 
   return (
-    <section id="faq" className="section-light py-12 md:py-16" ref={ref}>
+    <section id="faq" className="section-light py-8 md:py-10" ref={ref}>
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left */}
           <div className="reveal-element" data-delay="0">
-            <span className="section-label block mb-4">{t.faq.eyebrow}</span>
             <h2 className="font-display text-[44px] font-bold mb-6">
               {t.faq.title}
             </h2>
