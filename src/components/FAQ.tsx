@@ -1,38 +1,32 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-
-const faqs = [
-  "Placeholder question one?",
-  "Placeholder question two?",
-  "Placeholder question three?",
-  "Placeholder question four?",
-  "Placeholder question five?",
-];
+import { useI18n } from "@/lib/i18n";
 
 const FAQ = () => {
   const ref = useScrollReveal(0.1);
   const [open, setOpen] = useState(0);
+  const { t } = useI18n();
 
   return (
-    <section className="section-light py-20" ref={ref}>
+    <section id="faq" className="section-light py-20" ref={ref}>
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left */}
           <div className="reveal-element" data-delay="0">
-            <span className="section-label block mb-4">FAQ</span>
+            <span className="section-label block mb-4">{t.faq.eyebrow}</span>
             <h2 className="font-display text-[44px] font-bold mb-6">
-              Placeholder FAQ Title
+              {t.faq.title}
             </h2>
             <div className="space-y-2 font-body font-light text-sm" style={{ color: "#4a5568" }}>
-              <p>placeholder@email.com</p>
-              <p>+48 000 000 000</p>
+              <p>{t.faq.email}</p>
+              <p>{t.faq.phone}</p>
             </div>
           </div>
 
           {/* Right */}
           <div className="space-y-0">
-            {faqs.map((q, i) => {
+            {t.faq.items.map((item, i) => {
               const isOpen = open === i;
               return (
                 <div key={i} className="reveal-element" data-delay={String(i * 0.08)}>
@@ -47,7 +41,7 @@ const FAQ = () => {
                       }`}
                       style={{ color: isOpen ? "#0059ff" : "#0a0a0a" }}
                     >
-                      {q}
+                      {item.question}
                     </span>
                     <ChevronDown
                       size={18}
@@ -58,7 +52,7 @@ const FAQ = () => {
                     />
                   </button>
                   <div
-                    className="overflow-hidden transition-all duration-[400ms]"
+                    className="overflow-hidden"
                     style={{
                       maxHeight: isOpen ? "120px" : "0",
                       opacity: isOpen ? 1 : 0,
@@ -66,7 +60,7 @@ const FAQ = () => {
                     }}
                   >
                     <p className="font-body font-light text-sm faq-answer pb-5 leading-relaxed" style={{ color: "#4a5568" }}>
-                      Placeholder answer text. A sentence or two of filler content goes here to demonstrate the accordion behavior.
+                      {item.answer}
                     </p>
                   </div>
                 </div>

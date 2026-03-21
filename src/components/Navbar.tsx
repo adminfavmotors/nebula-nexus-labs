@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-
-const navLinks = ["Główna", "Usługi", "Projekty", "O nas"];
+import { useI18n, type Locale } from "@/lib/i18n";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(false);
+  const { locale, setLocale, t } = useI18n();
 
   useEffect(() => {
     setVisible(true);
@@ -27,25 +27,50 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex items-center justify-between py-5 px-6">
         <div className="font-display text-xl text-foreground tracking-tight">
-          logo<span className="text-primary">.</span>
+          {t.brand}<span className="text-primary">.</span>
         </div>
 
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
+          {t.nav.links.map((link) => (
             <a
-              key={link}
-              href="#"
+              key={link.href}
+              href={link.href}
               className="font-body font-semibold text-[13px] tracking-[0.06em] hover:text-foreground transition-colors duration-300"
               style={{ color: "#7a9acc" }}
             >
-              {link}
+              {link.label}
             </a>
           ))}
         </div>
 
-        <button className="btn-primary text-[13px] px-5 py-2.5 hidden md:inline-flex">
-          Placeholder CTA
-        </button>
+        <div className="flex items-center gap-3">
+          <div
+            className="inline-flex items-center rounded-full border border-primary/20 bg-white/5 p-1 backdrop-blur-sm"
+            aria-label={t.nav.languageLabel}
+          >
+            {(["pl", "en"] as Locale[]).map((nextLocale) => {
+              const isActive = locale === nextLocale;
+              return (
+                <button
+                  key={nextLocale}
+                  type="button"
+                  onClick={() => setLocale(nextLocale)}
+                  className="rounded-full px-3 py-1.5 font-body text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors duration-300"
+                  style={{
+                    background: isActive ? "#0059ff" : "transparent",
+                    color: isActive ? "#ffffff" : "#9db7e6",
+                  }}
+                >
+                  {nextLocale}
+                </button>
+              );
+            })}
+          </div>
+
+          <a href="#contact" className="btn-primary text-[13px] px-5 py-2.5 hidden md:inline-flex">
+            {t.nav.cta}
+          </a>
+        </div>
       </div>
     </nav>
   );

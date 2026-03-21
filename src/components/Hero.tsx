@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 
 const Hero = () => {
   const [loaded, setLoaded] = useState(false);
+  const { t } = useI18n();
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 400);
     return () => clearTimeout(t);
   }, []);
 
-  const words = ["Placeholder", "Headline", "Text"];
-
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Glow orbs — large, visible */}
       <div className="glow-orb w-[350px] h-[350px] -top-20 left-[10%]" style={{ opacity: 0.3, filter: "blur(120px)" }} />
       <div className="glow-orb glow-orb-b w-[250px] h-[250px] top-[40%] left-[55%]" style={{ opacity: 0.3, filter: "blur(120px)" }} />
@@ -29,13 +29,13 @@ const Hero = () => {
             }}
           >
             <span className="btn-ghost text-[11px] px-4 py-1.5 tracking-[0.08em] uppercase font-medium cursor-default">
-              Placeholder Badge
+              {t.hero.badge}
             </span>
           </div>
 
           {/* H1 */}
           <h1 className="font-display text-[clamp(48px,6vw,80px)] leading-[1.0] tracking-[-0.03em] text-foreground">
-            {words.map((word, i) => (
+            {t.hero.words.map((word, i) => (
               <span
                 key={i}
                 className="block"
@@ -60,7 +60,7 @@ const Hero = () => {
               transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 1s",
             }}
           >
-            Placeholder body text goes here. One or two lines of description placeholder content.
+            {t.hero.body}
           </p>
 
           {/* Buttons */}
@@ -72,8 +72,12 @@ const Hero = () => {
               transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 1.15s",
             }}
           >
-            <button className="btn-primary">Placeholder CTA</button>
-            <button className="btn-ghost">Placeholder Link</button>
+            <a href="#contact" className="btn-primary">
+              {t.hero.primaryCta}
+            </a>
+            <a href="#projects" className="btn-ghost">
+              {t.hero.secondaryCta}
+            </a>
           </div>
         </div>
 
@@ -96,7 +100,7 @@ const Hero = () => {
                 boxShadow: "0 0 80px rgba(0, 89, 255, 0.5)",
               }}
             >
-              <span className="absolute bottom-4 left-4 section-label">Image Placeholder</span>
+              <span className="absolute bottom-4 left-4 section-label">{t.hero.imageLabel}</span>
             </div>
           </div>
         </div>

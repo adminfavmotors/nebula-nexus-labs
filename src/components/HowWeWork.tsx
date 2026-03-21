@@ -1,35 +1,30 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-
-const steps = [
-  { num: "01.", title: "Placeholder Step", desc: "Placeholder sentence describing this step." },
-  { num: "02.", title: "Placeholder Step", desc: "Placeholder sentence describing this step." },
-  { num: "03.", title: "Placeholder Step", desc: "Placeholder sentence describing this step." },
-  { num: "04.", title: "Placeholder Step", desc: "Placeholder sentence describing this step." },
-];
+import { useI18n } from "@/lib/i18n";
 
 const HowWeWork = () => {
   const ref = useScrollReveal(0.12);
+  const { t } = useI18n();
 
   return (
-    <section className="section-deep py-20 relative overflow-hidden" ref={ref}>
+    <section id="process" className="section-deep py-20 relative overflow-hidden" ref={ref}>
       <div className="glow-orb w-[200px] h-[200px] top-[20%] right-[10%]" style={{ opacity: 0.25, filter: "blur(100px)" }} />
       <div className="glow-orb glow-orb-b w-[150px] h-[150px] bottom-[10%] left-[5%]" style={{ opacity: 0.25, filter: "blur(80px)" }} />
 
       <div className="container mx-auto px-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 gap-4">
           <div>
-            <span className="reveal-element section-label block mb-4" data-delay="0">JAK PRACUJEMY</span>
+            <span className="reveal-element section-label block mb-4" data-delay="0">{t.howWeWork.eyebrow}</span>
             <h2 className="reveal-element font-display text-[44px] text-foreground font-bold" data-delay="0.05">
-              Placeholder Title
+              {t.howWeWork.title}
             </h2>
           </div>
-          <a href="#" className="reveal-element btn-ghost text-sm px-5 py-2" data-delay="0.1">
-            Placeholder Link →
+          <a href="#contact" className="reveal-element btn-ghost text-sm px-5 py-2" data-delay="0.1">
+            {t.howWeWork.link}
           </a>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {steps.map((step, i) => (
+          {t.howWeWork.steps.map((step, i) => (
             <div
               key={i}
               className="reveal-element card-surface p-8 relative"

@@ -1,27 +1,21 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { ArrowRight } from "lucide-react";
-
-const services = [
-  { num: "01.", name: "Placeholder Service", price: "od 2 500 PLN" },
-  { num: "02.", name: "Placeholder Service", price: "od 4 000 PLN" },
-  { num: "03.", name: "Placeholder Service", price: "od 1 800 PLN" },
-  { num: "04.", name: "Placeholder Service", price: "od 3 200 PLN" },
-  { num: "05.", name: "Placeholder Service", price: "od 5 000 PLN" },
-];
+import { useI18n } from "@/lib/i18n";
 
 const Services = () => {
   const ref = useScrollReveal();
+  const { t } = useI18n();
 
   return (
-    <section className="section-light py-20" ref={ref}>
+    <section id="services" className="section-light py-20" ref={ref}>
       <div className="container mx-auto px-6">
-        <span className="reveal-element section-label block mb-4" data-delay="0">NASZE USŁUGI</span>
+        <span className="reveal-element section-label block mb-4" data-delay="0">{t.services.eyebrow}</span>
         <h2 className="reveal-element font-display text-[44px] text-foreground mb-10 font-bold" data-delay="0.05">
-          Placeholder Title
+          {t.services.title}
         </h2>
 
         <div className="space-y-0">
-          {services.map((s, i) => (
+          {t.services.items.map((s, i) => (
             <div key={i}>
               <div style={{ height: "1px", background: "rgba(0,89,255,0.12)" }} />
               <div
