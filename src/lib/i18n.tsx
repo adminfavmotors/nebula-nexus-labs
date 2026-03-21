@@ -166,7 +166,7 @@ export const translations: Record<Locale, TranslationSet> = {
     faq: {
       eyebrow: "FAQ",
       title: "Najczęstsze pytania",
-      email: "yrasike60@gmail.com",
+      email: "Skorzystaj z formularza kontaktowego poniżej.",
       phone: "+48 579 120 480",
       items: [
         {
@@ -298,7 +298,7 @@ export const translations: Record<Locale, TranslationSet> = {
     faq: {
       eyebrow: "FAQ",
       title: "Frequently asked questions",
-      email: "yrasike60@gmail.com",
+      email: "Use the contact form below.",
       phone: "+48 579 120 480",
       items: [
         {

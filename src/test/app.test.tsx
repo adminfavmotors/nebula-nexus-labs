@@ -65,6 +65,6 @@ describe("critical user flows", () => {
       );
     });
 
-    expect(screen.getByText(/Zgłoszenie zostało wysłane na yrasike60@gmail.com/i)).toBeInTheDocument();
+    expect(screen.getByText(/Zgłoszenie zostało wysłane pomyślnie/i)).toBeInTheDocument();
   });
 });

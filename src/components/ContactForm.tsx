@@ -13,13 +13,13 @@ const ContactForm = () => {
   const statusMessages = {
     pl: {
       submitting: "Wysyłamy zgłoszenie...",
-      success: "Dziękujemy. Zgłoszenie zostało wysłane na yrasike60@gmail.com.",
-      error: "Nie udało się wysłać formularza. Spróbuj ponownie lub napisz bezpośrednio na yrasike60@gmail.com.",
+      success: "Dziękujemy. Zgłoszenie zostało wysłane pomyślnie.",
+      error: "Nie udało się wysłać formularza. Spróbuj ponownie za chwilę.",
     },
     en: {
       submitting: "Sending your request...",
-      success: "Thanks. Your request has been sent to yrasike60@gmail.com.",
-      error: "We could not send the form. Please try again or email yrasike60@gmail.com directly.",
+      success: "Thanks. Your request has been sent successfully.",
+      error: "We could not send the form. Please try again in a moment.",
     },
   } as const;
 
@@ -92,14 +92,9 @@ const ContactForm = () => {
             className="w-full px-5 py-3.5 rounded-xl bg-white border border-blue-100 text-gray-900 font-body text-sm placeholder:text-gray-400 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-100 transition-all duration-300 resize-none"
           />
           <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
-          <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-            <button type="submit" className="btn-primary w-full sm:w-auto" disabled={status === "submitting"}>
-              {status === "submitting" ? statusMessages[locale].submitting : t.contact.submit}
-            </button>
-            <a href={`mailto:${FORM_RECIPIENT}`} className="btn-ghost w-full sm:w-auto">
-              {FORM_RECIPIENT}
-            </a>
-          </div>
+          <button type="submit" className="btn-primary w-full sm:w-auto" disabled={status === "submitting"}>
+            {status === "submitting" ? statusMessages[locale].submitting : t.contact.submit}
+          </button>
           {status !== "idle" ? (
             <p
               aria-live="polite"
