@@ -40,20 +40,26 @@ const Navbar = () => {
         }}
       >
         <div className="container mx-auto flex items-center justify-between py-5 px-6">
-          <a href="#home" className="font-display text-xl text-foreground tracking-tight inline-flex items-center navbar-logo">
-            {siteConfig.brandName}<span className="text-primary navbar-logo-dot">.</span>
-          </a>
+          <div className="logo-wrapper relative cursor-pointer">
+            <a href="#home" className="inline-flex items-center">
+              <div
+                className="font-display text-2xl text-foreground font-extrabold"
+                style={{ letterSpacing: "-0.03em" }}
+              >
+                {siteConfig.brandName}<span className="text-primary">.</span>
+              </div>
+            </a>
+            <span className="logo-orbit-ring" />
+          </div>
 
           <div className="hidden md:flex items-center gap-8">
             {t.nav.links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="nav-link-item font-body font-semibold text-[13px] tracking-[0.06em] relative group"
-                style={{ color: "#7a9acc" }}
+                className="nav-pill-link font-body font-bold text-[15px] tracking-[0.04em]"
               >
                 {link.label}
-                <span className="nav-dot" />
               </a>
             ))}
           </div>
@@ -92,7 +98,7 @@ const Navbar = () => {
 
             <a
               href="#contact"
-              className="btn-primary navbar-cta text-[13px] px-5 py-2.5 hidden md:inline-flex"
+              className="btn-primary navbar-cta text-[14px] px-6 py-3 font-bold hidden md:inline-flex"
               style={{ position: "relative", overflow: "hidden" }}
             >
               {t.nav.cta}
@@ -115,6 +121,13 @@ const Navbar = () => {
             </button>
           </div>
         </div>
+        <div
+          className="navbar-depth-line"
+          style={{
+            opacity: scrolled ? 0 : 1,
+            transition: "opacity 0.3s ease",
+          }}
+        />
       </nav>
 
       <div
