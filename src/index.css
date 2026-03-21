@@ -63,27 +63,121 @@
 }
 
 @layer components {
-  .glow-orb {
-    @apply absolute rounded-full pointer-events-none;
-    background: hsl(var(--glow));
-    filter: blur(90px);
-    animation: orb-pulse 4s ease-in-out infinite;
+  /* ---- Light section ---- */
+  .section-light {
+    background: #f5f7ff;
+    color: #0a0a0a;
   }
 
+  .section-light h2,
+  .section-light h3 {
+    color: #0a0a0a;
+  }
+
+  .section-light p,
+  .section-light .body-text {
+    color: #4a5568;
+  }
+
+  .section-light .section-label {
+    color: #0059ff;
+  }
+
+  .section-light .stat-number {
+    color: #0a0a0a;
+  }
+
+  .section-light .stat-suffix {
+    color: #0059ff;
+  }
+
+  .section-light .stat-label {
+    color: #4a5568;
+  }
+
+  .section-light .stat-divider {
+    background: #e2e8f0;
+  }
+
+  /* Light section cards */
+  .section-light .card-surface {
+    background: #ffffff;
+    border-color: #e2e8f0;
+  }
+
+  .section-light .card-surface:hover {
+    border-color: #0059ff;
+    box-shadow: 0 8px 32px rgba(0, 89, 255, 0.1);
+  }
+
+  .section-light .icon-circle {
+    background: rgba(0, 89, 255, 0.08);
+    border-color: rgba(0, 89, 255, 0.15);
+  }
+
+  .section-light .glow-divider {
+    background: linear-gradient(90deg, transparent, #0059ff, transparent);
+    opacity: 0.15;
+  }
+
+  /* Light section FAQ */
+  .section-light .faq-question {
+    color: #0a0a0a;
+  }
+
+  .section-light .faq-question.active {
+    color: #0059ff;
+  }
+
+  .section-light .faq-answer {
+    color: #4a5568;
+  }
+
+  .section-light .faq-chevron {
+    color: #7a9acc;
+  }
+
+  .section-light .faq-separator {
+    background: linear-gradient(90deg, transparent, rgba(0, 89, 255, 0.3), transparent);
+  }
+
+  /* ---- Dark deep section ---- */
+  .section-deep {
+    background: #050d2e;
+  }
+
+  /* ---- Glow orbs ---- */
+  .glow-orb {
+    @apply absolute rounded-full pointer-events-none;
+    background: #0059ff;
+    filter: blur(90px);
+    animation: orb-pulse-a 5s ease-in-out infinite;
+  }
+
+  .glow-orb-b {
+    animation: orb-pulse-b 7s ease-in-out infinite;
+  }
+
+  .glow-orb-c {
+    animation: orb-pulse-c 6s ease-in-out infinite;
+  }
+
+  /* ---- Cards ---- */
   .card-surface {
-    background: linear-gradient(135deg, hsl(224 76% 17%), hsl(var(--card)));
-    border: 1px solid hsl(var(--border));
+    background: linear-gradient(135deg, #051650, #0d2472);
+    border: 1px solid rgba(0, 89, 255, 0.2);
     border-radius: var(--radius);
     overflow: hidden;
     transition: border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
   }
 
   .card-surface:hover {
-    border-color: hsla(220, 100%, 50%, 0.5);
+    border-color: rgba(0, 89, 255, 0.5);
     transform: translateY(-5px);
-    box-shadow: 0 8px 32px hsla(220, 100%, 50%, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 89, 255, 0.15);
   }
 
+  /* ---- Buttons ---- */
   .btn-pill {
     @apply inline-flex items-center justify-center font-body font-semibold text-sm tracking-wide;
     border-radius: 999px;
@@ -92,13 +186,13 @@
 
   .btn-primary {
     @apply btn-pill text-primary-foreground px-7 py-3;
-    background: hsl(var(--primary));
-    box-shadow: 0 0 24px hsla(220, 100%, 50%, 0.45);
+    background: #0059ff;
+    box-shadow: 0 0 24px rgba(0, 89, 255, 0.45);
   }
 
   .btn-primary:hover {
-    background: hsl(var(--accent));
-    box-shadow: 0 0 36px hsla(220, 100%, 50%, 0.6);
+    background: #2979ff;
+    box-shadow: 0 0 36px rgba(0, 89, 255, 0.6);
   }
 
   .btn-primary:active {
@@ -107,41 +201,58 @@
 
   .btn-ghost {
     @apply btn-pill px-7 py-3;
-    border: 1px solid hsl(var(--border));
-    color: hsl(var(--muted-foreground));
+    border: 1px solid rgba(0, 89, 255, 0.2);
+    color: #7a9acc;
     background: transparent;
   }
 
   .btn-ghost:hover {
-    border-color: hsl(var(--primary));
-    color: hsl(var(--foreground));
+    border-color: #0059ff;
+    color: #e8f0ff;
   }
 
   .btn-ghost:active {
     transform: scale(0.97);
   }
 
-  .section-label {
-    @apply font-body font-medium text-[11px] uppercase tracking-[0.12em] text-muted-foreground;
+  .section-light .btn-ghost {
+    border-color: rgba(0, 89, 255, 0.2);
+    color: #0059ff;
   }
 
+  .section-light .btn-ghost:hover {
+    border-color: #0059ff;
+    color: #0059ff;
+    background: rgba(0, 89, 255, 0.05);
+  }
+
+  /* ---- Labels ---- */
+  .section-label {
+    @apply font-body font-medium text-[11px] uppercase;
+    letter-spacing: 0.15em;
+    color: #0059ff;
+  }
+
+  /* ---- Dividers ---- */
   .glow-divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(var(--primary)), transparent);
+    background: linear-gradient(90deg, transparent, #0059ff, transparent);
     opacity: 0.25;
   }
 
+  /* ---- Icon circles ---- */
   .icon-circle {
     @apply w-12 h-12 rounded-full flex items-center justify-center;
-    background: hsla(220, 100%, 50%, 0.1);
-    border: 1px solid hsla(220, 100%, 50%, 0.2);
+    background: rgba(0, 89, 255, 0.1);
+    border: 1px solid rgba(0, 89, 255, 0.2);
     transition: all 0.3s ease;
   }
 
+  /* ---- Scroll reveal ---- */
   .reveal-element {
     opacity: 0;
     transform: translateY(40px);
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .reveal-element.revealed {
@@ -151,8 +262,8 @@
 
   .reveal-left {
     opacity: 0;
-    transform: translateX(-30px);
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateX(-20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .reveal-left.revealed {
@@ -161,7 +272,17 @@
   }
 }
 
-@keyframes orb-pulse {
-  0%, 100% { opacity: 0.15; }
-  50% { opacity: 0.25; }
+@keyframes orb-pulse-a {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes orb-pulse-b {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes orb-pulse-c {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.4; }
 }

@@ -8,20 +8,21 @@ const Navbar = () => {
 
   useEffect(() => {
     setVisible(true);
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/[0.88] backdrop-blur-[16px] shadow-lg shadow-primary/5" : "bg-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(-20px)",
-        transition: "opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1), background 0.3s ease, backdrop-filter 0.3s ease",
+        background: scrolled ? "rgba(0, 7, 45, 0.9)" : "transparent",
+        backdropFilter: scrolled ? "blur(20px)" : "none",
+        boxShadow: scrolled ? "0 4px 30px rgba(0, 89, 255, 0.05)" : "none",
+        transition: "opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1), background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease",
       }}
     >
       <div className="container mx-auto flex items-center justify-between py-5 px-6">
@@ -34,7 +35,8 @@ const Navbar = () => {
             <a
               key={link}
               href="#"
-              className="font-body font-semibold text-[13px] tracking-[0.06em] text-muted-foreground hover:text-foreground transition-colors duration-300"
+              className="font-body font-semibold text-[13px] tracking-[0.06em] hover:text-foreground transition-colors duration-300"
+              style={{ color: "#7a9acc" }}
             >
               {link}
             </a>

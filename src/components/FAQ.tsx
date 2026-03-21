@@ -15,15 +15,16 @@ const FAQ = () => {
   const [open, setOpen] = useState(0);
 
   return (
-    <section className="py-32" ref={ref}>
+    <section className="section-light py-20" ref={ref}>
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left */}
           <div className="reveal-element" data-delay="0">
-            <h2 className="font-display text-[clamp(28px,4vw,44px)] text-foreground mb-6">
+            <span className="section-label block mb-4">FAQ</span>
+            <h2 className="font-display text-[44px] font-bold mb-6">
               Placeholder FAQ Title
             </h2>
-            <div className="space-y-2 text-muted-foreground font-body font-light text-sm">
+            <div className="space-y-2 font-body font-light text-sm" style={{ color: "#4a5568" }}>
               <p>placeholder@email.com</p>
               <p>+48 000 000 000</p>
             </div>
@@ -35,23 +36,25 @@ const FAQ = () => {
               const isOpen = open === i;
               return (
                 <div key={i} className="reveal-element" data-delay={String(i * 0.08)}>
-                  <div className="glow-divider" />
+                  <div className="faq-separator" style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(0,89,255,0.2), transparent)" }} />
                   <button
                     onClick={() => setOpen(isOpen ? -1 : i)}
                     className="w-full flex items-center justify-between py-5 text-left group"
                   >
                     <span
                       className={`font-body font-semibold text-[15px] transition-colors duration-300 ${
-                        isOpen ? "text-accent" : "text-foreground group-hover:text-accent"
+                        isOpen ? "faq-question active" : "faq-question"
                       }`}
+                      style={{ color: isOpen ? "#0059ff" : "#0a0a0a" }}
                     >
                       {q}
                     </span>
                     <ChevronDown
                       size={18}
-                      className={`text-muted-foreground transition-transform duration-400 flex-shrink-0 ml-4 ${
+                      className={`faq-chevron transition-transform duration-400 flex-shrink-0 ml-4 ${
                         isOpen ? "rotate-180" : ""
                       }`}
+                      style={{ color: "#7a9acc" }}
                     />
                   </button>
                   <div
@@ -62,14 +65,14 @@ const FAQ = () => {
                       transition: "max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease",
                     }}
                   >
-                    <p className="font-body font-light text-sm text-muted-foreground pb-5 leading-relaxed">
+                    <p className="font-body font-light text-sm faq-answer pb-5 leading-relaxed" style={{ color: "#4a5568" }}>
                       Placeholder answer text. A sentence or two of filler content goes here to demonstrate the accordion behavior.
                     </p>
                   </div>
                 </div>
               );
             })}
-            <div className="glow-divider" />
+            <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(0,89,255,0.2), transparent)" }} />
           </div>
         </div>
       </div>
