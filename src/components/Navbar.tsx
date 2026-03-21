@@ -31,26 +31,29 @@ const Navbar = () => {
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateY(0)" : "translateY(-20px)",
-          background: scrolled ? "rgba(0, 7, 45, 0.9)" : "transparent",
-          backdropFilter: scrolled ? "blur(20px)" : "none",
-          boxShadow: scrolled ? "0 4px 30px rgba(0, 89, 255, 0.05)" : "none",
-          transition: "opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1), background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease",
+          filter: visible ? "blur(0px)" : "blur(8px)",
+          background: scrolled ? "rgba(0, 5, 30, 0.85)" : "transparent",
+          backdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
+          borderBottom: scrolled ? "1px solid rgba(0, 89, 255, 0.08)" : "1px solid transparent",
+          boxShadow: scrolled ? "0 1px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.03)" : "none",
+          transition: "opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1), filter 0.6s cubic-bezier(0.16,1,0.3,1), background 0.3s ease, backdrop-filter 0.3s ease, border-bottom 0.3s ease, box-shadow 0.3s ease",
         }}
       >
         <div className="container mx-auto flex items-center justify-between py-5 px-6">
-          <div className="font-display text-xl text-foreground tracking-tight">
-            {siteConfig.brandName}<span className="text-primary">.</span>
-          </div>
+          <a href="#home" className="font-display text-xl text-foreground tracking-tight inline-flex items-center navbar-logo">
+            {siteConfig.brandName}<span className="text-primary navbar-logo-dot">.</span>
+          </a>
 
           <div className="hidden md:flex items-center gap-8">
             {t.nav.links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="font-body font-semibold text-[13px] tracking-[0.06em] hover:text-foreground transition-colors duration-300"
+                className="nav-link-item font-body font-semibold text-[13px] tracking-[0.06em] relative group"
                 style={{ color: "#7a9acc" }}
               >
                 {link.label}
+                <span className="nav-dot" />
               </a>
             ))}
           </div>
@@ -73,11 +76,11 @@ const Navbar = () => {
                     type="button"
                     onClick={() => setLocale(nextLocale)}
                     disabled={isTransitioningLocale}
-                    className="rounded-full px-3 py-1.5 font-body text-[11px] font-semibold uppercase tracking-[0.12em] transition-all duration-300 disabled:cursor-default"
+                    className="locale-switch-button rounded-full px-3 py-1.5 font-body text-[11px] font-semibold uppercase tracking-[0.12em] transition-all duration-300 disabled:cursor-default"
                     style={{
                       background: isActive ? "#0059ff" : "transparent",
                       color: isActive ? "#ffffff" : "#9db7e6",
-                      boxShadow: isActive ? "0 8px 24px rgba(0, 89, 255, 0.22)" : "none",
+                      boxShadow: isActive ? "0 0 12px rgba(0, 89, 255, 0.6)" : "none",
                       transform: isActive ? "translateY(0)" : "translateY(0.5px)",
                     }}
                   >
@@ -87,7 +90,11 @@ const Navbar = () => {
               })}
             </div>
 
-            <a href="#contact" className="btn-primary text-[13px] px-5 py-2.5 hidden md:inline-flex">
+            <a
+              href="#contact"
+              className="btn-primary navbar-cta text-[13px] px-5 py-2.5 hidden md:inline-flex"
+              style={{ position: "relative", overflow: "hidden" }}
+            >
               {t.nav.cta}
             </a>
 

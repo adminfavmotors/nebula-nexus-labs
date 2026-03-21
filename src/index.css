@@ -200,6 +200,22 @@
     transform: scale(0.97);
   }
 
+  .navbar-cta::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.5s ease;
+  }
+
+  .navbar-cta:hover::after {
+    left: 150%;
+  }
+
   .btn-ghost {
     @apply btn-pill px-7 py-3;
     border: 1px solid rgba(0, 89, 255, 0.2);
@@ -232,6 +248,48 @@
     @apply font-body font-medium text-[11px] uppercase;
     letter-spacing: 0.15em;
     color: #0059ff;
+  }
+
+  .nav-link-item {
+    transition: color 0.25s ease, text-shadow 0.25s ease;
+  }
+
+  .nav-link-item:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 20px rgba(0, 89, 255, 0.5);
+  }
+
+  .nav-dot {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #0059ff;
+    box-shadow: 0 0 8px 2px rgba(0, 89, 255, 0.7);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    opacity: 0;
+  }
+
+  .nav-link-item:hover .nav-dot {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+
+  .navbar-logo-dot {
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+
+  .navbar-logo:hover .navbar-logo-dot {
+    text-shadow: 0 0 12px rgba(0, 89, 255, 0.9);
+    transform: scale(1.3);
+  }
+
+  .locale-switch-button:hover:not(:disabled) {
+    color: #e8f0ff !important;
   }
 
   /* ---- Dividers ---- */
