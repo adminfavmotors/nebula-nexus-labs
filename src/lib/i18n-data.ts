@@ -32,9 +32,11 @@ export type TranslationSet = {
     imageLabel: string;
   };
   about: {
-    titleStart: string;
-    titleAccent: string;
-    titleEnd: string;
+    titleLine1: string;
+    titleLine2start: string;
+    titleLine2accent: string;
+    titleLine2end: string;
+    titleLine3: string;
     theses: AboutThesis[];
     stats: Stat[];
   };
@@ -127,9 +129,11 @@ export const translations = {
       imageLabel: "Strategia, design i wdrożenie",
     },
     about: {
-      titleStart: "Projektujemy doświadczenia",
-      titleAccent: "cyfrowe,",
-      titleEnd: "które wyglądają premium.",
+      titleLine1: "Budujemy obecność online,",
+      titleLine2start: "która wyróżnia ",
+      titleLine2accent: "Twoją markę",
+      titleLine2end: "",
+      titleLine3: "i zamienia odwiedziny w klientów.",
       theses: [
         { num: "01.", text: "Strona to narzędzie sprzedaży, nie tylko wizytówka." },
         { num: "02.", text: "Pomagamy rosnąć firmom, które chcą być zauważone." },
@@ -268,9 +272,11 @@ export const translations = {
       imageLabel: "Strategy, design and delivery",
     },
     about: {
-      titleStart: "We design",
-      titleAccent: "digital experiences,",
-      titleEnd: "that feel premium.",
+      titleLine1: "We build an online presence,",
+      titleLine2start: "that makes ",
+      titleLine2accent: "your brand stand out",
+      titleLine2end: "",
+      titleLine3: "and turns visitors into customers.",
       theses: [
         { num: "01.", text: "A website should work as a sales tool, not just a business card." },
         { num: "02.", text: "We help ambitious companies grow and become easier to notice." },

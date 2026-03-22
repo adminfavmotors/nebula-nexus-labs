@@ -24,7 +24,13 @@ const About = () => {
     <Section id="about" tone="light" className="pt-4 md:pt-6" ref={ref}>
       <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2">
         <SectionTitle tone="light" revealClassName="reveal-element" className="text-[clamp(28px,4vw,44px)]" delay="0.05">
-          {t.about.titleStart} <span className="text-primary">{t.about.titleAccent}</span> {t.about.titleEnd}
+          {t.about.titleLine1}
+          <br />
+          <span>{t.about.titleLine2start}</span>
+          <span className="text-[#0059ff]">{t.about.titleLine2accent}</span>
+          <span>{t.about.titleLine2end}</span>
+          <br />
+          {t.about.titleLine3}
         </SectionTitle>
         <div className="flex flex-col gap-3 self-end">
           {t.about.theses.map((item, i) => (
