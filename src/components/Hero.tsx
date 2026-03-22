@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useI18n } from "@/lib/i18n";
+import heroFrameImage from "../../img/13fee5a7e8394b3260a86ddda7609cdc.jpg";
 
 const Hero = () => {
   const [loaded, setLoaded] = useState(false);
@@ -100,6 +101,24 @@ const Hero = () => {
                 boxShadow: "0 0 80px rgba(0, 89, 255, 0.5)",
               }}
             >
+              <img
+                src={heroFrameImage}
+                alt="Premium desktop workspace"
+                className="absolute inset-0 w-full h-full object-cover scale-110 opacity-35 blur-xl"
+              />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: "linear-gradient(180deg, rgba(5,22,80,0.12) 0%, rgba(5,22,80,0.36) 100%)",
+                }}
+              />
+              <div className="relative z-10 w-full h-full p-4 md:p-5">
+                <img
+                  src={heroFrameImage}
+                  alt="Premium desktop workspace"
+                  className="w-full h-full object-contain rounded-xl"
+                />
+              </div>
               <span className="absolute bottom-4 left-4 section-label">{t.hero.imageLabel}</span>
             </div>
           </div>
