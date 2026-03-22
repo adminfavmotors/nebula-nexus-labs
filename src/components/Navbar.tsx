@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useI18n, type Locale } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site-config";
@@ -7,27 +7,8 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [logoHovered, setLogoHovered] = useState(false);
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
-  const [pillStyle, setPillStyle] = useState({ left: 0, width: 0 });
-  const navRef = useRef<HTMLDivElement>(null);
   const { locale, setLocale, isTransitioningLocale, t } = useI18n();
   const closeMenu = () => setMenuOpen(false);
-
-  const handleLinkHover = (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    const nav = navRef.current;
-    const target = event.currentTarget;
-    if (!nav) return;
-
-    const navRect = nav.getBoundingClientRect();
-    const linkRect = target.getBoundingClientRect();
-
-    setPillStyle({
-      left: linkRect.left - navRect.left,
-      width: linkRect.width,
-    });
-    setHoveredLink(href);
-  };
 
   useEffect(() => {
     setVisible(true);
@@ -46,40 +27,18 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 relative"
-        style={{
-          opacity: visible ? 1 : 0,
-          transform: visible ? "translateY(0)" : "translateY(-20px)",
-          filter: visible ? "blur(0px)" : "blur(6px)",
-          background: scrolled ? "rgba(0, 4, 24, 0.82)" : "transparent",
-          backdropFilter: scrolled ? "blur(24px) saturate(160%)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(0, 89, 255, 0.1)" : "1px solid transparent",
-          boxShadow: scrolled ? "0 8px 32px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(0,89,255,0.08)" : "none",
-          transition: "opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1), filter 0.6s cubic-bezier(0.16,1,0.3,1), background 0.3s ease, backdrop-filter 0.3s ease, border-bottom 0.3s ease, box-shadow 0.3s ease",
-        }}
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-[opacity,transform,filter,background-color,backdrop-filter,border-color,box-shadow] duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
+          visible ? "translate-y-0 opacity-100 blur-0" : "-translate-y-5 opacity-0 blur-[6px]"
+        } ${
+          scrolled
+            ? "border-primary/10 bg-[rgba(0,4,24,0.82)] shadow-[0_8px_32px_rgba(0,0,0,0.35),0_1px_0_rgba(0,89,255,0.08)] backdrop-blur-[24px] backdrop-saturate-150"
+            : "border-transparent bg-transparent shadow-none"
+        }`}
       >
-        <div className="container mx-auto flex items-center justify-between py-5 px-6">
-          <div
-            className="relative inline-flex items-center cursor-pointer select-none"
-            onMouseEnter={() => setLogoHovered(true)}
-            onMouseLeave={() => setLogoHovered(false)}
-          >
-            <a href="#home" className="inline-flex items-center">
-              <svg
-                className="logo-orbit-svg"
-                viewBox="0 0 100 40"
-                preserveAspectRatio="none"
-                style={{
-                  position: "absolute",
-                  inset: "-8px -16px",
-                  width: "calc(100% + 32px)",
-                  height: "calc(100% + 16px)",
-                  opacity: logoHovered ? 1 : 0,
-                  transition: "opacity 0.3s ease",
-                  pointerEvents: "none",
-                  overflow: "visible",
-                }}
-              >
+        <div className="container mx-auto flex items-center justify-between px-6 py-5">
+          <a href="#home" className="group relative inline-flex select-none items-center">
+            <span className="pointer-events-none absolute inset-[-8px_-16px] overflow-visible opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <svg viewBox="0 0 100 40" preserveAspectRatio="none" className="h-[calc(100%+16px)] w-[calc(100%+32px)] overflow-visible">
                 <rect
                   x="2"
                   y="2"
@@ -91,8 +50,7 @@ const Navbar = () => {
                   stroke="url(#orbitGrad)"
                   strokeWidth="1.5"
                   strokeDasharray="40 200"
-                  className={logoHovered ? "logo-orbit-dash" : ""}
-                  style={{ transformOrigin: "center" }}
+                  className="origin-center group-hover:animate-[orbit-dash_1.8s_linear_infinite]"
                 />
                 <defs>
                   <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -102,45 +60,21 @@ const Navbar = () => {
                   </linearGradient>
                 </defs>
               </svg>
+            </span>
+            <span className="font-display text-2xl font-extrabold tracking-[-0.03em] text-foreground">
+              {siteConfig.brandName}
+            </span>
+            <span className="ml-px inline-block text-primary transition-[text-shadow,transform] duration-300 group-hover:scale-[1.4] group-hover:[text-shadow:0_0_16px_rgba(0,89,255,0.9)]">
+              .
+            </span>
+          </a>
 
-              <span className="font-display text-2xl font-extrabold tracking-[-0.03em] text-foreground">
-                {siteConfig.brandName}
-              </span>
-              <span
-                className="text-primary ml-[1px]"
-                style={{
-                  transition: "text-shadow 0.3s ease, transform 0.3s ease",
-                  display: "inline-block",
-                  textShadow: logoHovered ? "0 0 16px rgba(0,89,255,0.9)" : "none",
-                  transform: logoHovered ? "scale(1.4)" : "scale(1)",
-                }}
-              >
-                .
-              </span>
-            </a>
-          </div>
-
-          <div
-            ref={navRef}
-            className="hidden md:flex items-center gap-1 relative"
-            onMouseLeave={() => setHoveredLink(null)}
-          >
-            <div
-              className="nav-hover-pill"
-              style={{
-                opacity: hoveredLink ? 1 : 0,
-                transform: `translateX(${pillStyle.left}px)`,
-                width: `${pillStyle.width}px`,
-              }}
-            />
+          <div className="hidden items-center gap-1 md:flex">
             {t.nav.links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                onMouseEnter={(event) => handleLinkHover(event, link.href)}
-                onMouseLeave={() => setHoveredLink(null)}
-                className="relative z-10 font-body font-bold text-[15px] tracking-[0.03em] px-4 py-2 rounded-full transition-colors duration-200"
-                style={{ color: hoveredLink === link.href ? "#e8f0ff" : "#7a9acc" }}
+                className="rounded-full px-4 py-2 font-body text-[15px] font-bold tracking-[0.03em] text-[#7a9acc] transition-all duration-200 hover:bg-primary/10 hover:text-[#e8f0ff]"
               >
                 {link.label}
               </a>
@@ -149,13 +83,10 @@ const Navbar = () => {
 
           <div className="flex items-center gap-3">
             <div
-              className="inline-flex items-center rounded-full border border-primary/20 bg-white/5 p-1 backdrop-blur-sm"
+              className={`inline-flex items-center rounded-full border border-primary/20 bg-white/5 p-1 backdrop-blur-sm transition-[opacity,transform] duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
+                isTransitioningLocale ? "scale-[0.985] opacity-[0.85]" : "scale-100 opacity-100"
+              }`}
               aria-label={t.nav.languageLabel}
-              style={{
-                opacity: isTransitioningLocale ? 0.85 : 1,
-                transform: isTransitioningLocale ? "scale(0.985)" : "scale(1)",
-                transition: "opacity 0.28s cubic-bezier(0.16,1,0.3,1), transform 0.28s cubic-bezier(0.16,1,0.3,1)",
-              }}
             >
               {(["pl", "en"] as Locale[]).map((nextLocale) => {
                 const isActive = locale === nextLocale;
@@ -165,13 +96,11 @@ const Navbar = () => {
                     type="button"
                     onClick={() => setLocale(nextLocale)}
                     disabled={isTransitioningLocale}
-                    className="locale-switch-button rounded-full px-3 py-1.5 font-body text-[11px] font-semibold uppercase tracking-[0.12em] transition-all duration-300 disabled:cursor-default"
-                    style={{
-                      background: isActive ? "#0059ff" : "transparent",
-                      color: isActive ? "#ffffff" : "#9db7e6",
-                      boxShadow: isActive ? "0 0 12px rgba(0, 89, 255, 0.6)" : "none",
-                      transform: isActive ? "translateY(0)" : "translateY(0.5px)",
-                    }}
+                    className={`rounded-full px-3 py-1.5 font-body text-[11px] font-semibold uppercase tracking-[0.12em] transition-all duration-300 disabled:cursor-default ${
+                      isActive
+                        ? "bg-primary text-white shadow-[0_0_12px_rgba(0,89,255,0.6)]"
+                        : "translate-y-px bg-transparent text-[#9db7e6] hover:text-[#e8f0ff]"
+                    }`}
                   >
                     {nextLocale}
                   </button>
@@ -181,26 +110,18 @@ const Navbar = () => {
 
             <a
               href="#contact"
-              className="btn-primary navbar-cta text-[14px] px-6 py-3 font-bold hidden md:inline-flex"
-              style={{ position: "relative", overflow: "hidden" }}
+              className="btn-primary navbar-cta relative hidden overflow-hidden px-6 py-3 text-[14px] font-bold md:inline-flex"
             >
               {t.nav.cta}
             </a>
 
             <button
               type="button"
-              className="flex md:hidden items-center justify-center"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/20 bg-white/5 text-[#e8f0ff] md:hidden"
               onClick={() => setMenuOpen((open) => !open)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
-              style={{
-                width: "36px",
-                height: "36px",
-                border: "1px solid rgba(0,89,255,0.2)",
-                background: "rgba(255,255,255,0.05)",
-                borderRadius: "50%",
-              }}
             >
-              {menuOpen ? <X size={16} style={{ color: "#e8f0ff" }} /> : <Menu size={16} style={{ color: "#e8f0ff" }} />}
+              {menuOpen ? <X size={16} /> : <Menu size={16} />}
             </button>
           </div>
         </div>
@@ -208,56 +129,21 @@ const Navbar = () => {
       </nav>
 
       <div
-        className="md:hidden"
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 40,
-          background: "rgba(0, 7, 45, 0.97)",
-          backdropFilter: "blur(20px)",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          paddingLeft: "2rem",
-          paddingRight: "2rem",
-          paddingTop: "80px",
-          opacity: menuOpen ? 1 : 0,
-          pointerEvents: menuOpen ? "auto" : "none",
-          transition: "opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
+        className={`fixed inset-0 z-40 flex flex-col justify-center bg-[rgba(0,7,45,0.97)] px-8 pt-20 backdrop-blur-[20px] transition-opacity duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] md:hidden ${
+          menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        }`}
       >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: "260px",
-            height: "260px",
-            background: "#0059ff",
-            filter: "blur(100px)",
-            opacity: 0.12,
-            borderRadius: "50%",
-            pointerEvents: "none",
-          }}
-        />
+        <div className="pointer-events-none absolute right-0 top-0 h-[260px] w-[260px] rounded-full bg-primary/20 blur-[100px]" />
 
         <div className="relative z-10">
-          {t.nav.links.map((link, index) => (
+          {t.nav.links.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={closeMenu}
-              className="block font-display font-bold transition-colors duration-300 hover:text-[#2979ff]"
-              style={{
-                fontSize: "32px",
-                color: "#e8f0ff",
-                paddingTop: "12px",
-                paddingBottom: "12px",
-                borderBottom: "1px solid rgba(0,89,255,0.1)",
-                opacity: menuOpen ? 1 : 0,
-                transform: menuOpen ? "translateX(0)" : "translateX(-24px)",
-                transition: `opacity 0.5s cubic-bezier(0.16,1,0.3,1) ${0.08 + index * 0.07}s, transform 0.5s cubic-bezier(0.16,1,0.3,1) ${0.08 + index * 0.07}s`,
-              }}
+              className={`block border-b border-primary/10 py-3 font-display text-[32px] font-bold text-[#e8f0ff] transition-all duration-300 hover:text-[#2979ff] ${
+                menuOpen ? "translate-x-0 opacity-100" : "-translate-x-6 opacity-0"
+              }`}
             >
               {link.label}
             </a>
@@ -266,17 +152,9 @@ const Navbar = () => {
           <a
             href="#contact"
             onClick={closeMenu}
-            className="btn-primary inline-flex justify-center"
-            style={{
-              width: "100%",
-              marginTop: "32px",
-              fontSize: "15px",
-              paddingTop: "14px",
-              paddingBottom: "14px",
-              opacity: menuOpen ? 1 : 0,
-              transform: menuOpen ? "translateX(0)" : "translateX(-24px)",
-              transition: `opacity 0.5s cubic-bezier(0.16,1,0.3,1) ${0.08 + t.nav.links.length * 0.07}s, transform 0.5s cubic-bezier(0.16,1,0.3,1) ${0.08 + t.nav.links.length * 0.07}s`,
-            }}
+            className={`btn-primary mt-8 inline-flex w-full justify-center py-3.5 text-[15px] transition-all duration-300 ${
+              menuOpen ? "translate-x-0 opacity-100" : "-translate-x-6 opacity-0"
+            }`}
           >
             {t.nav.cta}
           </a>

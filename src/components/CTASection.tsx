@@ -11,47 +11,36 @@ const CTASection = () => {
       : { form: "Open the form", faq: "See FAQ" };
 
   return (
-    <section className="section-deep py-8 md:py-10" ref={ref}>
+    <section className="section-deep section-spacing" ref={ref}>
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {/* Left card */}
-          <div className="reveal-element card-surface p-10 flex flex-col justify-between min-h-[280px]" data-delay="0">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <div className="card-surface reveal-element flex min-h-[280px] flex-col justify-between p-10" data-delay="0">
             <div>
-              <h2 className="font-display text-[clamp(24px,3vw,36px)] text-foreground mb-4 font-bold">
+              <h2 className="mb-4 font-display text-[clamp(24px,3vw,36px)] font-bold text-foreground">
                 {t.cta.title}
               </h2>
-              <p className="font-body font-light text-sm leading-relaxed max-w-sm" style={{ color: "#7a9acc" }}>
-                {t.cta.body}
-              </p>
+              <p className="section-copy-dark max-w-sm">{t.cta.body}</p>
             </div>
             <div className="mt-8">
               <a href="#contact" className="btn-primary">{t.cta.button}</a>
             </div>
           </div>
 
-          {/* Right card — solid blue */}
-          <div
-            className="reveal-element rounded-[20px] p-10 flex flex-col justify-between min-h-[280px] relative overflow-hidden"
-            data-delay="0.15"
-            style={{
-              background: "#0059ff",
-              boxShadow: "0 0 120px rgba(0, 89, 255, 0.5)",
-            }}
-          >
-            <div className="glow-orb w-[200px] h-[200px] -top-10 -right-10" style={{ background: "white", opacity: 0.15, filter: "blur(80px)" }} />
+          <div className="cta-panel reveal-element relative flex min-h-[280px] flex-col justify-between p-10" data-delay="0.15">
+            <div className="glow-orb -right-10 -top-10 h-[200px] w-[200px] bg-white opacity-[0.15] blur-[80px]" />
             <div className="relative z-10">
-              <h2 className="font-display text-[clamp(24px,3vw,36px)] text-white mb-4 font-bold">
+              <h2 className="mb-4 font-display text-[clamp(24px,3vw,36px)] font-bold text-white">
                 {t.cta.availabilityTitle}
               </h2>
-              <p className="font-body font-light text-sm text-white/70 leading-relaxed max-w-sm">
+              <p className="max-w-sm font-body text-sm font-light leading-relaxed text-white/70">
                 {t.cta.availabilityBody}
               </p>
             </div>
-            <div className="relative z-10 flex gap-4 mt-8">
-              <a href="#contact" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-body font-semibold text-sm hover:bg-white/20 transition-all duration-300 active:scale-[0.97]">
+            <div className="relative z-10 mt-8 flex gap-4">
+              <a href="#contact" className="cta-action">
                 <MessageCircle size={14} /> {quickActions.form}
               </a>
-              <a href="#faq" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-body font-semibold text-sm hover:bg-white/20 transition-all duration-300 active:scale-[0.97]">
+              <a href="#faq" className="cta-action">
                 <CircleHelp size={14} /> {quickActions.faq}
               </a>
             </div>

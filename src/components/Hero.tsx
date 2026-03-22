@@ -5,74 +5,44 @@ import workspaceImage from "../../img/20260322_0944_Image Generation_remix_01kma
 const Hero = () => {
   const [loaded, setLoaded] = useState(false);
   const { t } = useI18n();
+
+  const enterClass = (delayClass: string, hiddenClass = "translate-y-5") =>
+    `transition-all [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${delayClass} ${
+      loaded ? "translate-y-0 opacity-100" : `${hiddenClass} opacity-0`
+    }`;
+
+  const wordDelayClasses = ["delay-[650ms]", "delay-[750ms]", "delay-[850ms]"] as const;
+
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 400);
     return () => clearTimeout(t);
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Glow orbs — large, visible */}
-      <div className="glow-orb w-[350px] h-[350px] -top-20 left-[10%]" style={{ opacity: 0.3, filter: "blur(120px)" }} />
-      <div className="glow-orb glow-orb-b w-[250px] h-[250px] top-[40%] left-[55%]" style={{ opacity: 0.3, filter: "blur(120px)" }} />
-      <div className="glow-orb glow-orb-c w-[200px] h-[200px] bottom-[10%] left-[25%]" style={{ opacity: 0.3, filter: "blur(120px)" }} />
+    <section id="home" className="relative flex min-h-screen items-center overflow-hidden">
+      <div className="glow-orb -top-20 left-[10%] h-[350px] w-[350px] opacity-30 blur-[120px]" />
+      <div className="glow-orb glow-orb-b left-[55%] top-[40%] h-[250px] w-[250px] opacity-30 blur-[120px]" />
+      <div className="glow-orb glow-orb-c bottom-[10%] left-[25%] h-[200px] w-[200px] opacity-30 blur-[120px]" />
 
-      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-5 gap-12 items-center pt-12 pb-16 md:pb-20">
-        {/* Left */}
-        <div className="lg:col-span-3 space-y-8">
-          {/* Badge */}
-          <div
-            className="inline-flex"
-            style={{
-              opacity: loaded ? 1 : 0,
-              transform: loaded ? "translateY(0)" : "translateY(20px)",
-              transition: "all 0.7s cubic-bezier(0.16,1,0.3,1) 0.5s",
-            }}
-          >
-            <span className="hero-badge cursor-default">
-              {t.hero.badge}
-            </span>
+      <div className="container mx-auto grid grid-cols-1 items-center gap-12 px-6 pb-16 pt-12 md:pb-20 lg:grid-cols-5">
+        <div className="space-y-8 lg:col-span-3">
+          <div className={`inline-flex duration-700 ${enterClass("delay-[500ms]")}`}>
+            <span className="hero-badge cursor-default">{t.hero.badge}</span>
           </div>
 
-          {/* H1 */}
-          <h1 className="font-display text-[clamp(48px,6vw,80px)] leading-[1.0] tracking-[-0.03em] text-foreground">
+          <h1 className="font-display text-[clamp(48px,6vw,80px)] leading-[1] tracking-[-0.03em] text-foreground">
             {t.hero.words.map((word, i) => (
-              <span
-                key={i}
-                className="block"
-                style={{
-                  opacity: loaded ? 1 : 0,
-                  transform: loaded ? "translateY(0)" : "translateY(30px)",
-                  transition: `all 0.8s cubic-bezier(0.16,1,0.3,1) ${0.65 + i * 0.1}s`,
-                }}
-              >
-                {i === 1 ? <span style={{ color: "#2979ff" }}>{word}</span> : word}
+              <span key={i} className={`block duration-700 ${enterClass(wordDelayClasses[i], "translate-y-[30px]")}`}>
+                {i === 1 ? <span className="text-[#2979ff]">{word}</span> : word}
               </span>
             ))}
           </h1>
 
-          {/* Body */}
-          <p
-            className="font-body font-light text-[15px] leading-[1.7] max-w-md"
-            style={{
-              color: "#7a9acc",
-              opacity: loaded ? 1 : 0,
-              transform: loaded ? "translateY(0)" : "translateY(20px)",
-              transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 1s",
-            }}
-          >
+          <p className={`max-w-md font-body text-[15px] font-light leading-[1.7] text-[#7a9acc] duration-700 ${enterClass("delay-[1000ms]")}`}>
             {t.hero.body}
           </p>
 
-          {/* Buttons */}
-          <div
-            className="flex gap-4 flex-wrap"
-            style={{
-              opacity: loaded ? 1 : 0,
-              transform: loaded ? "translateY(0)" : "translateY(20px)",
-              transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 1.15s",
-            }}
-          >
+          <div className={`flex flex-wrap gap-4 duration-700 ${enterClass("delay-[1150ms]")}`}>
             <a href="#contact" className="btn-primary">
               {t.hero.primaryCta}
             </a>
@@ -82,81 +52,17 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Right — image placeholder */}
-        <div
-          className="lg:col-span-2 flex items-start justify-center"
-          style={{
-            opacity: loaded ? 1 : 0,
-            transform: loaded ? "translateY(0) scale(1)" : "translateY(30px) scale(0.95)",
-            transition: "all 1s cubic-bezier(0.16,1,0.3,1) 0.8s",
-          }}
-        >
-          <div
-            className="relative w-full"
-            style={{
-              maxWidth: "480px",
-              aspectRatio: "4/3",
-              marginTop: "1rem",
-              animation: "card-float 7.5s cubic-bezier(0.37, 0, 0.63, 1) infinite",
-              willChange: "transform",
-              backfaceVisibility: "hidden",
-              transform: "translateZ(0)",
-              transformStyle: "preserve-3d",
-              contain: "layout paint",
-              isolation: "isolate",
-            }}
-          >
-            <div
-              style={{
-                position: "absolute",
-                inset: "-34px",
-                background: "#0059ff",
-                borderRadius: "50%",
-                filter: "blur(88px)",
-                opacity: 0.38,
-                zIndex: 0,
-                animation: "orb-pulse-a 5s ease-in-out infinite",
-              }}
-            />
+        <div className={`flex items-start justify-center lg:col-span-2 duration-[1000ms] ${enterClass("delay-[800ms]", "translate-y-[30px] scale-95")}`}>
+          <div className="relative mt-4 aspect-[4/3] w-full max-w-[480px] isolate animate-[card-float_7.5s_cubic-bezier(0.37,0,0.63,1)_infinite] [backface-visibility:hidden] [contain:layout_paint] [transform-style:preserve-3d]">
+            <div className="absolute inset-[-34px] z-0 rounded-full bg-primary opacity-[0.38] blur-[88px] animate-[orb-pulse-a_5s_ease-in-out_infinite]" />
 
-            <div
-              style={{
-                position: "relative",
-                width: "100%",
-                height: "100%",
-                borderRadius: "20px",
-                overflow: "hidden",
-                border: "none",
-                backgroundImage: `url(${workspaceImage})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center top",
-                boxShadow: "0 0 72px rgba(0, 89, 255, 0.45), 0 0 150px rgba(0, 89, 255, 0.22)",
-                zIndex: 1,
-                transform: "translateZ(0)",
-                backfaceVisibility: "hidden",
-              }}
-            >
+            <div className="relative z-10 size-full overflow-hidden rounded-[20px] shadow-[0_0_72px_rgba(0,89,255,0.45),0_0_150px_rgba(0,89,255,0.22)] [backface-visibility:hidden]">
               <img
                 src={workspaceImage}
-                alt="Workspace"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  objectPosition: "center top",
-                  display: "block",
-                  transform: "translateZ(0)",
-                  backfaceVisibility: "hidden",
-                }}
+                alt={t.hero.imageLabel}
+                className="block size-full object-cover object-top [backface-visibility:hidden]"
               />
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: "linear-gradient(135deg, rgba(0,7,45,0.04) 0%, transparent 58%, rgba(0,89,255,0.08) 100%)",
-                  pointerEvents: "none",
-                }}
-              />
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(0,7,45,0.04)_0%,transparent_58%,rgba(0,89,255,0.08)_100%)]" />
             </div>
           </div>
         </div>
