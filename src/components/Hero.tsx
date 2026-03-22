@@ -54,7 +54,7 @@ const Hero = () => {
         </div>
 
         <div className={`flex items-start justify-center lg:col-span-2 duration-[1000ms] ${enterClass("delay-[800ms]", "translate-y-[30px] scale-[0.96]")}`}>
-          <div className="hero-visual-wrap mt-2">
+          <div className="hero-visual-wrap hero-visual-wrap-square mt-2">
             <div className="hero-visual-ambient" />
             <div className="hero-visual-ambient hero-visual-ambient-b" />
             <div className="hero-visual-shell">
