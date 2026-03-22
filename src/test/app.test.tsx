@@ -12,6 +12,7 @@ function renderWithI18n(component: React.ReactElement) {
 describe("critical user flows", () => {
   beforeEach(() => {
     window.localStorage.clear();
+    window.sessionStorage.clear();
     document.head.innerHTML = '<meta name="description" content="" />';
   });
 
@@ -63,6 +64,8 @@ describe("critical user flows", () => {
     fireEvent.change(textboxes[0], { target: { value: "Jan Kowalski" } });
     fireEvent.change(textboxes[1], { target: { value: "jan@example.com" } });
     fireEvent.change(textboxes[2], { target: { value: "Potrzebuje nowego landing page." } });
+    const startedAtInput = document.querySelector('input[name="_startedAt"]') as HTMLInputElement;
+    startedAtInput.value = String(Date.now() - 5_000);
 
     fireEvent.submit(screen.getByRole("button").closest("form")!);
 
@@ -93,8 +96,33 @@ describe("critical user flows", () => {
     fireEvent.change(textboxes[0], { target: { value: "Jan Kowalski" } });
     fireEvent.change(textboxes[1], { target: { value: "jan@example.com" } });
     fireEvent.change(textboxes[2], { target: { value: "Potrzebuje nowego landing page." } });
+    const startedAtInput = document.querySelector('input[name="_startedAt"]') as HTMLInputElement;
+    startedAtInput.value = String(Date.now() - 5_000);
 
     fireEvent.click(screen.getByRole("button"));
+
+    expect(await screen.findByRole("alert")).toBeInTheDocument();
+  });
+
+  it("blocks suspicious form submissions before the network request is sent", async () => {
+    const fetchMock = vi.fn();
+
+    vi.stubGlobal("fetch", fetchMock);
+
+    renderWithI18n(<ContactForm />);
+
+    const textboxes = screen.getAllByRole("textbox");
+    fireEvent.change(textboxes[0], { target: { value: "Jan Kowalski" } });
+    fireEvent.change(textboxes[1], { target: { value: "jan@example.com" } });
+    fireEvent.change(textboxes[2], { target: { value: "https://spam.example www.example spam spam spam" } });
+    const trapInput = document.querySelector('input[name="website"]') as HTMLInputElement;
+    trapInput.value = "https://bot.example";
+
+    fireEvent.submit(screen.getByRole("button").closest("form")!);
+
+    await waitFor(() => {
+      expect(fetchMock).not.toHaveBeenCalled();
+    });
 
     expect(await screen.findByRole("alert")).toBeInTheDocument();
   });

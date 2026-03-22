@@ -70,7 +70,7 @@ export const legalContent: Record<Locale, LegalContent> = {
           title: "2. Jakie dane zbieramy",
           paragraphs: [
             "Przetwarzamy dane, które podajesz dobrowolnie w formularzu kontaktowym, w szczególności imię i nazwisko, adres e-mail oraz treść wiadomości.",
-            "Technicznie zapisujemy również preferencję języka strony w pamięci przeglądarki, aby serwis mógł wyświetlać właściwą wersję językową przy kolejnych odwiedzinach.",
+            "Technicznie zapisujemy również preferencję języka strony w pamięci przeglądarki, a po próbie wysłania formularza możemy tymczasowo zapisać krótki znacznik antyspamowy ograniczający automatyczne ponowne zgłoszenia.",
           ],
         },
         {
@@ -117,7 +117,7 @@ export const legalContent: Record<Locale, LegalContent> = {
     },
     cookies: {
       metaTitle: "Polityka cookies | Nebula Nexus Labs",
-      metaDescription: "Informacje o cookies i local storage wykorzystywanych przez Nebula Nexus Labs.",
+      metaDescription: "Informacje o cookies i pamięci przeglądarki wykorzystywanych przez Nebula Nexus Labs.",
       title: "Polityka cookies",
       intro:
         "Ta strona nie korzysta obecnie z marketingowych ani analitycznych cookies. Używamy wyłącznie minimalnych mechanizmów technicznych potrzebnych do działania wybranych funkcji serwisu.",
@@ -127,6 +127,7 @@ export const legalContent: Record<Locale, LegalContent> = {
           title: "1. Czego używa ta strona",
           paragraphs: [
             "Serwis zapisuje preferencję języka w pamięci przeglądarki (localStorage), aby po ponownej wizycie od razu wyświetlić wybraną wersję językową.",
+            "Po próbie wysłania formularza kontaktowego strona może tymczasowo zapisać w sessionStorage krótki znacznik antyspamowy ograniczający bardzo szybkie, powtarzalne zgłoszenia wyglądające na automatyczne.",
             "Nie wykorzystujemy obecnie narzędzi reklamowych, pikseli marketingowych ani analityki, które wymagałyby osobnego banera zgody na opcjonalne cookies.",
           ],
           items: [
@@ -134,18 +135,22 @@ export const legalContent: Record<Locale, LegalContent> = {
             "Cel: zapamiętanie preferowanego języka strony",
             "Zakres: wartość pl / en",
             "Czas działania: do momentu usunięcia przez użytkownika lub wyczyszczenia danych przeglądarki",
+            "Klucz: nebula-nexus-labs-contact-cooldown",
+            "Cel: ograniczenie automatycznych, seryjnych wysyłek formularza",
+            "Zakres: znacznik czasu ostatniej próby wysłania formularza",
+            "Czas działania: sesyjnie, do zamknięcia karty lub wyczyszczenia danych sesji",
           ],
         },
         {
           title: "2. Podstawa korzystania z pamięci przeglądarki",
           paragraphs: [
-            "Taki zapis służy wyłącznie realizacji funkcji wybranej przez użytkownika, czyli zapamiętaniu preferencji językowej przy kolejnych odwiedzinach.",
+            "Takie zapisy służą wyłącznie realizacji funkcji wybranej przez użytkownika oraz podstawowym zabezpieczeniom serwisu przed nadużyciami formularza kontaktowego.",
           ],
         },
         {
           title: "3. Zarządzanie ustawieniami",
           paragraphs: [
-            "W każdej chwili możesz usunąć zapisane dane strony w ustawieniach przeglądarki lub wyczyścić localStorage dla tej domeny. Po usunięciu preferencji językowej serwis wróci do domyślnej wersji językowej.",
+            "W każdej chwili możesz usunąć zapisane dane strony w ustawieniach przeglądarki albo wyczyścić localStorage i sessionStorage dla tej domeny. Po usunięciu preferencji językowej serwis wróci do domyślnej wersji językowej.",
           ],
         },
         {
@@ -191,7 +196,7 @@ export const legalContent: Record<Locale, LegalContent> = {
           title: "2. What data we collect",
           paragraphs: [
             "We process the data you voluntarily provide in the contact form, especially your name, email address and the content of your message.",
-            "We also store your language preference in browser storage so the website can display the selected language on future visits.",
+            "We also store your language preference in browser storage and may temporarily store a short anti-spam marker after a form attempt to limit automated repeat submissions.",
           ],
         },
         {
@@ -248,6 +253,7 @@ export const legalContent: Record<Locale, LegalContent> = {
           title: "1. What this website uses",
           paragraphs: [
             "The site stores the chosen language in browser storage (localStorage) so that future visits can open in the preferred language.",
+            "After a contact form attempt, the site may temporarily store a short anti-spam marker in sessionStorage to slow down very fast, repetitive submissions that look automated.",
             "We do not currently use advertising tools, marketing pixels or analytics that would require a separate consent banner for optional cookies.",
           ],
           items: [
@@ -255,18 +261,22 @@ export const legalContent: Record<Locale, LegalContent> = {
             "Purpose: remember the preferred site language",
             "Scope: value pl / en",
             "Duration: until removed by the user or browser data is cleared",
+            "Key: nebula-nexus-labs-contact-cooldown",
+            "Purpose: limit automated repeat contact-form submissions",
+            "Scope: timestamp of the latest form attempt",
+            "Duration: session-based, until the tab is closed or session data is cleared",
           ],
         },
         {
           title: "2. Legal basis for browser storage",
           paragraphs: [
-            "This storage is used only to deliver a function explicitly requested by the user, namely remembering the language preference across visits.",
+            "This storage is used only to deliver a function explicitly requested by the user and to provide basic protection against abuse of the contact form.",
           ],
         },
         {
           title: "3. Managing settings",
           paragraphs: [
-            "You can remove stored site data at any time in your browser settings or clear localStorage for this domain. After removal, the site will return to the default language version.",
+            "You can remove stored site data at any time in your browser settings or clear localStorage and sessionStorage for this domain. After removal, the site will return to the default language version.",
           ],
         },
         {
