@@ -17,7 +17,7 @@ const Hero = () => {
       <div className="glow-orb glow-orb-b w-[250px] h-[250px] top-[40%] left-[55%]" style={{ opacity: 0.3, filter: "blur(120px)" }} />
       <div className="glow-orb glow-orb-c w-[200px] h-[200px] bottom-[10%] left-[25%]" style={{ opacity: 0.3, filter: "blur(120px)" }} />
 
-      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-5 gap-12 items-center pt-24 pb-16 md:pb-20">
+      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-5 gap-12 items-center pt-12 pb-16 md:pb-20">
         {/* Left */}
         <div className="lg:col-span-3 space-y-8">
           {/* Badge */}
@@ -96,7 +96,7 @@ const Hero = () => {
             style={{
               maxWidth: "480px",
               aspectRatio: "4/3",
-              marginTop: "2rem",
+              marginTop: "1rem",
               animation: "card-float 6s ease-in-out infinite",
               willChange: "transform",
               backfaceVisibility: "hidden",
@@ -125,6 +125,8 @@ const Hero = () => {
                 border: "1px solid rgba(0, 89, 255, 0.3)",
                 boxShadow: "0 0 40px rgba(0, 89, 255, 0.3), 0 0 80px rgba(0, 89, 255, 0.12)",
                 zIndex: 1,
+                transform: "translateZ(0)",
+                backfaceVisibility: "hidden",
               }}
             >
               <img
@@ -136,6 +138,8 @@ const Hero = () => {
                   objectFit: "cover",
                   objectPosition: "center top",
                   display: "block",
+                  transform: "translateZ(0)",
+                  backfaceVisibility: "hidden",
                 }}
               />
               <div
