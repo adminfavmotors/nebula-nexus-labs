@@ -26,7 +26,8 @@ const About = () => {
         <SectionTitle
           tone="light"
           revealClassName="reveal-element"
-          className="max-w-[14.5ch] text-[clamp(24px,3.35vw,54px)] leading-[1.03] tracking-[-0.045em]"
+          className="max-w-[14.5ch] text-[clamp(22px,3vw,32px)] leading-[1.03] tracking-[-0.045em]"
+          style={{ wordBreak: "keep-all", overflowWrap: "normal" }}
           delay="0.05"
         >
           <span className="block md:whitespace-nowrap">{t.about.titleLine1}</span>
