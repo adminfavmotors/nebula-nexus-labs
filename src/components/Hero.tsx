@@ -109,11 +109,11 @@ const Hero = () => {
             <div
               style={{
                 position: "absolute",
-                inset: "-20px",
+                inset: "-28px",
                 background: "#0059ff",
                 borderRadius: "50%",
-                filter: "blur(60px)",
-                opacity: 0.2,
+                filter: "blur(72px)",
+                opacity: 0.28,
                 zIndex: 0,
                 animation: "orb-pulse-a 5s ease-in-out infinite",
               }}
@@ -126,8 +126,8 @@ const Hero = () => {
                 height: "100%",
                 borderRadius: "20px",
                 overflow: "hidden",
-                border: "1px solid rgba(0, 89, 255, 0.3)",
-                boxShadow: "0 0 40px rgba(0, 89, 255, 0.3), 0 0 80px rgba(0, 89, 255, 0.12)",
+                border: "1px solid rgba(255, 255, 255, 0.05)",
+                boxShadow: "0 0 56px rgba(0, 89, 255, 0.34), 0 0 120px rgba(0, 89, 255, 0.14)",
                 zIndex: 1,
                 transform: "translateZ(0)",
                 backfaceVisibility: "hidden",
@@ -150,7 +150,7 @@ const Hero = () => {
                 style={{
                   position: "absolute",
                   inset: 0,
-                  background: "linear-gradient(135deg, rgba(0,7,45,0.15) 0%, transparent 60%, rgba(0,89,255,0.08) 100%)",
+                  background: "linear-gradient(135deg, rgba(0,7,45,0.08) 0%, transparent 55%, rgba(0,89,255,0.12) 100%)",
                   pointerEvents: "none",
                 }}
               />
