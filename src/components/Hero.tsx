@@ -29,7 +29,7 @@ const Hero = () => {
               transition: "all 0.7s cubic-bezier(0.16,1,0.3,1) 0.5s",
             }}
           >
-            <span className="btn-ghost text-[11px] px-4 py-1.5 tracking-[0.08em] uppercase font-medium cursor-default">
+            <span className="hero-badge cursor-default">
               {t.hero.badge}
             </span>
           </div>
