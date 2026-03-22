@@ -22,17 +22,24 @@ const About = () => {
 
   return (
     <Section id="about" tone="light" className="pt-4 md:pt-6" ref={ref}>
-      <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2">
-        <SectionTitle tone="light" revealClassName="reveal-element" className="text-[clamp(28px,4vw,44px)]" delay="0.05">
-          {t.about.titleLine1}
+      <div className="mb-16 grid grid-cols-1 items-center gap-10 md:gap-12 lg:grid-cols-[minmax(0,1.06fr)_minmax(0,0.94fr)] lg:gap-16">
+        <SectionTitle
+          tone="light"
+          revealClassName="reveal-element"
+          className="max-w-[14.5ch] text-[clamp(24px,3.35vw,54px)] leading-[1.03] tracking-[-0.045em]"
+          delay="0.05"
+        >
+          <span className="block md:whitespace-nowrap">{t.about.titleLine1}</span>
           <br />
-          <span>{t.about.titleLine2start}</span>
-          <span className="text-[#0059ff]">{t.about.titleLine2accent}</span>
-          <span>{t.about.titleLine2end}</span>
+          <span className="block md:whitespace-nowrap">
+            <span>{t.about.titleLine2start}</span>
+            <span className="text-[#0059ff]">{t.about.titleLine2accent}</span>
+            <span>{t.about.titleLine2end}</span>
+          </span>
           <br />
-          {t.about.titleLine3}
+          <span className="block md:whitespace-nowrap">{t.about.titleLine3}</span>
         </SectionTitle>
-        <div className="flex flex-col gap-3 self-end">
+        <div className="flex w-full max-w-[50rem] flex-col gap-4 self-center lg:justify-self-end">
           {t.about.theses.map((item, i) => (
             <div key={i} className="reveal-left" data-delay={String(0.15 + i * 0.15)}>
               <div className="about-thesis-card flex items-start gap-4">
