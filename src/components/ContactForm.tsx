@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useI18n } from "@/lib/i18n";
+import { legalContent } from "@/lib/legal-content";
 import { formEndpoint } from "@/lib/site-config";
 import { Section, SectionTitle } from "@/components/primitives/Section";
 import { ActionButton } from "@/components/primitives/Actions";
@@ -9,6 +10,7 @@ import { FormInput, FormTextarea } from "@/components/primitives/FormFields";
 const ContactForm = () => {
   const ref = useScrollReveal(0.1);
   const { locale, t } = useI18n();
+  const legal = legalContent[locale];
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -90,6 +92,13 @@ const ContactForm = () => {
         <ActionButton type="submit" className="w-full sm:w-auto" disabled={status === "submitting"}>
           {status === "submitting" ? t.contact.status.submitting : t.contact.submit}
         </ActionButton>
+        <p className="font-body text-sm leading-6 text-[#4a5568]">
+          {legal.formNotice.prefix}{" "}
+          <a href="/privacy-policy" className="text-[#0059ff] underline underline-offset-4 transition-opacity hover:opacity-75">
+            {legal.formNotice.linkLabel}
+          </a>{" "}
+          {legal.formNotice.suffix}
+        </p>
         {status !== "idle" ? (
           <p
             aria-live="polite"
