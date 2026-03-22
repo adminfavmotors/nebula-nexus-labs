@@ -33,13 +33,24 @@ jobs:
       - name: Build production bundle
         run: npm run build
 
+      - name: Install lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
       - name: Deploy to SEOHOST over FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: h79.seohost.pl
-          protocol: ftp
-          username: ${{ secrets.SEOHOST_FTP_USERNAME }}
-          password: ${{ secrets.SEOHOST_FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: /domains/node48.pl/public_html/
-          dangerous-clean-slate: false
+        env:
+          SEOHOST_FTP_USERNAME: ${{ secrets.SEOHOST_FTP_USERNAME }}
+          SEOHOST_FTP_PASSWORD: ${{ secrets.SEOHOST_FTP_PASSWORD }}
+        run: |
+          lftp -e "
+            set cmd:fail-exit true;
+            set ftp:ssl-allow no;
+            set ftp:passive-mode true;
+            set net:timeout 20;
+            set net:max-retries 2;
+            set net:reconnect-interval-base 5;
+            open -u ${SEOHOST_FTP_USERNAME},${SEOHOST_FTP_PASSWORD} ftp://h79.seohost.pl;
+            mirror -R --verbose --parallel=2 ./dist /domains/node48.pl/public_html;
+            bye
+          "
