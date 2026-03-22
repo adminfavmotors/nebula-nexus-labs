@@ -1,12 +1,9 @@
-const contactEmailUser = ["yrasike", "60"].join("");
-const contactEmailDomain = ["gmail", "com"].join(".");
-const businessPhoneParts = ["+48", "579", "120", "480"] as const;
-
 export const siteConfig = {
-  brandName: "Nebula Nexus Labs",
-  businessPhone: businessPhoneParts.join(" "),
+  brandName: "NODE48",
+  dataControllerName: "Yury Luzhkouski",
+  businessPhone: "+48 788 554 887",
   currentYear: 2026,
-  contactEmail: `${contactEmailUser}@${contactEmailDomain}`,
+  contactEmail: "contact@node48.pl",
 } as const;
 
 export const formEndpoint = `https://formsubmit.co/ajax/${siteConfig.contactEmail}`;

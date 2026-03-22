@@ -34,7 +34,7 @@ describe("critical user flows", () => {
     });
 
     expect(document.documentElement.lang).toBe("en");
-    expect(window.localStorage.getItem("nebula-nexus-labs-locale")).toBe("en");
+    expect(window.localStorage.getItem("node48-locale")).toBe("en");
   });
 
   it("updates document metadata when locale changes", async () => {

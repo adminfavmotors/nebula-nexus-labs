@@ -52,8 +52,8 @@ export const legalContent: Record<Locale, LegalContent> = {
       suffix: "i rozumiesz, że wiadomość jest przekazywana przez zewnętrzny formularz kontaktowy.",
     },
     privacy: {
-      metaTitle: "Polityka prywatności | Nebula Nexus Labs",
-      metaDescription: "Informacje o przetwarzaniu danych osobowych przez Nebula Nexus Labs.",
+      metaTitle: "Polityka prywatności | NODE48",
+      metaDescription: "Informacje o przetwarzaniu danych osobowych związanych z marką NODE48.",
       title: "Polityka prywatności",
       intro:
         "Poniżej opisujemy, jakie dane osobowe przetwarzamy w ramach tej strony, w jakich celach, na jakiej podstawie oraz jakie prawa przysługują osobom kontaktującym się z nami.",
@@ -62,7 +62,7 @@ export const legalContent: Record<Locale, LegalContent> = {
         {
           title: "1. Administrator danych",
           paragraphs: [
-            `${siteConfig.brandName} jest administratorem danych osobowych przetwarzanych w związku z korzystaniem z tej strony i formularza kontaktowego.`,
+            `${siteConfig.dataControllerName}, działający pod marką ${siteConfig.brandName}, jest administratorem danych osobowych przetwarzanych w związku z korzystaniem z tej strony i formularza kontaktowego.`,
             `W sprawach dotyczących prywatności możesz skontaktować się z nami pod adresem ${siteConfig.contactEmail} lub telefonicznie: ${siteConfig.businessPhone}.`,
           ],
         },
@@ -116,8 +116,8 @@ export const legalContent: Record<Locale, LegalContent> = {
       ],
     },
     cookies: {
-      metaTitle: "Polityka cookies | Nebula Nexus Labs",
-      metaDescription: "Informacje o cookies i pamięci przeglądarki wykorzystywanych przez Nebula Nexus Labs.",
+      metaTitle: "Polityka cookies | NODE48",
+      metaDescription: "Informacje o cookies i pamięci przeglądarki wykorzystywanych przez markę NODE48.",
       title: "Polityka cookies",
       intro:
         "Ta strona nie korzysta obecnie z marketingowych ani analitycznych cookies. Używamy wyłącznie minimalnych mechanizmów technicznych potrzebnych do działania wybranych funkcji serwisu.",
@@ -131,11 +131,11 @@ export const legalContent: Record<Locale, LegalContent> = {
             "Nie wykorzystujemy obecnie narzędzi reklamowych, pikseli marketingowych ani analityki, które wymagałyby osobnego banera zgody na opcjonalne cookies.",
           ],
           items: [
-            "Klucz: nebula-nexus-labs-locale",
+            "Klucz: node48-locale",
             "Cel: zapamiętanie preferowanego języka strony",
             "Zakres: wartość pl / en",
             "Czas działania: do momentu usunięcia przez użytkownika lub wyczyszczenia danych przeglądarki",
-            "Klucz: nebula-nexus-labs-contact-cooldown",
+            "Klucz: node48-contact-cooldown",
             "Cel: ograniczenie automatycznych, seryjnych wysyłek formularza",
             "Zakres: znacznik czasu ostatniej próby wysłania formularza",
             "Czas działania: sesyjnie, do zamknięcia karty lub wyczyszczenia danych sesji",
@@ -178,8 +178,8 @@ export const legalContent: Record<Locale, LegalContent> = {
       suffix: "and understand that your message is delivered through an external form processor.",
     },
     privacy: {
-      metaTitle: "Privacy Policy | Nebula Nexus Labs",
-      metaDescription: "Information about how Nebula Nexus Labs processes personal data.",
+      metaTitle: "Privacy Policy | NODE48",
+      metaDescription: "Information about personal data processing related to the NODE48 brand.",
       title: "Privacy Policy",
       intro:
         "Below we explain what personal data we process through this website, why we process it, what legal bases apply and what rights are available to people who contact us.",
@@ -188,7 +188,7 @@ export const legalContent: Record<Locale, LegalContent> = {
         {
           title: "1. Data controller",
           paragraphs: [
-            `${siteConfig.brandName} is the controller of personal data processed in connection with this website and its contact form.`,
+            `${siteConfig.dataControllerName}, operating under the ${siteConfig.brandName} brand, is the controller of personal data processed in connection with this website and its contact form.`,
             `For privacy-related matters, you can contact us at ${siteConfig.contactEmail} or by phone at ${siteConfig.businessPhone}.`,
           ],
         },
@@ -242,8 +242,8 @@ export const legalContent: Record<Locale, LegalContent> = {
       ],
     },
     cookies: {
-      metaTitle: "Cookie Policy | Nebula Nexus Labs",
-      metaDescription: "Information about cookies and browser storage used by Nebula Nexus Labs.",
+      metaTitle: "Cookie Policy | NODE48",
+      metaDescription: "Information about cookies and browser storage used by the NODE48 brand.",
       title: "Cookie Policy",
       intro:
         "This website currently does not use marketing or analytics cookies. We only rely on minimal technical browser storage required for selected site functions.",
@@ -257,11 +257,11 @@ export const legalContent: Record<Locale, LegalContent> = {
             "We do not currently use advertising tools, marketing pixels or analytics that would require a separate consent banner for optional cookies.",
           ],
           items: [
-            "Key: nebula-nexus-labs-locale",
+            "Key: node48-locale",
             "Purpose: remember the preferred site language",
             "Scope: value pl / en",
             "Duration: until removed by the user or browser data is cleared",
-            "Key: nebula-nexus-labs-contact-cooldown",
+            "Key: node48-contact-cooldown",
             "Purpose: limit automated repeat contact-form submissions",
             "Scope: timestamp of the latest form attempt",
             "Duration: session-based, until the tab is closed or session data is cleared",

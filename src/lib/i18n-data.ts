@@ -103,7 +103,7 @@ export type TranslationSet = {
 export const translations = {
   pl: {
     meta: {
-      title: "Nebula Nexus Labs | Strony i produkty cyfrowe",
+      title: "NODE48 | Strony i produkty cyfrowe",
       description:
         "Projektujemy szybkie strony internetowe, landing page'e i doświadczenia cyfrowe dla firm, które chcą wyglądać nowocześnie i sprzedawać skuteczniej.",
     },
@@ -246,7 +246,7 @@ export const translations = {
   },
   en: {
     meta: {
-      title: "Nebula Nexus Labs | Websites and digital products",
+      title: "NODE48 | Websites and digital products",
       description:
         "We design fast websites, landing pages and digital experiences for companies that want a modern presence and stronger conversion.",
     },
@@ -389,4 +389,4 @@ export const translations = {
   },
 } satisfies Record<Locale, TranslationSet>;
 
-export const STORAGE_KEY = "nebula-nexus-labs-locale";
+export const STORAGE_KEY = "node48-locale";

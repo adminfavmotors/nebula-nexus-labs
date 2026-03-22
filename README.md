@@ -1,6 +1,6 @@
-# Nebula Nexus Labs
+# NODE48
 
-Marketing website for `Nebula Nexus Labs`, built with `React`, `Vite`, `TypeScript`, `Tailwind CSS`, and `shadcn/ui`.
+Marketing website for `NODE48`, built with `React`, `Vite`, `TypeScript`, and `Tailwind CSS`.
 
 ## Current State
 
@@ -70,7 +70,7 @@ src/
 
 ## Localization
 
-- Translations are stored in [src/lib/i18n.tsx](C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/i18n.tsx).
+- Translations are stored in [src/lib/i18n-data.ts](C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/i18n-data.ts).
 - Polish is the default locale.
 - The selected locale is persisted in `localStorage`.
 - `html[lang]`, `document.title`, and selected meta descriptions are updated when the locale changes.

@@ -7,7 +7,7 @@ import { Section, SectionTitle } from "@/components/primitives/Section";
 import { ActionButton } from "@/components/primitives/Actions";
 import { FormInput, FormTextarea } from "@/components/primitives/FormFields";
 
-const CONTACT_FORM_COOLDOWN_KEY = "nebula-nexus-labs-contact-cooldown";
+const CONTACT_FORM_COOLDOWN_KEY = "node48-contact-cooldown";
 const CONTACT_FORM_COOLDOWN_MS = 45_000;
 const CONTACT_FORM_MIN_COMPLETION_MS = 1_800;
 const CONTACT_FORM_MAX_LINKS = 2;
@@ -69,7 +69,7 @@ const ContactForm = () => {
 
     setStatus("submitting");
     formData.append("_replyto", String(formData.get("email") ?? ""));
-    formData.append("_subject", `Nebula Nexus Labs inquiry (${locale.toUpperCase()})`);
+    formData.append("_subject", `NODE48 inquiry (${locale.toUpperCase()})`);
     formData.append("_template", "table");
     formData.append("_captcha", "false");
     formData.append("locale", locale);
