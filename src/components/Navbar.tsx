@@ -9,6 +9,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoHovered, setLogoHovered] = useState(false);
   const { locale, setLocale, isTransitioningLocale, t } = useI18n();
   const closeMenu = () => setMenuOpen(false);
 
@@ -34,10 +35,38 @@ const Navbar = () => {
         }`}
       >
         <div className={cx("header-panel", scrolled ? "header-panel-scrolled" : "header-panel-idle")}>
-          <a href="#home" className="header-brand">
-            <span className="header-brand-name">{siteConfig.brandName}</span>
-            <span className="header-brand-dot" aria-hidden="true" />
-          </a>
+          <div
+            style={{ position: "relative", display: "inline-flex", alignItems: "center", cursor: "pointer" }}
+            onMouseEnter={() => setLogoHovered(true)}
+            onMouseLeave={() => setLogoHovered(false)}
+          >
+            <span
+              className={cx("logo-neon-ring", logoHovered && "logo-hovered")}
+              style={{
+                position: "absolute",
+                inset: "-6px -14px",
+                borderRadius: "12px",
+                pointerEvents: "none",
+                opacity: logoHovered ? 1 : 0,
+                transition: "opacity 0.3s ease",
+              }}
+            />
+            <a href="#home" className="header-brand">
+              <span className="header-brand-name">{siteConfig.brandName}</span>
+              <span
+                className="header-brand-dot"
+                aria-hidden="true"
+                style={{
+                  textShadow: logoHovered ? "0 0 14px rgba(0,89,255,0.9)" : "none",
+                  transform: logoHovered ? "scale(1.3)" : "scale(1)",
+                  transition: "all 0.3s ease",
+                  display: "inline-block",
+                }}
+              >
+                .
+              </span>
+            </a>
+          </div>
 
           <div className="hidden items-center gap-1 lg:flex">
             {t.nav.links.map((link) => (

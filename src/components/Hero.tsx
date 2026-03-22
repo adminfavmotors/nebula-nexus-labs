@@ -55,12 +55,13 @@ const Hero = () => {
 
         <div className={`flex items-start justify-center lg:col-span-2 duration-[1000ms] ${enterClass("delay-[800ms]", "translate-y-[30px] scale-[0.96]")}`}>
           <div className="hero-visual-wrap hero-visual-wrap-square mt-2">
-            <div className="hero-neon-fog" />
-            <div className="hero-neon-fog hero-neon-fog-b" />
-            <div className="hero-neon-fog hero-neon-fog-c" />
-            <div className="hero-visual-shell">
+            <div className="hero-card-glow absolute inset-[-24px] z-0 rounded-full bg-primary opacity-[0.35] blur-[80px]" />
+            <div
+              className="hero-visual-shell"
+              style={{ willChange: "transform", backfaceVisibility: "hidden", transform: "translateZ(0)" }}
+            >
               <div className="hero-visual-rim" />
-              <div className="hero-visual-mask">
+              <div className="hero-visual-mask card-neon-border">
                 <div className="hero-visual-grain" />
                 <img
                   src={workspaceImage}
