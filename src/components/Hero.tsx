@@ -84,7 +84,7 @@ const Hero = () => {
 
         {/* Right — image placeholder */}
         <div
-          className="lg:col-span-2 flex items-center justify-center"
+          className="lg:col-span-2 flex items-start justify-center"
           style={{
             opacity: loaded ? 1 : 0,
             transform: loaded ? "translateY(0) scale(1)" : "translateY(30px) scale(0.95)",
@@ -96,7 +96,10 @@ const Hero = () => {
             style={{
               maxWidth: "480px",
               aspectRatio: "4/3",
+              marginTop: "2rem",
               animation: "card-float 6s ease-in-out infinite",
+              willChange: "transform",
+              backfaceVisibility: "hidden",
             }}
           >
             <div
