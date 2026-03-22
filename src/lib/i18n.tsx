@@ -24,6 +24,9 @@ type TranslationSet = {
   about: {
     eyebrow: string;
     title: string;
+    titleStart: string;
+    titleAccent: string;
+    titleEnd: string;
     body: string;
     stats: Array<{ value: number; suffix: string; label: string }>;
   };
@@ -111,6 +114,9 @@ export const translations: Record<Locale, TranslationSet> = {
     },
     about: {
       eyebrow: "O nas",
+      titleStart: "Projektujemy doświadczenia",
+      titleAccent: "cyfrowe,",
+      titleEnd: "które wyglądają premium.",
       title: "Projektujemy doświadczenia cyfrowe, które wyglądają premium i pracują na wynik.",
       body:
         "Pomagamy firmom uporządkować komunikację, zbudować spójny wizerunek i wdrożyć stronę, która ładuje się szybko, wygląda nowocześnie i prowadzi użytkownika do działania.",
@@ -242,6 +248,9 @@ export const translations: Record<Locale, TranslationSet> = {
     },
     about: {
       eyebrow: "About us",
+      titleStart: "We design",
+      titleAccent: "digital experiences,",
+      titleEnd: "that feel premium.",
       title: "We design digital experiences that feel premium and support business goals.",
       body:
         "We help companies sharpen their message, build a cohesive visual language and launch websites that are fast, modern and built to guide users toward action.",
