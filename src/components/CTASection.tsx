@@ -4,11 +4,7 @@ import { useI18n } from "@/lib/i18n";
 
 const CTASection = () => {
   const ref = useScrollReveal(0.15);
-  const { locale, t } = useI18n();
-  const quickActions =
-    locale === "pl"
-      ? { form: "Przejdź do formularza", faq: "Zobacz FAQ" }
-      : { form: "Open the form", faq: "See FAQ" };
+  const { t } = useI18n();
 
   return (
     <section className="section-deep section-spacing" ref={ref}>
@@ -38,10 +34,10 @@ const CTASection = () => {
             </div>
             <div className="relative z-10 mt-8 flex gap-4">
               <a href="#contact" className="cta-action">
-                <MessageCircle size={14} /> {quickActions.form}
+                <MessageCircle size={14} /> {t.cta.quickActions.form}
               </a>
               <a href="#faq" className="cta-action">
-                <CircleHelp size={14} /> {quickActions.faq}
+                <CircleHelp size={14} /> {t.cta.quickActions.faq}
               </a>
             </div>
           </div>

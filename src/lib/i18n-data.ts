@@ -1,17 +1,27 @@
-import { createContext, startTransition, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { siteConfig } from "@/lib/site-config";
 
 export type Locale = "pl" | "en";
 
-type TranslationSet = {
+type NavLink = { label: string; href: string };
+type Stat = { value: number; suffix: string; label: string };
+type Service = { num: string; name: string; price: string };
+type ProcessStep = { num: string; title: string; desc: string };
+type Project = { name: string; tag: string };
+type Benefit = { title: string; desc: string };
+type FaqItem = { question: string; answer: string };
+type AboutThesis = { num: string; text: string };
+
+export type TranslationSet = {
   meta: {
     title: string;
     description: string;
   };
   nav: {
-    links: Array<{ label: string; href: string }>;
+    links: NavLink[];
     cta: string;
     languageLabel: string;
+    openMenuLabel: string;
+    closeMenuLabel: string;
   };
   hero: {
     badge: string;
@@ -22,59 +32,61 @@ type TranslationSet = {
     imageLabel: string;
   };
   about: {
-    eyebrow: string;
-    title: string;
     titleStart: string;
     titleAccent: string;
     titleEnd: string;
-    body: string;
-    stats: Array<{ value: number; suffix: string; label: string }>;
+    theses: AboutThesis[];
+    stats: Stat[];
   };
   services: {
-    eyebrow: string;
     title: string;
-    items: Array<{ num: string; name: string; price: string }>;
+    items: Service[];
   };
   howWeWork: {
-    eyebrow: string;
     title: string;
     link: string;
-    steps: Array<{ num: string; title: string; desc: string }>;
+    steps: ProcessStep[];
   };
   projects: {
-    eyebrow: string;
     title: string;
     viewAll: string;
     imageLabel: string;
-    items: Array<{ name: string; tag: string }>;
+    previousLabel: string;
+    nextLabel: string;
+    items: Project[];
   };
   whyUs: {
-    eyebrow: string;
     title: string;
-    items: Array<{ title: string; desc: string }>;
+    items: Benefit[];
   };
   faq: {
-    eyebrow: string;
     title: string;
     email: string;
     phone: string;
-    items: Array<{ question: string; answer: string }>;
+    items: FaqItem[];
   };
   contact: {
-    eyebrow: string;
     title: string;
     namePlaceholder: string;
     emailPlaceholder: string;
     messagePlaceholder: string;
     submit: string;
+    status: {
+      submitting: string;
+      success: string;
+      error: string;
+    };
   };
   cta: {
-    eyebrow: string;
     title: string;
     body: string;
     button: string;
     availabilityTitle: string;
     availabilityBody: string;
+    quickActions: {
+      form: string;
+      faq: string;
+    };
   };
   footer: {
     rights: string;
@@ -86,7 +98,7 @@ type TranslationSet = {
   };
 };
 
-export const translations: Record<Locale, TranslationSet> = {
+export const translations = {
   pl: {
     meta: {
       title: "Nebula Nexus Labs | Strony i produkty cyfrowe",
@@ -102,6 +114,8 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
       cta: "Umów konsultację",
       languageLabel: "Język",
+      openMenuLabel: "Otwórz menu",
+      closeMenuLabel: "Zamknij menu",
     },
     hero: {
       badge: "Studio stron i produktów cyfrowych",
@@ -113,13 +127,14 @@ export const translations: Record<Locale, TranslationSet> = {
       imageLabel: "Strategia, design i wdrożenie",
     },
     about: {
-      eyebrow: "O nas",
       titleStart: "Projektujemy doświadczenia",
       titleAccent: "cyfrowe,",
       titleEnd: "które wyglądają premium.",
-      title: "Projektujemy doświadczenia cyfrowe, które wyglądają premium i pracują na wynik.",
-      body:
-        "Pomagamy firmom uporządkować komunikację, zbudować spójny wizerunek i wdrożyć stronę, która ładuje się szybko, wygląda nowocześnie i prowadzi użytkownika do działania.",
+      theses: [
+        { num: "01.", text: "Strona to narzędzie sprzedaży, nie tylko wizytówka." },
+        { num: "02.", text: "Pomagamy rosnąć firmom, które chcą być zauważone." },
+        { num: "03.", text: "Od strategii po wdrożenie, z myślą o Twoim wyniku." },
+      ],
       stats: [
         { value: 147, suffix: "+", label: "zrealizowanych ekranów i sekcji" },
         { value: 98, suffix: "%", label: "projektów oddanych w terminie" },
@@ -127,7 +142,6 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
     },
     services: {
-      eyebrow: "Nasze usługi",
       title: "Od pierwszego briefu do gotowego wdrożenia",
       items: [
         { num: "01.", name: "Landing page sprzedażowy", price: "od 2 500 PLN" },
@@ -138,7 +152,6 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
     },
     howWeWork: {
-      eyebrow: "Jak pracujemy",
       title: "Przejrzysty proces, który daje tempo i kontrolę",
       link: "Zobacz etapy ↓",
       steps: [
@@ -149,10 +162,11 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
     },
     projects: {
-      eyebrow: "Portfolio",
       title: "Wybrane realizacje",
       viewAll: "Zobacz wszystkie →",
       imageLabel: "Podgląd projektu",
+      previousLabel: "Poprzedni projekt",
+      nextLabel: "Następny projekt",
       items: [
         { name: "Strona premium dla marki usługowej", tag: "Landing page" },
         { name: "Sklep z nową architekturą oferty", tag: "E-commerce" },
@@ -160,7 +174,6 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
     },
     whyUs: {
-      eyebrow: "Dlaczego my",
       title: "Łączymy estetykę z odpowiedzialnym wykonaniem",
       items: [
         { title: "Jasny proces", desc: "Na każdym etapie wiesz, co robimy, po co to robimy i jaki będzie kolejny krok." },
@@ -169,7 +182,6 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
     },
     faq: {
-      eyebrow: "FAQ",
       title: "Najczęstsze pytania",
       email: "Skorzystaj z formularza kontaktowego poniżej.",
       phone: siteConfig.businessPhone,
@@ -197,20 +209,27 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
     },
     contact: {
-      eyebrow: "Formularz",
       title: "Opowiedz nam o swoim projekcie",
       namePlaceholder: "Imię i nazwisko",
       emailPlaceholder: "Adres e-mail",
       messagePlaceholder: "Krótko opisz cele i zakres projektu",
       submit: "Wyślij wiadomość",
+      status: {
+        submitting: "Wysyłamy zgłoszenie...",
+        success: "Dziękujemy. Zgłoszenie zostało wysłane pomyślnie.",
+        error: "Nie udało się wysłać formularza. Spróbuj ponownie za chwilę.",
+      },
     },
     cta: {
-      eyebrow: "Kontakt",
       title: "Potrzebujesz nowej strony albo odświeżenia obecnej?",
       body: "Przygotujemy kierunek, zakres i następne kroki bez zbędnego chaosu. Zacznijmy od krótkiej rozmowy.",
       button: "Umów rozmowę",
       availabilityTitle: "Odpowiadamy szybko",
       availabilityBody: "Napisz do nas mailowo lub zostaw zgłoszenie w formularzu, jeśli chcesz szybko omówić zakres, termin albo wstępny budżet.",
+      quickActions: {
+        form: "Przejdź do formularza",
+        faq: "Zobacz FAQ",
+      },
     },
     footer: {
       rights: "Wszelkie prawa zastrzeżone.",
@@ -236,6 +255,8 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
       cta: "Book a call",
       languageLabel: "Language",
+      openMenuLabel: "Open menu",
+      closeMenuLabel: "Close menu",
     },
     hero: {
       badge: "Website and digital product studio",
@@ -247,13 +268,14 @@ export const translations: Record<Locale, TranslationSet> = {
       imageLabel: "Strategy, design and delivery",
     },
     about: {
-      eyebrow: "About us",
       titleStart: "We design",
       titleAccent: "digital experiences,",
       titleEnd: "that feel premium.",
-      title: "We design digital experiences that feel premium and support business goals.",
-      body:
-        "We help companies sharpen their message, build a cohesive visual language and launch websites that are fast, modern and built to guide users toward action.",
+      theses: [
+        { num: "01.", text: "A website should work as a sales tool, not just a business card." },
+        { num: "02.", text: "We help ambitious companies grow and become easier to notice." },
+        { num: "03.", text: "From strategy to launch, we keep the end result tied to your goals." },
+      ],
       stats: [
         { value: 147, suffix: "+", label: "screens and sections delivered" },
         { value: 98, suffix: "%", label: "projects delivered on time" },
@@ -261,7 +283,6 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
     },
     services: {
-      eyebrow: "Our services",
       title: "From first brief to launch-ready delivery",
       items: [
         { num: "01.", name: "Conversion-focused landing page", price: "from 2,500 PLN" },
@@ -272,7 +293,6 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
     },
     howWeWork: {
-      eyebrow: "How we work",
       title: "A clear process that keeps momentum and control",
       link: "See the steps ↓",
       steps: [
@@ -283,10 +303,11 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
     },
     projects: {
-      eyebrow: "Portfolio",
       title: "Selected work",
       viewAll: "See all →",
       imageLabel: "Project preview",
+      previousLabel: "Previous project",
+      nextLabel: "Next project",
       items: [
         { name: "Premium website for a service brand", tag: "Landing page" },
         { name: "Storefront with a refreshed offer structure", tag: "E-commerce" },
@@ -294,7 +315,6 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
     },
     whyUs: {
-      eyebrow: "Why us",
       title: "We balance strong aesthetics with reliable delivery",
       items: [
         { title: "Clear process", desc: "At every step you know what we are doing, why it matters and what comes next." },
@@ -303,7 +323,6 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
     },
     faq: {
-      eyebrow: "FAQ",
       title: "Frequently asked questions",
       email: "Use the contact form below.",
       phone: siteConfig.businessPhone,
@@ -331,20 +350,27 @@ export const translations: Record<Locale, TranslationSet> = {
       ],
     },
     contact: {
-      eyebrow: "Form",
       title: "Tell us about your project",
       namePlaceholder: "Full name",
       emailPlaceholder: "Email address",
       messagePlaceholder: "Briefly describe your goals and project scope",
       submit: "Send message",
+      status: {
+        submitting: "Sending your request...",
+        success: "Thanks. Your request has been sent successfully.",
+        error: "We could not send the form. Please try again in a moment.",
+      },
     },
     cta: {
-      eyebrow: "Contact",
       title: "Need a new website or a thoughtful redesign?",
       body: "We will help define the direction, scope and next steps without unnecessary chaos. Let's start with a short conversation.",
       button: "Book a call",
       availabilityTitle: "We reply fast",
       availabilityBody: "Email us or leave a request in the form if you want to quickly discuss scope, timing or a rough budget.",
+      quickActions: {
+        form: "Open the form",
+        faq: "See FAQ",
+      },
     },
     footer: {
       rights: "All rights reserved.",
@@ -355,87 +381,6 @@ export const translations: Record<Locale, TranslationSet> = {
       cta: "Back to home",
     },
   },
-};
+} satisfies Record<Locale, TranslationSet>;
 
-type I18nContextValue = {
-  locale: Locale;
-  setLocale: (locale: Locale) => void;
-  isTransitioningLocale: boolean;
-  t: TranslationSet;
-};
-
-const I18nContext = createContext<I18nContextValue | null>(null);
-
-const STORAGE_KEY = "nebula-nexus-labs-locale";
-
-export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(() => {
-    if (typeof window === "undefined") return "pl";
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    return stored === "en" ? "en" : "pl";
-  });
-  const [isTransitioningLocale, setIsTransitioningLocale] = useState(false);
-  const changeTimerRef = useRef<number | null>(null);
-  const settleTimerRef = useRef<number | null>(null);
-
-  const t = translations[locale];
-
-  const setLocale = (nextLocale: Locale) => {
-    if (nextLocale === locale) return;
-
-    if (changeTimerRef.current) {
-      window.clearTimeout(changeTimerRef.current);
-    }
-
-    if (settleTimerRef.current) {
-      window.clearTimeout(settleTimerRef.current);
-    }
-
-    setIsTransitioningLocale(true);
-
-    changeTimerRef.current = window.setTimeout(() => {
-      startTransition(() => {
-        setLocaleState(nextLocale);
-      });
-
-      settleTimerRef.current = window.setTimeout(() => {
-        setIsTransitioningLocale(false);
-      }, 240);
-    }, 110);
-  };
-
-  useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, locale);
-    document.documentElement.lang = locale;
-    document.title = t.meta.title;
-
-    document.querySelector('meta[name="description"]')?.setAttribute("content", t.meta.description);
-    document.querySelector('meta[property="og:title"]')?.setAttribute("content", t.meta.title);
-    document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", t.meta.title);
-    document.querySelector('meta[property="og:description"]')?.setAttribute("content", t.meta.description);
-    document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", t.meta.description);
-  }, [locale, t.meta.description, t.meta.title]);
-
-  useEffect(() => {
-    return () => {
-      if (changeTimerRef.current) {
-        window.clearTimeout(changeTimerRef.current);
-      }
-
-      if (settleTimerRef.current) {
-        window.clearTimeout(settleTimerRef.current);
-      }
-    };
-  }, []);
-
-  return <I18nContext.Provider value={{ locale, setLocale, isTransitioningLocale, t }}>{children}</I18nContext.Provider>;
-}
-
-export function useI18n() {
-  const context = useContext(I18nContext);
-  if (!context) {
-    throw new Error("useI18n must be used within I18nProvider");
-  }
-
-  return context;
-}
+export const STORAGE_KEY = "nebula-nexus-labs-locale";

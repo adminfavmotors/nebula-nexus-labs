@@ -119,7 +119,7 @@ const Navbar = () => {
               type="button"
               className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/20 bg-white/5 text-[#e8f0ff] md:hidden"
               onClick={() => setMenuOpen((open) => !open)}
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-label={menuOpen ? t.nav.closeMenuLabel : t.nav.openMenuLabel}
             >
               {menuOpen ? <X size={16} /> : <Menu size={16} />}
             </button>

@@ -8,19 +8,6 @@ const ContactForm = () => {
   const { locale, t } = useI18n();
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
-  const statusMessages = {
-    pl: {
-      submitting: "Wysyłamy zgłoszenie...",
-      success: "Dziękujemy. Zgłoszenie zostało wysłane pomyślnie.",
-      error: "Nie udało się wysłać formularza. Spróbuj ponownie za chwilę.",
-    },
-    en: {
-      submitting: "Sending your request...",
-      success: "Thanks. Your request has been sent successfully.",
-      error: "We could not send the form. Please try again in a moment.",
-    },
-  } as const;
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setStatus("submitting");
@@ -102,7 +89,7 @@ const ContactForm = () => {
           />
           <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
           <button type="submit" className="btn-primary w-full sm:w-auto" disabled={status === "submitting"}>
-            {status === "submitting" ? statusMessages[locale].submitting : t.contact.submit}
+            {status === "submitting" ? t.contact.status.submitting : t.contact.submit}
           </button>
           {status !== "idle" ? (
             <p
@@ -112,7 +99,7 @@ const ContactForm = () => {
                 status === "success" ? "text-[#0f7b0f]" : status === "error" ? "text-[#b42318]" : "text-[#4a5568]"
               }`}
             >
-              {statusMessages[locale][status]}
+              {t.contact.status[status]}
             </p>
           ) : null}
         </form>

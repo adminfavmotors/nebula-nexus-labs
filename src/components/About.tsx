@@ -18,11 +18,6 @@ const StatItem = ({ value, suffix, label }: { value: number; suffix: string; lab
 const About = () => {
   const ref = useScrollReveal(0.15);
   const { t } = useI18n();
-  const theses = [
-    { num: "01.", text: "Strona to narzędzie sprzedaży, nie tylko wizytówka." },
-    { num: "02.", text: "Pomagamy rosnąć firmom, które chcą być zauważone." },
-    { num: "03.", text: "Od strategii po wdrożenie, z myślą o Twoim wyniku." },
-  ];
 
   return (
     <section id="about" className="section-light section-spacing pt-4 md:pt-6" ref={ref}>
@@ -32,7 +27,7 @@ const About = () => {
             {t.about.titleStart} <span className="text-primary">{t.about.titleAccent}</span> {t.about.titleEnd}
           </h2>
           <div className="flex flex-col gap-3 self-end">
-            {theses.map((item, i) => (
+            {t.about.theses.map((item, i) => (
               <div key={i} className="reveal-left" data-delay={String(0.15 + i * 0.15)}>
                 <div className="about-thesis-card flex items-start gap-4">
                   <span className="mt-0.5 shrink-0 font-display text-[13px] font-bold tracking-widest text-primary">

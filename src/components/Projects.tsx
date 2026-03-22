@@ -24,6 +24,7 @@ const Projects = () => {
               type="button"
               onClick={() => setOffset((current) => (current - 1 + t.projects.items.length) % t.projects.items.length)}
               className="icon-circle hover:bg-primary/20"
+              aria-label={t.projects.previousLabel}
             >
               <ChevronLeft size={16} className="text-primary" />
             </button>
@@ -31,6 +32,7 @@ const Projects = () => {
               type="button"
               onClick={() => setOffset((current) => (current + 1) % t.projects.items.length)}
               className="icon-circle hover:bg-primary/20"
+              aria-label={t.projects.nextLabel}
             >
               <ChevronRight size={16} className="text-primary" />
             </button>
