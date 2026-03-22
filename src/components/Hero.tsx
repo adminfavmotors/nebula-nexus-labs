@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useI18n } from "@/lib/i18n";
-import heroFrameImage from "../../img/13fee5a7e8394b3260a86ddda7609cdc.jpg";
+import workspaceImage from "../../img/20260322_0944_Image Generation_remix_01kmabdvtae9tapkw5dw8pgt9h.png";
 
 const Hero = () => {
   const [loaded, setLoaded] = useState(false);
@@ -84,42 +84,65 @@ const Hero = () => {
 
         {/* Right — image placeholder */}
         <div
-          className="lg:col-span-2 flex justify-center"
+          className="lg:col-span-2 flex items-center justify-center"
           style={{
             opacity: loaded ? 1 : 0,
             transform: loaded ? "translateY(0) scale(1)" : "translateY(30px) scale(0.95)",
             transition: "all 1s cubic-bezier(0.16,1,0.3,1) 0.8s",
           }}
         >
-          <div className="relative w-full aspect-[4/3]">
-            <div className="glow-orb w-[180px] h-[180px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ opacity: 0.3, filter: "blur(80px)" }} />
+          <div
+            className="relative w-full"
+            style={{
+              maxWidth: "480px",
+              aspectRatio: "4/3",
+              animation: "card-float 6s ease-in-out infinite",
+            }}
+          >
             <div
-              className="relative w-full h-full rounded-2xl overflow-hidden"
               style={{
-                background: "linear-gradient(135deg, #051650, #0a1f6e)",
+                position: "absolute",
+                inset: "-20px",
+                background: "#0059ff",
+                borderRadius: "50%",
+                filter: "blur(60px)",
+                opacity: 0.2,
+                zIndex: 0,
+                animation: "orb-pulse-a 5s ease-in-out infinite",
+              }}
+            />
+
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                height: "100%",
+                borderRadius: "20px",
+                overflow: "hidden",
                 border: "1px solid rgba(0, 89, 255, 0.3)",
-                boxShadow: "0 0 80px rgba(0, 89, 255, 0.5)",
+                boxShadow: "0 0 40px rgba(0, 89, 255, 0.3), 0 0 80px rgba(0, 89, 255, 0.12)",
+                zIndex: 1,
               }}
             >
               <img
-                src={heroFrameImage}
-                alt="Premium desktop workspace"
-                className="absolute inset-0 w-full h-full object-cover scale-110 opacity-35 blur-xl"
-              />
-              <div
-                className="absolute inset-0"
+                src={workspaceImage}
+                alt="Workspace"
                 style={{
-                  background: "linear-gradient(180deg, rgba(5,22,80,0.12) 0%, rgba(5,22,80,0.36) 100%)",
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: "center top",
+                  display: "block",
                 }}
               />
-              <div className="relative z-10 w-full h-full p-4 md:p-5">
-                <img
-                  src={heroFrameImage}
-                  alt="Premium desktop workspace"
-                  className="w-full h-full object-contain rounded-xl"
-                />
-              </div>
-              <span className="absolute bottom-4 left-4 section-label">{t.hero.imageLabel}</span>
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "linear-gradient(135deg, rgba(0,7,45,0.15) 0%, transparent 60%, rgba(0,89,255,0.08) 100%)",
+                  pointerEvents: "none",
+                }}
+              />
             </div>
           </div>
         </div>
