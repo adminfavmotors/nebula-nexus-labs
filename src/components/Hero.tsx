@@ -97,9 +97,13 @@ const Hero = () => {
               maxWidth: "480px",
               aspectRatio: "4/3",
               marginTop: "1rem",
-              animation: "card-float 6s ease-in-out infinite",
+              animation: "card-float 7.5s cubic-bezier(0.37, 0, 0.63, 1) infinite",
               willChange: "transform",
               backfaceVisibility: "hidden",
+              transform: "translateZ(0)",
+              transformStyle: "preserve-3d",
+              contain: "layout paint",
+              isolation: "isolate",
             }}
           >
             <div
