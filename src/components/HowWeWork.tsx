@@ -2,6 +2,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useI18n } from "@/lib/i18n";
 import { Section, SectionHeader } from "@/components/primitives/Section";
 import { SurfaceCard } from "@/components/primitives/SurfaceCard";
+import { ActionLink } from "@/components/primitives/Actions";
 
 const HowWeWork = () => {
   const ref = useScrollReveal(0.12);
@@ -18,9 +19,9 @@ const HowWeWork = () => {
         titleRevealClassName="reveal-element"
         titleDelay="0.05"
         action={
-          <a href="#contact" className="btn-ghost reveal-element px-5 py-2 text-sm" data-delay="0.1">
+          <ActionLink href="#contact" variant="ghost" className="reveal-element px-5 py-2 text-sm" data-delay="0.1">
             {t.howWeWork.link}
-          </a>
+          </ActionLink>
         }
       />
 

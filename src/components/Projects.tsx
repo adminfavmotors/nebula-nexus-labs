@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { Section, SectionHeader } from "@/components/primitives/Section";
 import { SurfaceCard } from "@/components/primitives/SurfaceCard";
+import { IconButton } from "@/components/primitives/Actions";
 
 const Projects = () => {
   const ref = useScrollReveal(0.12);
@@ -24,22 +25,18 @@ const Projects = () => {
             <a href="#contact" className="section-link-light hidden sm:block">
               {t.projects.viewAll}
             </a>
-            <button
-              type="button"
+            <IconButton
               onClick={() => setOffset((current) => (current - 1 + t.projects.items.length) % t.projects.items.length)}
-              className="icon-circle hover:bg-primary/20"
               aria-label={t.projects.previousLabel}
             >
               <ChevronLeft size={16} className="text-primary" />
-            </button>
-            <button
-              type="button"
+            </IconButton>
+            <IconButton
               onClick={() => setOffset((current) => (current + 1) % t.projects.items.length)}
-              className="icon-circle hover:bg-primary/20"
               aria-label={t.projects.nextLabel}
             >
               <ChevronRight size={16} className="text-primary" />
-            </button>
+            </IconButton>
           </div>
         }
       />

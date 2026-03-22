@@ -3,6 +3,7 @@ import { CircleHelp, MessageCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { Section } from "@/components/primitives/Section";
 import { SurfaceCard } from "@/components/primitives/SurfaceCard";
+import { ActionLink } from "@/components/primitives/Actions";
 
 const CTASection = () => {
   const ref = useScrollReveal(0.15);
@@ -19,7 +20,7 @@ const CTASection = () => {
             <p className="section-copy-dark max-w-sm">{t.cta.body}</p>
           </div>
           <div className="mt-8">
-            <a href="#contact" className="btn-primary">{t.cta.button}</a>
+            <ActionLink href="#contact">{t.cta.button}</ActionLink>
           </div>
         </SurfaceCard>
 
@@ -34,12 +35,12 @@ const CTASection = () => {
             </p>
           </div>
           <div className="relative z-10 mt-8 flex gap-4">
-            <a href="#contact" className="cta-action">
+            <ActionLink href="#contact" variant="cta">
               <MessageCircle size={14} /> {t.cta.quickActions.form}
-            </a>
-            <a href="#faq" className="cta-action">
+            </ActionLink>
+            <ActionLink href="#faq" variant="cta">
               <CircleHelp size={14} /> {t.cta.quickActions.faq}
-            </a>
+            </ActionLink>
           </div>
         </div>
       </div>

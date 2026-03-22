@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 export function useCountUp(target: number, duration = 1500) {
   const [count, setCount] = useState(0);
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
 
   useEffect(() => {

@@ -3,6 +3,8 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useI18n } from "@/lib/i18n";
 import { formEndpoint } from "@/lib/site-config";
 import { Section, SectionTitle } from "@/components/primitives/Section";
+import { ActionButton } from "@/components/primitives/Actions";
+import { FormInput, FormTextarea } from "@/components/primitives/FormFields";
 
 const ContactForm = () => {
   const ref = useScrollReveal(0.1);
@@ -51,7 +53,7 @@ const ContactForm = () => {
           <label className="sr-only" htmlFor="contact-name">
             {t.contact.namePlaceholder}
           </label>
-          <input
+          <FormInput
             id="contact-name"
             name="name"
             type="text"
@@ -59,12 +61,11 @@ const ContactForm = () => {
             aria-label={t.contact.namePlaceholder}
             autoComplete="name"
             required
-            className="form-field"
           />
           <label className="sr-only" htmlFor="contact-email">
             {t.contact.emailPlaceholder}
           </label>
-          <input
+          <FormInput
             id="contact-email"
             name="email"
             type="email"
@@ -72,25 +73,23 @@ const ContactForm = () => {
             aria-label={t.contact.emailPlaceholder}
             autoComplete="email"
             required
-            className="form-field"
           />
         </div>
         <label className="sr-only" htmlFor="contact-message">
           {t.contact.messagePlaceholder}
         </label>
-        <textarea
+        <FormTextarea
           id="contact-message"
           name="message"
           placeholder={t.contact.messagePlaceholder}
           aria-label={t.contact.messagePlaceholder}
           rows={5}
           required
-          className="form-field resize-none"
         />
         <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
-        <button type="submit" className="btn-primary w-full sm:w-auto" disabled={status === "submitting"}>
+        <ActionButton type="submit" className="w-full sm:w-auto" disabled={status === "submitting"}>
           {status === "submitting" ? t.contact.status.submitting : t.contact.submit}
-        </button>
+        </ActionButton>
         {status !== "idle" ? (
           <p
             aria-live="polite"

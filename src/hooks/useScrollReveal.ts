@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 export function useScrollReveal(staggerDelay = 0.1) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
