@@ -1,0 +1,45 @@
+name: Deploy SEOHOST
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-seohost-production
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production bundle
+        run: npm run build
+
+      - name: Deploy to SEOHOST over FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: h79.seohost.pl
+          protocol: ftp
+          username: ${{ secrets.SEOHOST_FTP_USERNAME }}
+          password: ${{ secrets.SEOHOST_FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /domains/node48.pl/public_html/
+          dangerous-clean-slate: false
