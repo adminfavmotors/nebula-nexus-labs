@@ -57,7 +57,7 @@ export const legalContent: Record<Locale, LegalContent> = {
       title: "Polityka prywatności",
       intro:
         "Poniżej opisujemy, jakie dane osobowe przetwarzamy w ramach tej strony, w jakich celach, na jakiej podstawie oraz jakie prawa przysługują osobom kontaktującym się z nami.",
-      updatedAt: "22 marca 2026",
+      updatedAt: "23 marca 2026",
       sections: [
         {
           title: "1. Administrator danych",
@@ -71,6 +71,7 @@ export const legalContent: Record<Locale, LegalContent> = {
           paragraphs: [
             "Przetwarzamy dane, które podajesz dobrowolnie w formularzu kontaktowym, w szczególności imię i nazwisko, adres e-mail oraz treść wiadomości.",
             "Technicznie zapisujemy również preferencję języka strony w pamięci przeglądarki, a po próbie wysłania formularza możemy tymczasowo zapisać krótki znacznik antyspamowy ograniczający automatyczne ponowne zgłoszenia.",
+            "Jeżeli korzystasz ze strony z włączonymi skryptami analitycznymi, możemy również otrzymywać zagregowane informacje statystyczne o odsłonach, źródłach ruchu, urządzeniu, przeglądarce i przybliżonej lokalizacji, generowane przez Google Analytics.",
           ],
         },
         {
@@ -78,6 +79,7 @@ export const legalContent: Record<Locale, LegalContent> = {
           paragraphs: [
             "Dane z formularza przetwarzamy przede wszystkim w celu odpowiedzi na Twoją wiadomość, przygotowania wyceny, podjęcia działań przed zawarciem umowy albo prowadzenia dalszej korespondencji biznesowej.",
             "Podstawą prawną przetwarzania jest art. 6 ust. 1 lit. b RODO, gdy kontakt dotyczy usługi lub działań przedumownych podejmowanych na Twoje żądanie, oraz art. 6 ust. 1 lit. f RODO, czyli nasz prawnie uzasadniony interes polegający na obsłudze korespondencji i ochronie przed nadużyciami.",
+            "W zakresie analityki internetowej podstawą przetwarzania jest Twoja zgoda na opcjonalne pliki cookies i technologie pomiarowe, zgodnie z art. 6 ust. 1 lit. a RODO.",
           ],
         },
         {
@@ -85,6 +87,7 @@ export const legalContent: Record<Locale, LegalContent> = {
           paragraphs: [
             "Z danych mogą korzystać nasi dostawcy usług technicznych, hostingowych i pocztowych, wyłącznie w zakresie niezbędnym do działania strony i obsługi kontaktu.",
             "Wiadomości wysyłane przez formularz są technicznie przekazywane przez zewnętrznego operatora FormSubmit, który działa jako narzędzie do obsługi formularzy. Przed uruchomieniem strony produkcyjnie warto potwierdzić aktualne warunki przetwarzania danych i transferów u tego dostawcy.",
+            "Jeżeli korzystamy z Google Analytics, odbiorcą części danych statystycznych może być również Google Ireland Limited oraz podmioty powiązane z Google odpowiedzialne za utrzymanie i rozwój usługi analitycznej.",
           ],
         },
         {
@@ -117,18 +120,18 @@ export const legalContent: Record<Locale, LegalContent> = {
     },
     cookies: {
       metaTitle: "Polityka cookies | NODE48",
-      metaDescription: "Informacje o cookies i pamięci przeglądarki wykorzystywanych przez markę NODE48.",
+      metaDescription: "Informacje o cookies, pamięci przeglądarki i Google Analytics wykorzystywanych przez markę NODE48.",
       title: "Polityka cookies",
       intro:
-        "Ta strona nie korzysta obecnie z marketingowych ani analitycznych cookies. Używamy wyłącznie minimalnych mechanizmów technicznych potrzebnych do działania wybranych funkcji serwisu.",
-      updatedAt: "22 marca 2026",
+        "Ta strona korzysta z niezbędnych mechanizmów technicznych oraz z Google Analytics do analizy ruchu i działania serwisu.",
+      updatedAt: "23 marca 2026",
       sections: [
         {
           title: "1. Czego używa ta strona",
           paragraphs: [
             "Serwis zapisuje preferencję języka w pamięci przeglądarki (localStorage), aby po ponownej wizycie od razu wyświetlić wybraną wersję językową.",
             "Po próbie wysłania formularza kontaktowego strona może tymczasowo zapisać w sessionStorage krótki znacznik antyspamowy ograniczający bardzo szybkie, powtarzalne zgłoszenia wyglądające na automatyczne.",
-            "Nie wykorzystujemy obecnie narzędzi reklamowych, pikseli marketingowych ani analityki, które wymagałyby osobnego banera zgody na opcjonalne cookies.",
+            "Strona korzysta również z Google Analytics 4 (identyfikator pomiaru G-TKM0T56TB3), które może zapisywać analityczne pliki cookies i zbierać informacje statystyczne o korzystaniu z serwisu.",
           ],
           items: [
             "Klucz: node48-locale",
@@ -139,24 +142,34 @@ export const legalContent: Record<Locale, LegalContent> = {
             "Cel: ograniczenie automatycznych, seryjnych wysyłek formularza",
             "Zakres: znacznik czasu ostatniej próby wysłania formularza",
             "Czas działania: sesyjnie, do zamknięcia karty lub wyczyszczenia danych sesji",
+            "Cookie: _ga",
+            "Cel: rozróżnianie użytkowników na potrzeby statystyk Google Analytics",
+            "Zakres: losowy identyfikator klienta",
+            "Czas działania: zwykle do 2 lat",
+            "Cookie: _ga_TKM0T56TB3",
+            "Cel: utrzymanie stanu sesji i atrybucji pomiaru Google Analytics 4",
+            "Zakres: identyfikator sesji i parametry pomiarowe",
+            "Czas działania: zwykle do 2 lat",
           ],
         },
         {
           title: "2. Podstawa korzystania z pamięci przeglądarki",
           paragraphs: [
-            "Takie zapisy służą wyłącznie realizacji funkcji wybranej przez użytkownika oraz podstawowym zabezpieczeniom serwisu przed nadużyciami formularza kontaktowego.",
+            "Niezbędne zapisy służą realizacji funkcji wybranej przez użytkownika oraz podstawowym zabezpieczeniom serwisu przed nadużyciami formularza kontaktowego.",
+            "Analityczne pliki cookies Google Analytics służą mierzeniu ruchu, ocenie skuteczności treści i ulepszaniu serwisu.",
           ],
         },
         {
           title: "3. Zarządzanie ustawieniami",
           paragraphs: [
             "W każdej chwili możesz usunąć zapisane dane strony w ustawieniach przeglądarki albo wyczyścić localStorage i sessionStorage dla tej domeny. Po usunięciu preferencji językowej serwis wróci do domyślnej wersji językowej.",
+            "Możesz także zablokować lub ograniczyć cookies analityczne Google w ustawieniach przeglądarki albo za pomocą narzędzi do blokowania skryptów śledzących.",
           ],
         },
         {
           title: "4. Zmiany w polityce cookies",
           paragraphs: [
-            "Jeżeli w przyszłości wdrożymy opcjonalne narzędzia analityczne lub marketingowe, zaktualizujemy tę politykę i dodamy odpowiedni mechanizm zgody przed ich uruchomieniem.",
+            "Jeżeli zmieni się zakres wykorzystywanych technologii analitycznych lub marketingowych, zaktualizujemy tę politykę i odpowiednio opiszemy nowe narzędzia.",
           ],
         },
       ],
@@ -183,7 +196,7 @@ export const legalContent: Record<Locale, LegalContent> = {
       title: "Privacy Policy",
       intro:
         "Below we explain what personal data we process through this website, why we process it, what legal bases apply and what rights are available to people who contact us.",
-      updatedAt: "March 22, 2026",
+      updatedAt: "March 23, 2026",
       sections: [
         {
           title: "1. Data controller",
@@ -197,6 +210,7 @@ export const legalContent: Record<Locale, LegalContent> = {
           paragraphs: [
             "We process the data you voluntarily provide in the contact form, especially your name, email address and the content of your message.",
             "We also store your language preference in browser storage and may temporarily store a short anti-spam marker after a form attempt to limit automated repeat submissions.",
+            "If you use the website with analytics enabled, we may also receive aggregated statistical information about page views, traffic sources, device type, browser and approximate location generated by Google Analytics.",
           ],
         },
         {
@@ -204,6 +218,7 @@ export const legalContent: Record<Locale, LegalContent> = {
           paragraphs: [
             "We process form data mainly to reply to your message, prepare a quote, take steps before entering into a contract or continue business correspondence with you.",
             "The legal basis is Article 6(1)(b) GDPR when your request concerns a service or pre-contractual steps taken at your request, and Article 6(1)(f) GDPR, our legitimate interest in handling correspondence and protecting against misuse.",
+            "For website analytics, the legal basis is your consent to optional cookies and measurement technologies under Article 6(1)(a) GDPR.",
           ],
         },
         {
@@ -211,6 +226,7 @@ export const legalContent: Record<Locale, LegalContent> = {
           paragraphs: [
             "Your data may be processed by our technical, hosting and email service providers, but only to the extent necessary to operate the website and handle contact requests.",
             "Messages sent through the form are technically routed via FormSubmit, an external form handling tool. Before production use, it is worth confirming that provider's current data processing and transfer terms.",
+            "If Google Analytics is active, some statistical data may also be received by Google Ireland Limited and related Google entities responsible for maintaining and operating the analytics service.",
           ],
         },
         {
@@ -243,18 +259,18 @@ export const legalContent: Record<Locale, LegalContent> = {
     },
     cookies: {
       metaTitle: "Cookie Policy | NODE48",
-      metaDescription: "Information about cookies and browser storage used by the NODE48 brand.",
+      metaDescription: "Information about cookies, browser storage and Google Analytics used by the NODE48 brand.",
       title: "Cookie Policy",
       intro:
-        "This website currently does not use marketing or analytics cookies. We only rely on minimal technical browser storage required for selected site functions.",
-      updatedAt: "March 22, 2026",
+        "This website uses essential technical storage and Google Analytics to measure traffic and understand how the site performs.",
+      updatedAt: "March 23, 2026",
       sections: [
         {
           title: "1. What this website uses",
           paragraphs: [
             "The site stores the chosen language in browser storage (localStorage) so that future visits can open in the preferred language.",
             "After a contact form attempt, the site may temporarily store a short anti-spam marker in sessionStorage to slow down very fast, repetitive submissions that look automated.",
-            "We do not currently use advertising tools, marketing pixels or analytics that would require a separate consent banner for optional cookies.",
+            "The site also uses Google Analytics 4 (measurement ID G-TKM0T56TB3), which may place analytics cookies and collect statistical information about how visitors use the website.",
           ],
           items: [
             "Key: node48-locale",
@@ -265,24 +281,34 @@ export const legalContent: Record<Locale, LegalContent> = {
             "Purpose: limit automated repeat contact-form submissions",
             "Scope: timestamp of the latest form attempt",
             "Duration: session-based, until the tab is closed or session data is cleared",
+            "Cookie: _ga",
+            "Purpose: distinguish users for Google Analytics statistics",
+            "Scope: random client identifier",
+            "Duration: typically up to 2 years",
+            "Cookie: _ga_TKM0T56TB3",
+            "Purpose: maintain Google Analytics 4 session state and attribution",
+            "Scope: session identifier and measurement parameters",
+            "Duration: typically up to 2 years",
           ],
         },
         {
           title: "2. Legal basis for browser storage",
           paragraphs: [
-            "This storage is used only to deliver a function explicitly requested by the user and to provide basic protection against abuse of the contact form.",
+            "Essential storage is used to deliver a function explicitly requested by the user and to provide basic protection against abuse of the contact form.",
+            "Google Analytics cookies are used to measure traffic, understand content performance and improve the website.",
           ],
         },
         {
           title: "3. Managing settings",
           paragraphs: [
             "You can remove stored site data at any time in your browser settings or clear localStorage and sessionStorage for this domain. After removal, the site will return to the default language version.",
+            "You can also block or limit Google analytics cookies in your browser settings or by using tools that block tracking scripts.",
           ],
         },
         {
           title: "4. Future changes",
           paragraphs: [
-            "If we introduce optional analytics or marketing tools in the future, we will update this policy and add an appropriate consent mechanism before they start operating.",
+            "If the scope of analytics or marketing technologies changes in the future, we will update this policy and describe those tools accordingly.",
           ],
         },
       ],
