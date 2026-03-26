@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useI18n, type Locale } from "@/lib/i18n";
-import { siteConfig } from "@/lib/site-config";
 import { cx } from "@/lib/cx";
 import { ActionLink } from "@/components/primitives/Actions";
+import BrandLogo from "@/components/BrandLogo";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -51,21 +51,7 @@ const Navbar = () => {
                 transition: "opacity 0.3s ease",
               }}
             />
-            <a href="#home" className="header-brand">
-              <span className="header-brand-name">{siteConfig.brandName}</span>
-              <span
-                className="header-brand-dot"
-                aria-hidden="true"
-                style={{
-                  textShadow: logoHovered ? "0 0 14px rgba(0,89,255,0.9)" : "none",
-                  transform: logoHovered ? "scale(1.3)" : "scale(1)",
-                  transition: "all 0.3s ease",
-                  display: "inline-block",
-                }}
-              >
-                .
-              </span>
-            </a>
+            <BrandLogo href="/#home" className="header-brand" />
           </div>
 
           <div className="hidden items-center gap-1 lg:flex">

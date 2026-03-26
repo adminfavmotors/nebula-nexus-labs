@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
 import { legalContent } from "@/lib/legal-content";
 import { siteConfig } from "@/lib/site-config";
+import BrandLogo from "@/components/BrandLogo";
 
 const Footer = () => {
   const { locale, t } = useI18n();
@@ -12,10 +13,7 @@ const Footer = () => {
       <div className="container mx-auto px-6">
         <div className="glow-divider mb-10" />
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-          <div className="font-display text-xl tracking-tight text-foreground">
-            {siteConfig.brandName}
-            <span className="text-primary">.</span>
-          </div>
+          <BrandLogo href="/#home" />
           <div className="flex flex-wrap items-center justify-center gap-6">
             {t.nav.links.map((link) => (
               <a

@@ -282,23 +282,23 @@
       0 0 44px rgba(0, 89, 255, 0.12);
   }
 
-  .header-brand {
+  .brand-logo {
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.65rem;
+    gap: 0.82rem;
     min-width: 0;
-    padding: 0.2rem 0.35rem 0.2rem 0.15rem;
+    padding: 0.24rem 0.42rem 0.24rem 0.18rem;
     color: hsl(var(--foreground));
   }
 
-  .header-brand::before {
+  .brand-logo::before {
     content: "";
     position: absolute;
     left: -0.45rem;
     top: 50%;
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 3.15rem;
+    height: 3.15rem;
     border-radius: 999px;
     background: radial-gradient(circle, rgba(0, 89, 255, 0.32) 0%, rgba(0, 89, 255, 0) 72%);
     transform: translateY(-50%);
@@ -307,24 +307,35 @@
     pointer-events: none;
   }
 
-  .header-brand-name {
+  .brand-logo-name {
     position: relative;
     z-index: 1;
     font-family: "Space Grotesk", sans-serif;
-    font-size: 1.15rem;
+    font-size: 1.36rem;
     font-weight: 700;
-    letter-spacing: -0.03em;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     text-wrap: nowrap;
   }
 
-  .header-brand-dot {
+  .brand-logo-dot {
     position: relative;
     z-index: 1;
     font-family: "Space Grotesk", sans-serif;
-    font-size: 1.45rem;
+    font-size: 1.64rem;
     font-weight: 700;
     line-height: 1;
     color: #0059ff;
+  }
+
+  .header-brand .brand-logo-dot {
+    text-shadow: 0 0 14px rgba(0, 89, 255, 0.9);
+    transform: scale(1);
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+  }
+
+  .header-brand:hover .brand-logo-dot {
+    transform: scale(1.3);
   }
 
   .logo-neon-ring {
@@ -824,8 +835,9 @@
     padding-right: 0.85rem;
   }
 
-  .header-brand-name {
-    font-size: 1.02rem;
+  .brand-logo-name {
+    font-size: 1.14rem;
+    letter-spacing: 0.12em;
   }
 
   .hero-visual-wrap {
