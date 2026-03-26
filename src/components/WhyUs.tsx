@@ -21,7 +21,7 @@ const WhyUs = () => {
       <SectionTitle tone="deep" revealClassName="reveal-element" className="mb-10" delay="0.05">
         {t.whyUs.title}
       </SectionTitle>
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
         {items.map((item, i) => (
           <SurfaceCard key={i} className="reveal-element relative p-8" data-delay={String(i * 0.12)}>
             <div className="glow-orb -left-6 -top-6 h-[100px] w-[100px] opacity-25 blur-[60px]" />

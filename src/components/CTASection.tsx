@@ -12,7 +12,7 @@ const CTASection = () => {
   return (
     <Section tone="deep" ref={ref}>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        <SurfaceCard className="reveal-element flex min-h-[280px] flex-col justify-between p-10" data-delay="0">
+        <SurfaceCard className="reveal-element flex min-h-[280px] flex-col justify-between p-6 sm:p-8 lg:p-10" data-delay="0">
           <div>
             <h2 className="mb-4 font-display text-[clamp(24px,3vw,36px)] font-bold text-foreground">
               {t.cta.title}
@@ -24,7 +24,7 @@ const CTASection = () => {
           </div>
         </SurfaceCard>
 
-        <div className="cta-panel reveal-element relative flex min-h-[280px] flex-col justify-between p-10" data-delay="0.15">
+        <div className="cta-panel reveal-element relative flex min-h-[280px] flex-col justify-between p-6 sm:p-8 lg:p-10" data-delay="0.15">
           <div className="glow-orb -right-10 -top-10 h-[200px] w-[200px] bg-white opacity-[0.15] blur-[80px]" />
           <div className="relative z-10">
             <h2 className="mb-4 font-display text-[clamp(24px,3vw,36px)] font-bold text-white">
@@ -34,11 +34,11 @@ const CTASection = () => {
               {t.cta.availabilityBody}
             </p>
           </div>
-          <div className="relative z-10 mt-8 flex gap-4">
-            <ActionLink href="#contact" variant="cta">
+          <div className="relative z-10 mt-8 flex flex-wrap gap-3 sm:gap-4">
+            <ActionLink href="#contact" variant="cta" className="w-full justify-center sm:w-auto">
               <MessageCircle size={14} /> {t.cta.quickActions.form}
             </ActionLink>
-            <ActionLink href="#faq" variant="cta">
+            <ActionLink href="#faq" variant="cta" className="w-full justify-center sm:w-auto">
               <CircleHelp size={14} /> {t.cta.quickActions.faq}
             </ActionLink>
           </div>

@@ -21,7 +21,7 @@ const Projects = () => {
         titleDelay="0.05"
         className="items-center"
         action={
-          <div className="reveal-element flex items-center gap-4" data-delay="0.1">
+          <div className="reveal-element flex flex-wrap items-center gap-3 sm:gap-4" data-delay="0.1">
             <a href="#contact" className="section-link-light hidden sm:block">
               {t.projects.viewAll}
             </a>
@@ -49,9 +49,9 @@ const Projects = () => {
                 {t.projects.imageLabel}
               </span>
             </div>
-            <div className="flex items-center justify-between p-6">
-              <span className="font-body font-semibold">{project.name}</span>
-              <span className="tag-pill">{project.tag}</span>
+            <div className="flex flex-col items-start gap-3 p-6 sm:flex-row sm:items-center sm:justify-between">
+              <span className="min-w-0 font-body font-semibold leading-snug">{project.name}</span>
+              <span className="tag-pill shrink-0">{project.tag}</span>
             </div>
           </SurfaceCard>
         ))}

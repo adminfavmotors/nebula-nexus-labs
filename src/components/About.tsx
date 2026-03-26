@@ -6,7 +6,7 @@ import { Section, SectionTitle } from "@/components/primitives/Section";
 const StatItem = ({ value, suffix, label }: { value: number; suffix: string; label: string }) => {
   const { count, ref } = useCountUp(value);
   return (
-    <div className="text-center">
+    <div className="max-w-[15rem] text-center">
       <span ref={ref} className="font-display text-[clamp(36px,5vw,64px)] tracking-tight font-bold text-[#0a0a0a]">
         {count}
         <span className="text-primary">{suffix}</span>
@@ -26,21 +26,21 @@ const About = () => {
         <SectionTitle
           tone="light"
           revealClassName="reveal-element"
-          className="max-w-[14.5ch] text-[clamp(22px,3vw,32px)] leading-[1.03] tracking-[-0.045em]"
+          className="max-w-[17ch] text-[clamp(22px,3vw,32px)] leading-[1.03] tracking-[-0.045em] sm:max-w-[15.5ch] lg:max-w-[14.5ch]"
           style={{ wordBreak: "keep-all", overflowWrap: "normal" }}
           delay="0.05"
         >
-          <span className="block md:whitespace-nowrap">{t.about.titleLine1}</span>
+          <span className="block lg:whitespace-nowrap">{t.about.titleLine1}</span>
           <br />
-          <span className="block md:whitespace-nowrap">
+          <span className="block lg:whitespace-nowrap">
             <span>{t.about.titleLine2start}</span>
             <span className="text-[#0059ff]">{t.about.titleLine2accent}</span>
             <span>{t.about.titleLine2end}</span>
           </span>
           <br />
-          <span className="block md:whitespace-nowrap">{t.about.titleLine3}</span>
+          <span className="block lg:whitespace-nowrap">{t.about.titleLine3}</span>
         </SectionTitle>
-        <div className="flex w-full max-w-[50rem] flex-col gap-4 self-center lg:justify-self-end">
+        <div className="flex w-full flex-col gap-4 self-center lg:max-w-[50rem] lg:justify-self-end">
           {t.about.theses.map((item, i) => (
             <div key={i} className="reveal-left" data-delay={String(0.15 + i * 0.15)}>
               <div className="about-thesis-card flex items-start gap-4">
