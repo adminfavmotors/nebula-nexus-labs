@@ -11,12 +11,12 @@ const FAQ = () => {
 
   return (
     <Section id="faq" tone="light" ref={ref}>
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-10 md:gap-12 lg:grid-cols-2">
         <div className="reveal-element" data-delay="0">
-          <SectionTitle tone="light" className="mb-6">
+          <SectionTitle tone="light" className="mb-5 md:mb-6">
             {t.faq.title}
           </SectionTitle>
-          <div className="space-y-2 font-body text-sm font-light text-[#4a5568]">
+          <div className="space-y-3 font-body text-sm font-light text-[#4a5568]">
             <p>{t.faq.email}</p>
             <p>{t.faq.phone}</p>
           </div>
@@ -31,7 +31,7 @@ const FAQ = () => {
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? -1 : i)}
-                  className="group flex w-full items-center justify-between py-5 text-left"
+                  className="group flex w-full items-center justify-between py-6 text-left"
                 >
                   <span className={`font-body text-[15px] font-semibold transition-colors duration-300 ${isOpen ? "text-primary" : "text-[#0a0a0a]"}`}>
                     {item.question}
@@ -43,7 +43,7 @@ const FAQ = () => {
                 </button>
                 <div className={`grid overflow-hidden transition-all duration-300 ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
                   <div className="min-h-0">
-                    <p className="pb-5 font-body text-sm font-light leading-relaxed text-[#4a5568]">
+                    <p className="pb-6 font-body text-sm font-light leading-relaxed text-[#4a5568]">
                       {item.answer}
                     </p>
                   </div>

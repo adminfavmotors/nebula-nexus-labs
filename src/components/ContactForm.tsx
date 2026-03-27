@@ -105,17 +105,17 @@ const ContactForm = () => {
 
   return (
     <Section id="contact" tone="light" ref={ref} containerClassName="max-w-2xl">
-      <SectionTitle tone="light" revealClassName="reveal-element" className="mb-10 text-center" delay="0.05">
+      <SectionTitle tone="light" revealClassName="reveal-element" className="mb-12 text-center md:mb-14" delay="0.05">
         {t.contact.title}
       </SectionTitle>
       <form
-        className="reveal-element space-y-5"
+        className="reveal-element space-y-6"
         data-delay="0.15"
         onSubmit={handleSubmit}
         onChangeCapture={() => setHasInteracted(true)}
         aria-busy={status === "submitting"}
       >
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <label className="sr-only" htmlFor="contact-name">
             {t.contact.namePlaceholder}
           </label>

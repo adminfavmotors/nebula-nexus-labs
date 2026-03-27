@@ -21,8 +21,8 @@ const About = () => {
   const { t } = useI18n();
 
   return (
-    <Section id="about" tone="light" className="pt-4 md:pt-6" ref={ref}>
-      <div className="mb-16 grid grid-cols-1 items-center gap-10 md:gap-12 lg:grid-cols-[minmax(0,1.06fr)_minmax(0,0.94fr)] lg:gap-16">
+    <Section id="about" tone="light" ref={ref}>
+      <div className="mb-12 grid grid-cols-1 items-center gap-8 md:mb-14 md:gap-10 lg:grid-cols-[minmax(0,1.06fr)_minmax(0,0.94fr)] lg:gap-12">
         <SectionTitle
           tone="light"
           revealClassName="reveal-element"
@@ -56,11 +56,11 @@ const About = () => {
         </div>
       </div>
 
-      <div className="reveal-element flex flex-col items-center justify-center gap-12 md:flex-row md:gap-0" data-delay="0.3">
+      <div className="reveal-element flex flex-col items-center justify-center gap-8 md:gap-0" data-delay="0.3">
         <StatItem {...t.about.stats[0]} />
-        <div className="mx-12 hidden h-16 w-px bg-[linear-gradient(180deg,transparent,#c4d0e8,transparent)] md:block" />
+        <div className="mx-10 hidden h-16 w-px bg-[linear-gradient(180deg,transparent,#c4d0e8,transparent)] lg:mx-12 md:block" />
         <StatItem {...t.about.stats[1]} />
-        <div className="mx-12 hidden h-16 w-px bg-[linear-gradient(180deg,transparent,#c4d0e8,transparent)] md:block" />
+        <div className="mx-10 hidden h-16 w-px bg-[linear-gradient(180deg,transparent,#c4d0e8,transparent)] lg:mx-12 md:block" />
         <StatItem {...t.about.stats[2]} />
       </div>
     </Section>

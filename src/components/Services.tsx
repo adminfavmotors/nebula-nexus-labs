@@ -9,7 +9,7 @@ const Services = () => {
 
   return (
     <Section id="services" tone="light" ref={ref}>
-      <SectionTitle tone="light" revealClassName="reveal-element" className="mb-10" delay="0.05">
+      <SectionTitle tone="light" revealClassName="reveal-element" className="mb-12 md:mb-14" delay="0.05">
         {t.services.title}
       </SectionTitle>
 
@@ -18,7 +18,7 @@ const Services = () => {
           <div key={i}>
             <div className="section-divider" />
             <div
-              className="reveal-left group -mx-4 flex flex-wrap items-start gap-4 rounded-xl px-4 py-5 transition-colors duration-300 hover:bg-primary/[0.04] sm:flex-nowrap sm:items-center sm:gap-5"
+              className="reveal-left group -mx-3 flex flex-wrap items-start gap-4 rounded-xl px-3 py-6 transition-colors duration-300 hover:bg-primary/[0.04] sm:-mx-4 sm:flex-nowrap sm:items-center sm:gap-5 sm:px-4"
               data-delay={String(i * 0.07)}
             >
               <span className="min-w-7 font-body text-[13px] font-semibold text-[#2979ff]">{service.num}</span>

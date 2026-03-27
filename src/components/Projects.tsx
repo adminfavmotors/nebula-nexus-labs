@@ -41,7 +41,7 @@ const Projects = () => {
         }
       />
 
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {visibleItems.map((project, i) => (
           <SurfaceCard key={`${project.name}-${i}`} className="reveal-element group cursor-pointer" data-delay={String(i * 0.12)}>
             <div className="project-preview-surface">
@@ -49,7 +49,7 @@ const Projects = () => {
                 {t.projects.imageLabel}
               </span>
             </div>
-            <div className="flex flex-col items-start gap-3 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col items-start gap-3 p-7 sm:flex-row sm:items-center sm:justify-between sm:p-8">
               <span className="min-w-0 font-body font-semibold leading-snug">{project.name}</span>
               <span className="tag-pill shrink-0">{project.tag}</span>
             </div>

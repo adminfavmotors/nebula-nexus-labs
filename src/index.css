@@ -11,6 +11,7 @@
 @layer base {
   :root {
     --site-shell-max: 66rem;
+    --section-space-y: clamp(3.75rem, 7vw, 5.5rem);
     --background: 225 100% 9%;
     --foreground: 216 100% 95%;
 
@@ -86,7 +87,7 @@
   }
 
   .section-spacing {
-    padding-block: 2rem;
+    padding-block: var(--section-space-y);
   }
 
   .section-light {
@@ -833,10 +834,6 @@
 @media (min-width: 768px) {
   .site-shell {
     width: calc(100% - 4rem);
-  }
-
-  .section-spacing {
-    padding-block: 2.5rem;
   }
 }
 
