@@ -3,10 +3,10 @@ import { useCountUp } from "@/hooks/useCountUp";
 import { useI18n } from "@/lib/i18n";
 import { Section, SectionTitle } from "@/components/primitives/Section";
 
-const StatItem = ({ value, suffix, label }: { value: number; suffix: string; label: string }) => {
+const StatItem = ({ value, suffix, label, className = "" }: { value: number; suffix: string; label: string; className?: string }) => {
   const { count, ref } = useCountUp(value);
   return (
-    <div className="max-w-[15rem] text-center">
+    <div className={`metric-cell text-center ${className}`}>
       <span ref={ref} className="font-display text-[clamp(36px,5vw,64px)] tracking-tight font-bold text-[#0a0a0a]">
         {count}
         <span className="text-primary">{suffix}</span>
@@ -51,12 +51,12 @@ const About = () => {
         </div>
       </div>
 
-      <div className="reveal-element flex flex-col items-center justify-center gap-8 md:gap-0" data-delay="0.3">
-        <StatItem {...t.about.stats[0]} />
-        <div className="mx-10 hidden h-16 w-px bg-[linear-gradient(180deg,transparent,#c4d0e8,transparent)] lg:mx-12 md:block" />
-        <StatItem {...t.about.stats[1]} />
-        <div className="mx-10 hidden h-16 w-px bg-[linear-gradient(180deg,transparent,#c4d0e8,transparent)] lg:mx-12 md:block" />
-        <StatItem {...t.about.stats[2]} />
+      <div className="metrics-band reveal-element" data-delay="0.3">
+        <div className="grid grid-cols-1 divide-y divide-[#dbe6fb] md:grid-cols-3 md:divide-x md:divide-y-0">
+          <StatItem {...t.about.stats[0]} className="mx-auto max-w-[15rem]" />
+          <StatItem {...t.about.stats[1]} className="mx-auto max-w-[15rem]" />
+          <StatItem {...t.about.stats[2]} className="mx-auto max-w-[15rem]" />
+        </div>
       </div>
     </Section>
   );

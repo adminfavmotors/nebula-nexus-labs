@@ -54,14 +54,14 @@ const Projects = () => {
             )}
             data-delay={String(i * 0.12)}
           >
-            <div className={cx("project-preview-surface", i === 0 ? "min-h-[18rem] sm:min-h-[20rem] lg:min-h-full" : "min-h-[14rem]")}>
+            <div className={cx("project-preview-surface", i === 0 ? "min-h-[16rem] sm:min-h-[18rem] lg:min-h-full" : "min-h-[13rem]")}>
               <span className="absolute bottom-3 left-4 font-body text-[11px] font-medium uppercase tracking-[0.15em] text-[#7a9acc]">
                 {t.projects.imageLabel}
               </span>
             </div>
             <div
               className={cx(
-                "flex flex-col items-start gap-3 p-7 sm:p-8",
+                "flex flex-col items-start gap-3 p-6 sm:p-7",
                 i === 0 ? "justify-between border-t border-[#e6ecfa] bg-[#f8fbff] lg:border-l lg:border-t-0" : "justify-end",
               )}
             >

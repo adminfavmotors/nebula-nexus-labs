@@ -13,12 +13,15 @@ const FAQ = () => {
     <Section id="faq" tone="light" ref={ref}>
       <div className="grid grid-cols-1 gap-10 md:gap-12 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
         <div className="reveal-element lg:max-w-[22rem]" data-delay="0">
-          <SectionTitle tone="light" className="mb-5 max-w-[15ch] md:mb-6 md:max-w-[16ch]">
-            {t.faq.title}
-          </SectionTitle>
-          <div className="section-copy-light measure-copy space-y-3">
-            <p>{t.faq.email}</p>
-            <p>{t.faq.phone}</p>
+          <div className="faq-aside-panel">
+            <SectionTitle tone="light" className="mb-5 max-w-[15ch] md:mb-6 md:max-w-[16ch]">
+              {t.faq.title}
+            </SectionTitle>
+            <div className="section-copy-light measure-copy space-y-3">
+              <p>{t.faq.email}</p>
+              <p>{t.faq.phone}</p>
+            </div>
+            <div className="faq-divider mt-6" />
           </div>
         </div>
 

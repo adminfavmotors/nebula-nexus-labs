@@ -22,12 +22,12 @@ const WhyUs = () => {
       <SectionTitle tone="deep" revealClassName="reveal-element" className="mb-12 max-w-[18ch] md:mb-14 md:max-w-[19ch]" delay="0.05">
         {t.whyUs.title}
       </SectionTitle>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:auto-rows-[minmax(16rem,auto)] xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:auto-rows-[minmax(14rem,auto)] xl:grid-cols-3">
         {items.map((item, i) => (
           <SurfaceCard
             key={i}
             className={cx(
-              "reveal-element relative p-7 sm:p-8",
+              "reveal-element relative p-6 sm:p-7",
               i === 0 && "benefit-spotlight md:col-span-2 xl:col-span-2 xl:grid xl:grid-cols-[minmax(0,1.1fr)_minmax(13rem,0.9fr)] xl:items-end",
             )}
             data-delay={String(i * 0.12)}

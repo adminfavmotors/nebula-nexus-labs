@@ -27,21 +27,21 @@ const HowWeWork = () => {
         }
       />
 
-      <div className="grid grid-cols-1 gap-6 md:auto-rows-[minmax(14rem,auto)] md:grid-cols-2 xl:gap-7">
+      <div className="grid grid-cols-1 gap-6 md:auto-rows-[minmax(13rem,auto)] md:grid-cols-2 xl:gap-7">
         {t.howWeWork.steps.map((step, i) => (
           <SurfaceCard
             key={i}
             className={cx(
-              "process-card reveal-element relative p-7 sm:p-8",
-              i === 0 && "process-card-emphasis md:row-span-2 md:min-h-[31rem]",
-              i === 1 && "md:mt-10",
+              "process-card reveal-element relative p-6 sm:p-7",
+              i === 0 && "process-card-emphasis md:row-span-2 md:min-h-[27rem]",
+              i === 1 && "md:mt-6",
               i === 2 && "process-card-outline",
-              i === 3 && "md:-mt-10",
+              i === 3 && "md:-mt-6",
             )}
             data-delay={String(i * 0.12)}
           >
             <div className="glow-orb -right-4 -top-4 h-[100px] w-[100px] opacity-25 blur-[60px]" />
-            <span className="font-display text-[80px] font-bold leading-none text-white/90">{step.num}</span>
+            <span className="font-display text-[72px] font-bold leading-none text-white/90">{step.num}</span>
             <h3 className="heading-balance measure-tight mb-2 mt-4 font-body font-semibold text-foreground">{step.title}</h3>
             <p className="section-copy-dark copy-pretty measure-card">{step.desc}</p>
           </SurfaceCard>
