@@ -222,16 +222,22 @@
     gap: 1.1rem;
   }
 
+  .service-page-hero-content > .hero-badge,
+  .service-page-hero-content > .tag-pill,
+  .service-page-hero-content > div {
+    align-self: flex-start;
+  }
+
   .service-page-summary-card {
     width: 100%;
   }
 
   .service-page-hero-title {
-    max-width: 14ch;
+    max-width: 16ch;
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(2.45rem, 4.25vw, 4.6rem);
+    font-size: clamp(2.3rem, 3.65vw, 4.1rem);
     font-weight: 700;
-    line-height: 1.07;
+    line-height: 1.04;
     letter-spacing: -0.035em;
     text-wrap: balance;
   }
@@ -262,7 +268,7 @@
   }
 
   .service-page-copy {
-    max-width: 58ch;
+    max-width: 60ch;
     font-size: 1rem;
     line-height: 1.72;
   }
@@ -328,6 +334,10 @@
     letter-spacing: 0.18em;
     line-height: 1;
     text-transform: uppercase;
+  }
+
+  .service-page-step-card .service-page-card-copy {
+    max-width: 44ch;
   }
 
   .section-link-light {
@@ -1103,6 +1113,7 @@
   }
 
   .service-page-hero-shell {
+    grid-template-columns: minmax(0, 1.08fr) minmax(24rem, 0.92fr);
     gap: 3.5rem;
   }
 }
@@ -1151,7 +1162,7 @@
   }
 
   .service-page-hero-title {
-    max-width: 13ch;
+    max-width: 15ch;
   }
 }
 
@@ -1193,7 +1204,7 @@
   }
 
   .service-page-hero-title {
-    max-width: 12.5ch;
+    max-width: 15.5ch;
   }
 }
 

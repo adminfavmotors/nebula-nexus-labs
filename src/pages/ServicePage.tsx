@@ -70,11 +70,11 @@ const ServicePage = () => {
           <div className="site-shell hero-layout service-page-hero-shell">
             <div className="service-page-hero-content">
               <div className="flex flex-wrap items-center gap-3 text-white/72">
-                <Link to="/" className="font-body text-sm hover:text-white">
+                <Link to="/" className="font-body text-sm text-white/72 hover:text-white">
                   NODE48
                 </Link>
-                <span>/</span>
-                <a href="/#services" className="font-body text-sm hover:text-white">
+                <span className="text-white/45">/</span>
+                <a href="/#services" className="font-body text-sm text-white/72 hover:text-white">
                   {ui.secondaryCta}
                 </a>
               </div>
@@ -120,15 +120,12 @@ const ServicePage = () => {
         </section>
 
         <Section tone="light" className="service-page-section">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:gap-10">
-            <div className="space-y-4">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.9fr)] lg:gap-10">
+            <div className="space-y-5">
               <p className="font-body text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-primary">
                 {copy.audienceBadge}
               </p>
               <h2 className="service-page-section-title text-[#0a0a0a]">{detail.audienceTitle}</h2>
-            </div>
-
-            <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,0.98fr)_minmax(18rem,0.9fr)]">
               <div className="service-page-prose">
                 {detail.audienceIntro.map((paragraph) => (
                   <p key={paragraph} className="section-copy-light copy-pretty service-page-copy">
@@ -136,18 +133,18 @@ const ServicePage = () => {
                   </p>
                 ))}
               </div>
-
-              <SurfaceCard className="p-6 sm:p-7">
-                <ul className="service-page-list">
-                  {detail.audienceBullets.map((item) => (
-                    <li key={item} className="service-page-list-item section-copy-light service-page-card-copy">
-                      <span className="service-page-list-dot" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </SurfaceCard>
             </div>
+
+            <SurfaceCard className="self-start p-6 sm:p-7">
+              <ul className="service-page-list">
+                {detail.audienceBullets.map((item) => (
+                  <li key={item} className="service-page-list-item section-copy-light service-page-card-copy">
+                    <span className="service-page-list-dot" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </SurfaceCard>
           </div>
         </Section>
 
@@ -177,8 +174,8 @@ const ServicePage = () => {
         </Section>
 
         <Section tone="light" className="service-page-section">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-10">
-            <div className="space-y-4">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-10">
+            <div className="space-y-5">
               <p className="font-body text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-primary">
                 {copy.processBadge}
               </p>
@@ -200,9 +197,9 @@ const ServicePage = () => {
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
               {detail.processSteps.map((step, index) => (
-                <SurfaceCard key={step.title} className="service-page-step-card p-6 sm:p-7">
+                <SurfaceCard key={step.title} className="service-page-step-card p-5 sm:p-6">
                   <div className="service-page-step-grid">
                     <span className="service-page-step-number">{String(index + 1).padStart(2, "0")}.</span>
                     <div className="space-y-3">
