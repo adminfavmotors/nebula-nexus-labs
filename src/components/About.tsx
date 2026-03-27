@@ -26,19 +26,14 @@ const About = () => {
         <SectionTitle
           tone="light"
           revealClassName="reveal-element"
-          className="max-w-[17ch] text-[clamp(22px,3vw,32px)] leading-[1.03] tracking-[-0.045em] sm:max-w-[15.5ch] lg:max-w-[14.5ch]"
-          style={{ wordBreak: "keep-all", overflowWrap: "normal" }}
+          className="max-w-[19ch] text-[clamp(22px,3vw,32px)] leading-[1.06] tracking-[-0.045em] sm:max-w-[18ch] lg:max-w-[16.5ch]"
           delay="0.05"
         >
-          <span className="block lg:whitespace-nowrap">{t.about.titleLine1}</span>
-          <br />
-          <span className="block lg:whitespace-nowrap">
-            <span>{t.about.titleLine2start}</span>
-            <span className="text-[#0059ff]">{t.about.titleLine2accent}</span>
-            <span>{t.about.titleLine2end}</span>
-          </span>
-          <br />
-          <span className="block lg:whitespace-nowrap">{t.about.titleLine3}</span>
+          <span>{t.about.titleLine1} </span>
+          <span>{t.about.titleLine2start}</span>
+          <span className="inline-block text-[#0059ff]">{t.about.titleLine2accent}</span>
+          <span>{t.about.titleLine2end} </span>
+          <span>{t.about.titleLine3}</span>
         </SectionTitle>
         <div className="flex w-full flex-col gap-4 self-center lg:max-w-[50rem] lg:justify-self-end">
           {t.about.theses.map((item, i) => (
@@ -47,7 +42,7 @@ const About = () => {
                 <span className="mt-0.5 shrink-0 font-display text-[13px] font-bold tracking-widest text-primary">
                   {item.num}
                 </span>
-                <span className="section-copy-dark text-[0.94rem] font-medium text-[#e8f0ff]">
+                <span className="section-copy-dark copy-pretty text-[0.94rem] font-medium text-[#e8f0ff]">
                   {item.text}
                 </span>
               </div>

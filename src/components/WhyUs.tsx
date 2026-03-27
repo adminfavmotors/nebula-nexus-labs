@@ -18,7 +18,7 @@ const WhyUs = () => {
       <div className="glow-orb right-[15%] top-0 h-[300px] w-[300px] opacity-20 blur-[120px]" />
       <div className="glow-orb glow-orb-b bottom-0 left-[10%] h-[200px] w-[200px] opacity-20 blur-[100px]" />
 
-      <SectionTitle tone="deep" revealClassName="reveal-element" className="mb-12 md:mb-14" delay="0.05">
+      <SectionTitle tone="deep" revealClassName="reveal-element" className="mb-12 max-w-[18ch] md:mb-14 md:max-w-[19ch]" delay="0.05">
         {t.whyUs.title}
       </SectionTitle>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -28,8 +28,8 @@ const WhyUs = () => {
             <div className="icon-circle mb-5">
               <item.icon size={20} className="text-primary" />
             </div>
-            <h3 className="mb-2 font-body font-semibold text-foreground">{item.title}</h3>
-            <p className="section-copy-dark">{item.desc}</p>
+            <h3 className="heading-balance mb-2 max-w-[16ch] font-body font-semibold text-foreground">{item.title}</h3>
+            <p className="section-copy-dark copy-pretty">{item.desc}</p>
           </SurfaceCard>
         ))}
       </div>

@@ -16,6 +16,7 @@ const HowWeWork = () => {
       <SectionHeader
         tone="deep"
         title={t.howWeWork.title}
+        titleClassName="max-w-[18ch] md:max-w-[20ch]"
         titleRevealClassName="reveal-element"
         titleDelay="0.05"
         action={
@@ -30,8 +31,8 @@ const HowWeWork = () => {
           <SurfaceCard key={i} className="reveal-element relative p-7 sm:p-8" data-delay={String(i * 0.12)}>
             <div className="glow-orb -right-4 -top-4 h-[100px] w-[100px] opacity-25 blur-[60px]" />
             <span className="font-display text-[80px] font-bold leading-none text-white/90">{step.num}</span>
-            <h3 className="mb-2 mt-4 font-body font-semibold text-foreground">{step.title}</h3>
-            <p className="section-copy-dark">{step.desc}</p>
+            <h3 className="heading-balance mb-2 mt-4 max-w-[16ch] font-body font-semibold text-foreground">{step.title}</h3>
+            <p className="section-copy-dark copy-pretty">{step.desc}</p>
           </SurfaceCard>
         ))}
       </div>

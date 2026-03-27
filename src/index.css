@@ -139,6 +139,14 @@
     line-height: 1.75;
   }
 
+  .heading-balance {
+    text-wrap: balance;
+  }
+
+  .copy-pretty {
+    text-wrap: pretty;
+  }
+
   .section-link-light {
     color: #0059ff;
     font-family: "DM Sans", sans-serif;

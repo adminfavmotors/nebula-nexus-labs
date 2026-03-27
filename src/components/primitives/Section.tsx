@@ -33,7 +33,7 @@ type SectionTitleProps = ComponentPropsWithoutRef<"h2"> & {
 export function SectionTitle({ tone, className, revealClassName, delay, children, ...props }: SectionTitleProps) {
   return (
     <h2
-      className={cx(tone === "light" ? "section-title-light" : "section-title-dark", revealClassName, className)}
+      className={cx("heading-balance", tone === "light" ? "section-title-light" : "section-title-dark", revealClassName, className)}
       data-delay={delay}
       {...props}
     >

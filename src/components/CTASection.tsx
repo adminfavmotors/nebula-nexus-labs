@@ -14,10 +14,10 @@ const CTASection = () => {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <SurfaceCard className="reveal-element flex min-h-[280px] flex-col justify-between p-7 sm:p-8 lg:p-9" data-delay="0">
           <div>
-            <h2 className="mb-4 font-display text-[clamp(24px,3vw,36px)] font-bold text-foreground">
+            <h2 className="heading-balance mb-4 max-w-[14ch] font-display text-[clamp(24px,3vw,36px)] font-bold text-foreground sm:max-w-[15ch]">
               {t.cta.title}
             </h2>
-            <p className="section-copy-dark max-w-sm">{t.cta.body}</p>
+            <p className="section-copy-dark copy-pretty max-w-sm">{t.cta.body}</p>
           </div>
           <div className="mt-7">
             <ActionLink href="#contact">{t.cta.button}</ActionLink>
@@ -27,10 +27,10 @@ const CTASection = () => {
         <div className="cta-panel reveal-element relative flex min-h-[280px] flex-col justify-between p-7 sm:p-8 lg:p-9" data-delay="0.15">
           <div className="glow-orb -right-10 -top-10 h-[200px] w-[200px] bg-white opacity-[0.15] blur-[80px]" />
           <div className="relative z-10">
-            <h2 className="mb-4 font-display text-[clamp(24px,3vw,36px)] font-bold text-white">
+            <h2 className="heading-balance mb-4 max-w-[13ch] font-display text-[clamp(24px,3vw,36px)] font-bold text-white sm:max-w-[14ch]">
               {t.cta.availabilityTitle}
             </h2>
-            <p className="section-copy-accent max-w-sm">
+            <p className="section-copy-accent copy-pretty max-w-sm">
               {t.cta.availabilityBody}
             </p>
           </div>

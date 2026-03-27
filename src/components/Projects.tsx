@@ -50,7 +50,9 @@ const Projects = () => {
               </span>
             </div>
             <div className="flex flex-col items-start gap-3 p-7 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-              <span className="min-w-0 font-body font-semibold leading-snug">{project.name}</span>
+              <span className="heading-balance min-w-0 max-w-[22ch] font-body font-semibold leading-snug sm:max-w-[17ch] lg:max-w-[18ch]">
+                {project.name}
+              </span>
               <span className="tag-pill shrink-0">{project.tag}</span>
             </div>
           </SurfaceCard>

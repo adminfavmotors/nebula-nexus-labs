@@ -13,7 +13,7 @@ const FAQ = () => {
     <Section id="faq" tone="light" ref={ref}>
       <div className="grid grid-cols-1 gap-10 md:gap-12 lg:grid-cols-2">
         <div className="reveal-element" data-delay="0">
-          <SectionTitle tone="light" className="mb-5 md:mb-6">
+          <SectionTitle tone="light" className="mb-5 max-w-[15ch] md:mb-6 md:max-w-[16ch]">
             {t.faq.title}
           </SectionTitle>
           <div className="section-copy-light space-y-3">
@@ -33,7 +33,7 @@ const FAQ = () => {
                   onClick={() => setOpen(isOpen ? -1 : i)}
                   className="group flex w-full items-center justify-between py-6 text-left"
                 >
-                  <span className={`font-body text-[15px] font-semibold transition-colors duration-300 ${isOpen ? "text-primary" : "text-[#0a0a0a]"}`}>
+                  <span className={`heading-balance max-w-[32ch] pr-3 font-body text-[15px] font-semibold transition-colors duration-300 ${isOpen ? "text-primary" : "text-[#0a0a0a]"}`}>
                     {item.question}
                   </span>
                   <ChevronDown
@@ -43,7 +43,7 @@ const FAQ = () => {
                 </button>
                 <div className={`grid overflow-hidden transition-all duration-300 ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
                   <div className="min-h-0">
-                    <p className="section-copy-light pb-6">
+                    <p className="section-copy-light copy-pretty pb-6">
                       {item.answer}
                     </p>
                   </div>
