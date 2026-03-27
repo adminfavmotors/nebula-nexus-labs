@@ -1,5 +1,6 @@
 export const siteConfig = {
   brandName: "NODE48",
+  siteUrl: "https://node48.pl",
   dataControllerName: "Yury Luzhkouski",
   businessPhone: "+48 788 554 887",
   currentYear: 2026,

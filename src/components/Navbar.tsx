@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useI18n, type Locale } from "@/lib/i18n";
 import { cx } from "@/lib/cx";
@@ -10,8 +11,13 @@ const Navbar = () => {
   const [visible, setVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [logoHovered, setLogoHovered] = useState(false);
+  const location = useLocation();
   const { locale, setLocale, isTransitioningLocale, t } = useI18n();
   const closeMenu = () => setMenuOpen(false);
+  const isHomePage = location.pathname === "/";
+  const hasLocalContact = isHomePage || location.pathname.startsWith("/uslugi/");
+  const resolveSectionHref = (href: string) => (isHomePage ? href : `/${href}`);
+  const contactHref = hasLocalContact ? "#contact" : "/#contact";
 
   useEffect(() => {
     setVisible(true);
@@ -51,14 +57,14 @@ const Navbar = () => {
                 transition: "opacity 0.3s ease",
               }}
             />
-            <BrandLogo href="/#home" className="header-brand" />
+            <BrandLogo href={isHomePage ? "#home" : "/#home"} className="header-brand" />
           </div>
 
           <div className="hidden items-center gap-1 lg:flex">
             {t.nav.links.map((link) => (
               <a
                 key={link.href}
-                href={link.href}
+                href={resolveSectionHref(link.href)}
                 className="header-nav-link"
               >
                 {link.label}
@@ -89,7 +95,7 @@ const Navbar = () => {
               })}
             </div>
 
-            <ActionLink href="#contact" className="header-cta hidden md:inline-flex">
+            <ActionLink href={contactHref} className="header-cta hidden md:inline-flex">
               {t.nav.cta}
             </ActionLink>
 
@@ -116,7 +122,7 @@ const Navbar = () => {
           {t.nav.links.map((link) => (
             <a
               key={link.href}
-              href={link.href}
+              href={resolveSectionHref(link.href)}
               onClick={closeMenu}
               className={`header-mobile-link ${
                 menuOpen ? "translate-x-0 opacity-100" : "-translate-x-6 opacity-0"
@@ -127,7 +133,7 @@ const Navbar = () => {
           ))}
 
           <ActionLink
-            href="#contact"
+            href={contactHref}
             onClick={closeMenu}
             className={`mt-8 inline-flex w-full justify-center py-3.5 text-[15px] transition-all duration-300 ${
               menuOpen ? "translate-x-0 opacity-100" : "-translate-x-6 opacity-0"

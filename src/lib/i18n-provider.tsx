@@ -41,14 +41,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, locale);
     document.documentElement.lang = locale;
-    document.title = t.meta.title;
-
-    document.querySelector('meta[name="description"]')?.setAttribute("content", t.meta.description);
-    document.querySelector('meta[property="og:title"]')?.setAttribute("content", t.meta.title);
-    document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", t.meta.title);
-    document.querySelector('meta[property="og:description"]')?.setAttribute("content", t.meta.description);
-    document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", t.meta.description);
-  }, [locale, t.meta.description, t.meta.title]);
+  }, [locale]);
 
   useEffect(() => {
     return () => {
