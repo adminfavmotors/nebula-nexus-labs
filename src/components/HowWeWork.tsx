@@ -3,6 +3,7 @@ import { useI18n } from "@/lib/i18n";
 import { Section, SectionHeader } from "@/components/primitives/Section";
 import { SurfaceCard } from "@/components/primitives/SurfaceCard";
 import { ActionLink } from "@/components/primitives/Actions";
+import { cx } from "@/lib/cx";
 
 const HowWeWork = () => {
   const ref = useScrollReveal(0.12);
@@ -26,9 +27,19 @@ const HowWeWork = () => {
         }
       />
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-6 md:auto-rows-[minmax(14rem,auto)] md:grid-cols-2 xl:gap-7">
         {t.howWeWork.steps.map((step, i) => (
-          <SurfaceCard key={i} className="reveal-element relative p-7 sm:p-8" data-delay={String(i * 0.12)}>
+          <SurfaceCard
+            key={i}
+            className={cx(
+              "process-card reveal-element relative p-7 sm:p-8",
+              i === 0 && "process-card-emphasis md:row-span-2 md:min-h-[31rem]",
+              i === 1 && "md:mt-10",
+              i === 2 && "process-card-outline",
+              i === 3 && "md:-mt-10",
+            )}
+            data-delay={String(i * 0.12)}
+          >
             <div className="glow-orb -right-4 -top-4 h-[100px] w-[100px] opacity-25 blur-[60px]" />
             <span className="font-display text-[80px] font-bold leading-none text-white/90">{step.num}</span>
             <h3 className="heading-balance measure-tight mb-2 mt-4 font-body font-semibold text-foreground">{step.title}</h3>

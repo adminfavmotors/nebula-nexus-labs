@@ -227,6 +227,62 @@
     box-shadow: 0 8px 32px rgba(0, 89, 255, 0.1);
   }
 
+  .process-card {
+    background:
+      radial-gradient(circle at top right, rgba(61, 129, 255, 0.2), transparent 34%),
+      linear-gradient(160deg, rgba(7, 25, 86, 0.96), rgba(4, 11, 39, 0.96));
+  }
+
+  .process-card-emphasis {
+    background:
+      radial-gradient(circle at top right, rgba(122, 176, 255, 0.26), transparent 32%),
+      linear-gradient(160deg, rgba(9, 40, 122, 0.98), rgba(4, 16, 58, 0.96));
+    border-color: rgba(132, 181, 255, 0.34);
+    box-shadow:
+      0 18px 54px rgba(0, 25, 88, 0.34),
+      0 0 0 1px rgba(122, 176, 255, 0.12);
+  }
+
+  .process-card-outline {
+    background:
+      linear-gradient(180deg, rgba(4, 11, 39, 0.76), rgba(4, 11, 39, 0.96));
+    border-color: rgba(122, 176, 255, 0.3);
+  }
+
+  .benefit-spotlight {
+    background:
+      radial-gradient(circle at top right, rgba(79, 149, 255, 0.22), transparent 34%),
+      linear-gradient(145deg, rgba(8, 25, 85, 0.98), rgba(3, 11, 39, 0.98));
+    border-color: rgba(105, 166, 255, 0.32);
+    box-shadow:
+      0 22px 56px rgba(0, 17, 66, 0.34),
+      0 0 0 1px rgba(105, 166, 255, 0.1);
+  }
+
+  .project-showcase-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-showcase-featured {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border-color: #dce8fb;
+    box-shadow:
+      0 20px 60px rgba(0, 89, 255, 0.1),
+      0 0 0 1px rgba(0, 89, 255, 0.04);
+  }
+
+  .project-showcase-featured .project-preview-surface {
+    background:
+      radial-gradient(circle at 20% 18%, rgba(0, 89, 255, 0.14), transparent 24%),
+      linear-gradient(135deg, #eef4ff, #dde8fb 48%, #d2def5 100%);
+  }
+
+  .project-showcase-stack .project-preview-surface {
+    background:
+      linear-gradient(145deg, #edf2fa, #d9e2f1);
+  }
+
   .about-thesis-card {
     border: 1px solid rgba(0, 89, 255, 0.2);
     border-radius: 1rem;
