@@ -22,11 +22,11 @@ const About = () => {
 
   return (
     <Section id="about" tone="light" ref={ref}>
-      <div className="mb-12 grid grid-cols-1 items-center gap-8 md:mb-14 md:gap-10 lg:grid-cols-[minmax(0,1.06fr)_minmax(0,0.94fr)] lg:gap-12">
+      <div className="about-layout mb-12 md:mb-14">
         <SectionTitle
           tone="light"
           revealClassName="reveal-element"
-          className="max-w-[22ch] text-[clamp(22px,3vw,32px)] leading-[1.1] tracking-[-0.045em] sm:max-w-[21ch] lg:max-w-[20ch]"
+          className="max-w-[22ch] text-[clamp(22px,3vw,32px)] leading-[1.1] tracking-[-0.045em] sm:max-w-[21ch] lg:max-w-[20ch] 2xl:max-w-[21ch]"
           delay="0.05"
         >
           <span>{t.about.titleLine1} </span>
@@ -35,10 +35,10 @@ const About = () => {
           <span>{t.about.titleLine2end} </span>
           <span>{t.about.titleLine3}</span>
         </SectionTitle>
-        <div className="flex w-full flex-col gap-4 self-center lg:max-w-[36rem] lg:justify-self-end">
+        <div className="about-theses flex w-full flex-col gap-4 self-center">
           {t.about.theses.map((item, i) => (
             <div key={i} className="reveal-left" data-delay={String(0.15 + i * 0.15)}>
-              <div className="about-thesis-card flex items-start gap-4 lg:max-w-[33rem]">
+              <div className="about-thesis-card flex items-start gap-4">
                 <span className="mt-0.5 shrink-0 font-display text-[13px] font-bold tracking-widest text-primary">
                   {item.num}
                 </span>

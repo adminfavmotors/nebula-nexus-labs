@@ -25,8 +25,8 @@ const Hero = () => {
       <div className="glow-orb glow-orb-b left-[55%] top-[40%] h-[250px] w-[250px] opacity-30 blur-[120px]" />
       <div className="glow-orb glow-orb-c bottom-[10%] left-[25%] h-[200px] w-[200px] opacity-30 blur-[120px]" />
 
-      <div className="site-shell grid grid-cols-1 items-center gap-14 pb-16 pt-28 md:pb-20 md:pt-32 lg:grid-cols-5">
-        <div className="space-y-8 lg:col-span-3">
+      <div className="site-shell hero-layout pb-16 pt-28 md:pb-20 md:pt-32">
+        <div className="space-y-8">
           <div className={`inline-flex duration-700 ${enterClass("delay-[500ms]")}`}>
             <span className="hero-badge cursor-default">{t.hero.badge}</span>
           </div>
@@ -53,7 +53,7 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className={`flex items-start justify-center lg:col-span-2 duration-[1000ms] ${enterClass("delay-[800ms]", "translate-y-[30px] scale-[0.96]")}`}>
+        <div className={`flex items-start justify-center lg:justify-end duration-[1000ms] ${enterClass("delay-[800ms]", "translate-y-[30px] scale-[0.96]")}`}>
           <div className="hero-visual-wrap hero-visual-wrap-square mt-2">
             <div className="hero-card-glow absolute inset-[-24px] z-0 rounded-full bg-primary opacity-[0.35] blur-[80px]" />
             <div

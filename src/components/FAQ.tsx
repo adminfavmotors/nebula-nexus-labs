@@ -11,8 +11,8 @@ const FAQ = () => {
 
   return (
     <Section id="faq" tone="light" ref={ref}>
-      <div className="grid grid-cols-1 gap-10 md:gap-12 lg:grid-cols-[minmax(18rem,0.88fr)_minmax(0,1.12fr)] lg:items-start">
-        <div className="reveal-element lg:max-w-[23rem]" data-delay="0">
+      <div className="faq-layout">
+        <div className="faq-aside-shell reveal-element" data-delay="0">
           <div className="faq-aside-panel">
             <SectionTitle tone="light" className="mb-4 max-w-[16ch] text-[clamp(1.85rem,3.4vw,2.65rem)] md:mb-5 md:max-w-[17ch]">
               {t.faq.title}
@@ -36,7 +36,7 @@ const FAQ = () => {
                   onClick={() => setOpen(isOpen ? -1 : i)}
                   className="group flex w-full items-center justify-between py-6 text-left"
                 >
-                  <span className={`heading-balance max-w-[32ch] pr-3 font-body text-[15px] font-semibold transition-colors duration-300 ${isOpen ? "text-primary" : "text-[#0a0a0a]"}`}>
+                  <span className={`heading-balance max-w-[36ch] pr-3 font-body text-[15px] font-semibold transition-colors duration-300 2xl:max-w-[38ch] ${isOpen ? "text-primary" : "text-[#0a0a0a]"}`}>
                     {item.question}
                   </span>
                   <ChevronDown

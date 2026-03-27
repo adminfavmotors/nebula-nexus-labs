@@ -11,7 +11,13 @@
 @layer base {
   :root {
     --site-shell-max: 80rem;
+    --contact-shell-max: 52rem;
     --section-space-y: clamp(2.75rem, 4.2vw, 4.25rem);
+    --measure-title-max: 22ch;
+    --measure-copy-max: 42ch;
+    --measure-copy-wide-max: 50ch;
+    --measure-card-max: 31ch;
+    --hero-visual-max: 32rem;
     --background: 225 100% 9%;
     --foreground: 216 100% 95%;
 
@@ -152,19 +158,52 @@
   }
 
   .measure-title {
-    max-width: 22ch;
+    max-width: var(--measure-title-max);
   }
 
   .measure-copy {
-    max-width: 42ch;
+    max-width: var(--measure-copy-max);
   }
 
   .measure-copy-wide {
-    max-width: 50ch;
+    max-width: var(--measure-copy-wide-max);
   }
 
   .measure-card {
-    max-width: 31ch;
+    max-width: var(--measure-card-max);
+  }
+
+  .contact-shell {
+    max-width: var(--contact-shell-max);
+  }
+
+  .hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    gap: 3.5rem;
+  }
+
+  .about-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .about-theses {
+    width: 100%;
+  }
+
+  .faq-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 2.5rem;
+  }
+
+  .faq-aside-shell {
+    width: 100%;
   }
 
   .section-link-light {
@@ -630,7 +669,7 @@
   }
 
   .hero-visual-wrap-square {
-    max-width: 32rem;
+    max-width: var(--hero-visual-max);
     aspect-ratio: 1 / 1;
   }
 
@@ -914,9 +953,111 @@
   }
 }
 
+@media (min-width: 1024px) {
+  .hero-layout {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 3.75rem;
+  }
+
+  .about-layout {
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+    gap: 3rem;
+  }
+
+  .about-theses {
+    max-width: 38rem;
+    justify-self: end;
+  }
+
+  .faq-layout {
+    grid-template-columns: minmax(18rem, 0.88fr) minmax(0, 1.12fr);
+    gap: 3rem;
+  }
+
+  .faq-aside-shell {
+    max-width: 23rem;
+  }
+}
+
 @media (min-width: 1280px) {
   .site-shell {
     width: calc(100% - 4rem);
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --site-shell-max: 88rem;
+    --contact-shell-max: 60rem;
+    --measure-copy-max: 44ch;
+    --measure-copy-wide-max: 54ch;
+    --measure-card-max: 33ch;
+    --hero-visual-max: 35rem;
+  }
+
+  .site-shell {
+    width: calc(100% - 5rem);
+  }
+
+  .hero-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(34rem, 0.98fr);
+    gap: 4.5rem;
+  }
+
+  .about-layout {
+    grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
+    gap: 3.75rem;
+  }
+
+  .about-theses {
+    max-width: 42rem;
+  }
+
+  .faq-layout {
+    grid-template-columns: minmax(21rem, 0.9fr) minmax(0, 1.1fr);
+    gap: 3.5rem;
+  }
+
+  .faq-aside-shell {
+    max-width: 25rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --site-shell-max: 110rem;
+    --contact-shell-max: 76rem;
+    --measure-copy-max: 48ch;
+    --measure-copy-wide-max: 62ch;
+    --measure-card-max: 36ch;
+    --hero-visual-max: 42rem;
+  }
+
+  .site-shell {
+    width: calc(100% - 6rem);
+  }
+
+  .hero-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(42rem, 1fr);
+    gap: 6.25rem;
+  }
+
+  .about-layout {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 5rem;
+  }
+
+  .about-theses {
+    max-width: 50rem;
+  }
+
+  .faq-layout {
+    grid-template-columns: minmax(24rem, 0.86fr) minmax(0, 1.14fr);
+    gap: 4.5rem;
+  }
+
+  .faq-aside-shell {
+    max-width: 29rem;
   }
 }
 
