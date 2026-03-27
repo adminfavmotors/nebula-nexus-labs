@@ -104,8 +104,8 @@ const ContactForm = () => {
   };
 
   return (
-    <Section id="contact" tone="light" ref={ref} containerClassName="max-w-2xl">
-      <SectionTitle tone="light" revealClassName="reveal-element" className="mb-12 max-w-[15ch] text-center md:mb-14 md:max-w-[16ch] mx-auto" delay="0.05">
+    <Section id="contact" tone="light" ref={ref} containerClassName="max-w-[52rem]">
+      <SectionTitle tone="light" revealClassName="reveal-element" className="mx-auto mb-10 max-w-[16ch] text-center md:mb-12 md:max-w-[17ch]" delay="0.05">
         {t.contact.title}
       </SectionTitle>
       <form

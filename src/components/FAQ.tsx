@@ -11,10 +11,10 @@ const FAQ = () => {
 
   return (
     <Section id="faq" tone="light" ref={ref}>
-      <div className="grid grid-cols-1 gap-10 md:gap-12 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
-        <div className="reveal-element lg:max-w-[22rem]" data-delay="0">
+      <div className="grid grid-cols-1 gap-10 md:gap-12 lg:grid-cols-[minmax(18rem,0.88fr)_minmax(0,1.12fr)] lg:items-start">
+        <div className="reveal-element lg:max-w-[23rem]" data-delay="0">
           <div className="faq-aside-panel">
-            <SectionTitle tone="light" className="mb-5 max-w-[15ch] md:mb-6 md:max-w-[16ch]">
+            <SectionTitle tone="light" className="mb-4 max-w-[16ch] text-[clamp(1.85rem,3.4vw,2.65rem)] md:mb-5 md:max-w-[17ch]">
               {t.faq.title}
             </SectionTitle>
             <div className="section-copy-light measure-copy space-y-3">

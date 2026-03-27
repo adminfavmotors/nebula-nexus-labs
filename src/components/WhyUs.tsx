@@ -3,7 +3,6 @@ import { Shield, Zap, Users } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { Section, SectionTitle } from "@/components/primitives/Section";
 import { SurfaceCard } from "@/components/primitives/SurfaceCard";
-import { cx } from "@/lib/cx";
 
 const WhyUs = () => {
   const ref = useScrollReveal(0.12);
@@ -19,29 +18,18 @@ const WhyUs = () => {
       <div className="glow-orb right-[15%] top-0 h-[300px] w-[300px] opacity-20 blur-[120px]" />
       <div className="glow-orb glow-orb-b bottom-0 left-[10%] h-[200px] w-[200px] opacity-20 blur-[100px]" />
 
-      <SectionTitle tone="deep" revealClassName="reveal-element" className="mb-12 max-w-[18ch] md:mb-14 md:max-w-[19ch]" delay="0.05">
+      <SectionTitle tone="deep" revealClassName="reveal-element" className="mb-10 max-w-[19ch] md:mb-12 md:max-w-[21ch]" delay="0.05">
         {t.whyUs.title}
       </SectionTitle>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:auto-rows-[minmax(14rem,auto)] xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {items.map((item, i) => (
-          <SurfaceCard
-            key={i}
-            className={cx(
-              "reveal-element relative p-6 sm:p-7",
-              i === 0 && "benefit-spotlight md:col-span-2 xl:col-span-2 xl:grid xl:grid-cols-[minmax(0,1.1fr)_minmax(13rem,0.9fr)] xl:items-end",
-            )}
-            data-delay={String(i * 0.12)}
-          >
+          <SurfaceCard key={i} className="reveal-element relative p-7 sm:p-8" data-delay={String(i * 0.12)}>
             <div className="glow-orb -left-6 -top-6 h-[100px] w-[100px] opacity-25 blur-[60px]" />
-            <div className={cx(i === 0 ? "xl:order-2 xl:justify-self-end" : "")}>
-              <div className={cx("icon-circle mb-5", i === 0 && "h-14 w-14 xl:mb-0 xl:h-16 xl:w-16")}>
-                <item.icon size={20} className="text-primary" />
-              </div>
+            <div className="icon-circle mb-5">
+              <item.icon size={20} className="text-primary" />
             </div>
-            <div className={cx(i === 0 ? "xl:order-1 xl:max-w-[25rem]" : "")}>
-              <h3 className="heading-balance measure-tight mb-2 font-body font-semibold text-foreground">{item.title}</h3>
-              <p className={cx("section-copy-dark copy-pretty", i === 0 ? "measure-copy" : "measure-card")}>{item.desc}</p>
-            </div>
+            <h3 className="heading-balance measure-tight mb-2 font-body font-semibold text-foreground">{item.title}</h3>
+            <p className="section-copy-dark copy-pretty measure-card">{item.desc}</p>
           </SurfaceCard>
         ))}
       </div>

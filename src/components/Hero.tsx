@@ -31,7 +31,7 @@ const Hero = () => {
             <span className="hero-badge cursor-default">{t.hero.badge}</span>
           </div>
 
-          <h1 className="max-w-[10.5ch] font-display text-[clamp(48px,6vw,80px)] leading-[1] tracking-[-0.03em] text-foreground sm:max-w-[11ch]">
+          <h1 className="max-w-[11.25ch] font-display text-[clamp(48px,6vw,80px)] leading-[1.04] tracking-[-0.03em] text-foreground sm:max-w-[11.5ch]">
             {t.hero.words.map((word, i) => (
               <span key={i} className={`block duration-700 ${enterClass(wordDelayClasses[i], "translate-y-[30px]")}`}>
                 {i === 1 ? <span className="text-[#2979ff]">{word}</span> : word}

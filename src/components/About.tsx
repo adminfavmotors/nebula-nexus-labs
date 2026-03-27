@@ -26,7 +26,7 @@ const About = () => {
         <SectionTitle
           tone="light"
           revealClassName="reveal-element"
-          className="max-w-[19ch] text-[clamp(22px,3vw,32px)] leading-[1.06] tracking-[-0.045em] sm:max-w-[18ch] lg:max-w-[16.5ch]"
+          className="max-w-[22ch] text-[clamp(22px,3vw,32px)] leading-[1.1] tracking-[-0.045em] sm:max-w-[21ch] lg:max-w-[20ch]"
           delay="0.05"
         >
           <span>{t.about.titleLine1} </span>

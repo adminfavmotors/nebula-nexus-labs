@@ -55,7 +55,7 @@ export default function LegalDocumentPage({ documentKey }: LegalDocumentPageProp
             <p className="mb-3 font-body text-sm font-medium uppercase tracking-[0.18em] text-[#0059ff]">
               {content.common.updatedLabel}: {documentContent.updatedAt}
             </p>
-            <h1 className="font-display text-[clamp(34px,5vw,56px)] leading-[1.02] tracking-[-0.04em] text-[#0a0a0a]">
+            <h1 className="font-display text-[clamp(34px,5vw,56px)] leading-[1.06] tracking-[-0.04em] text-[#0a0a0a]">
               {documentContent.title}
             </h1>
             <p className="section-copy-light measure-copy-wide mt-5">
