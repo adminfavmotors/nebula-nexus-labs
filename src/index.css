@@ -210,6 +210,34 @@
     padding-top: clamp(6.5rem, 8.2vw, 7.75rem);
   }
 
+  .service-page-breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
+    color: rgba(232, 240, 255, 0.84);
+  }
+
+  .service-page-breadcrumb-link {
+    color: rgba(232, 240, 255, 0.84);
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
+    transition: color 0.22s ease, opacity 0.22s ease;
+  }
+
+  .service-page-breadcrumb-link:hover {
+    color: white;
+  }
+
+  .service-page-breadcrumb-separator {
+    color: rgba(185, 204, 241, 0.55);
+    font-size: 1rem;
+    line-height: 1;
+  }
+
   .service-page-hero-shell {
     padding-bottom: clamp(2.75rem, 4.5vw, 4rem);
     align-items: start;
@@ -1116,6 +1144,11 @@
     grid-template-columns: minmax(0, 1.08fr) minmax(24rem, 0.92fr);
     gap: 3.5rem;
   }
+
+  .service-page-summary-card {
+    align-self: center;
+    margin-top: 1rem;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -1228,6 +1261,15 @@
 @media (max-width: 767px) {
   .service-page-hero {
     padding-top: 6rem;
+  }
+
+  .service-page-breadcrumbs {
+    gap: 0.65rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .service-page-breadcrumb-link {
+    font-size: 0.88rem;
   }
 
   .service-page-hero-title {

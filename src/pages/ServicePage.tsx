@@ -13,23 +13,13 @@ import { usePageSeo } from "@/lib/seo";
 
 const pageCopy = {
   pl: {
-    heroSummaryTitle: "W skrócie",
-    audienceBadge: "Dla kogo",
-    deliverablesBadge: "Co dostajesz",
-    processBadge: "Proces",
-    pricingBadge: "Budżet i zakres",
+    heroSummaryTitle: "W skrocie",
     durationLabel: "Czas realizacji",
-    relatedTitle: "Zobacz też",
-    relatedBody: "Jeśli zakres projektu jest większy albo mniejszy, możesz przejść do pokrewnej usługi i porównać kierunek.",
+    relatedBody: "Jesli zakres projektu jest wiekszy albo mniejszy, mozesz przejsc do pokrewnej uslugi i porownac kierunek.",
   },
   en: {
     heroSummaryTitle: "At a glance",
-    audienceBadge: "Who it is for",
-    deliverablesBadge: "What you get",
-    processBadge: "Process",
-    pricingBadge: "Budget and scope",
     durationLabel: "Timeline",
-    relatedTitle: "Explore related services",
     relatedBody: "If the project scope is bigger or smaller, compare it with another relevant service page.",
   },
 } as const;
@@ -67,18 +57,20 @@ const ServicePage = () => {
           <div className="glow-orb left-[12%] top-[12%] h-[240px] w-[240px] opacity-20 blur-[120px]" />
           <div className="glow-orb glow-orb-b bottom-[10%] right-[14%] h-[220px] w-[220px] opacity-20 blur-[120px]" />
 
+          <div className="site-shell">
+            <div className="service-page-breadcrumbs">
+              <Link to="/" className="service-page-breadcrumb-link">
+                NODE48
+              </Link>
+              <span className="service-page-breadcrumb-separator">/</span>
+              <a href="/#services" className="service-page-breadcrumb-link">
+                {ui.secondaryCta}
+              </a>
+            </div>
+          </div>
+
           <div className="site-shell hero-layout service-page-hero-shell">
             <div className="service-page-hero-content">
-              <div className="flex flex-wrap items-center gap-3 text-white/72">
-                <Link to="/" className="font-body text-sm text-white/72 hover:text-white">
-                  NODE48
-                </Link>
-                <span className="text-white/45">/</span>
-                <a href="/#services" className="font-body text-sm text-white/72 hover:text-white">
-                  {ui.secondaryCta}
-                </a>
-              </div>
-
               <span className="hero-badge cursor-default">{ui.eyebrow}</span>
 
               <div className="flex flex-wrap gap-3">
@@ -122,9 +114,6 @@ const ServicePage = () => {
         <Section tone="light" className="service-page-section">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.9fr)] lg:gap-10">
             <div className="space-y-5">
-              <p className="font-body text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-primary">
-                {copy.audienceBadge}
-              </p>
               <h2 className="service-page-section-title text-[#0a0a0a]">{detail.audienceTitle}</h2>
               <div className="service-page-prose">
                 {detail.audienceIntro.map((paragraph) => (
@@ -150,9 +139,6 @@ const ServicePage = () => {
 
         <Section tone="deep" className="service-page-section">
           <div className="mb-10 md:mb-12">
-            <p className="mb-3 font-body text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-[#8fb4ff]">
-              {copy.deliverablesBadge}
-            </p>
             <h2 className="service-page-section-title text-foreground">{detail.deliverablesTitle}</h2>
           </div>
 
@@ -176,9 +162,6 @@ const ServicePage = () => {
         <Section tone="light" className="service-page-section">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-10">
             <div className="space-y-5">
-              <p className="font-body text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-primary">
-                {copy.processBadge}
-              </p>
               <h2 className="service-page-section-title text-[#0a0a0a]">{detail.processTitle}</h2>
 
               {detail.processIntro.length > 0 ? (
@@ -220,9 +203,6 @@ const ServicePage = () => {
         <Section tone="deep" className="service-page-section">
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
             <SurfaceCard className="p-7 sm:p-8">
-              <p className="mb-3 font-body text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-[#8fb4ff]">
-                {copy.pricingBadge}
-              </p>
               <h2 className="service-page-section-title mb-5 text-foreground">{detail.pricingTitle}</h2>
               <p className="mb-6 font-display text-[1.65rem] font-bold tracking-[-0.03em] text-white sm:text-[2rem]">
                 {detail.pricingPrice}
@@ -258,9 +238,6 @@ const ServicePage = () => {
 
           <div className="mt-6 xl:mt-8">
             <SurfaceCard className="p-7 sm:p-8">
-              <p className="mb-3 font-body text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-[#8fb4ff]">
-                {copy.relatedTitle}
-              </p>
               <p className="section-copy-dark copy-pretty service-page-copy mb-6">{copy.relatedBody}</p>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 {related.map((item) => (
