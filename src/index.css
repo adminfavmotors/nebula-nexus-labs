@@ -147,6 +147,26 @@
     text-wrap: pretty;
   }
 
+  .measure-tight {
+    max-width: 16ch;
+  }
+
+  .measure-title {
+    max-width: 19ch;
+  }
+
+  .measure-copy {
+    max-width: 36ch;
+  }
+
+  .measure-copy-wide {
+    max-width: 42ch;
+  }
+
+  .measure-card {
+    max-width: 28ch;
+  }
+
   .section-link-light {
     color: #0059ff;
     font-family: "DM Sans", sans-serif;

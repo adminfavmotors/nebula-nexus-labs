@@ -169,7 +169,7 @@ const ContactForm = () => {
         <ActionButton type="submit" className="w-full sm:w-auto" disabled={status === "submitting"}>
           {status === "submitting" ? t.contact.status.submitting : t.contact.submit}
         </ActionButton>
-        <p className="section-copy-light">
+        <p className="section-copy-light measure-copy-wide">
           {legal.formNotice.prefix}{" "}
           <a href="/privacy-policy" className="text-[#0059ff] underline underline-offset-4 transition-opacity hover:opacity-75">
             {legal.formNotice.linkLabel}

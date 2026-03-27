@@ -22,7 +22,7 @@ const Services = () => {
               data-delay={String(i * 0.07)}
             >
               <span className="min-w-7 font-body text-[13px] font-semibold text-[#2979ff]">{service.num}</span>
-              <span className="heading-balance min-w-0 flex-1 max-w-[24ch] font-body text-[18px] font-semibold leading-snug text-[#0a0a0a] sm:max-w-none">
+              <span className="heading-balance min-w-0 flex-1 max-w-[24ch] font-body text-[18px] font-semibold leading-snug text-[#0a0a0a] md:max-w-[26ch] lg:max-w-[28ch]">
                 {service.name}
               </span>
               <span className="section-copy-light order-4 w-full pl-8 sm:hidden">{service.price}</span>

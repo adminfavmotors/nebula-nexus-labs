@@ -35,14 +35,14 @@ const About = () => {
           <span>{t.about.titleLine2end} </span>
           <span>{t.about.titleLine3}</span>
         </SectionTitle>
-        <div className="flex w-full flex-col gap-4 self-center lg:max-w-[50rem] lg:justify-self-end">
+        <div className="flex w-full flex-col gap-4 self-center lg:max-w-[36rem] lg:justify-self-end">
           {t.about.theses.map((item, i) => (
             <div key={i} className="reveal-left" data-delay={String(0.15 + i * 0.15)}>
-              <div className="about-thesis-card flex items-start gap-4">
+              <div className="about-thesis-card flex items-start gap-4 lg:max-w-[33rem]">
                 <span className="mt-0.5 shrink-0 font-display text-[13px] font-bold tracking-widest text-primary">
                   {item.num}
                 </span>
-                <span className="section-copy-dark copy-pretty text-[0.94rem] font-medium text-[#e8f0ff]">
+                <span className="section-copy-dark copy-pretty measure-copy text-[0.94rem] font-medium text-[#e8f0ff]">
                   {item.text}
                 </span>
               </div>

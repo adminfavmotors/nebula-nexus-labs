@@ -39,7 +39,7 @@ const Hero = () => {
             ))}
           </h1>
 
-          <p className={`section-copy-dark max-w-md duration-700 ${enterClass("delay-[1000ms]")}`}>
+          <p className={`section-copy-dark measure-copy duration-700 ${enterClass("delay-[1000ms]")}`}>
             {t.hero.body}
           </p>
 

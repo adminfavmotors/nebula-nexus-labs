@@ -28,8 +28,8 @@ const WhyUs = () => {
             <div className="icon-circle mb-5">
               <item.icon size={20} className="text-primary" />
             </div>
-            <h3 className="heading-balance mb-2 max-w-[16ch] font-body font-semibold text-foreground">{item.title}</h3>
-            <p className="section-copy-dark copy-pretty">{item.desc}</p>
+            <h3 className="heading-balance measure-tight mb-2 font-body font-semibold text-foreground">{item.title}</h3>
+            <p className="section-copy-dark copy-pretty measure-card">{item.desc}</p>
           </SurfaceCard>
         ))}
       </div>

@@ -51,25 +51,25 @@ export default function LegalDocumentPage({ documentKey }: LegalDocumentPageProp
         </div>
 
         <div className="rounded-[28px] border border-[#dbe6fb] bg-white p-6 shadow-[0_24px_80px_rgba(0,89,255,0.08)] md:p-10">
-          <div className="max-w-3xl">
+          <div className="max-w-[42rem]">
             <p className="mb-3 font-body text-sm font-medium uppercase tracking-[0.18em] text-[#0059ff]">
               {content.common.updatedLabel}: {documentContent.updatedAt}
             </p>
             <h1 className="font-display text-[clamp(34px,5vw,56px)] leading-[1.02] tracking-[-0.04em] text-[#0a0a0a]">
               {documentContent.title}
             </h1>
-            <p className="section-copy-light mt-5 max-w-3xl">
+            <p className="section-copy-light measure-copy-wide mt-5">
               {documentContent.intro}
             </p>
           </div>
 
           <div className="mt-10 space-y-8">
             {documentContent.sections.map((section) => (
-              <section key={section.title} className="max-w-3xl border-t border-[#ecf1fb] pt-6 first:border-t-0 first:pt-0">
+              <section key={section.title} className="max-w-[42rem] border-t border-[#ecf1fb] pt-6 first:border-t-0 first:pt-0">
                 <h2 className="font-display text-[clamp(22px,3vw,30px)] leading-[1.1] tracking-[-0.03em] text-[#0a0a0a]">
                   {section.title}
                 </h2>
-                <div className="mt-4 space-y-4 font-body text-[0.98rem] leading-[1.82] text-[#334155]">
+                <div className="measure-copy-wide mt-4 space-y-4 font-body text-[0.98rem] leading-[1.82] text-[#334155]">
                   {section.paragraphs.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}

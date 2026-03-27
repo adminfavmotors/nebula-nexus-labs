@@ -26,13 +26,13 @@ const HowWeWork = () => {
         }
       />
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-4">
         {t.howWeWork.steps.map((step, i) => (
           <SurfaceCard key={i} className="reveal-element relative p-7 sm:p-8" data-delay={String(i * 0.12)}>
             <div className="glow-orb -right-4 -top-4 h-[100px] w-[100px] opacity-25 blur-[60px]" />
             <span className="font-display text-[80px] font-bold leading-none text-white/90">{step.num}</span>
-            <h3 className="heading-balance mb-2 mt-4 max-w-[16ch] font-body font-semibold text-foreground">{step.title}</h3>
-            <p className="section-copy-dark copy-pretty">{step.desc}</p>
+            <h3 className="heading-balance measure-tight mb-2 mt-4 font-body font-semibold text-foreground">{step.title}</h3>
+            <p className="section-copy-dark copy-pretty measure-card">{step.desc}</p>
           </SurfaceCard>
         ))}
       </div>
