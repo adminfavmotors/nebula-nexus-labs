@@ -16,7 +16,7 @@ const FAQ = () => {
           <SectionTitle tone="light" className="mb-5 md:mb-6">
             {t.faq.title}
           </SectionTitle>
-          <div className="space-y-3 font-body text-sm font-light text-[#4a5568]">
+          <div className="section-copy-light space-y-3">
             <p>{t.faq.email}</p>
             <p>{t.faq.phone}</p>
           </div>
@@ -43,7 +43,7 @@ const FAQ = () => {
                 </button>
                 <div className={`grid overflow-hidden transition-all duration-300 ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
                   <div className="min-h-0">
-                    <p className="pb-6 font-body text-sm font-light leading-relaxed text-[#4a5568]">
+                    <p className="section-copy-light pb-6">
                       {item.answer}
                     </p>
                   </div>

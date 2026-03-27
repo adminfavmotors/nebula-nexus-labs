@@ -23,8 +23,8 @@ const Services = () => {
             >
               <span className="min-w-7 font-body text-[13px] font-semibold text-[#2979ff]">{service.num}</span>
               <span className="min-w-0 flex-1 font-body text-[18px] font-semibold leading-snug text-[#0a0a0a]">{service.name}</span>
-              <span className="order-4 w-full pl-8 font-body text-[14px] text-[#4a5568] sm:hidden">{service.price}</span>
-              <span className="hidden shrink-0 font-body text-[14px] text-[#4a5568] md:block">{service.price}</span>
+              <span className="section-copy-light order-4 w-full pl-8 sm:hidden">{service.price}</span>
+              <span className="section-copy-light hidden shrink-0 md:block">{service.price}</span>
 
               <div className="icon-circle ml-auto shrink-0 group-hover:bg-primary group-hover:shadow-[0_0_16px_rgba(0,89,255,0.6)] sm:ml-0">
                 <ArrowRight size={16} className="text-primary transition-colors duration-300 group-hover:text-primary-foreground" />

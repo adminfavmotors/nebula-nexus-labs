@@ -28,7 +28,7 @@
     --secondary-foreground: 216 100% 95%;
 
     --muted: 224 76% 17%;
-    --muted-foreground: 214 38% 63%;
+    --muted-foreground: 214 42% 70%;
 
     --accent: 220 100% 58%;
     --accent-foreground: 0 0% 100%;
@@ -116,11 +116,27 @@
   }
 
   .section-copy-dark {
-    color: #7a9acc;
+    color: #9cb8e9;
     font-family: "DM Sans", sans-serif;
-    font-size: 0.875rem;
-    font-weight: 300;
-    line-height: 1.7;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.78;
+  }
+
+  .section-copy-light {
+    color: #42526b;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.78;
+  }
+
+  .section-copy-accent {
+    color: rgba(255, 255, 255, 0.82);
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.75;
   }
 
   .section-link-light {

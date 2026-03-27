@@ -30,7 +30,7 @@ const CTASection = () => {
             <h2 className="mb-4 font-display text-[clamp(24px,3vw,36px)] font-bold text-white">
               {t.cta.availabilityTitle}
             </h2>
-            <p className="max-w-sm font-body text-sm font-light leading-relaxed text-white/70">
+            <p className="section-copy-accent max-w-sm">
               {t.cta.availabilityBody}
             </p>
           </div>

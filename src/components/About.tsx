@@ -11,7 +11,7 @@ const StatItem = ({ value, suffix, label }: { value: number; suffix: string; lab
         {count}
         <span className="text-primary">{suffix}</span>
       </span>
-      <p className="mt-1 font-body text-sm font-light text-[#4a5568]">{label}</p>
+      <p className="section-copy-light mt-2">{label}</p>
     </div>
   );
 };
@@ -47,7 +47,7 @@ const About = () => {
                 <span className="mt-0.5 shrink-0 font-display text-[13px] font-bold tracking-widest text-primary">
                   {item.num}
                 </span>
-                <span className="font-body text-[14px] font-medium leading-relaxed text-[#e8f0ff]">
+                <span className="section-copy-dark text-[0.94rem] font-medium text-[#e8f0ff]">
                   {item.text}
                 </span>
               </div>

@@ -19,27 +19,27 @@ const Footer = () => {
               <a
                 key={link.href}
                 href={link.href}
-                className="font-body text-sm text-muted-foreground transition-colors duration-300 hover:text-foreground"
+                className="font-body text-[0.95rem] text-muted-foreground transition-colors duration-300 hover:text-foreground"
               >
                 {link.label}
               </a>
             ))}
             <Link
               to="/privacy-policy"
-              className="font-body text-sm text-muted-foreground transition-colors duration-300 hover:text-foreground"
+              className="font-body text-[0.95rem] text-muted-foreground transition-colors duration-300 hover:text-foreground"
             >
               {legal.footer.privacy}
             </Link>
             <Link
               to="/cookie-policy"
-              className="font-body text-sm text-muted-foreground transition-colors duration-300 hover:text-foreground"
+              className="font-body text-[0.95rem] text-muted-foreground transition-colors duration-300 hover:text-foreground"
             >
               {legal.footer.cookies}
             </Link>
           </div>
         </div>
         <div className="glow-divider mb-6 mt-10" />
-        <p className="text-center font-body text-xs text-muted-foreground">
+        <p className="text-center font-body text-sm text-muted-foreground">
           {"\u00A9"} {siteConfig.currentYear} {siteConfig.brandName}. {t.footer.rights}
         </p>
       </div>

@@ -169,7 +169,7 @@ const ContactForm = () => {
         <ActionButton type="submit" className="w-full sm:w-auto" disabled={status === "submitting"}>
           {status === "submitting" ? t.contact.status.submitting : t.contact.submit}
         </ActionButton>
-        <p className="font-body text-sm leading-6 text-[#4a5568]">
+        <p className="section-copy-light">
           {legal.formNotice.prefix}{" "}
           <a href="/privacy-policy" className="text-[#0059ff] underline underline-offset-4 transition-opacity hover:opacity-75">
             {legal.formNotice.linkLabel}
@@ -180,8 +180,8 @@ const ContactForm = () => {
           <p
             aria-live="polite"
             role={status === "error" ? "alert" : "status"}
-            className={`font-body text-sm ${
-              status === "success" ? "text-[#0f7b0f]" : status === "error" ? "text-[#b42318]" : "text-[#4a5568]"
+            className={`text-[0.95rem] font-body leading-7 ${
+              status === "success" ? "text-[#0f7b0f]" : status === "error" ? "text-[#b42318]" : "text-[#42526b]"
             }`}
           >
             {t.contact.status[status]}
