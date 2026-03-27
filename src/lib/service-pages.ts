@@ -395,7 +395,7 @@ export const serviceEntries: ServiceEntry[] = [
     content: {
       pl: {
         listName: "Opieka techniczna",
-        priceFrom: "od 100 zł",
+        priceFrom: "od 100 zł / miesiąc",
         teaser: "Stałe wsparcie, poprawki i rozwój po publikacji",
         metaTitle: "Opieka techniczna nad stroną | NODE48",
         metaDescription: "Opieka techniczna nad stroną internetową: aktualizacje, poprawki, drobny rozwój i wsparcie po wdrożeniu. Pakiety od 100 zł.",
@@ -424,7 +424,7 @@ export const serviceEntries: ServiceEntry[] = [
       },
       en: {
         listName: "Technical support",
-        priceFrom: "from 100 PLN",
+        priceFrom: "from 100 PLN / month",
         teaser: "Ongoing support, fixes and post-launch improvements",
         metaTitle: "Website technical support | NODE48",
         metaDescription: "Website technical support covering updates, fixes, small improvements and post-launch care. Plans from 100 PLN.",
@@ -475,5 +475,9 @@ export function getServiceBySlug(locale: Locale, slug: string) {
     return null;
   }
 
-  return entry.content[locale];
+  return {
+    key: entry.key,
+    slug: entry.slug,
+    ...entry.content[locale],
+  };
 }
