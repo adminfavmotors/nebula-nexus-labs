@@ -10,7 +10,7 @@ const Footer = () => {
 
   return (
     <footer className="pb-12 pt-8">
-      <div className="container mx-auto px-6">
+      <div className="site-shell">
         <div className="glow-divider mb-10" />
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row md:items-start">
           <BrandLogo href="/#home" className="justify-center md:justify-start" />

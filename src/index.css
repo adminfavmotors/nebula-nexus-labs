@@ -10,6 +10,7 @@
 
 @layer base {
   :root {
+    --site-shell-max: 66rem;
     --background: 225 100% 9%;
     --foreground: 216 100% 95%;
 
@@ -57,6 +58,12 @@
 }
 
 @layer components {
+  .site-shell {
+    width: calc(100% - 3rem);
+    max-width: var(--site-shell-max);
+    margin-inline: auto;
+  }
+
   .hero-section {
     background:
       radial-gradient(circle at top right, rgba(28, 91, 255, 0.16), transparent 26%),
@@ -240,7 +247,7 @@
     position: relative;
     z-index: 20;
     display: flex;
-    width: min(100%, 1160px);
+    width: min(100%, var(--site-shell-max));
     margin-inline: auto;
     align-items: center;
     justify-content: space-between;
@@ -824,6 +831,10 @@
 }
 
 @media (min-width: 768px) {
+  .site-shell {
+    width: calc(100% - 4rem);
+  }
+
   .section-spacing {
     padding-block: 2.5rem;
   }

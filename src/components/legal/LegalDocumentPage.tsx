@@ -39,7 +39,7 @@ export default function LegalDocumentPage({ documentKey }: LegalDocumentPageProp
 
   return (
     <div className="min-h-screen bg-[#f5f7ff] text-[#0a0a0a]">
-      <div className="container mx-auto px-6 py-10 md:py-14">
+      <div className="site-shell py-10 md:py-14">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <Link
             to="/"

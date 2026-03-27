@@ -25,7 +25,7 @@ const Hero = () => {
       <div className="glow-orb glow-orb-b left-[55%] top-[40%] h-[250px] w-[250px] opacity-30 blur-[120px]" />
       <div className="glow-orb glow-orb-c bottom-[10%] left-[25%] h-[200px] w-[200px] opacity-30 blur-[120px]" />
 
-      <div className="container mx-auto grid grid-cols-1 items-center gap-14 px-6 pb-16 pt-28 md:pb-20 md:pt-32 lg:grid-cols-5">
+      <div className="site-shell grid grid-cols-1 items-center gap-14 pb-16 pt-28 md:pb-20 md:pt-32 lg:grid-cols-5">
         <div className="space-y-8 lg:col-span-3">
           <div className={`inline-flex duration-700 ${enterClass("delay-[500ms]")}`}>
             <span className="hero-badge cursor-default">{t.hero.badge}</span>
