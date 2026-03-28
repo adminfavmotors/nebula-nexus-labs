@@ -700,6 +700,60 @@
     box-shadow: 0 8px 32px rgba(0, 89, 255, 0.1);
   }
 
+  .card-surface-spotlight {
+    position: relative;
+    isolation: isolate;
+    --spotlight-x: 50%;
+    --spotlight-y: 50%;
+    --spotlight-opacity: 0;
+  }
+
+  .card-surface-spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(circle at var(--spotlight-x) var(--spotlight-y), rgba(126, 178, 255, 0.18), transparent 24%),
+      radial-gradient(circle at var(--spotlight-x) var(--spotlight-y), rgba(0, 89, 255, 0.14), transparent 42%);
+    opacity: var(--spotlight-opacity);
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+
+  .card-surface-spotlight::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(124, 173, 255, 0.12);
+    opacity: calc(var(--spotlight-opacity) * 0.95);
+    transition:
+      opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+
+  .card-surface-spotlight > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-surface-spotlight:hover::after {
+    border-color: rgba(124, 173, 255, 0.24);
+  }
+
+  .section-light .card-surface-spotlight::before {
+    background:
+      radial-gradient(circle at var(--spotlight-x) var(--spotlight-y), rgba(111, 176, 255, 0.22), transparent 26%),
+      radial-gradient(circle at var(--spotlight-x) var(--spotlight-y), rgba(0, 89, 255, 0.1), transparent 44%);
+  }
+
+  .section-light .card-surface-spotlight::after {
+    border-color: rgba(0, 89, 255, 0.1);
+  }
+
   .metrics-band {
     border: 1px solid rgba(0, 89, 255, 0.1);
     border-radius: 1.5rem;
