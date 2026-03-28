@@ -6,7 +6,6 @@ type NavLink = { label: string; href: string };
 type Stat = { value: number; suffix: string; label: string };
 type Service = { num: string; name: string; price: string };
 type ProcessStep = { num: string; title: string; desc: string };
-type Project = { name: string; tag: string };
 type Benefit = { title: string; desc: string };
 type FaqItem = { question: string; answer: string };
 type AboutThesis = { num: string; text: string };
@@ -57,11 +56,11 @@ export type TranslationSet = {
   };
   projects: {
     title: string;
-    viewAll: string;
-    imageLabel: string;
+    collectionLabel: string;
+    liveLabel: string;
+    openLabel: string;
     previousLabel: string;
     nextLabel: string;
-    items: Project[];
   };
   whyUs: {
     title: string;
@@ -174,15 +173,11 @@ export const translations = {
     },
     projects: {
       title: "Wybrane realizacje",
-      viewAll: "Zobacz wszystkie →",
-      imageLabel: "Podgląd projektu",
+      collectionLabel: "6 realizacji online",
+      liveLabel: "Strona live",
+      openLabel: "Otwórz projekt",
       previousLabel: "Poprzedni projekt",
       nextLabel: "Następny projekt",
-      items: [
-        { name: "Strona premium dla marki usługowej", tag: "Landing page" },
-        { name: "Sklep z nową architekturą oferty", tag: "E-commerce" },
-        { name: "Panel marketingowy dla produktu B2B", tag: "SaaS" },
-      ],
     },
     whyUs: {
       title: "Łączymy estetykę z odpowiedzialnym wykonaniem",
@@ -318,15 +313,11 @@ export const translations = {
     },
     projects: {
       title: "Selected work",
-      viewAll: "See all →",
-      imageLabel: "Project preview",
+      collectionLabel: "6 live projects",
+      liveLabel: "Live website",
+      openLabel: "Open project",
       previousLabel: "Previous project",
       nextLabel: "Next project",
-      items: [
-        { name: "Premium website for a service brand", tag: "Landing page" },
-        { name: "Storefront with a refreshed offer structure", tag: "E-commerce" },
-        { name: "Marketing dashboard for a B2B product", tag: "SaaS" },
-      ],
     },
     whyUs: {
       title: "We balance strong aesthetics with reliable delivery",

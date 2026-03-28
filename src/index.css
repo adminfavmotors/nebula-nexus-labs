@@ -1409,6 +1409,196 @@
     background: linear-gradient(135deg, #e8ecf4, #d4dced);
   }
 
+  .project-case-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-carousel {
+    position: relative;
+    min-height: 32rem;
+    isolation: isolate;
+  }
+
+  .project-carousel-card {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(100%, 26rem);
+    transform-origin: center center;
+    transition:
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .project-carousel-card-active {
+    z-index: 3;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+    filter: none;
+    pointer-events: auto;
+  }
+
+  .project-carousel-card-next {
+    z-index: 2;
+    opacity: 0.76;
+    transform: translateX(calc(-50% + 23rem)) translateY(1.4rem) scale(0.9);
+    filter: saturate(0.86);
+    pointer-events: none;
+  }
+
+  .project-carousel-card-prev {
+    z-index: 2;
+    opacity: 0.76;
+    transform: translateX(calc(-50% - 23rem)) translateY(1.4rem) scale(0.9);
+    filter: saturate(0.86);
+    pointer-events: none;
+  }
+
+  .project-carousel-card-hidden {
+    z-index: 1;
+    opacity: 0;
+    transform: translateX(-50%) translateY(3rem) scale(0.82);
+    pointer-events: none;
+  }
+
+  .project-carousel-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: rgba(0, 89, 255, 0.18);
+    transition: transform 0.24s ease, background-color 0.24s ease;
+  }
+
+  .project-carousel-dot-active {
+    background: #0059ff;
+    transform: scale(1.16);
+  }
+
+  .project-collection-pill {
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid rgba(0, 89, 255, 0.12);
+    border-radius: 999px;
+    background: rgba(0, 89, 255, 0.06);
+    color: #0059ff;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .project-preview-case {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at top right, color-mix(in srgb, var(--project-accent) 26%, transparent), transparent 32%),
+      linear-gradient(145deg, var(--project-from), var(--project-to));
+  }
+
+  .project-preview-case::before {
+    content: "";
+    position: absolute;
+    inset: auto -12% -28% auto;
+    width: 11rem;
+    height: 11rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--project-accent) 58%, transparent);
+    filter: blur(54px);
+    opacity: 0.52;
+    pointer-events: none;
+  }
+
+  .project-preview-case::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 28%, rgba(4, 8, 20, 0.28) 100%),
+      radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.12), transparent 18%);
+    pointer-events: none;
+  }
+
+  .project-preview-topline,
+  .project-preview-copy {
+    position: relative;
+    z-index: 1;
+  }
+
+  .project-preview-topline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+  }
+
+  .project-preview-domain,
+  .project-preview-live,
+  .project-preview-kicker,
+  .project-card-link {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .project-preview-domain {
+    color: rgba(236, 244, 255, 0.76);
+  }
+
+  .project-preview-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: white;
+  }
+
+  .project-preview-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    max-width: 18rem;
+  }
+
+  .project-preview-kicker {
+    color: color-mix(in srgb, var(--project-accent) 80%, white 20%);
+  }
+
+  .project-preview-title {
+    color: white;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(1.35rem, 2vw, 1.8rem);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  .project-preview-summary {
+    max-width: 30ch;
+    color: rgba(220, 232, 255, 0.82);
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+
+  .project-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #0059ff;
+  }
+
   .tag-pill {
     border: 1px solid rgba(0, 89, 255, 0.2);
     border-radius: 999px;
@@ -1935,6 +2125,22 @@
   .service-page-hero-title {
     max-width: 15ch;
   }
+
+  .project-carousel {
+    min-height: 34rem;
+  }
+
+  .project-carousel-card {
+    width: min(100%, 28rem);
+  }
+
+  .project-carousel-card-next {
+    transform: translateX(calc(-50% + 25rem)) translateY(1.5rem) scale(0.92);
+  }
+
+  .project-carousel-card-prev {
+    transform: translateX(calc(-50% - 25rem)) translateY(1.5rem) scale(0.92);
+  }
 }
 
 @media (min-width: 1920px) {
@@ -2003,6 +2209,22 @@
   .hero-shell {
     padding-top: 6.7rem;
     padding-bottom: 3.8rem;
+  }
+
+  .project-carousel {
+    min-height: 28rem;
+  }
+
+  .project-carousel-card {
+    width: min(100%, 22rem);
+  }
+
+  .project-carousel-card-next {
+    transform: translateX(calc(-50% + 15.5rem)) translateY(1.2rem) scale(0.88);
+  }
+
+  .project-carousel-card-prev {
+    transform: translateX(calc(-50% - 15.5rem)) translateY(1.2rem) scale(0.88);
   }
 
   .hero-visual-stage {
@@ -2082,6 +2304,27 @@
 
   .service-page-hero {
     padding-top: 6rem;
+  }
+
+  .project-carousel {
+    min-height: auto;
+  }
+
+  .project-carousel-card {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+  }
+
+  .project-carousel-card-active {
+    transform: none;
+  }
+
+  .project-carousel-card-next,
+  .project-carousel-card-prev,
+  .project-carousel-card-hidden {
+    display: none;
   }
 
   .service-page-breadcrumbs {
