@@ -21,56 +21,75 @@ const Hero = () => {
 
   return (
     <section id="home" className="hero-section relative flex min-h-screen items-center overflow-hidden">
+      <div className="hero-section-aurora" />
+      <div className="hero-section-mesh" />
+      <div className="hero-section-grid" />
+
       <div className="glow-orb -top-20 left-[10%] h-[350px] w-[350px] opacity-30 blur-[120px]" />
       <div className="glow-orb glow-orb-b left-[55%] top-[40%] h-[250px] w-[250px] opacity-30 blur-[120px]" />
       <div className="glow-orb glow-orb-c bottom-[10%] left-[25%] h-[200px] w-[200px] opacity-30 blur-[120px]" />
+      <div className="hero-section-beam" />
 
-      <div className="site-shell hero-layout pb-16 pt-28 md:pb-20 md:pt-32">
-        <div className="space-y-8">
+      <div className="site-shell hero-layout hero-shell">
+        <div className="hero-content-stack">
           <div className={`inline-flex duration-700 ${enterClass("delay-[500ms]")}`}>
             <span className="hero-badge cursor-default">{t.hero.badge}</span>
           </div>
 
-          <h1 className="max-w-[11.25ch] font-display text-[clamp(48px,6vw,80px)] leading-[1.04] tracking-[-0.03em] text-foreground sm:max-w-[11.5ch]">
-            {t.hero.words.map((word, i) => (
-              <span key={i} className={`block duration-700 ${enterClass(wordDelayClasses[i], "translate-y-[30px]")}`}>
-                {i === 1 ? <span className="text-[#2979ff]">{word}</span> : word}
-              </span>
-            ))}
-          </h1>
+          <div className="hero-copy-cluster">
+            <h1 className="hero-title">
+              {t.hero.words.map((word, i) => (
+                <span key={i} className={`block duration-700 ${enterClass(wordDelayClasses[i], "translate-y-[30px]")}`}>
+                  {i === 1 ? <span className="hero-title-accent">{word}</span> : word}
+                </span>
+              ))}
+            </h1>
 
-          <p className={`section-copy-dark measure-copy duration-700 ${enterClass("delay-[1000ms]")}`}>
-            {t.hero.body}
-          </p>
+            <p className={`hero-body duration-700 ${enterClass("delay-[1000ms]")}`}>
+              {t.hero.body}
+            </p>
+          </div>
 
-          <div className={`flex flex-wrap gap-4 duration-700 ${enterClass("delay-[1150ms]")}`}>
-            <ActionLink href="#contact">
+          <div className={`hero-actions duration-700 ${enterClass("delay-[1150ms]")}`}>
+            <ActionLink href="#contact" className="hero-primary-cta">
               {t.hero.primaryCta}
             </ActionLink>
-            <ActionLink href="#projects" variant="ghost">
+            <ActionLink href="#projects" variant="ghost" className="hero-secondary-cta">
               {t.hero.secondaryCta}
             </ActionLink>
           </div>
+
+          <p className={`hero-support-line duration-700 ${enterClass("delay-[1250ms]")}`}>
+            {t.hero.imageLabel}
+          </p>
         </div>
 
-        <div className={`flex items-start justify-center lg:justify-end duration-[1000ms] ${enterClass("delay-[800ms]", "translate-y-[30px] scale-[0.96]")}`}>
-          <div className="hero-visual-wrap hero-visual-wrap-square mt-2">
-            <div className="hero-card-glow absolute inset-[-24px] z-0 rounded-full bg-primary opacity-[0.35] blur-[80px]" />
-            <div
-              className="hero-visual-shell"
-              style={{ willChange: "transform", backfaceVisibility: "hidden", transform: "translateZ(0)" }}
-            >
-              <div className="hero-visual-rim" />
-              <div className="hero-visual-mask card-neon-border">
-                <div className="hero-visual-grain" />
-                <img
-                  src={workspaceImage}
-                  alt={t.hero.imageLabel}
-                  className="hero-visual-image"
-                />
-                <div className="hero-visual-sheen" />
-                <div className="hero-visual-vignette" />
+        <div
+          className={`hero-visual-column duration-[1000ms] ${enterClass("delay-[800ms]", "translate-y-[30px] scale-[0.96]")}`}
+        >
+          <div className="hero-visual-stage">
+            <div className="hero-visual-backplate" />
+            <div className="hero-visual-ring" />
+
+            <div className="hero-visual-wrap hero-visual-wrap-square mt-2">
+              <div className="hero-card-glow absolute inset-[-24px] z-0 rounded-full bg-primary opacity-[0.35] blur-[80px]" />
+              <div
+                className="hero-visual-shell"
+                style={{ willChange: "transform", backfaceVisibility: "hidden", transform: "translateZ(0)" }}
+              >
+                <div className="hero-visual-rim" />
+                <div className="hero-visual-mask card-neon-border">
+                  <div className="hero-visual-grain" />
+                  <img src={workspaceImage} alt={t.hero.imageLabel} className="hero-visual-image" />
+                  <div className="hero-visual-sheen" />
+                  <div className="hero-visual-vignette" />
+                </div>
               </div>
+            </div>
+
+            <div className="hero-visual-caption">
+              <span className="hero-visual-caption-label">{t.hero.badge}</span>
+              <span className="hero-visual-caption-copy">{t.hero.imageLabel}</span>
             </div>
           </div>
         </div>
