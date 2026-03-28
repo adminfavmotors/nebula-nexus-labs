@@ -238,6 +238,130 @@
     padding-bottom: 4.5rem;
   }
 
+  .trust-strip-section {
+    position: relative;
+    z-index: 2;
+    padding-top: 0;
+    padding-bottom: 1rem;
+  }
+
+  .trust-strip-shell {
+    margin-top: -2.9rem;
+  }
+
+  .trust-strip-panel {
+    position: relative;
+    display: grid;
+    gap: 1.5rem;
+    padding: 1.2rem;
+    border: 1px solid rgba(0, 89, 255, 0.12);
+    border-radius: 1.6rem;
+    background:
+      radial-gradient(circle at top right, rgba(0, 89, 255, 0.08), transparent 30%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(246, 249, 255, 0.98));
+    box-shadow:
+      0 26px 70px rgba(0, 31, 88, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    overflow: hidden;
+  }
+
+  .trust-strip-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(0, 89, 255, 0.06), transparent 16%, transparent 84%, rgba(0, 89, 255, 0.04)),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.42), transparent 35%);
+    pointer-events: none;
+  }
+
+  .trust-strip-intro {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .trust-strip-eyebrow {
+    color: #0059ff;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .trust-strip-title {
+    max-width: 18ch;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(1.4rem, 2.2vw, 2rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  .trust-strip-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.85rem;
+  }
+
+  .trust-strip-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    min-height: 100%;
+    padding: 1rem 1.05rem;
+    border: 1px solid rgba(0, 89, 255, 0.1);
+    border-radius: 1.1rem;
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      0 8px 20px rgba(0, 89, 255, 0.04);
+  }
+
+  .trust-strip-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 1px solid rgba(0, 89, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(0, 89, 255, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  }
+
+  .trust-strip-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .trust-strip-value {
+    color: #0a0a0a;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.96rem;
+    font-weight: 700;
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+
+  .trust-strip-label {
+    color: #42526b;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
   .hero-content-stack {
     display: flex;
     flex-direction: column;
@@ -1574,6 +1698,14 @@
     width: calc(100% - 3rem);
   }
 
+  .trust-strip-panel {
+    padding: 1.35rem;
+  }
+
+  .trust-strip-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .contact-overlay-root {
     padding: 1.5rem;
   }
@@ -1587,6 +1719,21 @@
   .hero-layout {
     grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
     gap: 4.2rem;
+  }
+
+  .trust-strip-shell {
+    margin-top: -3.35rem;
+  }
+
+  .trust-strip-panel {
+    grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
+    gap: 1.25rem 1.5rem;
+    padding: 1.45rem;
+  }
+
+  .trust-strip-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.95rem;
   }
 
   .about-layout {
@@ -1647,6 +1794,14 @@
   .hero-layout {
     grid-template-columns: minmax(0, 1fr) minmax(36rem, 0.98fr);
     gap: 5rem;
+  }
+
+  .trust-strip-shell {
+    margin-top: -3.6rem;
+  }
+
+  .trust-strip-panel {
+    grid-template-columns: minmax(20rem, 0.7fr) minmax(0, 1.3fr);
   }
 
   .hero-title {
@@ -1753,6 +1908,24 @@
   .hero-shell {
     padding-top: 6.15rem;
     padding-bottom: 3.2rem;
+  }
+
+  .trust-strip-shell {
+    margin-top: -2.35rem;
+  }
+
+  .trust-strip-panel {
+    padding: 1rem;
+    border-radius: 1.35rem;
+  }
+
+  .trust-strip-item {
+    padding: 0.95rem;
+  }
+
+  .trust-strip-icon {
+    width: 2.2rem;
+    height: 2.2rem;
   }
 
   .hero-content-stack {
