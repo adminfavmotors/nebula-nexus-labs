@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties, type MouseEvent } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
@@ -16,9 +16,10 @@ const Projects = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "center",
-    loop: items.length > 2,
-    duration: 28,
+    align: "start",
+    loop: items.length > 3,
+    duration: 26,
+    dragFree: false,
   });
 
   useEffect(() => {
@@ -41,15 +42,6 @@ const Projects = () => {
     };
   }, [emblaApi]);
 
-  const handleCardClick = (event: MouseEvent<HTMLAnchorElement>, index: number) => {
-    if (!emblaApi || index === selectedIndex) {
-      return;
-    }
-
-    event.preventDefault();
-    emblaApi.scrollTo(index);
-  };
-
   return (
     <Section id="projects" tone="light" ref={ref}>
       <SectionHeader
@@ -62,16 +54,10 @@ const Projects = () => {
         action={
           <div className="reveal-element flex flex-wrap items-center gap-3 sm:gap-4" data-delay="0.1">
             <span className="project-collection-pill hidden sm:inline-flex">{t.projects.collectionLabel}</span>
-            <IconButton
-              onClick={() => emblaApi?.scrollPrev()}
-              aria-label={t.projects.previousLabel}
-            >
+            <IconButton onClick={() => emblaApi?.scrollPrev()} aria-label={t.projects.previousLabel}>
               <ChevronLeft size={16} className="text-primary" />
             </IconButton>
-            <IconButton
-              onClick={() => emblaApi?.scrollNext()}
-              aria-label={t.projects.nextLabel}
-            >
+            <IconButton onClick={() => emblaApi?.scrollNext()} aria-label={t.projects.nextLabel}>
               <ChevronRight size={16} className="text-primary" />
             </IconButton>
           </div>
@@ -81,85 +67,69 @@ const Projects = () => {
       <div className="project-carousel-shell reveal-element" data-delay="0.12">
         <div className="project-carousel-viewport" ref={emblaRef}>
           <div className="project-carousel-track">
-            {items.map((project, index) => {
-              const isActive = index === selectedIndex;
-
-              return (
-                <div className="project-carousel-slide" key={`${project.name}-${project.href}`}>
-                  <a
-                    href={project.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(event) => handleCardClick(event, index)}
-                    className="project-carousel-link"
-                    aria-label={`${t.projects.openLabel}: ${project.name}`}
-                  >
-                    <SurfaceCard
-                      spotlight
-                      className={cx(
-                        "project-case-card card-neon-border project-showcase-card",
-                        isActive ? "project-showcase-card-active" : "project-showcase-card-inactive",
-                      )}
+            {items.map((project) => (
+              <div className="project-carousel-slide" key={`${project.name}-${project.href}`}>
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="project-carousel-link"
+                  aria-label={`${t.projects.openLabel}: ${project.name}`}
+                >
+                  <SurfaceCard spotlight className="project-card project-card-surface">
+                    <div
+                      className="project-card-preview"
+                      style={
+                        {
+                          "--project-from": project.palette.from,
+                          "--project-to": project.palette.to,
+                          "--project-accent": project.palette.accent,
+                        } as CSSProperties
+                      }
                     >
-                      <div
-                        className="project-preview-surface project-preview-case"
-                        style={
-                          {
-                            "--project-from": project.palette.from,
-                            "--project-to": project.palette.to,
-                            "--project-accent": project.palette.accent,
-                          } as CSSProperties
-                        }
-                      >
-                        <div className="project-preview-browser">
-                          <div className="project-preview-browser-topline">
-                            <span className="project-preview-browser-dots">
-                              <span />
-                              <span />
-                              <span />
-                            </span>
-                            <span className="project-preview-domain">{project.domain}</span>
-                            <span className="project-preview-live">
-                              {t.projects.liveLabel}
-                              <ArrowUpRight size={14} />
-                            </span>
-                          </div>
-
-                          <div className="project-preview-browser-body">
-                            <div className="project-preview-copy">
-                              <span className="project-preview-kicker">{project.location}</span>
-                              <strong className="project-preview-title">{project.name}</strong>
-                              <p className="project-preview-summary">{project.summary}</p>
-                            </div>
-
-                            <div className="project-preview-metric-stack" aria-hidden="true">
-                              <span className="project-preview-metric project-preview-metric-strong">{project.tag}</span>
-                              <span className="project-preview-metric">{project.location}</span>
-                              <span className="project-preview-metric">Live</span>
-                            </div>
-                          </div>
-                        </div>
+                      <div className="project-card-preview-bar">
+                        <span className="project-card-preview-dots" aria-hidden="true">
+                          <span />
+                          <span />
+                          <span />
+                        </span>
+                        <span className="project-card-domain">{project.domain}</span>
                       </div>
 
-                      <div className="project-card-body">
-                        <div className="project-card-meta">
-                          <span className="tag-pill shrink-0">{project.tag}</span>
-                          <span className="project-card-location">{project.location}</span>
+                      <div className="project-card-preview-body">
+                        <div className="project-card-preview-stack">
+                          <span className="project-card-kicker">{project.tag}</span>
+                          <strong className="project-card-preview-title">{project.name}</strong>
+                          <p className="project-card-preview-summary">{project.summary}</p>
                         </div>
 
-                        <div className="project-card-bottomline">
-                          <span className="heading-balance project-card-heading">{project.name}</span>
-                          <span className="project-card-link">
-                            {t.projects.openLabel}
-                            <ArrowUpRight size={14} />
-                          </span>
+                        <div className="project-card-preview-mock" aria-hidden="true">
+                          <span className="project-card-preview-pill project-card-preview-pill-accent" />
+                          <span className="project-card-preview-line project-card-preview-line-strong" />
+                          <span className="project-card-preview-line" />
+                          <span className="project-card-preview-line project-card-preview-line-short" />
                         </div>
                       </div>
-                    </SurfaceCard>
-                  </a>
-                </div>
-              );
-            })}
+                    </div>
+
+                    <div className="project-card-content">
+                      <div className="project-card-meta">
+                        <span className="tag-pill shrink-0">{project.location}</span>
+                        <span className="project-card-location">{project.tag}</span>
+                      </div>
+
+                      <div className="project-card-footer">
+                        <span className="heading-balance project-card-title">{project.name}</span>
+                        <span className="project-card-link">
+                          {t.projects.openLabel}
+                          <ArrowUpRight size={14} />
+                        </span>
+                      </div>
+                    </div>
+                  </SurfaceCard>
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -171,7 +141,7 @@ const Projects = () => {
             type="button"
             onClick={() => emblaApi?.scrollTo(index)}
             className={cx("project-carousel-dot", index === selectedIndex && "project-carousel-dot-active")}
-            aria-label={`${t.projects.openLabel}: ${items[index]?.name ?? index + 1}`}
+            aria-label={`${t.projects.nextLabel}: ${items[index]?.name ?? index + 1}`}
           />
         ))}
       </div>
