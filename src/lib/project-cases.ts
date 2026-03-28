@@ -141,7 +141,7 @@ const projectCases: ProjectCaseEntry[] = [
       pl: {
         name: "Teal & Tale Aesthetics",
         tag: "Beauty",
-        summary: "Lifestyle’owa strona salonu beauty z miękkim klimatem premium i wyważonym UX.",
+        summary: "Lifestyle'owa strona salonu beauty z miękkim klimatem premium i wyważonym UX.",
         location: "Kraków",
       },
       en: {

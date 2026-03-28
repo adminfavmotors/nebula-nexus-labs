@@ -17,10 +17,10 @@ const overlayCopy = {
   pl: {
     eyebrow: "Szybki kontakt",
     title: "Opowiedz nam o swoim projekcie",
-    body: "Zostaw kilka konkretow. Wrocimy z odpowiedzia tak szybko, jak to mozliwe.",
+    body: "Zostaw kilka konkretów. Wrócimy z odpowiedzią tak szybko, jak to możliwe.",
     closeLabel: "Zamknij okno kontaktowe",
-    successTitle: "Wiadomosc wyslana",
-    successBody: "Dziekujemy za kontakt. Odezwie sie do Ciebie niedlugo i zyczymy Ci dobrego dnia.",
+    successTitle: "Wiadomość wysłana",
+    successBody: "Dziękujemy za kontakt. Odezwie się do Ciebie niedługo i życzymy Ci dobrego dnia.",
   },
   en: {
     eyebrow: "Quick contact",
@@ -129,11 +129,8 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
                   role="dialog"
                   aria-modal="true"
                   aria-labelledby="contact-overlay-title"
-                  className={`contact-overlay-panel card-neon-border ${isOpen ? "contact-overlay-panel-open" : ""}`}
+                  className={`contact-overlay-panel neon-frame-soft ${isOpen ? "contact-overlay-panel-open" : ""}`}
                 >
-                  <div className="glow-orb left-[-8%] top-[-6%] h-[180px] w-[180px] opacity-30 blur-[100px]" />
-                  <div className="glow-orb glow-orb-b bottom-[-10%] right-[-6%] h-[170px] w-[170px] opacity-30 blur-[100px]" />
-
                   <div className="contact-overlay-header">
                     <div className="space-y-3">
                       <span className="hero-badge cursor-default">{copy.eyebrow}</span>

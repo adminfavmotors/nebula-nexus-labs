@@ -76,7 +76,7 @@ const Projects = () => {
                   className="project-carousel-link"
                   aria-label={`${t.projects.openLabel}: ${project.name}`}
                 >
-                  <SurfaceCard spotlight className="project-card project-card-surface card-neon-border">
+                  <SurfaceCard className="project-card project-card-surface card-neon-border">
                     <div
                       className="project-card-preview"
                       style={
@@ -104,18 +104,6 @@ const Projects = () => {
                           <span />
                         </span>
                         <span className="project-card-domain">{project.domain}</span>
-                      </div>
-
-                      <div className="project-card-preview-body">
-                        <div className="project-card-preview-stack">
-                          <span className="project-card-kicker">{project.tag}</span>
-                          <strong className="project-card-preview-title">{project.name}</strong>
-                        </div>
-
-                        <div className="project-card-preview-chip-row" aria-hidden="true">
-                          <span className="project-card-preview-chip">{project.location}</span>
-                          <span className="project-card-preview-chip project-card-preview-chip-accent">{project.tag}</span>
-                        </div>
                       </div>
                     </div>
 
