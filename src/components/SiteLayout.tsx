@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ScrollToTopButton from "@/components/ScrollToTopButton";
 
 type SiteLayoutProps = {
   children: ReactNode;
@@ -12,6 +13,7 @@ const SiteLayout = ({ children }: SiteLayoutProps) => {
       <Navbar />
       {children}
       <Footer />
+      <ScrollToTopButton />
     </div>
   );
 };
