@@ -86,11 +86,6 @@ const Hero = () => {
                 </div>
               </div>
             </div>
-
-            <div className="hero-visual-caption">
-              <span className="hero-visual-caption-label">{t.hero.badge}</span>
-              <span className="hero-visual-caption-copy">{t.hero.imageLabel}</span>
-            </div>
           </div>
         </div>
       </div>
