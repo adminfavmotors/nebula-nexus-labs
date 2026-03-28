@@ -44,7 +44,12 @@ const Projects = () => {
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {visibleItems.map((project, i) => (
-          <SurfaceCard key={`${project.name}-${i}`} className="reveal-element group cursor-pointer" data-delay={String(i * 0.12)}>
+          <SurfaceCard
+            key={`${project.name}-${i}`}
+            spotlight
+            className="reveal-element group cursor-pointer"
+            data-delay={String(i * 0.12)}
+          >
             <div className="project-preview-surface min-h-[14rem] sm:min-h-[15rem]">
               <span className="absolute bottom-3 left-4 font-body text-[11px] font-medium uppercase tracking-[0.15em] text-[#7a9acc]">
                 {t.projects.imageLabel}

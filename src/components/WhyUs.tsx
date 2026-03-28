@@ -23,7 +23,7 @@ const WhyUs = () => {
       </SectionTitle>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {items.map((item, i) => (
-          <SurfaceCard key={i} className="reveal-element relative p-7 sm:p-8" data-delay={String(i * 0.12)}>
+          <SurfaceCard key={i} spotlight className="reveal-element relative p-7 sm:p-8" data-delay={String(i * 0.12)}>
             <div className="glow-orb -left-6 -top-6 h-[100px] w-[100px] opacity-25 blur-[60px]" />
             <div className="icon-circle mb-5">
               <item.icon size={20} className="text-primary" />

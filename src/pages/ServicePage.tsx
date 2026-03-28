@@ -132,7 +132,7 @@ const ServicePage = () => {
               </div>
             </div>
 
-            <SurfaceCard className="self-start p-6 sm:p-7">
+            <SurfaceCard spotlight className="self-start p-6 sm:p-7">
               <ul className="service-page-list">
                 {detail.audienceBullets.map((item) => (
                   <li key={item} className="service-page-list-item section-copy-light service-page-card-copy">
@@ -152,7 +152,7 @@ const ServicePage = () => {
 
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             {detail.deliverablesItems.map((item, index) => (
-              <SurfaceCard key={item.title} className="relative p-6 sm:p-7">
+              <SurfaceCard key={item.title} spotlight className="relative p-6 sm:p-7">
                 <span className="font-display text-[0.85rem] font-bold tracking-[0.2em] text-[#8fb4ff]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
@@ -190,7 +190,7 @@ const ServicePage = () => {
 
             <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
               {detail.processSteps.map((step, index) => (
-                <SurfaceCard key={step.title} className="service-page-step-card p-5 sm:p-6">
+                <SurfaceCard key={step.title} spotlight className="service-page-step-card p-5 sm:p-6">
                   <div className="service-page-step-grid">
                     <span className="service-page-step-number">{String(index + 1).padStart(2, "0")}.</span>
                     <div className="space-y-3">
