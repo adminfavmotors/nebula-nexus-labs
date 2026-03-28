@@ -51,7 +51,7 @@ const projectCases: ProjectCaseEntry[] = [
       pl: {
         name: "MotoFix Serwis",
         tag: "Warsztat",
-        summary: "Serwisowa strona lokalna z czytelnym układem usług i szybkim wejściem do kontaktu.",
+        summary: "Lokalna strona serwisowa z czytelnym układem usług i szybkim wejściem do kontaktu.",
         location: "Kraków",
       },
       en: {
@@ -71,13 +71,13 @@ const projectCases: ProjectCaseEntry[] = [
     },
     content: {
       pl: {
-        name: "Wodny Standart",
+        name: "Wodny Start",
         tag: "Instalacje",
         summary: "Techniczna strona usługowa dla marki od systemów grzewczych i nowoczesnych instalacji.",
         location: "Polska",
       },
       en: {
-        name: "Wodny Standart",
+        name: "Wodny Start",
         tag: "Installations",
         summary: "Technical service website for a brand focused on heating systems and modern installations.",
         location: "Poland",
@@ -93,13 +93,13 @@ const projectCases: ProjectCaseEntry[] = [
     },
     content: {
       pl: {
-        name: "SmileArt Dental",
+        name: "Smile Art Digital",
         tag: "Stomatologia",
-        summary: "Elegancka strona kliniki stomatologicznej z premium presentation i spokojną typografią.",
+        summary: "Elegancka strona kliniki stomatologicznej z premium prezentacją i spokojną typografią.",
         location: "Kraków",
       },
       en: {
-        name: "SmileArt Dental",
+        name: "Smile Art Digital",
         tag: "Dental",
         summary: "Elegant dental clinic website with premium presentation and calm typography.",
         location: "Krakow",
@@ -137,13 +137,13 @@ const projectCases: ProjectCaseEntry[] = [
     },
     content: {
       pl: {
-        name: "DentaKraków Smile Studio",
+        name: "DentaCare Smile Studio",
         tag: "Klinika",
-        summary: "Strona medyczna z lokalnym pozycjonowaniem, czytelną nawigacją i wysokim zaufaniem.",
+        summary: "Strona medyczna z lokalnym pozycjonowaniem, czytelną nawigacją i prezentacją wysokiego zaufania.",
         location: "Kraków",
       },
       en: {
-        name: "DentaKraków Smile Studio",
+        name: "DentaCare Smile Studio",
         tag: "Clinic",
         summary: "Medical website with local SEO focus, clear navigation and high-trust presentation.",
         location: "Krakow",

@@ -1,25 +1,54 @@
-import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useEffect, useState, type CSSProperties, type MouseEvent } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { useMemo, useState, type CSSProperties } from "react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useI18n } from "@/lib/i18n";
 import { getProjectCases } from "@/lib/project-cases";
+import { cx } from "@/lib/cx";
 import { Section, SectionHeader } from "@/components/primitives/Section";
 import { SurfaceCard } from "@/components/primitives/SurfaceCard";
 import { IconButton } from "@/components/primitives/Actions";
 
 const Projects = () => {
   const ref = useScrollReveal(0.12);
-  const [activeIndex, setActiveIndex] = useState(0);
   const { locale, t } = useI18n();
   const items = getProjectCases(locale);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "center",
+    loop: items.length > 2,
+    duration: 28,
+  });
 
-  const carouselItems = useMemo(() => {
-    if (items.length === 0) {
-      return [];
+  useEffect(() => {
+    if (!emblaApi) {
+      return;
     }
 
-    return items.map((_, offset) => items[(activeIndex + offset) % items.length]);
-  }, [activeIndex, items]);
+    const syncState = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+      setScrollSnaps(emblaApi.scrollSnapList());
+    };
+
+    syncState();
+    emblaApi.on("select", syncState);
+    emblaApi.on("reInit", syncState);
+
+    return () => {
+      emblaApi.off("select", syncState);
+      emblaApi.off("reInit", syncState);
+    };
+  }, [emblaApi]);
+
+  const handleCardClick = (event: MouseEvent<HTMLAnchorElement>, index: number) => {
+    if (!emblaApi || index === selectedIndex) {
+      return;
+    }
+
+    event.preventDefault();
+    emblaApi.scrollTo(index);
+  };
 
   return (
     <Section id="projects" tone="light" ref={ref}>
@@ -34,13 +63,13 @@ const Projects = () => {
           <div className="reveal-element flex flex-wrap items-center gap-3 sm:gap-4" data-delay="0.1">
             <span className="project-collection-pill hidden sm:inline-flex">{t.projects.collectionLabel}</span>
             <IconButton
-              onClick={() => setActiveIndex((current) => (current - 1 + items.length) % items.length)}
+              onClick={() => emblaApi?.scrollPrev()}
               aria-label={t.projects.previousLabel}
             >
               <ChevronLeft size={16} className="text-primary" />
             </IconButton>
             <IconButton
-              onClick={() => setActiveIndex((current) => (current + 1) % items.length)}
+              onClick={() => emblaApi?.scrollNext()}
               aria-label={t.projects.nextLabel}
             >
               <ChevronRight size={16} className="text-primary" />
@@ -49,77 +78,100 @@ const Projects = () => {
         }
       />
 
-      <div className="project-carousel reveal-element" data-delay="0.12">
-        {carouselItems.map((project, index) => {
-          const slotClass =
-            index === 0
-              ? "project-carousel-card-active"
-              : index === 1
-                ? "project-carousel-card-next"
-                : index === items.length - 1
-                  ? "project-carousel-card-prev"
-                  : "project-carousel-card-hidden";
+      <div className="project-carousel-shell reveal-element" data-delay="0.12">
+        <div className="project-carousel-viewport" ref={emblaRef}>
+          <div className="project-carousel-track">
+            {items.map((project, index) => {
+              const isActive = index === selectedIndex;
 
-          return (
-            <a
-              key={`${project.name}-${project.href}`}
-              href={project.href}
-              target="_blank"
-              rel="noreferrer"
-              className={`project-carousel-card ${slotClass}`}
-            >
-              <SurfaceCard spotlight className="project-case-card group h-full cursor-pointer">
-                <div
-                  className="project-preview-surface project-preview-case min-h-[14rem] sm:min-h-[15rem]"
-                  style={
-                    {
-                      "--project-from": project.palette.from,
-                      "--project-to": project.palette.to,
-                      "--project-accent": project.palette.accent,
-                    } as CSSProperties
-                  }
-                >
-                  <div className="project-preview-topline">
-                    <span className="project-preview-domain">{project.domain}</span>
-                    <span className="project-preview-live">
-                      {t.projects.liveLabel}
-                      <ArrowUpRight size={14} />
-                    </span>
-                  </div>
+              return (
+                <div className="project-carousel-slide" key={`${project.name}-${project.href}`}>
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={(event) => handleCardClick(event, index)}
+                    className="project-carousel-link"
+                    aria-label={`${t.projects.openLabel}: ${project.name}`}
+                  >
+                    <SurfaceCard
+                      spotlight
+                      className={cx(
+                        "project-case-card card-neon-border project-showcase-card",
+                        isActive ? "project-showcase-card-active" : "project-showcase-card-inactive",
+                      )}
+                    >
+                      <div
+                        className="project-preview-surface project-preview-case"
+                        style={
+                          {
+                            "--project-from": project.palette.from,
+                            "--project-to": project.palette.to,
+                            "--project-accent": project.palette.accent,
+                          } as CSSProperties
+                        }
+                      >
+                        <div className="project-preview-browser">
+                          <div className="project-preview-browser-topline">
+                            <span className="project-preview-browser-dots">
+                              <span />
+                              <span />
+                              <span />
+                            </span>
+                            <span className="project-preview-domain">{project.domain}</span>
+                            <span className="project-preview-live">
+                              {t.projects.liveLabel}
+                              <ArrowUpRight size={14} />
+                            </span>
+                          </div>
 
-                  <div className="project-preview-copy">
-                    <span className="project-preview-kicker">{project.location}</span>
-                    <strong className="project-preview-title">{project.name}</strong>
-                    <p className="project-preview-summary">{project.summary}</p>
-                  </div>
+                          <div className="project-preview-browser-body">
+                            <div className="project-preview-copy">
+                              <span className="project-preview-kicker">{project.location}</span>
+                              <strong className="project-preview-title">{project.name}</strong>
+                              <p className="project-preview-summary">{project.summary}</p>
+                            </div>
+
+                            <div className="project-preview-metric-stack" aria-hidden="true">
+                              <span className="project-preview-metric project-preview-metric-strong">{project.tag}</span>
+                              <span className="project-preview-metric">{project.location}</span>
+                              <span className="project-preview-metric">Live</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="project-card-body">
+                        <div className="project-card-meta">
+                          <span className="tag-pill shrink-0">{project.tag}</span>
+                          <span className="project-card-location">{project.location}</span>
+                        </div>
+
+                        <div className="project-card-bottomline">
+                          <span className="heading-balance project-card-heading">{project.name}</span>
+                          <span className="project-card-link">
+                            {t.projects.openLabel}
+                            <ArrowUpRight size={14} />
+                          </span>
+                        </div>
+                      </div>
+                    </SurfaceCard>
+                  </a>
                 </div>
-
-                <div className="flex flex-col items-start gap-3 p-7 sm:p-8">
-                  <span className="heading-balance measure-card min-w-0 font-body font-semibold leading-snug sm:max-w-[19ch] lg:max-w-[18ch]">
-                    {project.name}
-                  </span>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="tag-pill shrink-0">{project.tag}</span>
-                    <span className="project-card-link">
-                      {t.projects.openLabel}
-                      <ArrowUpRight size={14} />
-                    </span>
-                  </div>
-                </div>
-              </SurfaceCard>
-            </a>
-          );
-        })}
+              );
+            })}
+          </div>
+        </div>
       </div>
 
-      <div className="mt-5 flex items-center justify-center gap-2 sm:hidden">
-        {items.map((project, index) => (
+      <div className="mt-6 flex items-center justify-center gap-2.5">
+        {scrollSnaps.map((_, index) => (
           <button
-            key={`${project.href}-dot`}
+            key={`project-dot-${index}`}
             type="button"
-            onClick={() => setActiveIndex(index)}
-            className={`project-carousel-dot ${index === activeIndex ? "project-carousel-dot-active" : ""}`}
-            aria-label={`${t.projects.openLabel}: ${project.name}`}
+            onClick={() => emblaApi?.scrollTo(index)}
+            className={cx("project-carousel-dot", index === selectedIndex && "project-carousel-dot-active")}
+            aria-label={`${t.projects.openLabel}: ${items[index]?.name ?? index + 1}`}
           />
         ))}
       </div>
