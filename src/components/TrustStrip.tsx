@@ -2,6 +2,7 @@ import { Layers3, MonitorSmartphone, Route, Search } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useI18n } from "@/lib/i18n";
 import { trustStripContent } from "@/lib/trust-strip-content";
+import { SurfaceCard } from "@/components/primitives/SurfaceCard";
 
 const icons = [Layers3, MonitorSmartphone, Search, Route] as const;
 
@@ -24,7 +25,12 @@ const TrustStrip = () => {
               const Icon = icons[index];
 
               return (
-                <article key={item.value} className="trust-strip-item reveal-element" data-delay={String(0.08 + index * 0.07)}>
+                <SurfaceCard
+                  key={item.value}
+                  spotlight
+                  className="trust-strip-card reveal-element"
+                  data-delay={String(0.08 + index * 0.07)}
+                >
                   <div className="trust-strip-icon">
                     <Icon size={16} className="text-primary" />
                   </div>
@@ -33,7 +39,7 @@ const TrustStrip = () => {
                     <p className="trust-strip-value">{item.value}</p>
                     <p className="trust-strip-label">{item.label}</p>
                   </div>
-                </article>
+                </SurfaceCard>
               );
             })}
           </div>
