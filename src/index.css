@@ -1021,6 +1021,220 @@
     outline: none;
   }
 
+  .contact-overlay-root {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem;
+    pointer-events: none;
+  }
+
+  .contact-overlay-root-open {
+    pointer-events: auto;
+  }
+
+  .contact-overlay-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 8, 28, 0.72);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact-overlay-root-open .contact-overlay-backdrop {
+    opacity: 1;
+  }
+
+  .contact-overlay-panel {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 44rem);
+    padding: 1.25rem;
+    border: 1px solid rgba(71, 128, 255, 0.14);
+    border-radius: 1.75rem;
+    background:
+      radial-gradient(circle at top left, rgba(66, 120, 255, 0.22), transparent 26%),
+      radial-gradient(circle at bottom right, rgba(0, 89, 255, 0.18), transparent 30%),
+      linear-gradient(180deg, rgba(5, 16, 52, 0.96), rgba(4, 12, 40, 0.98));
+    box-shadow:
+      0 28px 90px rgba(0, 0, 0, 0.44),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+    transition:
+      opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact-overlay-panel-open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .contact-overlay-header {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .contact-overlay-title {
+    max-width: 13ch;
+    color: white;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(2rem, 4vw, 3.3rem);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  .contact-overlay-copy {
+    max-width: 48ch;
+    color: rgba(221, 232, 255, 0.82);
+    font-family: "DM Sans", sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+
+  .contact-overlay-close {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    border: 1px solid rgba(132, 175, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #eef5ff;
+    transition:
+      background-color 0.22s ease,
+      transform 0.22s ease,
+      border-color 0.22s ease;
+  }
+
+  .contact-overlay-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(132, 175, 255, 0.28);
+    transform: translateY(-1px);
+  }
+
+  .contact-overlay-meta {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.35rem;
+    color: rgba(176, 201, 244, 0.82);
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.92rem;
+  }
+
+  .contact-overlay-meta-separator {
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 999px;
+    background: rgba(126, 178, 255, 0.72);
+  }
+
+  .contact-overlay-field {
+    border-color: rgba(132, 175, 255, 0.16);
+    background: rgba(255, 255, 255, 0.06);
+    color: #eef5ff;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.03),
+      0 10px 26px rgba(0, 0, 0, 0.12);
+  }
+
+  .contact-overlay-field::placeholder {
+    color: rgba(176, 201, 244, 0.58);
+  }
+
+  .contact-overlay-field:focus {
+    border-color: rgba(126, 178, 255, 0.52);
+    box-shadow:
+      0 0 0 1px rgba(126, 178, 255, 0.38),
+      0 16px 34px rgba(0, 89, 255, 0.16);
+  }
+
+  .contact-overlay-textarea {
+    min-height: 9.5rem;
+  }
+
+  .contact-overlay-legal {
+    max-width: 32rem;
+    color: rgba(176, 201, 244, 0.72);
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .contact-success-banner {
+    position: fixed;
+    left: 50%;
+    bottom: 1.25rem;
+    z-index: 72;
+    width: min(calc(100% - 2rem), 30rem);
+    padding: 1rem 1.15rem;
+    border: 1px solid rgba(108, 177, 255, 0.18);
+    border-radius: 1.35rem;
+    background:
+      radial-gradient(circle at top left, rgba(86, 149, 255, 0.2), transparent 30%),
+      linear-gradient(160deg, rgba(6, 24, 76, 0.95), rgba(3, 14, 46, 0.98));
+    box-shadow: 0 20px 70px rgba(0, 12, 44, 0.44);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(18px) scale(0.97);
+    transition:
+      opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact-success-banner-open {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  .contact-success-banner-glow {
+    position: absolute;
+    inset: auto auto -18% -10%;
+    width: 12rem;
+    height: 12rem;
+    border-radius: 999px;
+    background: rgba(0, 89, 255, 0.4);
+    filter: blur(70px);
+    pointer-events: none;
+  }
+
+  .contact-success-banner-title {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 0.35rem;
+    color: white;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .contact-success-banner-copy {
+    position: relative;
+    z-index: 1;
+    color: rgba(221, 232, 255, 0.86);
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
   .cta-panel {
     overflow: hidden;
     border-radius: 20px;
@@ -1112,6 +1326,15 @@
 @media (min-width: 768px) {
   .site-shell {
     width: calc(100% - 3rem);
+  }
+
+  .contact-overlay-root {
+    align-items: center;
+    padding: 1.5rem;
+  }
+
+  .contact-overlay-panel {
+    padding: 1.45rem 1.45rem 1.35rem;
   }
 }
 
@@ -1270,6 +1493,25 @@
 
   .service-page-breadcrumb-link {
     font-size: 0.88rem;
+  }
+
+  .contact-overlay-panel {
+    border-radius: 1.4rem;
+  }
+
+  .contact-overlay-header {
+    flex-direction: column;
+  }
+
+  .contact-overlay-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .contact-overlay-title {
+    max-width: 10ch;
+    font-size: clamp(1.9rem, 10vw, 2.7rem);
   }
 
   .service-page-hero-title {

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, type MouseEvent } from "react";
 import { Link, useParams } from "react-router-dom";
 import SiteLayout from "@/components/SiteLayout";
 import ContactForm from "@/components/ContactForm";
@@ -10,6 +10,7 @@ import { useI18n } from "@/lib/i18n";
 import { getServiceCatalog, getServiceBySlug, getServicePageUi } from "@/lib/service-pages";
 import { getServicePageDetail } from "@/lib/service-page-details";
 import { usePageSeo } from "@/lib/seo";
+import { useContactOverlay } from "@/components/contact/contact-overlay-context";
 
 const pageCopy = {
   pl: {
@@ -32,6 +33,7 @@ const ServicePage = () => {
   const catalog = getServiceCatalog(locale);
   const ui = getServicePageUi(locale);
   const copy = pageCopy[locale];
+  const { openContactOverlay } = useContactOverlay();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -49,6 +51,10 @@ const ServicePage = () => {
 
   const related = catalog.filter((item) => item.slug !== slug).slice(0, 3);
   const heroHighlights = detail.deliverablesItems.slice(0, 3);
+  const handleContactClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    openContactOverlay();
+  };
 
   return (
     <SiteLayout>
@@ -83,7 +89,9 @@ const ServicePage = () => {
               <p className="section-copy-dark copy-pretty service-page-hero-copy">{detail.heroLead}</p>
 
               <div className="flex flex-wrap gap-4">
-                <ActionLink href="#contact">{detail.heroCta}</ActionLink>
+                <ActionLink href="#contact" onClick={handleContactClick}>
+                  {detail.heroCta}
+                </ActionLink>
                 <ActionLink href="/#services" variant="ghost">
                   {ui.secondaryCta}
                 </ActionLink>
@@ -226,9 +234,11 @@ const ServicePage = () => {
                 ))}
               </div>
               <div className="flex flex-wrap gap-4">
-                <ActionLink href="#contact">{detail.closingPrimaryCta}</ActionLink>
+                <ActionLink href="#contact" onClick={handleContactClick}>
+                  {detail.closingPrimaryCta}
+                </ActionLink>
                 {detail.closingSecondaryCta ? (
-                  <ActionLink href="#contact" variant="ghost">
+                  <ActionLink href="#contact" variant="ghost" onClick={handleContactClick}>
                     {detail.closingSecondaryCta}
                   </ActionLink>
                 ) : null}

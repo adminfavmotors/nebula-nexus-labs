@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useI18n, type Locale } from "@/lib/i18n";
 import { cx } from "@/lib/cx";
 import { ActionLink } from "@/components/primitives/Actions";
 import BrandLogo from "@/components/BrandLogo";
+import { useContactOverlay } from "@/components/contact/contact-overlay-context";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -13,11 +14,22 @@ const Navbar = () => {
   const [logoHovered, setLogoHovered] = useState(false);
   const location = useLocation();
   const { locale, setLocale, isTransitioningLocale, t } = useI18n();
+  const { openContactOverlay } = useContactOverlay();
   const closeMenu = () => setMenuOpen(false);
   const isHomePage = location.pathname === "/";
-  const hasLocalContact = isHomePage || location.pathname.startsWith("/uslugi/");
   const resolveSectionHref = (href: string) => (isHomePage ? href : `/${href}`);
-  const contactHref = hasLocalContact ? "#contact" : "/#contact";
+  const contactHref = isHomePage ? "#contact" : "/#contact";
+
+  const handleContactClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (isHomePage) {
+      closeMenu();
+      return;
+    }
+
+    event.preventDefault();
+    closeMenu();
+    openContactOverlay();
+  };
 
   useEffect(() => {
     setVisible(true);
@@ -95,7 +107,7 @@ const Navbar = () => {
               })}
             </div>
 
-            <ActionLink href={contactHref} className="header-cta hidden md:inline-flex">
+            <ActionLink href={contactHref} onClick={handleContactClick} className="header-cta hidden md:inline-flex">
               {t.nav.cta}
             </ActionLink>
 
@@ -134,7 +146,7 @@ const Navbar = () => {
 
           <ActionLink
             href={contactHref}
-            onClick={closeMenu}
+            onClick={handleContactClick}
             className={`mt-8 inline-flex w-full justify-center py-3.5 text-[15px] transition-all duration-300 ${
               menuOpen ? "translate-x-0 opacity-100" : "-translate-x-6 opacity-0"
             }`}

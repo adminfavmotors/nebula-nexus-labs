@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { ContactOverlayProvider } from "@/components/contact/ContactOverlay";
 
 type SiteLayoutProps = {
   children: ReactNode;
@@ -9,9 +10,11 @@ type SiteLayoutProps = {
 const SiteLayout = ({ children }: SiteLayoutProps) => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
-      <Navbar />
-      {children}
-      <Footer />
+      <ContactOverlayProvider>
+        <Navbar />
+        {children}
+        <Footer />
+      </ContactOverlayProvider>
     </div>
   );
 };
