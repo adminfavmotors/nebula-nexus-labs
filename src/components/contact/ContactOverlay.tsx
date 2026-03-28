@@ -6,6 +6,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 import { useLocation } from "react-router-dom";
 import { X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
@@ -40,6 +41,7 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
   const location = useLocation();
   const { locale } = useI18n();
   const copy = overlayCopy[locale];
+  const [isMounted, setIsMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const bannerTimeoutRef = useRef<number | null>(null);
@@ -51,6 +53,10 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
   const openContactOverlay = useCallback(() => {
     setShowBanner(false);
     setIsOpen(true);
+  }, []);
+
+  useEffect(() => {
+    setIsMounted(true);
   }, []);
 
   useEffect(() => {
@@ -112,47 +118,63 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
     <ContactOverlayContext.Provider value={value}>
       {children}
 
-      <div className={`contact-overlay-root ${isOpen ? "contact-overlay-root-open" : ""}`} aria-hidden={!isOpen}>
-        <button type="button" className="contact-overlay-backdrop" onClick={closeContactOverlay} aria-label={copy.closeLabel} />
+      {isMounted
+        ? createPortal(
+            <>
+              <div className={`contact-overlay-root ${isOpen ? "contact-overlay-root-open" : ""}`} aria-hidden={!isOpen}>
+                <button type="button" className="contact-overlay-backdrop" onClick={closeContactOverlay} aria-label={copy.closeLabel} />
 
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="contact-overlay-title"
-          className={`contact-overlay-panel card-neon-border ${isOpen ? "contact-overlay-panel-open" : ""}`}
-        >
-          <div className="glow-orb left-[-8%] top-[-6%] h-[180px] w-[180px] opacity-30 blur-[100px]" />
-          <div className="glow-orb glow-orb-b bottom-[-10%] right-[-6%] h-[170px] w-[170px] opacity-30 blur-[100px]" />
+                <div
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="contact-overlay-title"
+                  className={`contact-overlay-panel card-neon-border ${isOpen ? "contact-overlay-panel-open" : ""}`}
+                >
+                  <div className="glow-orb left-[-8%] top-[-6%] h-[180px] w-[180px] opacity-30 blur-[100px]" />
+                  <div className="glow-orb glow-orb-b bottom-[-10%] right-[-6%] h-[170px] w-[170px] opacity-30 blur-[100px]" />
 
-          <div className="contact-overlay-header">
-            <div className="space-y-3">
-              <span className="hero-badge cursor-default">{copy.eyebrow}</span>
-              <h2 id="contact-overlay-title" className="contact-overlay-title">
-                {copy.title}
-              </h2>
-              <p className="contact-overlay-copy">{copy.body}</p>
-            </div>
+                  <div className="contact-overlay-header">
+                    <div className="space-y-3">
+                      <span className="hero-badge cursor-default">{copy.eyebrow}</span>
+                      <h2 id="contact-overlay-title" className="contact-overlay-title">
+                        {copy.title}
+                      </h2>
+                      <p className="contact-overlay-copy">{copy.body}</p>
+                    </div>
 
-            <button type="button" className="contact-overlay-close" onClick={closeContactOverlay} aria-label={copy.closeLabel}>
-              <X size={18} />
-            </button>
-          </div>
+                    <button
+                      type="button"
+                      className="contact-overlay-close"
+                      onClick={closeContactOverlay}
+                      aria-label={copy.closeLabel}
+                    >
+                      <X size={18} />
+                    </button>
+                  </div>
 
-          <div className="contact-overlay-meta">
-            <span>{siteConfig.contactEmail}</span>
-            <span className="contact-overlay-meta-separator" />
-            <span>{siteConfig.businessPhone}</span>
-          </div>
+                  <div className="contact-overlay-meta">
+                    <span>{siteConfig.contactEmail}</span>
+                    <span className="contact-overlay-meta-separator" />
+                    <span>{siteConfig.businessPhone}</span>
+                  </div>
 
-          <ContactFormPanel mode="modal" autoFocus={isOpen} onSuccess={handleSuccess} />
-        </div>
-      </div>
+                  <ContactFormPanel mode="modal" autoFocus={isOpen} onSuccess={handleSuccess} />
+                </div>
+              </div>
 
-      <div className={`contact-success-banner ${showBanner ? "contact-success-banner-open" : ""}`} role="status" aria-live="polite">
-        <div className="contact-success-banner-glow" />
-        <p className="contact-success-banner-title">{copy.successTitle}</p>
-        <p className="contact-success-banner-copy">{copy.successBody}</p>
-      </div>
+              <div
+                className={`contact-success-banner ${showBanner ? "contact-success-banner-open" : ""}`}
+                role="status"
+                aria-live="polite"
+              >
+                <div className="contact-success-banner-glow" />
+                <p className="contact-success-banner-title">{copy.successTitle}</p>
+                <p className="contact-success-banner-copy">{copy.successBody}</p>
+              </div>
+            </>,
+            document.body,
+          )
+        : null}
     </ContactOverlayContext.Provider>
   );
 }

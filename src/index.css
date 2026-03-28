@@ -1025,14 +1025,20 @@
     position: fixed;
     inset: 0;
     z-index: 70;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    display: grid;
+    place-items: center;
     padding: 1rem;
+    opacity: 0;
+    visibility: hidden;
     pointer-events: none;
+    transition:
+      opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .contact-overlay-root-open {
+    opacity: 1;
+    visibility: visible;
     pointer-events: auto;
   }
 
@@ -1053,6 +1059,8 @@
     position: relative;
     z-index: 1;
     width: min(100%, 44rem);
+    max-height: min(100dvh - 2rem, 52rem);
+    overflow: auto;
     padding: 1.25rem;
     border: 1px solid rgba(71, 128, 255, 0.14);
     border-radius: 1.75rem;
@@ -1329,7 +1337,6 @@
   }
 
   .contact-overlay-root {
-    align-items: center;
     padding: 1.5rem;
   }
 
