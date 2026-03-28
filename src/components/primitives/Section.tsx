@@ -18,7 +18,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(function Section(
   ref,
 ) {
   return (
-    <section ref={ref} className={cx("section-spacing scroll-mt-44 md:scroll-mt-40", toneClassMap[tone], className)} {...props}>
+    <section ref={ref} className={cx("section-spacing scroll-mt-28 md:scroll-mt-24", toneClassMap[tone], className)} {...props}>
       <div className={cx("site-shell", containerClassName)}>{children}</div>
     </section>
   );
