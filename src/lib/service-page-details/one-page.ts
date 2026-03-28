@@ -1,12 +1,12 @@
 import type { ServicePageDetail } from "./types";
 
 export const onePageDetail: ServicePageDetail = {
-  metaTitle: "Strona wizytówka one-page | Nowoczesna strona internetowa od 1 000 zł",
+  metaTitle: "Strona wizytówka one-page od 1 000 zł | NODE48",
   metaDescription:
-    "Prosta, szybka i elegancka strona internetowa w formie one-page. Idealna dla freelancerów i małych firm. Sprawdź, co dostajesz i zamów wycenę.",
-  heroTitle: "Twoja firma w sieci — prosto, szybko i bez zbędnego chaosu",
+    "Nowoczesna strona wizytówka one-page dla freelancerów, małych firm i usług lokalnych. Szybka, responsywna i gotowa pod SEO. Od 1 000 zł.",
+  heroTitle: "Strona wizytówka one-page dla firm, które chcą być widoczne w sieci",
   heroLead:
-    "Strona wizytówka to Twój cyfrowy punkt kontaktowy. Jeden ekran — wszystko, czego potrzebuje Twój klient, żeby do Ciebie zadzwonić lub napisać. Nic więcej, nic mniej.",
+    "Strona wizytówka one-page to Twój cyfrowy punkt kontaktowy. Jeden ekran — wszystko, czego potrzebuje Twój klient, żeby do Ciebie zadzwonić lub napisać. Nic więcej, nic mniej.",
   heroCta: "Chcę taką stronę",
   audienceTitle: "Dla kogo jest ta usługa?",
   audienceIntro: [

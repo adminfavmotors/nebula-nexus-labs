@@ -1,10 +1,10 @@
 import type { ServicePageDetail } from "./types";
 
 export const companyWebsiteDetail: ServicePageDetail = {
-  metaTitle: "Strona firmowa z podstronami — profesjonalna obecność w internecie | od 2 500 zł",
+  metaTitle: "Strona firmowa z podstronami od 2 500 zł | NODE48",
   metaDescription:
-    "Buduję strony firmowe, które pracują dla Ciebie — przyciągają klientów, budują zaufanie i prezentują Twoją ofertę. Sprawdź szczegóły i zamów wycenę.",
-  heroTitle: "Twoja firma zasługuje na stronę, która robi wrażenie — i przynosi klientów",
+    "Strona firmowa z podstronami dla firm usługowych i rozwijających się marek. Lepsza struktura, SEO i wygodna rozbudowa. Od 2 500 zł.",
+  heroTitle: "Strona firmowa z podstronami, która robi wrażenie i przynosi klientów",
   heroLead:
     "Strona firmowa to więcej niż wizytówka. To Twoje biuro, które działa 24 godziny na dobę, 7 dni w tygodniu — odpowiada na pytania, przedstawia ofertę i sprawia, że klient chce się z Tobą skontaktować, zanim w ogóle podniesie słuchawkę.",
   heroCta: "Chcę taką stronę dla mojej firmy",

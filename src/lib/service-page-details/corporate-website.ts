@@ -1,10 +1,10 @@
 import type { ServicePageDetail } from "./types";
 
 export const corporateWebsiteDetail: ServicePageDetail = {
-  metaTitle: "Strona korporacyjna premium — indywidualny projekt dla wymagających firm | od 8 000 zł",
+  metaTitle: "Strona korporacyjna premium od 8 000 zł | NODE48",
   metaDescription:
-    "Tworzę zaawansowane strony internetowe dla firm, dla których wizerunek ma znaczenie. Indywidualny design, animacje, CMS i pełna optymalizacja. Sprawdź szczegóły.",
-  heroTitle: "Kiedy zależy Ci na tym, żeby Twoja strona robiła dokładnie takie wrażenie, jakie chcesz",
+    "Strona korporacyjna premium dla wymagających firm: indywidualny design, rozbudowana architektura, SEO i wysoki standard marki. Od 8 000 zł.",
+  heroTitle: "Strona korporacyjna premium, która buduje właściwe wrażenie od pierwszej wizyty",
   heroLead:
     "Są firmy, dla których strona internetowa to nie tylko punkt kontaktowy — to wizytówka marki, narzędzie sprzedaży i pierwszy argument w rozmowie z klientem. Jeśli należysz do tej grupy, masz przed sobą właściwą ofertę.",
   heroCta: "Porozmawiajmy o Twoim projekcie",

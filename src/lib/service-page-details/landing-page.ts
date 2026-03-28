@@ -1,10 +1,10 @@
 import type { ServicePageDetail } from "./types";
 
 export const landingPageDetail: ServicePageDetail = {
-  metaTitle: "Landing page — strona sprzedażowa, która konwertuje | od 1 500 zł",
+  metaTitle: "Landing page od 1 500 zł | NODE48",
   metaDescription:
-    "Tworzę landing page nastawione na wynik — więcej zapytań, więcej sprzedaży. Sprawdź co zawiera mój projekt i zamów bezpłatną wycenę.",
-  heroTitle: "Strona, która nie tylko wygląda dobrze — ale też sprzedaje",
+    "Landing page pod Google Ads, Meta Ads i lead generation. Projekt strony nastawionej na konwersję, czytelne CTA i szybkie wdrożenie. Od 1 500 zł.",
+  heroTitle: "Landing page, który wygląda dobrze i realnie sprzedaje",
   heroLead:
     "Wydajesz pieniądze na reklamy, a efekty Cię rozczarowują? Problem często nie leży w reklamie — leży w stronie, na którą trafia Twój potencjalny klient. Landing page to strona zaprojektowana wyłącznie po to, żeby zamienić odwiedzającego w kupującego.",
   heroCta: "Chcę więcej klientów z reklam",

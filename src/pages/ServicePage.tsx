@@ -10,13 +10,14 @@ import { useI18n } from "@/lib/i18n";
 import { getServiceCatalog, getServiceBySlug, getServicePageUi } from "@/lib/service-pages";
 import { getServicePageDetail } from "@/lib/service-page-details";
 import { usePageSeo } from "@/lib/seo";
+import { getServicePageStructuredData } from "@/lib/service-page-seo";
 import { useContactOverlay } from "@/components/contact/contact-overlay-context";
 
 const pageCopy = {
   pl: {
-    heroSummaryTitle: "W skrocie",
+    heroSummaryTitle: "W skrócie",
     durationLabel: "Czas realizacji",
-    relatedBody: "Jesli zakres projektu jest wiekszy albo mniejszy, mozesz przejsc do pokrewnej uslugi i porownac kierunek.",
+    relatedBody: "Jeśli zakres projektu jest większy albo mniejszy, możesz przejść do pokrewnej usługi i porównać kierunek.",
   },
   en: {
     heroSummaryTitle: "At a glance",
@@ -34,6 +35,7 @@ const ServicePage = () => {
   const ui = getServicePageUi(locale);
   const copy = pageCopy[locale];
   const { openContactOverlay } = useContactOverlay();
+  const pagePath = `/uslugi/${slug}`;
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -42,7 +44,14 @@ const ServicePage = () => {
   usePageSeo({
     title: detail?.metaTitle ?? service?.metaTitle ?? "NODE48",
     description: detail?.metaDescription ?? service?.metaDescription ?? "",
-    path: `/uslugi/${slug}`,
+    path: pagePath,
+    structuredData: getServicePageStructuredData({
+      locale,
+      slug,
+      serviceName: service?.listName ?? "NODE48",
+      title: detail?.metaTitle ?? service?.metaTitle ?? "NODE48",
+      description: detail?.metaDescription ?? service?.metaDescription ?? "",
+    }),
   });
 
   if (!service || !detail) {

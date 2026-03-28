@@ -1,10 +1,10 @@
 import type { ServicePageDetail } from "./types";
 
 export const redesignDetail: ServicePageDetail = {
-  metaTitle: "Redesign strony internetowej — nowy wygląd, lepsza wydajność | od 1 200 zł",
+  metaTitle: "Redesign strony internetowej od 1 200 zł | NODE48",
   metaDescription:
-    "Twoja strona wygląda jak z innej epoki? Odświeżę ją — nowy design, szybkość, responsywność. Bez utraty pozycji w Google. Sprawdź i zamów wycenę.",
-  heroTitle: "Twoja firma się zmieniła. Może czas żeby Twoja strona też to pokazała?",
+    "Redesign strony internetowej: nowy wygląd, lepsza wydajność, responsywność i SEO bez utraty wartościowych adresów. Od 1 200 zł.",
+  heroTitle: "Redesign strony internetowej, który odświeża wizerunek i poprawia użyteczność",
   heroLead:
     "Masz stronę, ale wiesz że coś jest nie tak. Może wygląda jak sprzed 5 lat. Może działa wolno. Może wstydzisz się podać jej adres na spotkaniach. Redesign to nie nowy projekt od zera — to odświeżenie tego, co już masz, tak żebyś był z tego dumny.",
   heroCta: "Chcę nowy wygląd swojej strony",

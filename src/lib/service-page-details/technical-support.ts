@@ -1,10 +1,10 @@
 import type { ServicePageDetail } from "./types";
 
 export const technicalSupportDetail: ServicePageDetail = {
-  metaTitle: "Opieka techniczna nad stroną internetową | Abonament od 100 zł / miesiąc",
+  metaTitle: "Opieka techniczna nad stroną od 100 zł / miesiąc | NODE48",
   metaDescription:
-    "Twoja strona zawsze online, szybka i bezpieczna. Hosting, monitoring, poprawki, kopie zapasowe — wszystko w jednym miesięcznym abonamencie. Sprawdź pakiety.",
-  heroTitle: "Ty zajmujesz się swoją firmą. Ja zajmuję się Twoją stroną.",
+    "Opieka techniczna nad stroną internetową: monitoring, poprawki, aktualizacje i wsparcie po wdrożeniu. Pakiety od 100 zł miesięcznie.",
+  heroTitle: "Opieka techniczna nad stroną, dzięki której wszystko działa bez przerw",
   heroLead:
     "Twoja strona internetowa to narzędzie, które musi działać — bez przerw, bez awarii, bez nieprzyjemnych niespodzianek. Opieka techniczna to miesięczny abonament, dzięki któremu możesz o tym całkowicie zapomnieć. W dobrym sensie.",
   heroCta: "Chcę żeby ktoś zadbał o moją stronę",
