@@ -1460,8 +1460,8 @@
 
   .project-card-surface.card-surface-spotlight::before {
     background:
-      radial-gradient(circle at var(--spotlight-x) var(--spotlight-y), rgba(126, 178, 255, 0.16), transparent 24%),
-      radial-gradient(circle at var(--spotlight-x) var(--spotlight-y), rgba(0, 89, 255, 0.1), transparent 44%);
+      radial-gradient(circle at var(--spotlight-x) var(--spotlight-y), rgba(126, 178, 255, 0.18), transparent 24%),
+      radial-gradient(circle at var(--spotlight-x) var(--spotlight-y), rgba(0, 89, 255, 0.12), transparent 44%);
   }
 
   .project-card-surface::after {
@@ -1470,7 +1470,7 @@
     inset: 0;
     pointer-events: none;
     border-radius: inherit;
-    opacity: 0.28;
+    opacity: 0.38;
   }
 
   .project-card-surface.card-neon-border::after {
@@ -1488,6 +1488,13 @@
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     animation: neon-angle-spin 4.4s linear infinite;
+  }
+
+  .project-card-surface.card-neon-border {
+    box-shadow:
+      0 22px 54px rgba(2, 8, 26, 0.18),
+      0 10px 26px rgba(0, 61, 179, 0.12),
+      inset 0 1px 0 rgba(179, 211, 255, 0.06);
   }
 
   .project-card-surface::before {
@@ -1544,8 +1551,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 13rem;
-    padding: 1rem;
+    min-height: 12.1rem;
+    padding: 0.9rem;
     overflow: hidden;
     border-radius: 1.2rem;
     background:
@@ -1587,10 +1594,12 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.8rem;
-    padding: 0.35rem 0.45rem 0.35rem 0.35rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.34rem 0.5rem 0.34rem 0.35rem;
+    border: 1px solid rgba(112, 166, 255, 0.14);
     border-radius: 999px;
-    background: rgba(4, 11, 35, 0.18);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+      rgba(4, 11, 35, 0.22);
     backdrop-filter: blur(10px);
   }
 
@@ -1612,8 +1621,8 @@
     flex: 1;
     flex-direction: column;
     justify-content: space-between;
-    gap: 1rem;
-    padding-top: 1rem;
+    gap: 0.8rem;
+    padding-top: 0.8rem;
   }
 
   .project-card-domain,
@@ -1631,13 +1640,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: rgba(236, 244, 255, 0.76);
+    color: rgba(236, 244, 255, 0.82);
   }
 
   .project-card-preview-stack {
     display: flex;
     flex-direction: column;
-    gap: 0.55rem;
+    gap: 0.45rem;
     max-width: 17rem;
   }
 
@@ -1648,42 +1657,68 @@
   .project-card-preview-title {
     color: white;
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(1.15rem, 1.7vw, 1.45rem);
+    font-size: clamp(1.18rem, 1.6vw, 1.42rem);
     font-weight: 700;
-    line-height: 1.08;
+    line-height: 1.04;
     letter-spacing: -0.04em;
     text-wrap: balance;
   }
 
   .project-card-preview-summary {
     max-width: 30ch;
-    color: rgba(220, 232, 255, 0.82);
+    color: rgba(229, 239, 255, 0.9);
     font-family: "DM Sans", sans-serif;
-    font-size: 0.9rem;
-    line-height: 1.58;
+    font-size: 0.92rem;
+    line-height: 1.52;
     text-wrap: pretty;
   }
 
   .project-card-preview-mock {
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem;
-    padding: 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    border-radius: 1rem;
-    background: rgba(255, 255, 255, 0.04);
+    display: grid;
+    grid-template-columns: minmax(4.2rem, 0.78fr) minmax(0, 1.2fr);
+    gap: 0.7rem;
+    align-items: stretch;
+    padding: 0.7rem;
+    border: 1px solid rgba(112, 166, 255, 0.12);
+    border-radius: 1.05rem;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+      rgba(6, 15, 46, 0.22);
+    backdrop-filter: blur(8px);
   }
 
+  .project-card-preview-panel,
   .project-card-preview-pill,
   .project-card-preview-line {
     display: block;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .project-card-preview-panel {
+    border-radius: 0.8rem;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+      rgba(255, 255, 255, 0.04);
+    min-height: 4.7rem;
+  }
+
+  .project-card-preview-panel-accent {
+    background:
+      radial-gradient(circle at 24% 22%, color-mix(in srgb, var(--project-accent) 36%, rgba(255, 255, 255, 0.18)), transparent 36%),
+      linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
+  }
+
+  .project-card-preview-grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.38rem;
   }
 
   .project-card-preview-pill {
     width: 5.2rem;
-    height: 1.35rem;
+    height: 1.18rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
   }
 
   .project-card-preview-pill-accent {
@@ -1692,7 +1727,9 @@
 
   .project-card-preview-line {
     width: 100%;
-    height: 0.56rem;
+    height: 0.48rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
   }
 
   .project-card-preview-line-strong {
@@ -1707,8 +1744,8 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    gap: 0.95rem;
-    padding: 1rem 0.2rem 0.15rem;
+    gap: 0.8rem;
+    padding: 0.9rem 0.1rem 0.05rem;
   }
 
   .project-card-meta {
@@ -1719,7 +1756,7 @@
   }
 
   .project-card-location {
-    color: rgba(208, 224, 255, 0.72);
+    color: rgba(221, 234, 255, 0.78);
     font-family: "DM Sans", sans-serif;
     font-size: 0.78rem;
     font-weight: 700;
@@ -1740,9 +1777,9 @@
     max-width: 16ch;
     color: white;
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(1.1rem, 1.4vw, 1.35rem);
+    font-size: clamp(1.08rem, 1.25vw, 1.28rem);
     font-weight: 700;
-    line-height: 1.08;
+    line-height: 1.04;
     letter-spacing: -0.04em;
   }
 
@@ -1756,19 +1793,25 @@
 
   @media (hover: hover) and (pointer: fine) {
     .project-card-surface:hover {
-      transform: translateY(-0.32rem);
+      transform: translateY(-0.36rem);
       box-shadow:
-        0 30px 72px rgba(2, 8, 26, 0.2),
-        0 14px 34px rgba(0, 89, 255, 0.14);
+        0 34px 78px rgba(2, 8, 26, 0.24),
+        0 16px 36px rgba(0, 89, 255, 0.16),
+        inset 0 1px 0 rgba(179, 211, 255, 0.09);
     }
 
     .project-card-surface:hover::before {
-      opacity: 0.32;
-      transform: scale(1.06);
+      opacity: 0.38;
+      transform: scale(1.1);
     }
 
     .project-card-surface:hover.card-neon-border::after {
-      opacity: 0.56;
+      opacity: 0.76;
+    }
+
+    .project-card-surface:hover .project-card-preview-bar,
+    .project-card-surface:hover .project-card-preview-mock {
+      border-color: rgba(129, 181, 255, 0.18);
     }
 
     .project-card-surface:hover .project-card-link {
