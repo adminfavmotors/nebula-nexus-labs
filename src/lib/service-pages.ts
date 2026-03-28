@@ -28,6 +28,7 @@ type LocalizedServiceContent = {
 type ServiceEntry = {
   key: ServiceKey;
   slug: string;
+  aliases?: string[];
   content: Record<Locale, LocalizedServiceContent>;
 };
 
@@ -71,18 +72,19 @@ const pageUi: Record<Locale, PageUiCopy> = {
 export const serviceEntries: ServiceEntry[] = [
   {
     key: "one-page",
-    slug: "strona-wizytowka-one-page",
+    slug: "strona-wizytowka",
+    aliases: ["strona-wizytowka-one-page"],
     content: {
       pl: {
-        listName: "Strona wizytówka one-page",
-        priceFrom: "od 1 000 zł",
+        listName: "Strona wizytówka",
+        priceFrom: "od 1 490 zł",
         teaser: "Prosta strona dla małej firmy lub specjalisty",
-        metaTitle: "Strona wizytówka one-page | NODE48",
-        metaDescription: "Projekt i wdrożenie strony wizytówki one-page dla małych firm, ekspertów i lokalnych usług. Ceny od 1000 zł.",
-        heroTitle: "Strona wizytówka one-page dla małych firm i specjalistów",
+        metaTitle: "Strona wizytówka | NODE48",
+        metaDescription: "Projekt i wdrożenie strony wizytówki dla małych firm, ekspertów i lokalnych usług. Ceny od 1490 zł.",
+        heroTitle: "Strona wizytówka dla małych firm i specjalistów",
         heroLead: "Lekka, szybka i czytelna strona, która przedstawia ofertę, buduje zaufanie i ułatwia pierwszy kontakt.",
         intro: "To rozwiązanie dla firm, które chcą być obecne w Google, wyglądać profesjonalnie i zebrać najważniejsze informacje o ofercie na jednej dobrze zaprojektowanej stronie.",
-        scopeTitle: "Co zawiera strona wizytówka one-page",
+        scopeTitle: "Co zawiera strona wizytówka",
         scopeItems: [
           "projekt jednego spójnego ekranu sprzedażowego z kluczowymi sekcjami",
           "sekcję oferta, o firmie, FAQ i wezwanie do kontaktu",
@@ -103,15 +105,15 @@ export const serviceEntries: ServiceEntry[] = [
         ],
       },
       en: {
-        listName: "One-page business card website",
-        priceFrom: "from 1,000 PLN",
+        listName: "Business card website",
+        priceFrom: "from 1,490 PLN",
         teaser: "Simple website for a small company or solo expert",
-        metaTitle: "One-page business card website | NODE48",
-        metaDescription: "Design and delivery of a one-page business card website for small companies, specialists and local services. Prices from 1,000 PLN.",
-        heroTitle: "One-page business card website for small companies and specialists",
+        metaTitle: "Business card website | NODE48",
+        metaDescription: "Design and delivery of a business card website for small companies, specialists and local services. Prices from 1,490 PLN.",
+        heroTitle: "Business card website for small companies and specialists",
         heroLead: "A light, fast and clear website that presents your offer, builds trust and makes the first contact easier.",
         intro: "This format works well for companies that want to show up in search, look professional and collect the most important information about their offer on one polished page.",
-        scopeTitle: "What the one-page website includes",
+        scopeTitle: "What the business card website includes",
         scopeItems: [
           "a focused one-page structure with the key business sections",
           "offer, about, FAQ and contact call-to-action blocks",
@@ -139,10 +141,10 @@ export const serviceEntries: ServiceEntry[] = [
     content: {
       pl: {
         listName: "Landing page",
-        priceFrom: "od 1 500 zł",
+        priceFrom: "od 1 790 zł",
         teaser: "Strona pod kampanie, leady i sprzedaż",
         metaTitle: "Landing page sprzedażowy | NODE48",
-        metaDescription: "Landing page pod kampanie reklamowe, lead generation i oferty sprzedażowe. Projekt, copy flow i wdrożenie od 1500 zł.",
+        metaDescription: "Landing page pod kampanie reklamowe, lead generation i oferty sprzedażowe. Projekt, copy flow i wdrożenie od 1790 zł.",
         heroTitle: "Landing page, który prowadzi użytkownika do konkretnej akcji",
         heroLead: "Projektujemy strony pod kampanie, leady i sprzedaż, z jasną strukturą komunikacji i mocnym CTA.",
         intro: "Landing page nie powinien być tylko ładny. Ma porządkować ofertę, redukować opór i prowadzić użytkownika do zapisu, zakupu albo wysłania zapytania.",
@@ -168,10 +170,10 @@ export const serviceEntries: ServiceEntry[] = [
       },
       en: {
         listName: "Landing page",
-        priceFrom: "from 1,500 PLN",
+        priceFrom: "from 1,790 PLN",
         teaser: "Page built for campaigns, leads and sales",
         metaTitle: "Conversion-focused landing page | NODE48",
-        metaDescription: "Landing page for paid campaigns, lead generation and sales offers. Strategy, copy flow and implementation from 1,500 PLN.",
+        metaDescription: "Landing page for paid campaigns, lead generation and sales offers. Strategy, copy flow and implementation from 1,790 PLN.",
         heroTitle: "Landing page designed to lead visitors toward one clear action",
         heroLead: "We design campaign pages for lead generation and sales with a clear message hierarchy and strong CTA.",
         intro: "A landing page should not only look good. It should structure the offer, reduce friction and guide the visitor toward signup, purchase or inquiry.",
@@ -199,17 +201,18 @@ export const serviceEntries: ServiceEntry[] = [
   },
   {
     key: "company-website",
-    slug: "strona-firmowa-z-podstronami",
+    slug: "strona-firmowa",
+    aliases: ["strona-firmowa-z-podstronami"],
     content: {
       pl: {
-        listName: "Strona firmowa z podstronami",
-        priceFrom: "od 2 500 zł",
+        listName: "Strona firmowa",
+        priceFrom: "od 2 990 zł",
         teaser: "Rozbudowana strona dla firmy z większą ofertą",
-        metaTitle: "Strona firmowa z podstronami | NODE48",
-        metaDescription: "Projektujemy strony firmowe z podstronami usług, o firmie, FAQ i kontaktem. Lepsza struktura, SEO i wygodna rozbudowa. Od 2500 zł.",
-        heroTitle: "Strona firmowa z podstronami dla firm, które chcą rosnąć długofalowo",
+        metaTitle: "Strona firmowa | NODE48",
+        metaDescription: "Projektujemy strony firmowe z podstronami usług, o firmie, FAQ i kontaktem. Lepsza struktura, SEO i wygodna rozbudowa. Od 2990 zł.",
+        heroTitle: "Strona firmowa dla firm, które chcą rosnąć długofalowo",
         heroLead: "To dobry wybór, kiedy oferta jest szersza, a użytkownik potrzebuje kilku punktów wejścia zamiast jednej strony.",
-        intro: "Strona firmowa z podstronami pomaga uporządkować komunikację, zwiększyć liczbę fraz, na które możesz się pozycjonować, i lepiej prowadzić użytkownika przez różne usługi.",
+        intro: "Strona firmowa pomaga uporządkować komunikację, zwiększyć liczbę fraz, na które możesz się pozycjonować, i lepiej prowadzić użytkownika przez różne usługi.",
         scopeTitle: "Co obejmuje rozbudowana strona firmowa",
         scopeItems: [
           "architekturę informacji z podziałem na usługi, ofertę i sekcje wspierające",
@@ -231,12 +234,12 @@ export const serviceEntries: ServiceEntry[] = [
         ],
       },
       en: {
-        listName: "Company website with subpages",
-        priceFrom: "from 2,500 PLN",
+        listName: "Company website",
+        priceFrom: "from 2,990 PLN",
         teaser: "Extended website for a company with a broader offer",
-        metaTitle: "Company website with subpages | NODE48",
-        metaDescription: "We design company websites with service pages, about, FAQ and contact sections. Better structure, SEO and long-term scalability. From 2,500 PLN.",
-        heroTitle: "Company website with subpages for businesses that want to grow long term",
+        metaTitle: "Company website | NODE48",
+        metaDescription: "We design company websites with service pages, about, FAQ and contact sections. Better structure, SEO and long-term scalability. From 2,990 PLN.",
+        heroTitle: "Company website for businesses that want to grow long term",
         heroLead: "This is the right option when your offer is broader and users need several entry points instead of a single page.",
         intro: "A structured company website helps organise communication, target more search topics and guide visitors through multiple services more effectively.",
         scopeTitle: "What an extended company website includes",
@@ -263,18 +266,19 @@ export const serviceEntries: ServiceEntry[] = [
   },
   {
     key: "corporate-website",
-    slug: "strona-korporacyjna-premium",
+    slug: "strona-premium-dla-wymagajacych-firm",
+    aliases: ["strona-korporacyjna-premium"],
     content: {
       pl: {
-        listName: "Strona korporacyjna premium",
-        priceFrom: "od 8 000 zł",
+        listName: "Strona premium dla wymagających firm",
+        priceFrom: "wycena indywidualna",
         teaser: "Zaawansowany serwis dla większej marki lub organizacji",
-        metaTitle: "Strona korporacyjna premium | NODE48",
-        metaDescription: "Projekt i wdrożenie strony korporacyjnej premium z rozbudowaną architekturą, wieloma sekcjami i wysokim standardem prezentacji marki. Od 8000 zł.",
-        heroTitle: "Strona korporacyjna premium dla marek, które potrzebują wysokiego standardu prezentacji",
+        metaTitle: "Strona premium dla wymagających firm | NODE48",
+        metaDescription: "Projekt i wdrożenie strony premium dla wymagających firm z rozbudowaną architekturą, wieloma sekcjami i wysokim standardem prezentacji marki. Wycena indywidualna.",
+        heroTitle: "Strona premium dla wymagających firm i marek o wysokich standardach",
         heroLead: "Budujemy serwisy dla większych organizacji, gdzie liczy się czytelna struktura, wizerunek, SEO i spójność wielu obszarów komunikacji.",
         intro: "Taki projekt wymaga bardziej dopracowanej architektury, hierarchii treści i wizualnej dyscypliny. To nie jest tylko większa strona firmowa, ale cały system prezentacji marki.",
-        scopeTitle: "Co zawiera strona korporacyjna premium",
+        scopeTitle: "Co zawiera strona premium dla wymagających firm",
         scopeItems: [
           "warsztat lub discovery dla struktury serwisu i priorytetów komunikacyjnych",
           "projekt wielu typów podstron i komponentów w jednym systemie",
@@ -295,15 +299,15 @@ export const serviceEntries: ServiceEntry[] = [
         ],
       },
       en: {
-        listName: "Premium corporate website",
-        priceFrom: "from 8,000 PLN",
+        listName: "Premium website for demanding companies",
+        priceFrom: "custom quote",
         teaser: "Advanced website for a larger brand or organisation",
-        metaTitle: "Premium corporate website | NODE48",
-        metaDescription: "Design and delivery of a premium corporate website with expanded architecture, multiple sections and a high standard of brand presentation. From 8,000 PLN.",
-        heroTitle: "Premium corporate website for brands that need a high standard of presentation",
+        metaTitle: "Premium website for demanding companies | NODE48",
+        metaDescription: "Design and delivery of a premium website for demanding companies with expanded architecture, multiple sections and a high standard of brand presentation. Custom quote.",
+        heroTitle: "Premium website for demanding companies and high-standard brands",
         heroLead: "We build websites for larger organisations where structure, brand image, SEO and consistency across many communication areas matter.",
         intro: "This kind of project needs more disciplined architecture, stronger content hierarchy and a more robust design system. It is not just a bigger company website, but a full brand presentation system.",
-        scopeTitle: "What a premium corporate website includes",
+        scopeTitle: "What a premium website for demanding companies includes",
         scopeItems: [
           "discovery work for site structure and communication priorities",
           "design of multiple page types and reusable components",
@@ -331,10 +335,10 @@ export const serviceEntries: ServiceEntry[] = [
     content: {
       pl: {
         listName: "Redesign strony",
-        priceFrom: "od 1 200 zł",
+        priceFrom: "od 1 690 zł",
         teaser: "Odświeżenie wizualne i UX bez budowy wszystkiego od zera",
         metaTitle: "Redesign strony internetowej | NODE48",
-        metaDescription: "Redesign strony internetowej: nowa estetyka, lepsza struktura i mocniejszy UX bez niepotrzebnego chaosu. Ceny od 1200 zł.",
+        metaDescription: "Redesign strony internetowej: nowa estetyka, lepsza struktura i mocniejszy UX bez niepotrzebnego chaosu. Ceny od 1690 zł.",
         heroTitle: "Redesign strony internetowej, który porządkuje wizerunek i użyteczność",
         heroLead: "Odświeżamy istniejące strony tak, aby wyglądały nowocześnie, działały czytelniej i lepiej wspierały sprzedaż lub zapytania.",
         intro: "Redesign jest dobrym wyborem, gdy fundament już istnieje, ale warstwa wizualna, struktura lub doświadczenie użytkownika przestały odpowiadać marce i celom biznesowym.",
@@ -360,10 +364,10 @@ export const serviceEntries: ServiceEntry[] = [
       },
       en: {
         listName: "Website redesign",
-        priceFrom: "from 1,200 PLN",
+        priceFrom: "from 1,690 PLN",
         teaser: "Visual and UX refresh without rebuilding everything",
         metaTitle: "Website redesign | NODE48",
-        metaDescription: "Website redesign focused on better aesthetics, stronger structure and cleaner UX without unnecessary chaos. Prices from 1,200 PLN.",
+        metaDescription: "Website redesign focused on better aesthetics, stronger structure and cleaner UX without unnecessary chaos. Prices from 1,690 PLN.",
         heroTitle: "Website redesign that improves both visual quality and usability",
         heroLead: "We refresh existing websites so they look modern, feel clearer and support lead generation or sales more effectively.",
         intro: "Redesign is the right option when the foundation already exists, but the visual layer, structure or user experience no longer match the brand and business goals.",
@@ -395,10 +399,10 @@ export const serviceEntries: ServiceEntry[] = [
     content: {
       pl: {
         listName: "Opieka techniczna",
-        priceFrom: "od 100 zł / miesiąc",
+        priceFrom: "od 149 zł / miesiąc",
         teaser: "Stałe wsparcie, poprawki i rozwój po publikacji",
         metaTitle: "Opieka techniczna nad stroną | NODE48",
-        metaDescription: "Opieka techniczna nad stroną internetową: aktualizacje, poprawki, drobny rozwój i wsparcie po wdrożeniu. Pakiety od 100 zł.",
+        metaDescription: "Opieka techniczna nad stroną internetową: aktualizacje, poprawki, drobny rozwój i wsparcie po wdrożeniu. Pakiety od 149 zł.",
         heroTitle: "Opieka techniczna nad stroną po wdrożeniu",
         heroLead: "Zajmujemy się aktualizacjami, poprawkami i bieżącym rozwojem strony, żeby nie została porzucona po publikacji.",
         intro: "Wiele stron dobrze wygląda w dniu startu, ale traci jakość bez regularnych poprawek i opieki. Ta usługa pozwala utrzymać porządek techniczny i szybko reagować na nowe potrzeby.",
@@ -424,10 +428,10 @@ export const serviceEntries: ServiceEntry[] = [
       },
       en: {
         listName: "Technical support",
-        priceFrom: "from 100 PLN / month",
+        priceFrom: "from 149 PLN / month",
         teaser: "Ongoing support, fixes and post-launch improvements",
         metaTitle: "Website technical support | NODE48",
-        metaDescription: "Website technical support covering updates, fixes, small improvements and post-launch care. Plans from 100 PLN.",
+        metaDescription: "Website technical support covering updates, fixes, small improvements and post-launch care. Plans from 149 PLN.",
         heroTitle: "Technical support for your website after launch",
         heroLead: "We handle updates, fixes and ongoing improvements so the website does not get abandoned after publishing.",
         intro: "Many websites look good on launch day, but lose quality without regular maintenance. This service helps keep the technical side clean and responsive to new needs.",
@@ -468,8 +472,12 @@ export function getServicePageUi(locale: Locale) {
   return pageUi[locale];
 }
 
+function findServiceEntryBySlug(slug: string) {
+  return serviceEntries.find((item) => item.slug === slug || item.aliases?.includes(slug));
+}
+
 export function getServiceBySlug(locale: Locale, slug: string) {
-  const entry = serviceEntries.find((item) => item.slug === slug);
+  const entry = findServiceEntryBySlug(slug);
 
   if (!entry) {
     return null;
@@ -480,4 +488,8 @@ export function getServiceBySlug(locale: Locale, slug: string) {
     slug: entry.slug,
     ...entry.content[locale],
   };
+}
+
+export function getCanonicalServiceSlug(slug: string) {
+  return findServiceEntryBySlug(slug)?.slug ?? null;
 }

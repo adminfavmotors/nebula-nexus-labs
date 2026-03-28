@@ -1,17 +1,17 @@
 import type { ServicePageDetail } from "./types";
 
 export const companyWebsiteDetail: ServicePageDetail = {
-  metaTitle: "Strona firmowa z podstronami od 2 500 zł | NODE48",
+  metaTitle: "Strona firmowa od 2 990 zł | NODE48",
   metaDescription:
-    "Strona firmowa z podstronami dla firm usługowych i rozwijających się marek. Lepsza struktura, SEO i wygodna rozbudowa. Od 2 500 zł.",
-  heroTitle: "Strona firmowa z podstronami, która robi wrażenie i przynosi klientów",
+    "Strona firmowa dla firm usługowych i rozwijających się marek. Lepsza struktura, SEO i wygodna rozbudowa. Od 2 990 zł.",
+  heroTitle: "Strona firmowa, która robi wrażenie i przynosi klientów",
   heroLead:
     "Strona firmowa to więcej niż wizytówka. To Twoje biuro, które działa 24 godziny na dobę, 7 dni w tygodniu — odpowiada na pytania, przedstawia ofertę i sprawia, że klient chce się z Tobą skontaktować, zanim w ogóle podniesie słuchawkę.",
   heroCta: "Chcę taką stronę dla mojej firmy",
   audienceTitle: "Kiedy wiesz, że potrzebujesz czegoś więcej niż wizytówki?",
   audienceIntro: [
     "Może masz kilka różnych usług i nie chcesz upychać ich wszystkich na jednej stronie. Może zatrudniasz ludzi i chcesz pokazać swój zespół. Może piszesz artykuły i szukasz miejsca na bloga. Może po prostu wiesz, że Twoja firma jest poważna — i Twoja strona powinna to odzwierciedlać.",
-    "Strona firmowa z podstronami to odpowiedź na każdą z tych potrzeb.",
+    "Strona firmowa to odpowiedź na każdą z tych potrzeb.",
   ],
   audienceBullets: [
     "prowadzisz firmę usługową z kilkoma obszarami działalności",
@@ -73,7 +73,7 @@ export const companyWebsiteDetail: ServicePageDetail = {
   ],
   processDuration: "Czas realizacji: 2–4 tygodnie robocze, zależnie od zakresu.",
   pricingTitle: "Ile to kosztuje?",
-  pricingPrice: "od 2 500 zł netto",
+  pricingPrice: "od 2 990 zł netto",
   pricingBody: [
     "Ostateczna cena zależy od liczby podstron, zakresu treści i dodatkowych funkcji. Po rozmowie o Twoich potrzebach dostaniesz szczegółową wycenę — bez niespodzianek w trakcie projektu.",
   ],

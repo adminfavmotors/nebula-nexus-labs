@@ -1,9 +1,9 @@
 import type { ServicePageDetail } from "./types";
 
 export const technicalSupportDetail: ServicePageDetail = {
-  metaTitle: "Opieka techniczna nad stroną od 100 zł / miesiąc | NODE48",
+  metaTitle: "Opieka techniczna nad stroną od 149 zł / miesiąc | NODE48",
   metaDescription:
-    "Opieka techniczna nad stroną internetową: monitoring, poprawki, aktualizacje i wsparcie po wdrożeniu. Pakiety od 100 zł miesięcznie.",
+    "Opieka techniczna nad stroną internetową: monitoring, poprawki, aktualizacje i wsparcie po wdrożeniu. Pakiety od 149 zł miesięcznie.",
   heroTitle: "Opieka techniczna nad stroną, dzięki której wszystko działa bez przerw",
   heroLead:
     "Twoja strona internetowa to narzędzie, które musi działać — bez przerw, bez awarii, bez nieprzyjemnych niespodzianek. Opieka techniczna to miesięczny abonament, dzięki któremu możesz o tym całkowicie zapomnieć. W dobrym sensie.",
@@ -70,7 +70,7 @@ export const technicalSupportDetail: ServicePageDetail = {
   ],
   processDuration: "Zakres opieki ustalamy indywidualnie i rozliczamy w stałym miesięcznym modelu.",
   pricingTitle: "Ile to kosztuje?",
-  pricingPrice: "od 100 zł netto / miesiąc",
+  pricingPrice: "od 149 zł netto / miesiąc",
   pricingBody: [
     "Dokładna kwota zależy od zakresu opieki — rodzaju hostingu, liczby poprawek w miesiącu i dodatkowych potrzeb. Pakiety ustalamy indywidualnie, tak żebyś płacił za to czego naprawdę potrzebujesz.",
     "Jeśli zleciłeś mi budowę strony — opieka techniczna to naturalny następny krok. Zapytaj o szczegóły przy odbiorze projektu.",

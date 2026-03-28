@@ -1,9 +1,9 @@
 import type { ServicePageDetail } from "./types";
 
 export const redesignDetail: ServicePageDetail = {
-  metaTitle: "Redesign strony internetowej od 1 200 zł | NODE48",
+  metaTitle: "Redesign strony internetowej od 1 690 zł | NODE48",
   metaDescription:
-    "Redesign strony internetowej: nowy wygląd, lepsza wydajność, responsywność i SEO bez utraty wartościowych adresów. Od 1 200 zł.",
+    "Redesign strony internetowej: nowy wygląd, lepsza wydajność, responsywność i SEO bez utraty wartościowych adresów. Od 1 690 zł.",
   heroTitle: "Redesign strony internetowej, który odświeża wizerunek i poprawia użyteczność",
   heroLead:
     "Masz stronę, ale wiesz że coś jest nie tak. Może wygląda jak sprzed 5 lat. Może działa wolno. Może wstydzisz się podać jej adres na spotkaniach. Redesign to nie nowy projekt od zera — to odświeżenie tego, co już masz, tak żebyś był z tego dumny.",
@@ -68,7 +68,7 @@ export const redesignDetail: ServicePageDetail = {
   ],
   processDuration: "Czas realizacji: 2–3 tygodnie robocze.",
   pricingTitle: "Ile kosztuje?",
-  pricingPrice: "od 1 200 zł netto",
+  pricingPrice: "od 1 690 zł netto",
   pricingBody: [
     "Cena zależy od tego jak rozbudowana jest Twoja obecna strona i co chcesz zmienić. Im więcej treści do przeniesienia i im większy zakres zmian — tym więcej czasu wymaga projekt. Po krótkim audycie Twojej obecnej strony dostaniesz konkretną wycenę.",
   ],

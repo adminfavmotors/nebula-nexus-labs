@@ -21,6 +21,9 @@ Options -Indexes
   RewriteBase /
 
   RewriteRule ^index\.html$ - [L]
+  RewriteRule ^uslugi/strona-wizytowka-one-page/?$ /uslugi/strona-wizytowka [R=301,L]
+  RewriteRule ^uslugi/strona-firmowa-z-podstronami/?$ /uslugi/strona-firmowa [R=301,L]
+  RewriteRule ^uslugi/strona-korporacyjna-premium/?$ /uslugi/strona-premium-dla-wymagajacych-firm [R=301,L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]

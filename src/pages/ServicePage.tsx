@@ -1,5 +1,5 @@
 import { useEffect, type MouseEvent } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import SiteLayout from "@/components/SiteLayout";
 import ContactForm from "@/components/ContactForm";
 import { Section } from "@/components/primitives/Section";
@@ -7,7 +7,7 @@ import { SurfaceCard } from "@/components/primitives/SurfaceCard";
 import { ActionLink } from "@/components/primitives/Actions";
 import NotFound from "@/pages/NotFound";
 import { useI18n } from "@/lib/i18n";
-import { getServiceCatalog, getServiceBySlug, getServicePageUi } from "@/lib/service-pages";
+import { getCanonicalServiceSlug, getServiceCatalog, getServiceBySlug, getServicePageUi } from "@/lib/service-pages";
 import { getServicePageDetail } from "@/lib/service-page-details";
 import { usePageSeo } from "@/lib/seo";
 import { getServicePageStructuredData } from "@/lib/service-page-seo";
@@ -29,13 +29,14 @@ const pageCopy = {
 const ServicePage = () => {
   const { slug = "" } = useParams();
   const { locale } = useI18n();
+  const canonicalSlug = getCanonicalServiceSlug(slug);
   const service = getServiceBySlug(locale, slug);
   const detail = getServicePageDetail(locale, slug);
   const catalog = getServiceCatalog(locale);
   const ui = getServicePageUi(locale);
   const copy = pageCopy[locale];
   const { openContactOverlay } = useContactOverlay();
-  const pagePath = `/uslugi/${slug}`;
+  const pagePath = `/uslugi/${canonicalSlug ?? slug}`;
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -53,6 +54,10 @@ const ServicePage = () => {
       description: detail?.metaDescription ?? service?.metaDescription ?? "",
     }),
   });
+
+  if (canonicalSlug && canonicalSlug !== slug) {
+    return <Navigate to={`/uslugi/${canonicalSlug}`} replace />;
+  }
 
   if (!service || !detail) {
     return <NotFound />;

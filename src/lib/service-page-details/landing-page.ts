@@ -1,9 +1,9 @@
 import type { ServicePageDetail } from "./types";
 
 export const landingPageDetail: ServicePageDetail = {
-  metaTitle: "Landing page od 1 500 zł | NODE48",
+  metaTitle: "Landing page od 1 790 zł | NODE48",
   metaDescription:
-    "Landing page pod Google Ads, Meta Ads i lead generation. Projekt strony nastawionej na konwersję, czytelne CTA i szybkie wdrożenie. Od 1 500 zł.",
+    "Landing page pod Google Ads, Meta Ads i lead generation. Projekt strony nastawionej na konwersję, czytelne CTA i szybkie wdrożenie. Od 1 790 zł.",
   heroTitle: "Landing page, który wygląda dobrze i realnie sprzedaje",
   heroLead:
     "Wydajesz pieniądze na reklamy, a efekty Cię rozczarowują? Problem często nie leży w reklamie — leży w stronie, na którą trafia Twój potencjalny klient. Landing page to strona zaprojektowana wyłącznie po to, żeby zamienić odwiedzającego w kupującego.",
@@ -70,7 +70,7 @@ export const landingPageDetail: ServicePageDetail = {
   ],
   processDuration: "Czas realizacji: 5–10 dni roboczych.",
   pricingTitle: "Ile kosztuje?",
-  pricingPrice: "od 1 500 zł netto",
+  pricingPrice: "od 1 790 zł netto",
   pricingBody: [
     "Jeśli chcesz dwie wersje strony do testów A/B, dodatkowe integracje lub zaawansowane animacje — wycena uwzględni Twoje potrzeby. Piszesz, mówisz co potrzebujesz — ja mówię ile to kosztuje. Prosto.",
   ],

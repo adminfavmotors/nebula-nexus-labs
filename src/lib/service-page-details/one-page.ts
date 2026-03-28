@@ -1,12 +1,12 @@
 import type { ServicePageDetail } from "./types";
 
 export const onePageDetail: ServicePageDetail = {
-  metaTitle: "Strona wizytówka one-page od 1 000 zł | NODE48",
+  metaTitle: "Strona wizytówka od 1 490 zł | NODE48",
   metaDescription:
-    "Nowoczesna strona wizytówka one-page dla freelancerów, małych firm i usług lokalnych. Szybka, responsywna i gotowa pod SEO. Od 1 000 zł.",
-  heroTitle: "Strona wizytówka one-page dla firm, które chcą być widoczne w sieci",
+    "Nowoczesna strona wizytówka dla freelancerów, małych firm i usług lokalnych. Szybka, responsywna i gotowa pod SEO. Od 1 490 zł.",
+  heroTitle: "Strona wizytówka dla firm, które chcą być widoczne w sieci",
   heroLead:
-    "Strona wizytówka one-page to Twój cyfrowy punkt kontaktowy. Jeden ekran — wszystko, czego potrzebuje Twój klient, żeby do Ciebie zadzwonić lub napisać. Nic więcej, nic mniej.",
+    "Strona wizytówka to Twój cyfrowy punkt kontaktowy. Jeden ekran — wszystko, czego potrzebuje Twój klient, żeby do Ciebie zadzwonić lub napisać. Nic więcej, nic mniej.",
   heroCta: "Chcę taką stronę",
   audienceTitle: "Dla kogo jest ta usługa?",
   audienceIntro: [
@@ -74,7 +74,7 @@ export const onePageDetail: ServicePageDetail = {
   ],
   processDuration: "Cały proces trwa zwykle 7–14 dni roboczych.",
   pricingTitle: "Ile to kosztuje?",
-  pricingPrice: "od 1 000 zł netto",
+  pricingPrice: "od 1 490 zł netto",
   pricingBody: [
     "Cena zależy od zakresu — liczby sekcji, animacji, dodatkowych integracji. Po krótkiej rozmowie o Twoich potrzebach dostaniesz konkretną wycenę. Bez ukrytych kosztów, bez niespodzianek.",
   ],

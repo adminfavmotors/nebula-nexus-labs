@@ -10,6 +10,7 @@ type Project = { name: string; tag: string };
 type Benefit = { title: string; desc: string };
 type FaqItem = { question: string; answer: string };
 type AboutThesis = { num: string; text: string };
+type TrustStripItem = { value: string; label: string };
 
 export type TranslationSet = {
   meta: {
@@ -30,6 +31,11 @@ export type TranslationSet = {
     primaryCta: string;
     secondaryCta: string;
     imageLabel: string;
+  };
+  trustStrip: {
+    eyebrow: string;
+    title: string;
+    items: TrustStripItem[];
   };
   about: {
     titleLine1: string;
@@ -148,11 +154,12 @@ export const translations = {
     services: {
       title: "Od pierwszego briefu do gotowego wdrożenia",
       items: [
-        { num: "01.", name: "Landing page sprzedażowy", price: "od 2 500 PLN" },
-        { num: "02.", name: "Strona firmowa premium", price: "od 4 000 PLN" },
-        { num: "03.", name: "Redesign istniejącej witryny", price: "od 1 800 PLN" },
-        { num: "04.", name: "UI dla produktu SaaS", price: "od 3 200 PLN" },
-        { num: "05.", name: "Opieka i rozwój po wdrożeniu", price: "od 5 000 PLN" },
+        { num: "01.", name: "Strona wizytówka", price: "od 1 490 zł" },
+        { num: "02.", name: "Landing page", price: "od 1 790 zł" },
+        { num: "03.", name: "Strona firmowa", price: "od 2 990 zł" },
+        { num: "04.", name: "Redesign strony", price: "od 1 690 zł" },
+        { num: "05.", name: "Opieka techniczna", price: "od 149 zł / miesiąc" },
+        { num: "06.", name: "Strona premium dla wymagających firm", price: "wycena indywidualna" },
       ],
     },
     howWeWork: {
@@ -291,11 +298,12 @@ export const translations = {
     services: {
       title: "From first brief to launch-ready delivery",
       items: [
-        { num: "01.", name: "Conversion-focused landing page", price: "from 2,500 PLN" },
-        { num: "02.", name: "Premium company website", price: "from 4,000 PLN" },
-        { num: "03.", name: "Existing website redesign", price: "from 1,800 PLN" },
-        { num: "04.", name: "SaaS product UI design", price: "from 3,200 PLN" },
-        { num: "05.", name: "Post-launch growth support", price: "from 5,000 PLN" },
+        { num: "01.", name: "Business card website", price: "from 1,490 PLN" },
+        { num: "02.", name: "Landing page", price: "from 1,790 PLN" },
+        { num: "03.", name: "Company website", price: "from 2,990 PLN" },
+        { num: "04.", name: "Website redesign", price: "from 1,690 PLN" },
+        { num: "05.", name: "Technical support", price: "from 149 PLN / month" },
+        { num: "06.", name: "Premium website for demanding companies", price: "custom quote" },
       ],
     },
     howWeWork: {
