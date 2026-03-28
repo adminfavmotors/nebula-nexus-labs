@@ -366,6 +366,23 @@
     text-wrap: pretty;
   }
 
+  .why-us-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1rem;
+    min-height: 0;
+  }
+
+  .why-us-card .icon-circle {
+    margin-bottom: 0.25rem;
+  }
+
+  .why-us-card-copy {
+    max-width: 24ch;
+  }
+
   .section-light .trust-strip-card.card-surface-spotlight::before {
     background:
       radial-gradient(circle at var(--spotlight-x) var(--spotlight-y), rgba(111, 176, 255, 0.18), transparent 24%),

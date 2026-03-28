@@ -21,15 +21,20 @@ const WhyUs = () => {
       <SectionTitle tone="deep" revealClassName="reveal-element" className="mb-10 max-w-[19ch] md:mb-12 md:max-w-[21ch]" delay="0.05">
         {t.whyUs.title}
       </SectionTitle>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid items-start grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {items.map((item, i) => (
-          <SurfaceCard key={i} spotlight className="reveal-element relative p-7 sm:p-8" data-delay={String(i * 0.12)}>
+          <SurfaceCard
+            key={i}
+            spotlight
+            className="why-us-card reveal-element relative p-6 sm:p-7"
+            data-delay={String(i * 0.12)}
+          >
             <div className="glow-orb -left-6 -top-6 h-[100px] w-[100px] opacity-25 blur-[60px]" />
-            <div className="icon-circle mb-5">
+            <div className="icon-circle">
               <item.icon size={20} className="text-primary" />
             </div>
-            <h3 className="heading-balance measure-tight mb-2 font-body font-semibold text-foreground">{item.title}</h3>
-            <p className="section-copy-dark copy-pretty measure-card">{item.desc}</p>
+            <h3 className="heading-balance measure-tight font-body font-semibold text-foreground">{item.title}</h3>
+            <p className="section-copy-dark copy-pretty why-us-card-copy">{item.desc}</p>
           </SurfaceCard>
         ))}
       </div>
