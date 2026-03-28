@@ -10,7 +10,6 @@ import { createPortal } from "react-dom";
 import { useLocation } from "react-router-dom";
 import { X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import { siteConfig } from "@/lib/site-config";
 import ContactFormPanel from "@/components/contact/ContactFormPanel";
 import { ContactOverlayContext } from "@/components/contact/contact-overlay-context";
 
@@ -75,8 +74,10 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
   }, [closeContactOverlay, isOpen]);
 
   useEffect(() => {
+    document.documentElement.style.overflow = isOpen ? "hidden" : "";
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     };
   }, [isOpen]);
@@ -151,13 +152,6 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
                       <X size={18} />
                     </button>
                   </div>
-
-                  <div className="contact-overlay-meta">
-                    <span>{siteConfig.contactEmail}</span>
-                    <span className="contact-overlay-meta-separator" />
-                    <span>{siteConfig.businessPhone}</span>
-                  </div>
-
                   <ContactFormPanel mode="modal" autoFocus={isOpen} onSuccess={handleSuccess} />
                 </div>
               </div>

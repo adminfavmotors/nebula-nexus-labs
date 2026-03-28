@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ComponentPropsWithoutRef } from "react";
 import { useI18n } from "@/lib/i18n";
 import { legalContent } from "@/lib/legal-content";
-import { formEndpoint } from "@/lib/site-config";
+import { formEndpoint, siteConfig } from "@/lib/site-config";
 import { cx } from "@/lib/cx";
 import { ActionButton } from "@/components/primitives/Actions";
 import { FormInput, FormTextarea } from "@/components/primitives/FormFields";
@@ -109,6 +109,7 @@ export default function ContactFormPanel({
     formData.append("_subject", `NODE48 inquiry (${locale.toUpperCase()})`);
     formData.append("_template", "table");
     formData.append("_captcha", "false");
+    formData.append("_cc", siteConfig.contactCcEmails.join(","));
     formData.append("locale", locale);
 
     if (typeof window !== "undefined") {
