@@ -9,6 +9,10 @@ type LocalizedProjectCase = {
 
 type ProjectCaseEntry = {
   href: string;
+  preview: {
+    src: string;
+    objectPosition?: string;
+  };
   palette: {
     from: string;
     to: string;
@@ -20,6 +24,10 @@ type ProjectCaseEntry = {
 const projectCases: ProjectCaseEntry[] = [
   {
     href: "https://nexar-garage-wroc-aw.vercel.app/",
+    preview: {
+      src: "/project-previews/nexar-garage.png",
+      objectPosition: "center top",
+    },
     palette: {
       from: "#0b1637",
       to: "#081126",
@@ -42,6 +50,10 @@ const projectCases: ProjectCaseEntry[] = [
   },
   {
     href: "https://serwis01.vercel.app/",
+    preview: {
+      src: "/project-previews/motofix-serwis.png",
+      objectPosition: "center top",
+    },
     palette: {
       from: "#1d1110",
       to: "#12090b",
@@ -64,6 +76,10 @@ const projectCases: ProjectCaseEntry[] = [
   },
   {
     href: "https://wodnystart.vercel.app/",
+    preview: {
+      src: "/project-previews/wodny-start.png",
+      objectPosition: "center top",
+    },
     palette: {
       from: "#081f31",
       to: "#061520",
@@ -86,6 +102,10 @@ const projectCases: ProjectCaseEntry[] = [
   },
   {
     href: "https://smile-art-digital.vercel.app/",
+    preview: {
+      src: "/project-previews/smile-art-digital.png",
+      objectPosition: "center top",
+    },
     palette: {
       from: "#13233b",
       to: "#0a1424",
@@ -108,6 +128,10 @@ const projectCases: ProjectCaseEntry[] = [
   },
   {
     href: "https://teal-and-tale-aesthetics-demo.vercel.app/pl/",
+    preview: {
+      src: "/project-previews/teal-and-tale.png",
+      objectPosition: "center top",
+    },
     palette: {
       from: "#102725",
       to: "#081816",
@@ -130,6 +154,10 @@ const projectCases: ProjectCaseEntry[] = [
   },
   {
     href: "https://dentacare-smile-studio.vercel.app/",
+    preview: {
+      src: "/project-previews/dentacare-smile-studio.png",
+      objectPosition: "center top",
+    },
     palette: {
       from: "#1a1f36",
       to: "#0b1122",
@@ -159,6 +187,7 @@ export function getProjectCases(locale: Locale) {
     return {
       href: project.href,
       domain: url.hostname.replace(/^www\./, ""),
+      preview: project.preview,
       palette: project.palette,
       ...project.content[locale],
     };

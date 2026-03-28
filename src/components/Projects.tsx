@@ -87,6 +87,16 @@ const Projects = () => {
                         } as CSSProperties
                       }
                     >
+                      <img
+                        src={project.preview.src}
+                        alt={project.name}
+                        className="project-card-preview-image"
+                        style={{ objectPosition: project.preview.objectPosition ?? "center top" }}
+                        loading="lazy"
+                      />
+                      <div className="project-card-preview-image-tint" />
+                      <div className="project-card-preview-vignette" />
+
                       <div className="project-card-preview-bar">
                         <span className="project-card-preview-dots" aria-hidden="true">
                           <span />
@@ -103,14 +113,9 @@ const Projects = () => {
                           <p className="project-card-preview-summary">{project.summary}</p>
                         </div>
 
-                        <div className="project-card-preview-mock" aria-hidden="true">
-                          <div className="project-card-preview-panel project-card-preview-panel-accent" />
-                          <div className="project-card-preview-grid">
-                            <span className="project-card-preview-pill project-card-preview-pill-accent" />
-                            <span className="project-card-preview-line project-card-preview-line-strong" />
-                            <span className="project-card-preview-line" />
-                            <span className="project-card-preview-line project-card-preview-line-short" />
-                          </div>
+                        <div className="project-card-preview-chip-row" aria-hidden="true">
+                          <span className="project-card-preview-chip">{project.location}</span>
+                          <span className="project-card-preview-chip project-card-preview-chip-accent">{project.tag}</span>
                         </div>
                       </div>
                     </div>
