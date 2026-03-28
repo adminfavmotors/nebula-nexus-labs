@@ -78,7 +78,7 @@ const Hero = () => {
                 style={{ willChange: "transform", backfaceVisibility: "hidden", transform: "translateZ(0)" }}
               >
                 <div className="hero-visual-rim" />
-                <div className="hero-visual-mask card-neon-border">
+                <div className="hero-visual-mask card-neon-border neon-animated">
                   <div className="hero-visual-grain" />
                   <img src={workspaceImage} alt={t.hero.imageLabel} className="hero-visual-image" />
                   <div className="hero-visual-sheen" />

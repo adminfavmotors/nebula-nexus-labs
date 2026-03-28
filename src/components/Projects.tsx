@@ -110,7 +110,6 @@ const Projects = () => {
                         <div className="project-card-preview-stack">
                           <span className="project-card-kicker">{project.tag}</span>
                           <strong className="project-card-preview-title">{project.name}</strong>
-                          <p className="project-card-preview-summary">{project.summary}</p>
                         </div>
 
                         <div className="project-card-preview-chip-row" aria-hidden="true">
@@ -126,8 +125,12 @@ const Projects = () => {
                         <span className="project-card-location">{project.tag}</span>
                       </div>
 
-                      <div className="project-card-footer">
+                      <div className="project-card-copy">
                         <span className="heading-balance project-card-title">{project.name}</span>
+                        <p className="project-card-summary">{project.summary}</p>
+                      </div>
+
+                      <div className="project-card-footer">
                         <span className="project-card-link">
                           {t.projects.openLabel}
                           <ArrowUpRight size={14} />
