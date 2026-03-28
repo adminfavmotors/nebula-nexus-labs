@@ -367,20 +367,25 @@
   }
 
   .why-us-card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 1rem;
+    height: auto;
     min-height: 0;
   }
 
-  .why-us-card .icon-circle {
-    margin-bottom: 0.25rem;
+  .why-us-card-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .why-us-card-stack .icon-circle {
+    width: 2.8rem;
+    height: 2.8rem;
+    margin-bottom: 0.1rem;
   }
 
   .why-us-card-copy {
-    max-width: 24ch;
+    max-width: 23ch;
   }
 
   .section-light .trust-strip-card.card-surface-spotlight::before {

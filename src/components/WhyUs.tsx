@@ -25,16 +25,16 @@ const WhyUs = () => {
         {items.map((item, i) => (
           <SurfaceCard
             key={i}
-            spotlight
-            className="why-us-card reveal-element relative p-6 sm:p-7"
+            className="why-us-card reveal-element self-start p-5 sm:p-6"
             data-delay={String(i * 0.12)}
           >
-            <div className="glow-orb -left-6 -top-6 h-[100px] w-[100px] opacity-25 blur-[60px]" />
-            <div className="icon-circle">
-              <item.icon size={20} className="text-primary" />
+            <div className="why-us-card-stack">
+              <div className="icon-circle">
+                <item.icon size={20} className="text-primary" />
+              </div>
+              <h3 className="heading-balance measure-tight font-body font-semibold text-foreground">{item.title}</h3>
+              <p className="section-copy-dark copy-pretty why-us-card-copy">{item.desc}</p>
             </div>
-            <h3 className="heading-balance measure-tight font-body font-semibold text-foreground">{item.title}</h3>
-            <p className="section-copy-dark copy-pretty why-us-card-copy">{item.desc}</p>
           </SurfaceCard>
         ))}
       </div>
