@@ -10,13 +10,25 @@ const TrustStrip = () => {
   const ref = useScrollReveal(0.06);
   const { locale } = useI18n();
   const copy = trustStripContent[locale];
+  const eyebrowParts = copy.eyebrow.includes("NODE48")
+    ? copy.eyebrow.split("NODE48")
+    : null;
 
   return (
     <section className="trust-strip-section section-light" ref={ref}>
       <div className="site-shell trust-strip-shell">
         <div className="trust-strip-panel reveal-element" data-delay="0.04">
           <div className="trust-strip-intro">
-            <span className="trust-strip-eyebrow">{copy.eyebrow}</span>
+            <span className="trust-strip-eyebrow">
+              {eyebrowParts ? (
+                <>
+                  <span>{eyebrowParts[0].trim()}</span>
+                  <span className="trust-strip-eyebrow-brand">NODE48</span>
+                </>
+              ) : (
+                copy.eyebrow
+              )}
+            </span>
             <h2 className="trust-strip-title">{copy.title}</h2>
           </div>
 
