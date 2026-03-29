@@ -1,23 +1,14 @@
-import { useEffect, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { ActionLink } from "@/components/primitives/Actions";
 import workspaceImage from "../../img/20260322_0944_Image Generation_remix_01kmabdvtae9tapkw5dw8pgt9h.png";
 
 const Hero = () => {
-  const [loaded, setLoaded] = useState(false);
   const { t } = useI18n();
 
-  const enterClass = (delayClass: string, hiddenClass = "translate-y-5") =>
-    `transition-all [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${delayClass} ${
-      loaded ? "translate-y-0 opacity-100" : `${hiddenClass} opacity-0`
-    }`;
+  const enterClass = (delayClass: string) =>
+    `translate-y-0 opacity-100 transition-all [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${delayClass}`;
 
   const wordDelayClasses = ["delay-[650ms]", "delay-[750ms]", "delay-[850ms]"] as const;
-
-  useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 400);
-    return () => clearTimeout(t);
-  }, []);
 
   return (
     <section id="home" className="hero-section relative flex min-h-screen items-center overflow-hidden">
@@ -39,7 +30,7 @@ const Hero = () => {
           <div className="hero-copy-cluster">
             <h1 className="hero-title">
               {t.hero.words.map((word, i) => (
-                <span key={i} className={`block duration-700 ${enterClass(wordDelayClasses[i], "translate-y-[30px]")}`}>
+                <span key={i} className={`block duration-700 ${enterClass(wordDelayClasses[i])}`}>
                   {i === 1 ? <span className="hero-title-accent">{word}</span> : word}
                 </span>
               ))}
@@ -65,7 +56,7 @@ const Hero = () => {
         </div>
 
         <div
-          className={`hero-visual-column duration-[1000ms] ${enterClass("delay-[800ms]", "translate-y-[30px] scale-[0.96]")}`}
+          className={`hero-visual-column duration-[1000ms] ${enterClass("delay-[800ms]")}`}
         >
           <div className="hero-visual-stage">
             <div className="hero-visual-backplate" />
