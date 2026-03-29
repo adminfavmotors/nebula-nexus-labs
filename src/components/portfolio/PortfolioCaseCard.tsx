@@ -32,14 +32,6 @@ const PortfolioCaseCard = ({ item, openLabel }: PortfolioCaseCardProps) => {
           loading="lazy"
         />
         <div className="portfolio-card__image-tint" />
-        <div className="portfolio-card__chrome">
-          <span className="portfolio-card__chrome-dots" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </span>
-          <span className="portfolio-card__domain">{item.domain}</span>
-        </div>
       </div>
 
       <div className="portfolio-card__body">

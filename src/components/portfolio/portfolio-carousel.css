@@ -36,9 +36,10 @@
 }
 
 .portfolio-carousel__viewport {
+  position: relative;
   overflow: hidden;
-  margin-inline: -0.45rem;
-  padding-block: 0.45rem 0.9rem;
+  margin-inline: -0.35rem;
+  padding-block: 0.2rem 0.35rem;
 }
 
 .portfolio-carousel__track {
@@ -47,10 +48,47 @@
   touch-action: pan-y pinch-zoom;
 }
 
+.portfolio-carousel__stage {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(126, 178, 255, 0.12);
+  border-radius: 2rem;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(97, 154, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 88% 100%, rgba(0, 89, 255, 0.14), transparent 28%),
+    linear-gradient(180deg, rgba(7, 16, 47, 0.98), rgba(4, 11, 34, 1));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 0 1px rgba(145, 191, 255, 0.04),
+    0 34px 90px rgba(2, 8, 26, 0.16);
+}
+
+.portfolio-carousel__stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 18%, rgba(0, 0, 0, 0.08) 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03), transparent 16%, transparent 84%, rgba(255, 255, 255, 0.02));
+  pointer-events: none;
+}
+
+.portfolio-carousel__stage-glow {
+  position: absolute;
+  inset: auto -5% -32% auto;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at center, rgba(32, 107, 255, 0.24), rgba(32, 107, 255, 0) 68%);
+  filter: blur(82px);
+  pointer-events: none;
+}
+
 .portfolio-carousel__slide {
   flex: 0 0 100%;
   min-width: 0;
-  padding-inline: 0.45rem;
+  padding-inline: 0.35rem;
 }
 
 .portfolio-card {
@@ -58,14 +96,16 @@
   display: flex;
   min-height: 100%;
   flex-direction: column;
-  border: 1px solid rgba(126, 178, 255, 0.14);
+  border: 1px solid rgba(126, 178, 255, 0.15);
   border-radius: 1.6rem;
-  background: linear-gradient(180deg, rgba(8, 19, 56, 0.98), rgba(5, 13, 40, 1));
+  background:
+    radial-gradient(circle at top right, rgba(90, 143, 255, 0.1), transparent 24%),
+    linear-gradient(180deg, rgba(10, 22, 63, 0.98), rgba(6, 15, 44, 1));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 0 0 1px rgba(126, 178, 255, 0.03),
-    0 24px 56px rgba(4, 10, 28, 0.18),
-    0 10px 24px rgba(0, 61, 179, 0.08);
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(126, 178, 255, 0.04),
+    0 24px 58px rgba(3, 10, 29, 0.22),
+    0 10px 26px rgba(0, 61, 179, 0.08);
   isolation: isolate;
   transition:
     transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
@@ -154,52 +194,12 @@
     inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-.portfolio-card__chrome {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.8rem;
-  margin: 0.7rem;
-  padding: 0.36rem 0.52rem 0.36rem 0.38rem;
-  border: 1px solid rgba(112, 166, 255, 0.14);
-  border-radius: 999px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.016)),
-    rgba(4, 11, 35, 0.44);
-  backdrop-filter: blur(10px);
-  transition: border-color 0.24s ease, background-color 0.24s ease;
-}
-
-.portfolio-card__chrome-dots {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.portfolio-card__chrome-dots span {
-  width: 0.42rem;
-  height: 0.42rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.portfolio-card__domain,
 .portfolio-card__cta {
   font-family: "DM Sans", sans-serif;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-}
-
-.portfolio-card__domain {
-  min-width: 0;
-  overflow: hidden;
-  color: rgba(236, 244, 255, 0.82);
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .portfolio-card__body {
@@ -260,10 +260,10 @@
 
 .portfolio-card__summary {
   max-width: 31ch;
-  color: rgba(204, 220, 246, 0.88);
+  color: rgba(216, 228, 248, 0.9);
   font-family: "DM Sans", sans-serif;
   font-size: 0.93rem;
-  line-height: 1.68;
+  line-height: 1.72;
   text-wrap: pretty;
 }
 
@@ -283,6 +283,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
+  padding: 0.1rem 1.1rem 1.15rem;
 }
 
 .portfolio-carousel__dot {
@@ -306,12 +307,12 @@
 @media (hover: hover) and (pointer: fine) {
   .portfolio-card:hover {
     transform: translateY(-0.38rem);
-    border-color: rgba(136, 188, 255, 0.2);
+    border-color: rgba(136, 188, 255, 0.22);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.06),
       0 0 0 1px rgba(136, 188, 255, 0.05),
-      0 32px 72px rgba(2, 8, 26, 0.18),
-      0 18px 34px rgba(0, 89, 255, 0.1);
+      0 34px 78px rgba(2, 8, 26, 0.24),
+      0 18px 38px rgba(0, 89, 255, 0.12);
   }
 
   .portfolio-card:hover::after {
@@ -322,10 +323,6 @@
     transform: scale(1.018);
   }
 
-  .portfolio-card:hover .portfolio-card__chrome {
-    border-color: rgba(129, 181, 255, 0.2);
-  }
-
   .portfolio-card:hover .portfolio-card__cta {
     color: #ffffff;
     transform: translateX(0.1rem);
@@ -333,12 +330,20 @@
 }
 
 @media (min-width: 768px) {
+  .portfolio-carousel__stage {
+    padding: 0.62rem;
+  }
+
   .portfolio-carousel__slide {
     flex-basis: 50%;
   }
 }
 
 @media (min-width: 1100px) {
+  .portfolio-carousel__stage {
+    padding: 0.72rem;
+  }
+
   .portfolio-carousel__slide {
     flex-basis: 33.3333%;
   }
@@ -347,11 +352,17 @@
 @media (max-width: 767px) {
   .portfolio-carousel__viewport {
     margin-inline: 0;
+    padding-block: 0;
   }
 
   .portfolio-carousel__slide {
     flex-basis: 100%;
     padding-inline: 0;
+  }
+
+  .portfolio-carousel__stage {
+    border-radius: 1.55rem;
+    padding: 0.44rem;
   }
 
   .portfolio-card {
@@ -367,7 +378,6 @@
 @media (prefers-reduced-motion: reduce) {
   .portfolio-card,
   .portfolio-card__image,
-  .portfolio-card__chrome,
   .portfolio-card__cta {
     transition-duration: 0.01ms;
   }

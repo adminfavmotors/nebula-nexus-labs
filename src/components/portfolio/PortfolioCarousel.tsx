@@ -66,29 +66,33 @@ const PortfolioCarousel = ({
         </div>
       </div>
 
-      <div className="portfolio-carousel__viewport" ref={emblaRef}>
-        <div className="portfolio-carousel__track">
-          {items.map((item) => (
-            <div className="portfolio-carousel__slide" key={`${item.name}-${item.href}`}>
-              <PortfolioCaseCard item={item} openLabel={openLabel} />
-            </div>
+      <div className="portfolio-carousel__stage">
+        <div className="portfolio-carousel__stage-glow" aria-hidden="true" />
+
+        <div className="portfolio-carousel__viewport" ref={emblaRef}>
+          <div className="portfolio-carousel__track">
+            {items.map((item) => (
+              <div className="portfolio-carousel__slide" key={`${item.name}-${item.href}`}>
+                <PortfolioCaseCard item={item} openLabel={openLabel} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="portfolio-carousel__dots" aria-label="Portfolio pagination">
+          {scrollSnaps.map((_, index) => (
+            <button
+              key={`portfolio-dot-${index}`}
+              type="button"
+              onClick={() => emblaApi?.scrollTo(index)}
+              className={cx(
+                "portfolio-carousel__dot",
+                index === selectedIndex && "portfolio-carousel__dot--active",
+              )}
+              aria-label={`${nextLabel}: ${items[index]?.name ?? index + 1}`}
+            />
           ))}
         </div>
-      </div>
-
-      <div className="portfolio-carousel__dots" aria-label="Portfolio pagination">
-        {scrollSnaps.map((_, index) => (
-          <button
-            key={`portfolio-dot-${index}`}
-            type="button"
-            onClick={() => emblaApi?.scrollTo(index)}
-            className={cx(
-              "portfolio-carousel__dot",
-              index === selectedIndex && "portfolio-carousel__dot--active",
-            )}
-            aria-label={`${nextLabel}: ${items[index]?.name ?? index + 1}`}
-          />
-        ))}
       </div>
     </div>
   );
