@@ -8,7 +8,7 @@ The site currently covers:
 
 - homepage with section-based navigation
 - dedicated SEO-oriented service pages under `/uslugi/*`
-- animated portfolio carousel with live case links
+- isolated portfolio carousel with live case links
 - reusable contact overlay for internal-page CTAs
 - privacy policy and cookie policy pages
 
@@ -20,18 +20,22 @@ Implemented and active:
 
 - responsive desktop and ultrawide layout system
 - upgraded homepage hero and trust strip
-- reusable spotlight card layer for selected surfaces
 - renamed service offer system with canonical URLs and redirects
 - service-page SEO layer with canonical tags and JSON-LD
+- reusable internal-page contact overlay
 - global scroll-to-top button
-- live portfolio carousel backed by structured project data
+- isolated portfolio carousel backed by structured project data and real preview images
+- progressive reveal behavior that keeps above-the-fold content visible on first paint
+- single-column FAQ layout for cleaner reading on large screens
 
 ## Documentation
 
 Recent internal documentation:
 
-- [Chat Report — 2026-03-28](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\chat-report-2026-03-28.md)
-- [Current State — 2026-03-28](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\current-state-2026-03-28.md)
+- [Chat Report - 2026-03-29](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\chat-report-2026-03-29.md)
+- [Current State - 2026-03-29](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\current-state-2026-03-29.md)
+- [Chat Report - 2026-03-28](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\chat-report-2026-03-28.md)
+- [Current State - 2026-03-28](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\current-state-2026-03-28.md)
 
 ## Stack
 
@@ -80,6 +84,7 @@ src/
   components/              Homepage sections and shared UI blocks
   components/contact/      Contact overlay and related form logic
   components/legal/        Legal-page components
+  components/portfolio/    Dedicated portfolio carousel module
   components/primitives/   Shared low-level UI primitives
   hooks/                   Reveal and viewport helpers
   lib/                     i18n, SEO, service data, project data, site config
@@ -88,6 +93,7 @@ src/
   test/                    Vitest setup and app-level tests
 public/
   .htaccess                Cache rules and redirects
+  project-previews/        Static preview images for portfolio cases
   sitemap.xml              Public sitemap
 docs/
   *.md                     Internal project reports
@@ -99,6 +105,7 @@ docs/
 - service catalog and slugs: [C:\Users\Admin\Desktop\project\nebula-nexus-labs\src\lib\service-pages.ts](C:\Users\Admin\Desktop\project\nebula-nexus-labs\src\lib\service-pages.ts)
 - service page details: [C:\Users\Admin\Desktop\project\nebula-nexus-labs\src\lib\service-page-details](C:\Users\Admin\Desktop\project\nebula-nexus-labs\src\lib\service-page-details)
 - project portfolio data: [C:\Users\Admin\Desktop\project\nebula-nexus-labs\src\lib\project-cases.ts](C:\Users\Admin\Desktop\project\nebula-nexus-labs\src\lib\project-cases.ts)
+- portfolio carousel module: [C:\Users\Admin\Desktop\project\nebula-nexus-labs\src\components\portfolio](C:\Users\Admin\Desktop\project\nebula-nexus-labs\src\components\portfolio)
 - SEO/meta handling: [C:\Users\Admin\Desktop\project\nebula-nexus-labs\src\lib\seo.ts](C:\Users\Admin\Desktop\project\nebula-nexus-labs\src\lib\seo.ts)
 
 ## Localization
@@ -134,4 +141,5 @@ Current main checks:
 
 - service pages still run in an SPA without SSR or prerendering
 - form delivery still depends on a third-party endpoint
+- portfolio previews are static assets and should be refreshed when the live case sites change significantly
 - content is now much more mature than the initial template, but the project can still benefit from a CMS or analytics layer later
