@@ -3,23 +3,34 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { Section, SectionTitle } from "@/components/primitives/Section";
+import { ActionButton } from "@/components/primitives/Actions";
+import { useContactOverlay } from "@/components/contact/contact-overlay-context";
 
 const FAQ = () => {
   const ref = useScrollReveal(0.1);
   const [open, setOpen] = useState(0);
   const { t } = useI18n();
+  const { openContactOverlay } = useContactOverlay();
 
   return (
     <Section id="faq" tone="light" ref={ref}>
       <div className="faq-layout">
         <div className="faq-header reveal-element" data-delay="0">
-          <SectionTitle tone="light" className="faq-title">
-            {t.faq.title}
-          </SectionTitle>
-          <div className="faq-contact-row section-copy-light">
-            <p>{t.faq.email}</p>
-            <span className="faq-contact-separator" aria-hidden="true" />
-            <p>{t.faq.phone}</p>
+          <div className="faq-intro-panel">
+            <div className="faq-intro-copy">
+              <SectionTitle tone="light" className="faq-title">
+                {t.faq.title}
+              </SectionTitle>
+              <p className="faq-intro-text section-copy-light">{t.faq.email}</p>
+            </div>
+
+            <ActionButton
+              className="faq-contact-button"
+              onClick={openContactOverlay}
+              aria-label={t.nav.cta}
+            >
+              {t.nav.cta}
+            </ActionButton>
           </div>
         </div>
 
