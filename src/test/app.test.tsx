@@ -45,8 +45,10 @@ describe("critical user flows", () => {
       expect(screen.getAllByText("Services").length).toBeGreaterThan(0);
     });
 
-    expect(document.documentElement.lang).toBe("en");
-    expect(window.localStorage.getItem("node48-locale")).toBe("en");
+    await waitFor(() => {
+      expect(document.documentElement.lang).toBe("en");
+      expect(window.localStorage.getItem("node48-locale")).toBe("en");
+    });
   });
 
   it("updates document metadata when locale changes", async () => {
