@@ -1,7 +1,7 @@
 .portfolio-carousel {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1rem;
 }
 
 .portfolio-carousel__toolbar {
@@ -38,8 +38,8 @@
 .portfolio-carousel__viewport {
   position: relative;
   overflow: hidden;
-  margin-inline: -0.35rem;
-  padding-block: 0.2rem 0.35rem;
+  margin-inline: -0.28rem;
+  padding-block: 0.16rem 0.28rem;
 }
 
 .portfolio-carousel__track {
@@ -88,7 +88,7 @@
 .portfolio-carousel__slide {
   flex: 0 0 100%;
   min-width: 0;
-  padding-inline: 0.35rem;
+  padding-inline: 0.28rem;
 }
 
 .portfolio-card {
@@ -144,8 +144,8 @@
 
 .portfolio-card__preview {
   position: relative;
-  aspect-ratio: 16 / 9.15;
-  margin: 0.68rem 0.68rem 0;
+  aspect-ratio: 16 / 8.45;
+  margin: 0.6rem 0.6rem 0;
   overflow: hidden;
   border-radius: 1.12rem;
   background:
@@ -206,15 +206,15 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 0.68rem;
-  padding: 0.82rem 0.94rem 0.92rem;
+  gap: 0.58rem;
+  padding: 0.72rem 0.88rem 0.8rem;
 }
 
 .portfolio-card__meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.55rem;
 }
 
 .portfolio-card__pill {
@@ -244,7 +244,7 @@
 .portfolio-card__copy {
   display: flex;
   flex-direction: column;
-  gap: 0.46rem;
+  gap: 0.4rem;
 }
 
 .portfolio-card__title {
@@ -262,8 +262,8 @@
   max-width: 31ch;
   color: rgba(216, 228, 248, 0.9);
   font-family: "DM Sans", sans-serif;
-  font-size: 0.91rem;
-  line-height: 1.62;
+  font-size: 0.89rem;
+  line-height: 1.56;
   text-wrap: pretty;
 }
 
@@ -283,7 +283,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  padding: 0.1rem 1.1rem 1.15rem;
+  padding: 0 1rem 0.96rem;
 }
 
 .portfolio-carousel__dot {
@@ -331,7 +331,7 @@
 
 @media (min-width: 768px) {
   .portfolio-carousel__stage {
-    padding: 0.62rem;
+    padding: 0.54rem;
   }
 
   .portfolio-carousel__slide {
@@ -341,7 +341,7 @@
 
 @media (min-width: 1100px) {
   .portfolio-carousel__stage {
-    padding: 0.72rem;
+    padding: 0.62rem;
   }
 
   .portfolio-carousel__slide {
@@ -362,7 +362,7 @@
 
   .portfolio-carousel__stage {
     border-radius: 1.55rem;
-    padding: 0.44rem;
+    padding: 0.38rem;
   }
 
   .portfolio-card {
@@ -370,7 +370,7 @@
   }
 
   .portfolio-card__preview {
-    margin: 0.6rem 0.6rem 0;
+    margin: 0.54rem 0.54rem 0;
     border-radius: 1rem;
   }
 }
