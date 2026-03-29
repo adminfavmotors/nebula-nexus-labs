@@ -1,6 +1,7 @@
 import { useI18n } from "@/lib/i18n";
 import { ActionLink } from "@/components/primitives/Actions";
-import workspaceImage from "../../img/20260322_0944_Image Generation_remix_01kmabdvtae9tapkw5dw8pgt9h.png";
+import workspaceImage from "../../img/hero-workspace.jpg";
+import workspaceImageMobile from "../../img/hero-workspace-mobile.jpg";
 
 const Hero = () => {
   const { t } = useI18n();
@@ -71,7 +72,17 @@ const Hero = () => {
                 <div className="hero-visual-rim" />
                 <div className="hero-visual-mask card-neon-border">
                   <div className="hero-visual-grain" />
-                  <img src={workspaceImage} alt={t.hero.imageLabel} className="hero-visual-image" />
+                  <img
+                    src={workspaceImage}
+                    srcSet={`${workspaceImageMobile} 640w, ${workspaceImage} 1024w`}
+                    sizes="(max-width: 767px) 72vw, (max-width: 1023px) 28rem, 32rem"
+                    alt={t.hero.imageLabel}
+                    className="hero-visual-image"
+                    width={1024}
+                    height={1024}
+                    decoding="async"
+                    fetchPriority="high"
+                  />
                   <div className="hero-visual-sheen" />
                   <div className="hero-visual-vignette" />
                 </div>

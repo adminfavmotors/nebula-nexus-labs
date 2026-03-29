@@ -40,12 +40,15 @@
   overflow: hidden;
   margin-inline: -0.28rem;
   padding-block: 0.16rem 0.28rem;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .portfolio-carousel__track {
   display: flex;
   align-items: stretch;
   touch-action: pan-y pinch-zoom;
+  will-change: transform;
 }
 
 .portfolio-carousel__stage {
@@ -363,15 +366,32 @@
   .portfolio-carousel__stage {
     border-radius: 1.55rem;
     padding: 0.38rem;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 16px 34px rgba(2, 8, 26, 0.14);
   }
 
   .portfolio-card {
     border-radius: 1.45rem;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 10px 24px rgba(3, 10, 29, 0.16);
   }
 
   .portfolio-card__preview {
     margin: 0.54rem 0.54rem 0;
     border-radius: 1rem;
+  }
+
+  .portfolio-carousel__stage::before,
+  .portfolio-carousel__stage-glow,
+  .portfolio-card::after {
+    display: none;
+  }
+
+  .portfolio-card__image {
+    transform: none;
+    filter: saturate(0.94) contrast(1) brightness(0.96);
   }
 }
 

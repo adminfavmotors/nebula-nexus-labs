@@ -43,7 +43,7 @@ const projectCases: ProjectCaseEntry[] = [
   {
     href: "https://nexar-garage-wroc-aw.vercel.app/",
     preview: {
-      src: "/project-previews/nexar-garage.png",
+      src: "/project-previews/nexar-garage.jpg",
       objectPosition: "center top",
     },
     palette: {
@@ -69,7 +69,7 @@ const projectCases: ProjectCaseEntry[] = [
   {
     href: "https://serwis01.vercel.app/",
     preview: {
-      src: "/project-previews/motofix-serwis.png",
+      src: "/project-previews/motofix-serwis.jpg",
       objectPosition: "center top",
     },
     palette: {
@@ -95,7 +95,7 @@ const projectCases: ProjectCaseEntry[] = [
   {
     href: "https://wodnystart.vercel.app/",
     preview: {
-      src: "/project-previews/wodny-start.png",
+      src: "/project-previews/wodny-start.jpg",
       objectPosition: "center top",
     },
     palette: {
@@ -121,7 +121,7 @@ const projectCases: ProjectCaseEntry[] = [
   {
     href: "https://smile-art-digital.vercel.app/",
     preview: {
-      src: "/project-previews/smile-art-digital.png",
+      src: "/project-previews/smile-art-digital.jpg",
       objectPosition: "center top",
     },
     palette: {
@@ -147,7 +147,7 @@ const projectCases: ProjectCaseEntry[] = [
   {
     href: "https://teal-and-tale-aesthetics-demo.vercel.app/pl/",
     preview: {
-      src: "/project-previews/teal-and-tale.png",
+      src: "/project-previews/teal-and-tale.jpg",
       objectPosition: "center top",
     },
     palette: {
@@ -173,7 +173,7 @@ const projectCases: ProjectCaseEntry[] = [
   {
     href: "https://dentacare-smile-studio.vercel.app/",
     preview: {
-      src: "/project-previews/dentacare-smile-studio.png",
+      src: "/project-previews/dentacare-smile-studio.jpg",
       objectPosition: "center top",
     },
     palette: {
