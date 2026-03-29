@@ -1,9 +1,6 @@
-import { siteConfig } from "@/lib/site-config";
-
-export type Locale = "pl" | "en";
+﻿export type Locale = "pl" | "en";
 
 type NavLink = { label: string; href: string };
-type Stat = { value: number; suffix: string; label: string };
 type Service = { num: string; name: string; price: string };
 type ProcessStep = { num: string; title: string; desc: string };
 type Benefit = { title: string; desc: string };
@@ -43,7 +40,6 @@ export type TranslationSet = {
     titleLine2end: string;
     titleLine3: string;
     theses: AboutThesis[];
-    stats: Stat[];
   };
   services: {
     title: string;
@@ -69,7 +65,6 @@ export type TranslationSet = {
   faq: {
     title: string;
     email: string;
-    phone: string;
     items: FaqItem[];
   };
   contact: {
@@ -110,64 +105,59 @@ export const translations = {
     meta: {
       title: "NODE48 | Strony i produkty cyfrowe",
       description:
-        "Projektujemy szybkie strony internetowe, landing page'e i doświadczenia cyfrowe dla firm, które chcą wyglądać nowocześnie i sprzedawać skuteczniej.",
+        "Projektujemy szybkie strony internetowe, landing page'e i doL�wiadczenia cyfrowe dla firm, ktAlre chcą wyglądać nowoczeL�nie i sprzedawać skuteczniej.",
     },
     nav: {
       links: [
         { label: "Start", href: "#home" },
-        { label: "Usługi", href: "#services" },
+        { label: "UsL�ugi", href: "#services" },
         { label: "Projekty", href: "#projects" },
         { label: "O nas", href: "#about" },
       ],
-      cta: "Umów konsultację",
+      cta: "UmAlw konsultację",
       languageLabel: "Język",
-      openMenuLabel: "Otwórz menu",
+      openMenuLabel: "OtwAlrz menu",
       closeMenuLabel: "Zamknij menu",
     },
     hero: {
-      badge: "Studio stron i produktów cyfrowych",
-      words: ["Tworzymy", "strony", "które działają"],
+      badge: "Studio stron i produktAlw cyfrowych",
+      words: ["Tworzymy", "strony", "ktAlre dziaL�ają"],
       body:
-        "Łączymy strategię, design i development, aby budować nowoczesne witryny dla marek, które chcą rosnąć szybciej i komunikować się wyraźniej.",
+        "L�ączymy strategię, design i development, aby budować nowoczesne witryny dla marek, ktAlre chcą rosnąć szybciej i komunikować się wyraLsniej.",
       primaryCta: "Porozmawiajmy",
       secondaryCta: "Zobacz realizacje",
-      imageLabel: "Strategia, design i wdrożenie",
+      imageLabel: "Strategia, design i wdroLLenie",
     },
     about: {
-      titleLine1: "Budujemy obecność online,",
-      titleLine2start: "która wyróżnia ",
+      titleLine1: "Budujemy obecnoL�ć online,",
+      titleLine2start: "ktAlra wyrAlLLnia ",
       titleLine2accent: "Twoją markę",
       titleLine2end: "",
-      titleLine3: "i zamienia odwiedziny w klientów.",
+      titleLine3: "i zamienia odwiedziny w klientAlw.",
       theses: [
-        { num: "01.", text: "Strona to narzędzie sprzedaży, nie tylko wizytówka." },
-        { num: "02.", text: "Pomagamy rosnąć firmom, które chcą być zauważone." },
-        { num: "03.", text: "Od strategii po wdrożenie, z myślą o Twoim wyniku." },
-      ],
-      stats: [
-        { value: 147, suffix: "+", label: "zrealizowanych ekranów i sekcji" },
-        { value: 98, suffix: "%", label: "projektów oddanych w terminie" },
-        { value: 12, suffix: "", label: "lat doświadczenia zespołu łącznie" },
+        { num: "01.", text: "Strona to narzędzie sprzedaLLy, nie tylko wizytAlwka." },
+        { num: "02.", text: "Pomagamy rosnąć firmom, ktAlre chcą być zauwaLLone." },
+        { num: "03.", text: "Od strategii po wdroLLenie, z myL�lą o Twoim wyniku." },
       ],
     },
     services: {
-      title: "Od pierwszego briefu do gotowego wdrożenia",
+      title: "Od pierwszego briefu do gotowego wdroLLenia",
       items: [
-        { num: "01.", name: "Strona wizytówka", price: "od 1 490 zł" },
-        { num: "02.", name: "Landing page", price: "od 1 790 zł" },
-        { num: "03.", name: "Strona firmowa", price: "od 2 990 zł" },
-        { num: "04.", name: "Redesign strony", price: "od 1 690 zł" },
-        { num: "05.", name: "Opieka techniczna", price: "od 149 zł / miesiąc" },
+        { num: "01.", name: "Strona wizytAlwka", price: "od 1 490 zL�" },
+        { num: "02.", name: "Landing page", price: "od 1 790 zL�" },
+        { num: "03.", name: "Strona firmowa", price: "od 2 990 zL�" },
+        { num: "04.", name: "Redesign strony", price: "od 1 690 zL�" },
+        { num: "05.", name: "Opieka techniczna", price: "od 149 zL� / miesiąc" },
         { num: "06.", name: "Strona premium dla wymagających firm", price: "wycena indywidualna" },
       ],
     },
     howWeWork: {
-      title: "Przejrzysty proces, który daje tempo i kontrolę",
+      title: "Przejrzysty proces, ktAlry daje tempo i kontrolę",
       link: "Zobacz etapy ↓",
       steps: [
-        { num: "01.", title: "Brief i cel", desc: "Ustalamy priorytety biznesowe, odbiorców i zakres, zanim zaczniemy projektować." },
-        { num: "02.", title: "Kierunek wizualny", desc: "Budujemy strukturę, copy i styl, który pasuje do marki oraz wspiera konwersję." },
-        { num: "03.", title: "Projekt i development", desc: "Łączymy warstwę wizualną z szybkim, responsywnym wdrożeniem frontendu." },
+        { num: "01.", title: "Brief i cel", desc: "Ustalamy priorytety biznesowe, odbiorcAlw i zakres, zanim zaczniemy projektować." },
+        { num: "02.", title: "Kierunek wizualny", desc: "Budujemy strukturę, copy i styl, ktAlry pasuje do marki oraz wspiera konwersję." },
+        { num: "03.", title: "Projekt i development", desc: "L�ączymy warstwę wizualną z szybkim, responsywnym wdroLLeniem frontendu." },
         { num: "04.", title: "Publikacja i optymalizacja", desc: "Uruchamiamy stronę, testujemy ją i dopracowujemy na podstawie danych." },
       ],
     },
@@ -175,42 +165,41 @@ export const translations = {
       title: "Wybrane realizacje",
       collectionLabel: "6 realizacji online",
       liveLabel: "Strona live",
-      openLabel: "Otwórz projekt",
+      openLabel: "OtwAlrz projekt",
       previousLabel: "Poprzedni projekt",
       nextLabel: "Następny projekt",
     },
     whyUs: {
-      title: "Łączymy estetykę z odpowiedzialnym wykonaniem",
+      title: "L�ączymy estetykę z odpowiedzialnym wykonaniem",
       items: [
-        { title: "Jasny proces", desc: "Na każdym etapie wiesz, co robimy, po co to robimy i jaki będzie kolejny krok." },
-        { title: "Szybkie wdrożenie", desc: "Projektujemy z myślą o realnym wdrożeniu, a nie tylko o ładnych makietach." },
-        { title: "Partnerska współpraca", desc: "Doradzamy, upraszczamy decyzje i pilnujemy, by projekt dowoził wartość biznesową." },
+        { title: "Jasny proces", desc: "Na kaLLdym etapie wiesz, co robimy, po co to robimy i jaki będzie kolejny krok." },
+        { title: "Szybkie wdroLLenie", desc: "Projektujemy z myL�lą o realnym wdroLLeniu, a nie tylko o L�adnych makietach." },
+        { title: "Partnerska wspAlL�praca", desc: "Doradzamy, upraszczamy decyzje i pilnujemy, by projekt dowoziL� wartoL�ć biznesową." },
       ],
     },
     faq: {
       title: "Najczęstsze pytania",
-      email: "Skorzystaj z formularza kontaktowego poniżej.",
-      phone: siteConfig.businessPhone,
+      email: "Skorzystaj z formularza kontaktowego poniLLej.",
       items: [
         {
           question: "Ile trwa przygotowanie strony internetowej?",
-          answer: "Większość projektów landing page kończymy w 1-3 tygodnie. Bardziej rozbudowane strony firmowe lub produkty cyfrowe wymagają zwykle 3-6 tygodni pracy.",
+          answer: "WiększoL�ć projektAlw landing page koL�czymy w 1-3 tygodnie. Bardziej rozbudowane strony firmowe lub produkty cyfrowe wymagają zwykle 3-6 tygodni pracy.",
         },
         {
-          question: "Czy pomagacie także z treścią i strukturą strony?",
-          answer: "Tak. Możemy pomóc w architekturze informacji, uproszczeniu komunikacji i przygotowaniu copy do kluczowych sekcji.",
+          question: "Czy pomagacie takLLe z treL�cią i strukturą strony?",
+          answer: "Tak. MoLLemy pomAlc w architekturze informacji, uproszczeniu komunikacji i przygotowaniu copy do kluczowych sekcji.",
         },
         {
-          question: "Czy wdrożenie jest responsywne i szybkie?",
-          answer: "Tak, projektujemy mobile first i dbamy o wydajność, czytelność oraz komfort korzystania na telefonie i desktopie.",
+          question: "Czy wdroLLenie jest responsywne i szybkie?",
+          answer: "Tak, projektujemy mobile first i dbamy o wydajnoL�ć, czytelnoL�ć oraz komfort korzystania na telefonie i desktopie.",
         },
         {
           question: "Czy mogę zlecić tylko redesign bez budowy od zera?",
-          answer: "Oczywiście. Często pracujemy na istniejących materiałach i odświeżamy warstwę wizualną oraz UX bez pełnej przebudowy marki.",
+          answer: "OczywiL�cie. Często pracujemy na istniejących materiaL�ach i odL�wieLLamy warstwę wizualną oraz UX bez peL�nej przebudowy marki.",
         },
         {
-          question: "Czy po publikacji możecie dalej rozwijać stronę?",
-          answer: "Tak, możemy zapewnić dalsze iteracje, rozwój nowych sekcji, wsparcie techniczne i bieżące aktualizacje.",
+          question: "Czy po publikacji moLLecie dalej rozwijać stronę?",
+          answer: "Tak, moLLemy zapewnić dalsze iteracje, rozwAlj nowych sekcji, wsparcie techniczne i bieLLące aktualizacje.",
         },
       ],
     },
@@ -218,32 +207,32 @@ export const translations = {
       title: "Opowiedz nam o swoim projekcie",
       namePlaceholder: "Imię i nazwisko",
       emailPlaceholder: "Adres e-mail",
-      messagePlaceholder: "Krótko opisz cele i zakres projektu",
-      submit: "Wyślij wiadomość",
+      messagePlaceholder: "KrAltko opisz cele i zakres projektu",
+      submit: "WyL�lij wiadomoL�ć",
       status: {
-        submitting: "Wysyłamy zgłoszenie...",
-        success: "Dziękujemy. Zgłoszenie zostało wysłane pomyślnie.",
-        error: "Nie udało się wysłać formularza. Spróbuj ponownie za chwilę.",
+        submitting: "WysyL�amy zgL�oszenie...",
+        success: "Dziękujemy. ZgL�oszenie zostaL�o wysL�ane pomyL�lnie.",
+        error: "Nie udaL�o się wysL�ać formularza. SprAlbuj ponownie za chwilę.",
       },
     },
     cta: {
-      title: "Potrzebujesz nowej strony albo odświeżenia obecnej?",
-      body: "Przygotujemy kierunek, zakres i następne kroki bez zbędnego chaosu. Zacznijmy od krótkiej rozmowy.",
-      button: "Umów rozmowę",
+      title: "Potrzebujesz nowej strony albo odL�wieLLenia obecnej?",
+      body: "Przygotujemy kierunek, zakres i następne kroki bez zbędnego chaosu. Zacznijmy od krAltkiej rozmowy.",
+      button: "UmAlw rozmowę",
       availabilityTitle: "Odpowiadamy szybko",
-      availabilityBody: "Napisz do nas mailowo lub zostaw zgłoszenie w formularzu, jeśli chcesz szybko omówić zakres, termin albo wstępny budżet.",
+      availabilityBody: "Napisz do nas mailowo lub zostaw zgL�oszenie w formularzu, jeL�li chcesz szybko omAlwić zakres, termin albo wstępny budLLet.",
       quickActions: {
-        form: "Przejdź do formularza",
+        form: "PrzejdLs do formularza",
         faq: "Zobacz FAQ",
       },
     },
     footer: {
-      rights: "Wszelkie prawa zastrzeżone.",
+      rights: "Wszelkie prawa zastrzeLLone.",
     },
     notFound: {
-      title: "Strona nie została znaleziona",
-      body: "Wygląda na to, że ten adres nie istnieje lub został przeniesiony.",
-      cta: "Wróć na stronę główną",
+      title: "Strona nie zostaL�a znaleziona",
+      body: "Wygląda na to, LLe ten adres nie istnieje lub zostaL� przeniesiony.",
+      cta: "WrAlć na stronę gL�Alwną",
     },
   },
   en: {
@@ -283,11 +272,6 @@ export const translations = {
         { num: "01.", text: "A website should work as a sales tool, not just a business card." },
         { num: "02.", text: "We help ambitious companies grow and become easier to notice." },
         { num: "03.", text: "From strategy to launch, we keep the end result tied to your goals." },
-      ],
-      stats: [
-        { value: 147, suffix: "+", label: "screens and sections delivered" },
-        { value: 98, suffix: "%", label: "projects delivered on time" },
-        { value: 12, suffix: "", label: "years of combined team experience" },
       ],
     },
     services: {
@@ -330,7 +314,6 @@ export const translations = {
     faq: {
       title: "Frequently asked questions",
       email: "Use the contact form below.",
-      phone: siteConfig.businessPhone,
       items: [
         {
           question: "How long does a website project usually take?",
@@ -389,3 +372,5 @@ export const translations = {
 } satisfies Record<Locale, TranslationSet>;
 
 export const STORAGE_KEY = "node48-locale";
+
+

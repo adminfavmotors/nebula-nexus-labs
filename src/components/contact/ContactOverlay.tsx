@@ -20,7 +20,7 @@ const overlayCopy = {
     body: "Zostaw kilka konkretów. Wrócimy z odpowiedzią tak szybko, jak to możliwe.",
     closeLabel: "Zamknij okno kontaktowe",
     successTitle: "Wiadomość wysłana",
-    successBody: "Dziękujemy za kontakt. Odezwie się do Ciebie niedługo i życzymy Ci dobrego dnia.",
+    successBody: "Dziękujemy za kontakt. Odezwiemy się niedługo i życzymy Ci dobrego dnia.",
   },
   en: {
     eyebrow: "Quick contact",
@@ -76,6 +76,7 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
   useEffect(() => {
     document.documentElement.style.overflow = isOpen ? "hidden" : "";
     document.body.style.overflow = isOpen ? "hidden" : "";
+
     return () => {
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
@@ -122,8 +123,16 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
       {isMounted
         ? createPortal(
             <>
-              <div className={`contact-overlay-root ${isOpen ? "contact-overlay-root-open" : ""}`} aria-hidden={!isOpen}>
-                <button type="button" className="contact-overlay-backdrop" onClick={closeContactOverlay} aria-label={copy.closeLabel} />
+              <div
+                className={`contact-overlay-root ${isOpen ? "contact-overlay-root-open" : ""}`}
+                aria-hidden={!isOpen}
+              >
+                <button
+                  type="button"
+                  className="contact-overlay-backdrop"
+                  onClick={closeContactOverlay}
+                  aria-label={copy.closeLabel}
+                />
 
                 <div
                   role="dialog"

@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import Navbar from "@/components/Navbar";
 import ContactForm from "@/components/ContactForm";
+import App from "@/App";
 import { I18nProvider } from "@/lib/i18n";
 import { formEndpoint } from "@/lib/site-config";
 
@@ -9,11 +9,23 @@ function renderWithI18n(component: React.ReactElement) {
   return render(<I18nProvider>{component}</I18nProvider>);
 }
 
+function renderApp() {
+  return render(<App />);
+}
+
 describe("critical user flows", () => {
   beforeEach(() => {
     window.localStorage.clear();
     window.sessionStorage.clear();
     document.head.innerHTML = '<meta name="description" content="" />';
+    vi.stubGlobal(
+      "ResizeObserver",
+      class ResizeObserver {
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      },
+    );
   });
 
   afterEach(() => {
@@ -22,7 +34,7 @@ describe("critical user flows", () => {
   });
 
   it("uses Polish by default and switches to English", async () => {
-    renderWithI18n(<Navbar />);
+    renderApp();
 
     expect(screen.getAllByRole("link", { name: /us/i }).length).toBeGreaterThan(0);
     expect(document.documentElement.lang).toBe("pl");
@@ -38,7 +50,7 @@ describe("critical user flows", () => {
   });
 
   it("updates document metadata when locale changes", async () => {
-    renderWithI18n(<Navbar />);
+    renderApp();
 
     fireEvent.click(screen.getByRole("button", { name: "en" }));
 

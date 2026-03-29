@@ -31,7 +31,7 @@ const PortfolioCaseCard = ({ item, openLabel }: PortfolioCaseCardProps) => {
           style={{ objectPosition: item.preview.objectPosition ?? "center top" }}
           loading="lazy"
           decoding="async"
-          fetchPriority="low"
+          fetchpriority="low"
           sizes="(max-width: 767px) calc(100vw - 2.8rem), (max-width: 1099px) calc(50vw - 2.5rem), calc(33vw - 2.6rem)"
           draggable="false"
         />

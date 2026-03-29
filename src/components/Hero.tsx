@@ -81,7 +81,7 @@ const Hero = () => {
                     width={1024}
                     height={1024}
                     decoding="async"
-                    fetchPriority="high"
+                    fetchpriority="high"
                   />
                   <div className="hero-visual-sheen" />
                   <div className="hero-visual-vignette" />
