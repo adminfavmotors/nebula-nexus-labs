@@ -21,6 +21,24 @@ type ProjectCaseEntry = {
   content: Record<Locale, LocalizedProjectCase>;
 };
 
+export type ProjectCase = {
+  href: string;
+  domain: string;
+  preview: {
+    src: string;
+    objectPosition?: string;
+  };
+  palette: {
+    from: string;
+    to: string;
+    accent: string;
+  };
+  name: string;
+  tag: string;
+  summary: string;
+  location: string;
+};
+
 const projectCases: ProjectCaseEntry[] = [
   {
     href: "https://nexar-garage-wroc-aw.vercel.app/",
@@ -180,7 +198,7 @@ const projectCases: ProjectCaseEntry[] = [
   },
 ];
 
-export function getProjectCases(locale: Locale) {
+export function getProjectCases(locale: Locale): ProjectCase[] {
   return projectCases.map((project) => {
     const url = new URL(project.href);
 
