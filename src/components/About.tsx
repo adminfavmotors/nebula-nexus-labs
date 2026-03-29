@@ -1,20 +1,6 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { useCountUp } from "@/hooks/useCountUp";
 import { useI18n } from "@/lib/i18n";
 import { Section, SectionTitle } from "@/components/primitives/Section";
-
-const StatItem = ({ value, suffix, label, className = "" }: { value: number; suffix: string; label: string; className?: string }) => {
-  const { count, ref } = useCountUp(value);
-  return (
-    <div className={`metric-cell text-center ${className}`}>
-      <span ref={ref} className="font-display text-[clamp(36px,5vw,64px)] tracking-tight font-bold text-[#0a0a0a]">
-        {count}
-        <span className="text-primary">{suffix}</span>
-      </span>
-      <p className="section-copy-light mt-2">{label}</p>
-    </div>
-  );
-};
 
 const About = () => {
   const ref = useScrollReveal(0.15);
@@ -48,14 +34,6 @@ const About = () => {
               </div>
             </div>
           ))}
-        </div>
-      </div>
-
-      <div className="metrics-band reveal-element" data-delay="0.3">
-        <div className="grid grid-cols-1 divide-y divide-[#dbe6fb] md:grid-cols-3 md:divide-x md:divide-y-0">
-          <StatItem {...t.about.stats[0]} className="mx-auto max-w-[15rem]" />
-          <StatItem {...t.about.stats[1]} className="mx-auto max-w-[15rem]" />
-          <StatItem {...t.about.stats[2]} className="mx-auto max-w-[15rem]" />
         </div>
       </div>
     </Section>
