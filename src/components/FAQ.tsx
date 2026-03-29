@@ -12,20 +12,18 @@ const FAQ = () => {
   return (
     <Section id="faq" tone="light" ref={ref}>
       <div className="faq-layout">
-        <div className="faq-aside-shell reveal-element" data-delay="0">
-          <div className="faq-aside-panel">
-            <SectionTitle tone="light" className="mb-4 max-w-[16ch] text-[clamp(1.85rem,3.4vw,2.65rem)] md:mb-5 md:max-w-[17ch]">
-              {t.faq.title}
-            </SectionTitle>
-            <div className="section-copy-light measure-copy space-y-3">
-              <p>{t.faq.email}</p>
-              <p>{t.faq.phone}</p>
-            </div>
-            <div className="faq-divider mt-6" />
+        <div className="faq-header reveal-element" data-delay="0">
+          <SectionTitle tone="light" className="faq-title">
+            {t.faq.title}
+          </SectionTitle>
+          <div className="faq-contact-row section-copy-light">
+            <p>{t.faq.email}</p>
+            <span className="faq-contact-separator" aria-hidden="true" />
+            <p>{t.faq.phone}</p>
           </div>
         </div>
 
-        <div className="space-y-0">
+        <div className="faq-list space-y-0">
           {t.faq.items.map((item, i) => {
             const isOpen = open === i;
             return (
