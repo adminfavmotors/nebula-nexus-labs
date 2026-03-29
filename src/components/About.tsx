@@ -36,6 +36,11 @@ const About = () => {
           ))}
         </div>
       </div>
+      <div className="reveal-element" data-delay="0.2">
+        <div className="about-section-bridge" aria-hidden="true">
+          <span className="about-section-bridge__accent" />
+        </div>
+      </div>
     </Section>
   );
 };
