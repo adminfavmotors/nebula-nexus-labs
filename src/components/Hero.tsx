@@ -16,6 +16,7 @@ const Hero = () => {
       <div className="hero-section-aurora" />
       <div className="hero-section-mesh" />
       <div className="hero-section-grid" />
+      <div className="brand-mark-motif brand-mark-motif-hero" aria-hidden="true" />
 
       <div className="glow-orb -top-20 left-[10%] h-[350px] w-[350px] opacity-30 blur-[120px]" />
       <div className="glow-orb glow-orb-b left-[55%] top-[40%] h-[250px] w-[250px] opacity-30 blur-[120px]" />
