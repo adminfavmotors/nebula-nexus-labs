@@ -1037,59 +1037,23 @@
     position: relative;
     display: inline-flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     min-width: 0;
-    padding: 0.24rem 0.42rem 0.24rem 0.18rem;
-    color: hsl(var(--foreground));
+    padding: 0.14rem 0.16rem;
+    border-radius: 999px;
+    line-height: 0;
     isolation: isolate;
   }
 
-  .brand-logo::before {
-    content: "";
-    position: absolute;
-    left: -0.35rem;
-    top: 50%;
-    width: 3.4rem;
-    height: 3.4rem;
-    border-radius: 999px;
-    background: radial-gradient(circle, rgba(0, 89, 255, 0.28) 0%, rgba(0, 89, 255, 0) 72%);
-    transform: translateY(-50%);
-    filter: blur(12px);
-    opacity: 0.92;
-    pointer-events: none;
-  }
-
-  .brand-logo-name {
-    position: relative;
-    z-index: 1;
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.08rem;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    text-transform: uppercase;
-    text-wrap: nowrap;
-    line-height: 1;
-    letter-spacing: 0.03em;
-    text-shadow: 0 8px 28px rgba(0, 0, 0, 0.26);
-  }
-
-  .brand-logo-prefix,
-  .brand-logo-suffix {
-    font-size: clamp(1.08rem, 1rem + 0.82vw, 1.48rem);
-    font-weight: 700;
-    letter-spacing: clamp(0.055em, 0.02em + 0.28vw, 0.115em);
-  }
-
-  .brand-logo-prefix {
-    color: rgba(245, 249, 255, 0.98);
-  }
-
-  .brand-logo-suffix {
-    color: #31cbff;
-    text-shadow:
-      0 0 18px rgba(49, 203, 255, 0.4),
-      0 0 36px rgba(0, 89, 255, 0.22);
+  .brand-logo-image {
+    display: block;
+    width: clamp(2.9rem, 2.45rem + 1.45vw, 3.95rem);
+    height: auto;
+    object-fit: contain;
+    user-select: none;
+    filter:
+      drop-shadow(0 0 10px rgba(52, 201, 255, 0.18))
+      drop-shadow(0 0 22px rgba(0, 89, 255, 0.1));
   }
 
   .logo-neon-ring {
@@ -2056,10 +2020,8 @@
     padding-right: 0.85rem;
   }
 
-  .brand-logo-prefix,
-  .brand-logo-suffix {
-      font-size: 1.18rem;
-      letter-spacing: 0.09em;
+  .brand-logo-image {
+      width: 3.3rem;
     }
 
   .hero-visual-wrap {
@@ -2259,19 +2221,8 @@
     padding: 0.72rem 0.72rem 0.72rem 0.9rem;
   }
 
-  .brand-logo {
-      padding-right: 0.2rem;
-    }
-  
-  .brand-logo::before {
-      width: 2.85rem;
-      height: 2.85rem;
-    }
-  
-  .brand-logo-prefix,
-  .brand-logo-suffix {
-      font-size: 1rem;
-      letter-spacing: 0.065em;
+  .brand-logo-image {
+      width: 2.95rem;
     }
 
   .header-locale-button {

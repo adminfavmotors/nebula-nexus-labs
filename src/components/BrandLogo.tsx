@@ -7,16 +7,18 @@ type BrandLogoProps = {
 };
 
 const BrandLogo = ({ href, className }: BrandLogoProps) => {
-  const match = siteConfig.brandName.match(/^(.*?)(\d+)$/);
-  const brandPrefix = match?.[1] ?? siteConfig.brandName;
-  const brandSuffix = match?.[2] ?? "";
-
   return (
-    <a href={href} className={cx("brand-logo", className)}>
-      <span className="brand-logo-name">
-        <span className="brand-logo-prefix">{brandPrefix}</span>
-        {brandSuffix ? <span className="brand-logo-suffix">{brandSuffix}</span> : null}
-      </span>
+    <a href={href} className={cx("brand-logo", className)} aria-label={`${siteConfig.brandName} — strona główna`}>
+      <img
+        src="/brand/node48-logo.png"
+        alt={siteConfig.brandName}
+        width={512}
+        height={512}
+        className="brand-logo-image"
+        decoding="async"
+        fetchpriority="high"
+        draggable={false}
+      />
     </a>
   );
 };
