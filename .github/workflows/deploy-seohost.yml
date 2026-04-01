@@ -12,6 +12,9 @@ on:
         default: ""
         type: string
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     uses: ./.github/workflows/_deploy-seohost-reusable.yml
