@@ -1,0 +1,18 @@
+name: Rollback SEOHOST
+run-name: Rollback production to ${{ inputs.rollback_ref }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      rollback_ref:
+        description: Existing production tag, branch, or commit SHA to redeploy to production.
+        required: true
+        type: string
+
+jobs:
+  rollback:
+    uses: ./.github/workflows/_deploy-seohost-reusable.yml
+    with:
+      deploy_ref: ${{ inputs.rollback_ref }}
+      deployment_reason: rollback
+    secrets: inherit

@@ -1,0 +1,59 @@
+# Production Deployments
+
+## What Changed
+
+Production deploys now use three GitHub Actions workflows:
+
+- `Deploy SEOHOST` for normal deploys from `main`
+- `Deploy SEOHOST` with manual input when you want to deploy a specific branch, tag, or SHA
+- `Rollback SEOHOST` for explicit rollback to an earlier production version
+
+Every successful production deployment now creates an immutable Git tag in this format:
+
+```text
+prod-YYYYMMDD-HHMMSS-<short-sha>
+```
+
+That tag is the rollback anchor. It marks exactly what was deployed to `https://node48.pl`.
+
+## Fast Rollback
+
+Recommended rollback flow:
+
+1. Open `Actions` in GitHub.
+2. Open `Rollback SEOHOST`.
+3. Click `Run workflow`.
+4. Paste a previously created `prod-*` tag into `rollback_ref`.
+5. Run the workflow.
+
+This redeploys the tagged version to production and creates a new immutable `prod-*` tag for the rollback deployment itself, so the audit trail stays intact.
+
+## Safe Deployment Flow
+
+Recommended deployment flow before shipping UI changes:
+
+1. Merge approved work to `main` only when ready for production.
+2. Let `Deploy SEOHOST` run automatically, or manually deploy a specific ref if needed.
+3. Verify the production site.
+4. If something is wrong, run `Rollback SEOHOST` with the last known good `prod-*` tag.
+
+## Why This Matches Current Practice
+
+For a static site deployed from GitHub Actions in 2026, the reliable rollback pattern is:
+
+- keep production deployment history in GitHub Actions
+- deploy from explicit refs, not from mutable local state
+- create immutable production tags after every successful release
+- make rollback a redeploy of a known good Git ref
+
+That approach is especially important for FTP-based hosting, where the platform itself usually does not provide instant version rollback.
+
+## Optional Hardening In GitHub Settings
+
+The workflows already target the `production` environment. To make production safer, configure this in GitHub:
+
+- Repository Settings -> Environments -> `production`
+- add required reviewers before production deploys
+- optionally restrict which branches can deploy
+
+That gives you an approval gate before a production deployment starts.
