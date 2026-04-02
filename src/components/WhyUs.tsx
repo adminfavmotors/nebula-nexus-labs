@@ -1,11 +1,10 @@
-import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Shield, Zap, Users } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { Reveal } from "@/components/primitives/Reveal";
 import { Section, SectionTitle } from "@/components/primitives/Section";
 import { SurfaceCard } from "@/components/primitives/SurfaceCard";
 
 const WhyUs = () => {
-  const ref = useScrollReveal(0.12);
   const { t } = useI18n();
   const items = [
     { icon: Shield, ...t.whyUs.items[0] },
@@ -14,19 +13,20 @@ const WhyUs = () => {
   ];
 
   return (
-    <Section id="why-us" tone="deep" className="relative overflow-hidden" ref={ref}>
+    <Section id="why-us" tone="deep" className="relative overflow-hidden">
       <div className="glow-orb right-[15%] top-0 h-[300px] w-[300px] opacity-20 blur-[120px]" />
       <div className="glow-orb glow-orb-b bottom-0 left-[10%] h-[200px] w-[200px] opacity-20 blur-[100px]" />
 
-      <SectionTitle tone="deep" revealClassName="reveal-element" className="mb-10 max-w-[19ch] md:mb-12 md:max-w-[21ch]" delay="0.05">
+      <Reveal as={SectionTitle} tone="deep" className="mb-10 max-w-[19ch] md:mb-12 md:max-w-[21ch]" delay={0.05}>
         {t.whyUs.title}
-      </SectionTitle>
+      </Reveal>
       <div className="grid items-start grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {items.map((item, i) => (
-          <SurfaceCard
+          <Reveal
+            as={SurfaceCard}
             key={i}
-            className="why-us-card reveal-element self-start p-5 sm:p-6"
-            data-delay={String(i * 0.12)}
+            className="why-us-card self-start p-5 sm:p-6"
+            delay={i * 0.12}
           >
             <div className="why-us-card-stack">
               <div className="icon-circle">
@@ -35,7 +35,7 @@ const WhyUs = () => {
               <h3 className="heading-balance measure-tight font-body font-semibold text-foreground">{item.title}</h3>
               <p className="section-copy-dark copy-pretty why-us-card-copy">{item.desc}</p>
             </div>
-          </SurfaceCard>
+          </Reveal>
         ))}
       </div>
     </Section>

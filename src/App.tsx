@@ -1,26 +1,84 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { ContactOverlayProvider } from "@/components/contact/ContactOverlay";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import Index from "./pages/Index.tsx";
-import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
-import CookiePolicy from "./pages/CookiePolicy.tsx";
-import ServicePage from "./pages/ServicePage.tsx";
-import NotFound from "./pages/NotFound.tsx";
+
+const ServicePage = lazy(() => import("./pages/ServicePage.tsx"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.tsx"));
+const CookiePolicy = lazy(() => import("./pages/CookiePolicy.tsx"));
+const NotFound = lazy(() => import("./pages/NotFound.tsx"));
+
+const HASH_SCROLL_RETRY_LIMIT = 12;
+const HASH_SCROLL_RETRY_DELAY_MS = 120;
+
+const RouteHashScrollManager = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) {
+      return;
+    }
+
+    const hashId = decodeURIComponent(location.hash.slice(1));
+
+    if (!hashId) {
+      return;
+    }
+
+    let attempts = 0;
+    let timeoutId: number | null = null;
+
+    const scrollToHashTarget = () => {
+      const target =
+        hashId === "home" ? document.documentElement : document.getElementById(hashId);
+
+      if (target) {
+        if (hashId === "home") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        return;
+      }
+
+      attempts += 1;
+      if (attempts >= HASH_SCROLL_RETRY_LIMIT) {
+        return;
+      }
+
+      timeoutId = window.setTimeout(scrollToHashTarget, HASH_SCROLL_RETRY_DELAY_MS);
+    };
+
+    scrollToHashTarget();
+
+    return () => {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, [location.hash, location.pathname]);
+
+  return null;
+};
 
 const AppShell = () => {
   const { isTransitioningLocale } = useI18n();
 
   return (
     <BrowserRouter>
+      <RouteHashScrollManager />
       <ContactOverlayProvider>
         <div className={`app-shell ${isTransitioningLocale ? "app-shell-transitioning" : ""}`}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/uslugi/:slug" element={<ServicePage />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/cookie-policy" element={<CookiePolicy />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={null}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/uslugi/:slug" element={<ServicePage />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/cookie-policy" element={<CookiePolicy />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </div>
       </ContactOverlayProvider>
     </BrowserRouter>

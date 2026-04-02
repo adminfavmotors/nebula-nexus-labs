@@ -1,0 +1,423 @@
+@media (min-width: 768px) {
+  .site-shell {
+    width: calc(100% - 3rem);
+  }
+
+  .scroll-top-button {
+    right: 1.35rem;
+    bottom: 1.35rem;
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  .trust-strip-panel {
+    padding: 1.35rem;
+  }
+
+  .trust-strip-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contact-overlay-root {
+    padding: 1.5rem;
+  }
+
+  .contact-overlay-panel {
+    padding: 1.45rem 1.45rem 1.35rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-layout {
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+    gap: 4.2rem;
+  }
+
+  .trust-strip-shell {
+    margin-top: -3.35rem;
+  }
+
+  .trust-strip-panel {
+    grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
+    gap: 1.25rem 1.5rem;
+    padding: 1.45rem;
+  }
+
+  .trust-strip-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.95rem;
+  }
+
+  .about-layout {
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+    gap: 3rem;
+  }
+
+  .about-theses {
+    max-width: 38rem;
+    justify-self: end;
+  }
+
+  .faq-layout {
+    gap: 1.55rem;
+  }
+
+  .service-page-hero-shell {
+    grid-template-columns: minmax(0, 1.08fr) minmax(24rem, 0.92fr);
+    gap: 3.5rem;
+  }
+
+  .service-page-summary-card {
+    align-self: center;
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .site-shell {
+    width: calc(100% - 4rem);
+  }
+
+  .hero-shell {
+    padding-top: 7.75rem;
+    padding-bottom: 5rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --site-shell-max: 88rem;
+    --contact-shell-max: 60rem;
+    --measure-copy-max: 44ch;
+    --measure-copy-wide-max: 54ch;
+    --measure-card-max: 33ch;
+    --hero-visual-max: 35rem;
+  }
+
+  .site-shell {
+    width: calc(100% - 5rem);
+  }
+
+  .hero-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(36rem, 0.98fr);
+    gap: 5rem;
+  }
+
+  .trust-strip-shell {
+    margin-top: -3.6rem;
+  }
+
+  .trust-strip-panel {
+    grid-template-columns: minmax(18rem, 0.64fr) minmax(0, 1.36fr);
+  }
+
+  .hero-title {
+    max-width: 10.5ch;
+  }
+
+  .about-layout {
+    grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
+    gap: 3.75rem;
+  }
+
+  .about-theses {
+    max-width: 42rem;
+  }
+
+  .faq-layout {
+    gap: 1.75rem;
+  }
+
+  .service-page-hero-title {
+    max-width: 15ch;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --site-shell-max: 110rem;
+    --contact-shell-max: 76rem;
+    --measure-copy-max: 48ch;
+    --measure-copy-wide-max: 62ch;
+    --measure-card-max: 36ch;
+    --hero-visual-max: 42rem;
+  }
+
+  .site-shell {
+    width: calc(100% - 6rem);
+  }
+
+  .hero-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(43rem, 1fr);
+    gap: 6.4rem;
+  }
+
+  .hero-title {
+    max-width: 10.25ch;
+    font-size: clamp(3.5rem, 5vw, 6.2rem);
+  }
+
+  .about-layout {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 5rem;
+  }
+
+  .about-theses {
+    max-width: 50rem;
+  }
+
+  .faq-layout {
+    gap: 1.9rem;
+  }
+
+  .service-page-hero-title {
+    max-width: 15.5ch;
+  }
+}
+
+@media (max-width: 1023px) {
+  .header-panel {
+    gap: 0.75rem;
+    padding-right: 0.85rem;
+  }
+
+  .brand-logo-prefix,
+  .brand-logo-suffix {
+    font-size: 1.18rem;
+    letter-spacing: 0.09em;
+  }
+
+  .hero-visual-wrap {
+    max-width: 30rem;
+    aspect-ratio: 1 / 1.05;
+  }
+
+  .hero-shell {
+    padding-top: 6.7rem;
+    padding-bottom: 3.8rem;
+  }
+
+  .hero-visual-stage {
+    padding-bottom: 3rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-section-mesh,
+  .hero-section-grid,
+  .hero-section-beam,
+  .glow-orb,
+  .hero-visual-backplate,
+  .hero-visual-ring,
+  .hero-card-glow,
+  .hero-visual-grain,
+  .hero-visual-sheen {
+    display: none;
+  }
+
+  .hero-shell {
+    padding-top: 6.15rem;
+    padding-bottom: 3.2rem;
+  }
+
+  .faq-layout {
+    gap: 1.2rem;
+  }
+
+  .faq-header {
+    gap: 0.7rem;
+  }
+
+  .faq-intro-panel {
+    align-items: stretch;
+    padding: 1.2rem 1.15rem;
+    border-radius: 1.25rem;
+  }
+
+  .faq-intro-copy {
+    gap: 0.6rem;
+  }
+
+  .faq-contact-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .trust-strip-shell {
+    margin-top: -2.35rem;
+  }
+
+  .trust-strip-panel {
+    padding: 1rem;
+    border-radius: 1.35rem;
+  }
+
+  .trust-strip-title {
+    max-width: 12ch;
+    font-size: clamp(1.7rem, 7.4vw, 2.3rem);
+    line-height: 1.04;
+  }
+
+  .trust-strip-card {
+    padding: 0.95rem;
+  }
+
+  .trust-strip-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .hero-content-stack {
+    gap: 1.15rem;
+  }
+
+  .hero-copy-cluster {
+    gap: 1.1rem;
+  }
+
+  .hero-title {
+    max-width: 11.2ch;
+    font-size: clamp(2.9rem, 13vw, 4rem);
+    line-height: 1.01;
+    letter-spacing: -0.045em;
+  }
+
+  .hero-actions {
+    width: 100%;
+    gap: 0.8rem;
+  }
+
+  .hero-primary-cta,
+  .hero-secondary-cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-support-line {
+    font-size: 0.76rem;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-visual-stage {
+    padding-inline: 0.1rem;
+    padding-bottom: 2.1rem;
+  }
+
+  .hero-visual-backplate {
+    inset: 10% 0 14%;
+    border-radius: 1.45rem;
+    transform: rotate(-5deg);
+  }
+
+  .hero-visual-ring {
+    inset: 8% 6% 18%;
+  }
+
+  .hero-visual-shell {
+    padding: 0.65rem;
+    animation: none;
+  }
+
+  .hero-visual-mask {
+    box-shadow:
+      0 18px 42px rgba(0, 0, 0, 0.28),
+      0 0 0 1px rgba(214, 230, 255, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .hero-visual-image {
+    transform: none;
+    filter: saturate(0.9) contrast(1) brightness(0.92);
+  }
+
+  .hero-visual-vignette {
+    background:
+      radial-gradient(circle at 82% 18%, rgba(89, 154, 255, 0.16) 0%, transparent 24%),
+      linear-gradient(180deg, rgba(6, 12, 34, 0.04) 0%, rgba(3, 7, 23, 0.44) 100%);
+  }
+
+  .service-page-hero {
+    padding-top: 6rem;
+  }
+
+  .service-page-breadcrumbs {
+    gap: 0.65rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .service-page-breadcrumb-link {
+    font-size: 0.88rem;
+  }
+
+  .contact-overlay-panel {
+    border-radius: 1.4rem;
+  }
+
+  .contact-overlay-header {
+    flex-direction: column;
+  }
+
+  .contact-overlay-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .contact-overlay-title {
+    max-width: 10ch;
+    font-size: clamp(1.9rem, 10vw, 2.7rem);
+  }
+
+  .service-page-hero-title {
+    max-width: none;
+    font-size: clamp(2.1rem, 11.5vw, 3.45rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+
+  .service-page-hero-copy {
+    max-width: none;
+  }
+
+  .header-panel {
+    gap: 0.6rem;
+    padding: 0.72rem 0.72rem 0.72rem 0.9rem;
+  }
+
+  .brand-logo {
+    padding-right: 0.2rem;
+  }
+
+  .brand-logo::before {
+    width: 2.85rem;
+    height: 2.85rem;
+  }
+
+  .brand-logo-prefix,
+  .brand-logo-suffix {
+    font-size: 1rem;
+    letter-spacing: 0.065em;
+  }
+
+  .header-locale-button {
+    padding: 0.5rem 0.72rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-orb,
+  .card-neon-border,
+  .hero-visual-shell,
+  .hero-badge::after {
+    animation: none !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition-duration: 0.01ms;
+    transition-delay: 0ms !important;
+  }
+}

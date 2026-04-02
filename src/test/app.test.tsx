@@ -13,8 +13,17 @@ function renderApp() {
   return render(<App />);
 }
 
+function setScrollPosition(value: number) {
+  Object.defineProperty(window, "scrollY", {
+    configurable: true,
+    value,
+    writable: true,
+  });
+}
+
 describe("critical user flows", () => {
   beforeEach(() => {
+    window.history.pushState({}, "", "/");
     window.localStorage.clear();
     window.sessionStorage.clear();
     document.head.innerHTML = '<meta name="description" content="" />';
@@ -26,6 +35,9 @@ describe("critical user flows", () => {
         disconnect() {}
       },
     );
+    window.scrollTo = vi.fn();
+    setScrollPosition(0);
+    Element.prototype.scrollIntoView = vi.fn();
   });
 
   afterEach(() => {
@@ -42,13 +54,11 @@ describe("critical user flows", () => {
     fireEvent.click(screen.getByRole("button", { name: "en" }));
 
     await waitFor(() => {
-      expect(screen.getAllByText("Services").length).toBeGreaterThan(0);
-    });
-
-    await waitFor(() => {
       expect(document.documentElement.lang).toBe("en");
       expect(window.localStorage.getItem("node48-locale")).toBe("en");
     });
+
+    expect(screen.getAllByRole("link", { name: /services/i }).length).toBeGreaterThan(0);
   });
 
   it("updates document metadata when locale changes", async () => {
@@ -67,15 +77,87 @@ describe("critical user flows", () => {
   it("opens the mobile navigation menu", async () => {
     renderApp();
 
-    const menuButton = screen.getByRole("button", { name: "Otwórz menu" });
-    fireEvent.click(menuButton);
+    const menuButton = document.querySelector('[aria-controls="mobile-navigation-panel"]');
+    expect(menuButton).toBeInstanceOf(HTMLButtonElement);
+
+    fireEvent.click(menuButton as HTMLButtonElement);
 
     await waitFor(() => {
-      expect(screen.getByRole("button", { name: "Zamknij menu" })).toBeInTheDocument();
+      expect(menuButton).toHaveAttribute("aria-expanded", "true");
     });
 
     const mobileLinks = document.querySelectorAll(".header-mobile-link.translate-x-0.opacity-100");
     expect(mobileLinks).toHaveLength(4);
+  });
+
+  it("closes the mobile navigation menu when Escape is pressed", async () => {
+    renderApp();
+
+    const menuButton = document.querySelector('[aria-controls="mobile-navigation-panel"]');
+    expect(menuButton).toBeInstanceOf(HTMLButtonElement);
+
+    fireEvent.click(menuButton as HTMLButtonElement);
+
+    await waitFor(() => {
+      expect(menuButton).toHaveAttribute("aria-expanded", "true");
+    });
+
+    fireEvent.keyDown(window, { key: "Escape" });
+
+    await waitFor(() => {
+      expect(menuButton).toHaveAttribute("aria-expanded", "false");
+    });
+  });
+
+  it("scrolls to the requested section when the route contains a hash", async () => {
+    window.history.pushState({}, "", "/#services");
+
+    renderApp();
+
+    await waitFor(() => {
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
+    });
+  });
+
+  it("navigates from a service page back to the services section without a full reload", async () => {
+    window.history.pushState({}, "", "/uslugi/strona-wizytowka");
+
+    renderApp();
+
+    await waitFor(() => {
+      expect(document.querySelector('a[href="/#services"]')).toBeInstanceOf(HTMLAnchorElement);
+    });
+
+    const servicesLink = document.querySelector('a[href="/#services"]');
+    expect(servicesLink).toBeInstanceOf(HTMLAnchorElement);
+
+    fireEvent.click(servicesLink as HTMLAnchorElement);
+
+    await waitFor(() => {
+      expect(window.location.pathname).toBe("/");
+      expect(window.location.hash).toBe("#services");
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
+    });
+  });
+
+  it("hides the header on downward scroll and reveals it on upward scroll", async () => {
+    renderApp();
+
+    const header = screen.getByRole("navigation");
+
+    setScrollPosition(180);
+    fireEvent.scroll(window);
+
+    await waitFor(() => {
+      expect(header).toHaveAttribute("data-header-visibility", "hidden");
+    });
+
+    setScrollPosition(60);
+    fireEvent.scroll(window);
+
+    await waitFor(() => {
+      expect(header).toHaveAttribute("data-header-visibility", "visible");
+    });
   });
 
   it("submits the contact form to the configured email endpoint", async () => {

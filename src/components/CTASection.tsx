@@ -1,18 +1,17 @@
-import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { CircleHelp, MessageCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { Reveal } from "@/components/primitives/Reveal";
 import { Section } from "@/components/primitives/Section";
 import { SurfaceCard } from "@/components/primitives/SurfaceCard";
 import { ActionLink } from "@/components/primitives/Actions";
 
 const CTASection = () => {
-  const ref = useScrollReveal(0.15);
   const { t } = useI18n();
 
   return (
-    <Section tone="deep" ref={ref}>
+    <Section tone="deep">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <SurfaceCard className="reveal-element flex min-h-[280px] flex-col justify-between p-7 sm:p-8 lg:p-9" data-delay="0">
+        <Reveal as={SurfaceCard} className="flex min-h-[280px] flex-col justify-between p-7 sm:p-8 lg:p-9" delay={0}>
           <div>
             <h2 className="heading-balance mb-4 max-w-[16ch] font-display text-[clamp(24px,3vw,36px)] font-bold text-foreground sm:max-w-[17ch]">
               {t.cta.title}
@@ -22,9 +21,9 @@ const CTASection = () => {
           <div className="mt-7">
             <ActionLink href="#contact">{t.cta.button}</ActionLink>
           </div>
-        </SurfaceCard>
+        </Reveal>
 
-        <div className="cta-panel reveal-element relative flex min-h-[280px] flex-col justify-between p-7 sm:p-8 lg:p-9" data-delay="0.15">
+        <Reveal className="cta-panel relative flex min-h-[280px] flex-col justify-between p-7 sm:p-8 lg:p-9" delay={0.15}>
           <div className="brand-mark-motif brand-mark-motif-cta" aria-hidden="true" />
           <div className="glow-orb -right-10 -top-10 h-[200px] w-[200px] bg-white opacity-[0.15] blur-[80px]" />
           <div className="relative z-10">
@@ -43,7 +42,7 @@ const CTASection = () => {
               <CircleHelp size={14} /> {t.cta.quickActions.faq}
             </ActionLink>
           </div>
-        </div>
+        </Reveal>
       </div>
     </Section>
   );

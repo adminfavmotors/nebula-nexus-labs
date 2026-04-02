@@ -1,31 +1,29 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
 import { legalContent } from "@/lib/legal-content";
 import { siteConfig } from "@/lib/site-config";
 import BrandLogo from "@/components/BrandLogo";
 
 const Footer = () => {
-  const location = useLocation();
   const { locale, t } = useI18n();
   const legal = legalContent[locale];
-  const isHomePage = location.pathname === "/";
-  const resolveSectionHref = (href: string) => (isHomePage ? href : `/${href}`);
+  const resolveSectionHref = (href: string) => `/${href}`;
 
   return (
     <footer className="pb-12 pt-8">
       <div className="site-shell">
         <div className="glow-divider mb-10" />
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row md:items-start">
-          <BrandLogo href={isHomePage ? "#home" : "/#home"} className="justify-center md:justify-start" />
+          <BrandLogo href="/#home" className="justify-center md:justify-start" />
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 md:justify-end">
             {t.nav.links.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={resolveSectionHref(link.href)}
+                to={resolveSectionHref(link.href)}
                 className="font-body text-[0.95rem] text-muted-foreground transition-colors duration-300 hover:text-foreground"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <Link
               to="/privacy-policy"

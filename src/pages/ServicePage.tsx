@@ -83,9 +83,9 @@ const ServicePage = () => {
                 NODE48
               </Link>
               <span className="service-page-breadcrumb-separator">/</span>
-              <a href="/#services" className="service-page-breadcrumb-link">
+              <Link to="/#services" className="service-page-breadcrumb-link">
                 {ui.secondaryCta}
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -106,9 +106,9 @@ const ServicePage = () => {
                 <ActionLink href="#contact" onClick={handleContactClick}>
                   {detail.heroCta}
                 </ActionLink>
-                <ActionLink href="/#services" variant="ghost">
+                <Link to="/#services" className="btn-ghost">
                   {ui.secondaryCta}
-                </ActionLink>
+                </Link>
               </div>
             </div>
 

@@ -1,21 +1,20 @@
-import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { Reveal } from "@/components/primitives/Reveal";
 import { Section, SectionTitle } from "@/components/primitives/Section";
 import { ActionButton } from "@/components/primitives/Actions";
 import { useContactOverlay } from "@/components/contact/contact-overlay-context";
 
 const FAQ = () => {
-  const ref = useScrollReveal(0.1);
   const [open, setOpen] = useState(0);
   const { t } = useI18n();
   const { openContactOverlay } = useContactOverlay();
 
   return (
-    <Section id="faq" tone="light" ref={ref}>
+    <Section id="faq" tone="light">
       <div className="faq-layout">
-        <div className="faq-header reveal-element" data-delay="0">
+        <Reveal className="faq-header">
           <div className="faq-intro-panel">
             <div className="faq-intro-copy">
               <SectionTitle tone="light" className="faq-title">
@@ -32,13 +31,13 @@ const FAQ = () => {
               {t.nav.cta}
             </ActionButton>
           </div>
-        </div>
+        </Reveal>
 
         <div className="faq-list space-y-0">
           {t.faq.items.map((item, i) => {
             const isOpen = open === i;
             return (
-              <div key={i} className="reveal-element" data-delay={String(i * 0.08)}>
+              <Reveal key={i} delay={i * 0.08}>
                 <div className="faq-divider" />
                 <button
                   type="button"
@@ -60,7 +59,7 @@ const FAQ = () => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             );
           })}
           <div className="faq-divider" />

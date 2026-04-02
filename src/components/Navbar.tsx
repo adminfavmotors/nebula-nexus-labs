@@ -1,5 +1,5 @@
-import { useEffect, useState, type MouseEvent } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useI18n, type Locale } from "@/lib/i18n";
 import { cx } from "@/lib/cx";
@@ -7,17 +7,22 @@ import { ActionLink } from "@/components/primitives/Actions";
 import BrandLogo from "@/components/BrandLogo";
 import { useContactOverlay } from "@/components/contact/contact-overlay-context";
 
+const HEADER_REVEAL_OFFSET = 24;
+const HEADER_HIDE_OFFSET = 120;
+const HEADER_SCROLL_DELTA = 6;
+
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [headerPinned, setHeaderPinned] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [logoHovered, setLogoHovered] = useState(false);
+  const lastScrollY = useRef(0);
   const location = useLocation();
   const { locale, setLocale, isTransitioningLocale, t } = useI18n();
   const { openContactOverlay } = useContactOverlay();
   const closeMenu = () => setMenuOpen(false);
   const isHomePage = location.pathname === "/";
-  const resolveSectionHref = (href: string) => (isHomePage ? href : `/${href}`);
+  const resolveSectionHref = (href: string) => `/${href}`;
   const contactHref = isHomePage ? "#contact" : "/#contact";
 
   const handleContactClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -33,54 +38,84 @@ const Navbar = () => {
 
   useEffect(() => {
     setVisible(true);
-    const onScroll = () => setScrolled(window.scrollY > 50);
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = currentScrollY - lastScrollY.current;
+
+      setScrolled(currentScrollY > 50);
+
+      if (menuOpen || currentScrollY <= HEADER_REVEAL_OFFSET) {
+        setHeaderPinned(true);
+      } else if (scrollDelta >= HEADER_SCROLL_DELTA && currentScrollY > HEADER_HIDE_OFFSET) {
+        setHeaderPinned(false);
+      } else if (scrollDelta <= -HEADER_SCROLL_DELTA) {
+        setHeaderPinned(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    lastScrollY.current = window.scrollY;
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [menuOpen]);
 
   useEffect(() => {
+    document.documentElement.style.overflow = menuOpen ? "hidden" : "";
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    setMenuOpen(false);
+    setHeaderPinned(true);
+  }, [location.hash, location.pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return;
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, [menuOpen]);
 
   return (
     <>
       <nav
+        data-header-visibility={headerPinned ? "visible" : "hidden"}
         className={`fixed inset-x-0 top-0 z-50 px-4 pt-4 transition-[opacity,transform,filter] duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
-          visible ? "translate-y-0 opacity-100 blur-0" : "-translate-y-5 opacity-0 blur-[6px]"
+          visible ? "opacity-100 blur-0" : "opacity-0 blur-[6px]"
+        } ${
+          headerPinned ? "translate-y-0" : "-translate-y-[calc(100%+1.25rem)]"
         }`}
       >
         <div className={cx("header-panel", scrolled ? "header-panel-scrolled" : "header-panel-idle")}>
-          <div
-            style={{ position: "relative", display: "inline-flex", alignItems: "center", cursor: "pointer" }}
-            onMouseEnter={() => setLogoHovered(true)}
-            onMouseLeave={() => setLogoHovered(false)}
-          >
-            <span
-              className={cx("logo-neon-ring", logoHovered && "logo-hovered")}
-              style={{
-                position: "absolute",
-                inset: "-6px -14px",
-                borderRadius: "12px",
-                pointerEvents: "none",
-                opacity: logoHovered ? 1 : 0,
-                transition: "opacity 0.3s ease",
-              }}
-            />
-            <BrandLogo href={isHomePage ? "#home" : "/#home"} className="header-brand" />
+          <div className="header-brand-shell">
+            <span className="logo-neon-ring" aria-hidden="true" />
+            <BrandLogo href="/#home" />
           </div>
 
           <div className="hidden items-center gap-1 lg:flex">
             {t.nav.links.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={resolveSectionHref(link.href)}
+                to={resolveSectionHref(link.href)}
                 className="header-nav-link"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -116,6 +151,8 @@ const Navbar = () => {
               className="header-mobile-trigger lg:hidden"
               onClick={() => setMenuOpen((open) => !open)}
               aria-label={menuOpen ? t.nav.closeMenuLabel : t.nav.openMenuLabel}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-navigation-panel"
             >
               {menuOpen ? <X size={16} /> : <Menu size={16} />}
             </button>
@@ -124,6 +161,7 @@ const Navbar = () => {
       </nav>
 
       <div
+        id="mobile-navigation-panel"
         className={`header-mobile-panel fixed inset-x-0 top-0 z-40 flex h-dvh flex-col justify-start overflow-y-auto px-8 pb-10 pt-24 transition-opacity duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
           menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
@@ -132,16 +170,16 @@ const Navbar = () => {
 
         <div className="relative z-10">
           {t.nav.links.map((link) => (
-            <a
+            <Link
               key={link.href}
-              href={resolveSectionHref(link.href)}
+              to={resolveSectionHref(link.href)}
               onClick={closeMenu}
               className={`header-mobile-link ${
                 menuOpen ? "translate-x-0 opacity-100" : "-translate-x-6 opacity-0"
               }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
 
           <ActionLink

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ComponentPropsWithoutRef } from "react";
+import { forwardRef, useEffect, useRef, useState, type ComponentPropsWithoutRef } from "react";
 import { useI18n } from "@/lib/i18n";
 import { legalContent } from "@/lib/legal-content";
 import { formEndpoint, siteConfig } from "@/lib/site-config";
@@ -39,13 +39,13 @@ type ContactFormPanelProps = ComponentPropsWithoutRef<"form"> & {
   onSuccess?: () => void;
 };
 
-export default function ContactFormPanel({
+const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(function ContactFormPanel({
   mode,
   autoFocus = false,
   onSuccess,
   className,
   ...props
-}: ContactFormPanelProps) {
+}, ref) {
   const { locale, t } = useI18n();
   const legal = legalContent[locale];
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -150,6 +150,7 @@ export default function ContactFormPanel({
 
   return (
     <form
+      ref={ref}
       className={cx(mode === "section" ? "space-y-6" : "space-y-5", className)}
       onSubmit={handleSubmit}
       onChangeCapture={() => setHasInteracted(true)}
@@ -262,4 +263,6 @@ export default function ContactFormPanel({
       ) : null}
     </form>
   );
-}
+});
+
+export default ContactFormPanel;
