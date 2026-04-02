@@ -179,6 +179,7 @@
   .header-panel {
     gap: 0.75rem;
     padding-right: 0.85rem;
+    backdrop-filter: blur(10px) saturate(120%);
   }
 
   .brand-logo-prefix,
@@ -382,6 +383,7 @@
   .header-panel {
     gap: 0.6rem;
     padding: 0.72rem 0.72rem 0.72rem 0.9rem;
+    backdrop-filter: none;
   }
 
   .brand-logo {

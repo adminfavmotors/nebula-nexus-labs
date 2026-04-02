@@ -17,6 +17,9 @@ const Navbar = () => {
   const [headerPinned, setHeaderPinned] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
+  const rafId = useRef<number | null>(null);
+  const scrolledRef = useRef(false);
+  const headerPinnedRef = useRef(true);
   const location = useLocation();
   const { locale, setLocale, isTransitioningLocale, t } = useI18n();
   const { openContactOverlay } = useContactOverlay();
@@ -39,27 +42,54 @@ const Navbar = () => {
   useEffect(() => {
     setVisible(true);
 
-    const onScroll = () => {
+    const updateHeaderState = () => {
       const currentScrollY = window.scrollY;
       const scrollDelta = currentScrollY - lastScrollY.current;
+      const nextScrolled = currentScrollY > 50;
+      let nextPinned = headerPinnedRef.current;
 
-      setScrolled(currentScrollY > 50);
+      if (nextScrolled !== scrolledRef.current) {
+        scrolledRef.current = nextScrolled;
+        setScrolled(nextScrolled);
+      }
 
       if (menuOpen || currentScrollY <= HEADER_REVEAL_OFFSET) {
-        setHeaderPinned(true);
+        nextPinned = true;
       } else if (scrollDelta >= HEADER_SCROLL_DELTA && currentScrollY > HEADER_HIDE_OFFSET) {
-        setHeaderPinned(false);
+        nextPinned = false;
       } else if (scrollDelta <= -HEADER_SCROLL_DELTA) {
-        setHeaderPinned(true);
+        nextPinned = true;
+      }
+
+      if (nextPinned !== headerPinnedRef.current) {
+        headerPinnedRef.current = nextPinned;
+        setHeaderPinned(nextPinned);
       }
 
       lastScrollY.current = currentScrollY;
+      rafId.current = null;
+    };
+
+    const onScroll = () => {
+      if (rafId.current !== null) {
+        return;
+      }
+
+      rafId.current = window.requestAnimationFrame(updateHeaderState);
     };
 
     lastScrollY.current = window.scrollY;
-    onScroll();
+    scrolledRef.current = window.scrollY > 50;
+    headerPinnedRef.current = true;
+    updateHeaderState();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+
+      if (rafId.current !== null) {
+        window.cancelAnimationFrame(rafId.current);
+      }
+    };
   }, [menuOpen]);
 
   useEffect(() => {
@@ -73,6 +103,7 @@ const Navbar = () => {
 
   useEffect(() => {
     setMenuOpen(false);
+    headerPinnedRef.current = true;
     setHeaderPinned(true);
   }, [location.hash, location.pathname]);
 
@@ -148,7 +179,7 @@ const Navbar = () => {
 
             <button
               type="button"
-              className="header-mobile-trigger lg:hidden"
+              className="header-mobile-trigger inline-flex lg:hidden"
               onClick={() => setMenuOpen((open) => !open)}
               aria-label={menuOpen ? t.nav.closeMenuLabel : t.nav.openMenuLabel}
               aria-expanded={menuOpen}
