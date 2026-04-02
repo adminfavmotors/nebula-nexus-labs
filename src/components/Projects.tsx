@@ -34,23 +34,25 @@ const Projects = () => {
   const { t } = useI18n();
 
   return (
-    <Section id="projects" tone="light">
+    <Section id="projects" tone="light" className="section-light-showcase projects-stage">
       <SectionHeader
         tone="light"
         title={<Reveal as="span" delay={0.05} className="inline-block">{t.projects.title}</Reveal>}
         titleClassName="max-w-[18ch] md:max-w-[20ch]"
       />
 
-      <ViewportMount fallback={<ProjectsFallback />}>
-        <Suspense fallback={<ProjectsFallback />}>
-          <PortfolioShowcase
-            collectionLabel={t.projects.collectionLabel}
-            openLabel={t.projects.openLabel}
-            previousLabel={t.projects.previousLabel}
-            nextLabel={t.projects.nextLabel}
-          />
-        </Suspense>
-      </ViewportMount>
+      <div className="projects-frame">
+        <ViewportMount fallback={<ProjectsFallback />}>
+          <Suspense fallback={<ProjectsFallback />}>
+            <PortfolioShowcase
+              collectionLabel={t.projects.collectionLabel}
+              openLabel={t.projects.openLabel}
+              previousLabel={t.projects.previousLabel}
+              nextLabel={t.projects.nextLabel}
+            />
+          </Suspense>
+        </ViewportMount>
+      </div>
     </Section>
   );
 };

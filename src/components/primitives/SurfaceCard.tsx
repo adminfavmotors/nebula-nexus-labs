@@ -7,10 +7,11 @@ import { cx } from "@/lib/cx";
 
 type SurfaceCardProps = ComponentPropsWithoutRef<"div"> & {
   spotlight?: boolean;
+  variant?: "default" | "editorial" | "showcase" | "deep" | "summary";
 };
 
 export const SurfaceCard = forwardRef<HTMLDivElement, SurfaceCardProps>(function SurfaceCard(
-  { className, children, spotlight = false, onPointerMove, onPointerLeave, ...props },
+  { className, children, spotlight = false, variant = "default", onPointerMove, onPointerLeave, ...props },
   ref,
 ) {
   const handlePointerMove: PointerEventHandler<HTMLDivElement> = (event) => {
@@ -38,7 +39,12 @@ export const SurfaceCard = forwardRef<HTMLDivElement, SurfaceCardProps>(function
   return (
     <div
       ref={ref}
-      className={cx("card-surface", spotlight && "card-surface-spotlight", className)}
+      className={cx(
+        "card-surface",
+        variant !== "default" && `card-surface-${variant}`,
+        spotlight && "card-surface-spotlight",
+        className,
+      )}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
       {...props}

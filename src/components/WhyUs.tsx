@@ -13,19 +13,20 @@ const WhyUs = () => {
   ];
 
   return (
-    <Section id="why-us" tone="deep" className="relative overflow-hidden">
+    <Section id="why-us" tone="deep" className="section-deep-focus">
       <div className="glow-orb right-[15%] top-0 h-[300px] w-[300px] opacity-20 blur-[120px]" />
       <div className="glow-orb glow-orb-b bottom-0 left-[10%] h-[200px] w-[200px] opacity-20 blur-[100px]" />
 
-      <Reveal as={SectionTitle} tone="deep" className="mb-10 max-w-[19ch] md:mb-12 md:max-w-[21ch]" delay={0.05}>
+      <Reveal as={SectionTitle} tone="deep" className="mb-12 max-w-[19ch] md:mb-14 md:max-w-[21ch]" delay={0.05}>
         {t.whyUs.title}
       </Reveal>
-      <div className="grid items-start grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="why-us-grid grid items-start grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {items.map((item, i) => (
           <Reveal
             as={SurfaceCard}
             key={i}
-            className="why-us-card self-start p-5 sm:p-6"
+            variant="deep"
+            className="self-start p-5 sm:p-6"
             delay={i * 0.12}
           >
             <div className="why-us-card-stack">

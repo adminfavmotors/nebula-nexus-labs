@@ -18,20 +18,24 @@ Default locale is Polish (`pl`) with an English switcher (`en`) in the navbar.
 
 Implemented and active:
 
-- responsive desktop and ultrawide layout system
-- upgraded homepage hero and trust strip
-- renamed service offer system with canonical URLs and redirects
-- service-page SEO layer with canonical tags and JSON-LD
-- reusable internal-page contact overlay
+- responsive desktop, mobile, and ultrawide layout system
+- rebuilt homepage visual layer with stronger hero, trust strip, CTA stage, and section backgrounds
+- cleaned motion system based on shared `Reveal` primitives instead of DOM-wide reveal hooks
+- route-level lazy loading for service and legal pages
+- deferred portfolio showcase mount so carousel code loads near viewport
+- dedicated SEO-oriented service pages with canonical URLs, redirects, and JSON-LD
+- reusable internal-page contact overlay and smart mobile navigation
 - global scroll-to-top button
 - isolated portfolio carousel backed by structured project data and real preview images
-- progressive reveal behavior that keeps above-the-fold content visible on first paint
-- single-column FAQ layout for cleaner reading on large screens
+- surface-card system for editorial, showcase, deep, and summary content blocks
+- production rollback flow via GitHub Actions with immutable `prod-*` tags
 
 ## Documentation
 
 Recent internal documentation:
 
+- [Chat Report - 2026-04-02](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\chat-report-2026-04-02.md)
+- [Production Deployments](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\production-deployments.md)
 - [Chat Report - 2026-03-29](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\chat-report-2026-03-29.md)
 - [Current State - 2026-03-29](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\current-state-2026-03-29.md)
 - [Chat Report - 2026-03-28](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\chat-report-2026-03-28.md)
@@ -85,11 +89,11 @@ src/
   components/contact/      Contact overlay and related form logic
   components/legal/        Legal-page components
   components/portfolio/    Dedicated portfolio carousel module
-  components/primitives/   Shared low-level UI primitives
-  hooks/                   Reveal and viewport helpers
+  components/primitives/   Shared low-level UI, reveal, and viewport primitives
   lib/                     i18n, SEO, service data, project data, site config
   lib/service-page-details Service-page content definitions
   pages/                   Route-level pages
+  styles/                  Split visual layers for home, shell, service pages, and responsive rules
   test/                    Vitest setup and app-level tests
 public/
   .htaccess                Cache rules and redirects
@@ -122,6 +126,13 @@ docs/
 - structured data is generated for service pages
 - sitemap and legacy service redirects are maintained in `public/`
 
+## Deploy and Rollback
+
+- production deploys run from GitHub Actions
+- rollback is handled by redeploying a known good `branch`, `tag`, or `SHA`
+- successful production deploys create immutable `prod-*` tags
+- the current deployment/rollback workflow is documented in [C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\production-deployments.md](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\production-deployments.md)
+
 ## Contact Form
 
 - the homepage includes a shared contact section
@@ -136,10 +147,12 @@ Current main checks:
 - `npm run lint`
 - `npm run build`
 - `npm run test`
+- manual mobile/desktop UI verification after visual passes
 
 ## Known Constraints
 
 - service pages still run in an SPA without SSR or prerendering
 - form delivery still depends on a third-party endpoint
 - portfolio previews are static assets and should be refreshed when the live case sites change significantly
+- the visual system is now cleaner, but hero polish, typography tuning, and further performance work still have headroom
 - content is now much more mature than the initial template, but the project can still benefit from a CMS or analytics layer later

@@ -39,6 +39,7 @@ const TrustStrip = () => {
                 <Reveal
                   as={SurfaceCard}
                   key={item.value}
+                  variant="showcase"
                   spotlight
                   className="trust-strip-card"
                   delay={0.08 + index * 0.07}

@@ -112,12 +112,12 @@ const ServicePage = () => {
               </div>
             </div>
 
-            <SurfaceCard className="service-page-summary-card p-7 sm:p-8 lg:p-10">
-              <p className="mb-3 font-body text-[0.8rem] font-semibold uppercase tracking-[0.18em] text-[#8fb4ff]">
+            <SurfaceCard variant="summary" className="service-page-summary-card p-7 sm:p-8 lg:p-10">
+              <p className="service-page-overline mb-3 text-[#8fb4ff]">
                 {copy.heroSummaryTitle}
               </p>
               <h2 className="service-page-section-title mb-4 text-foreground">{service.listName}</h2>
-              <p className="mb-6 font-display text-[1.65rem] font-bold tracking-[-0.03em] text-white sm:text-[1.9rem]">
+              <p className="service-page-summary-price mb-6 text-white">
                 {detail.pricingPrice}
               </p>
               <div className="glow-divider mb-6" />
@@ -146,7 +146,7 @@ const ServicePage = () => {
               </div>
             </div>
 
-            <SurfaceCard spotlight className="self-start p-6 sm:p-7">
+            <SurfaceCard variant="editorial" spotlight className="self-start p-6 sm:p-7">
               <ul className="service-page-list">
                 {detail.audienceBullets.map((item) => (
                   <li key={item} className="service-page-list-item section-copy-light service-page-card-copy">
@@ -166,11 +166,11 @@ const ServicePage = () => {
 
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             {detail.deliverablesItems.map((item, index) => (
-              <SurfaceCard key={item.title} spotlight className="relative p-6 sm:p-7">
-                <span className="font-display text-[0.85rem] font-bold tracking-[0.2em] text-[#8fb4ff]">
+              <SurfaceCard key={item.title} variant="deep" spotlight className="relative p-6 sm:p-7">
+                <span className="service-page-overline text-[#8fb4ff]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-4 heading-balance font-display text-[1.2rem] font-semibold leading-[1.15] tracking-[-0.03em] text-white">
+                <h3 className="service-page-card-title mt-4 text-white">
                   {item.title}
                 </h3>
                 {item.body ? (
@@ -204,11 +204,11 @@ const ServicePage = () => {
 
             <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
               {detail.processSteps.map((step, index) => (
-                <SurfaceCard key={step.title} spotlight className="service-page-step-card p-5 sm:p-6">
+                <SurfaceCard key={step.title} variant="editorial" spotlight className="service-page-step-card p-5 sm:p-6">
                   <div className="service-page-step-grid">
                     <span className="service-page-step-number">{String(index + 1).padStart(2, "0")}.</span>
                     <div className="space-y-3">
-                      <h3 className="heading-balance font-display text-[1.15rem] font-semibold leading-[1.16] tracking-[-0.03em] text-[#0a0a0a]">
+                      <h3 className="service-page-card-title text-[#0a0a0a]">
                         {step.title}
                       </h3>
                       {step.body ? (
@@ -224,7 +224,7 @@ const ServicePage = () => {
 
         <Section tone="deep" className="service-page-section">
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-            <SurfaceCard className="p-7 sm:p-8">
+            <SurfaceCard variant="deep" className="p-7 sm:p-8">
               <h2 className="service-page-section-title mb-5 text-foreground">{detail.pricingTitle}</h2>
               <p className="mb-6 font-display text-[1.65rem] font-bold tracking-[-0.03em] text-white sm:text-[2rem]">
                 {detail.pricingPrice}
@@ -238,7 +238,7 @@ const ServicePage = () => {
               </div>
             </SurfaceCard>
 
-            <SurfaceCard className="p-7 sm:p-8">
+            <SurfaceCard variant="deep" className="p-7 sm:p-8">
               <h2 className="service-page-section-title mb-5 text-foreground">{detail.closingTitle}</h2>
               <div className="service-page-prose mb-8">
                 {detail.closingBody.map((paragraph) => (
@@ -261,17 +261,17 @@ const ServicePage = () => {
           </div>
 
           <div className="mt-6 xl:mt-8">
-            <SurfaceCard className="p-7 sm:p-8">
+            <SurfaceCard variant="deep" className="p-7 sm:p-8">
               <p className="section-copy-dark copy-pretty service-page-copy mb-6">{copy.relatedBody}</p>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 {related.map((item) => (
                   <Link
                     key={item.slug}
                     to={`/uslugi/${item.slug}`}
-                    className="rounded-[1.25rem] border border-white/10 bg-white/5 p-5 transition-colors duration-300 hover:border-[#0059ff]"
+                    className="service-page-related-card"
                   >
-                    <p className="mb-2 font-body text-sm font-semibold uppercase tracking-[0.16em] text-[#8fb4ff]">{item.num}</p>
-                    <h3 className="heading-balance font-body text-[1.02rem] font-semibold text-white">{item.listName}</h3>
+                    <p className="service-page-related-number">{item.num}</p>
+                    <h3 className="service-page-related-title text-white">{item.listName}</h3>
                     <p className="section-copy-dark service-page-card-copy mt-3">{item.priceFrom}</p>
                   </Link>
                 ))}

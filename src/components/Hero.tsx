@@ -5,11 +5,7 @@ import workspaceImageMobile from "../../img/hero-workspace-mobile.jpg";
 
 const Hero = () => {
   const { t } = useI18n();
-
-  const enterClass = (delayClass: string) =>
-    `translate-y-0 opacity-100 transition-all [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${delayClass}`;
-
-  const wordDelayClasses = ["delay-[650ms]", "delay-[750ms]", "delay-[850ms]"] as const;
+  const heroDelayStyle = (delayMs: number) => ({ animationDelay: `${delayMs}ms` });
 
   return (
     <section id="home" className="hero-section relative flex min-h-screen items-center overflow-hidden">
@@ -25,25 +21,29 @@ const Hero = () => {
 
       <div className="site-shell hero-layout hero-shell">
         <div className="hero-content-stack">
-          <div className={`inline-flex duration-700 ${enterClass("delay-[500ms]")}`}>
+          <div className="hero-enter inline-flex" style={heroDelayStyle(260)}>
             <span className="hero-badge cursor-default">{t.hero.badge}</span>
           </div>
 
           <div className="hero-copy-cluster">
             <h1 className="hero-title">
               {t.hero.words.map((word, i) => (
-                <span key={i} className={`block duration-700 ${enterClass(wordDelayClasses[i])}`}>
+                <span
+                  key={i}
+                  className="hero-enter-word block"
+                  style={heroDelayStyle(380 + i * 120)}
+                >
                   {i === 1 ? <span className="hero-title-accent">{word}</span> : word}
                 </span>
               ))}
             </h1>
 
-            <p className={`hero-body duration-700 ${enterClass("delay-[1000ms]")}`}>
+            <p className="hero-body hero-enter" style={heroDelayStyle(840)}>
               {t.hero.body}
             </p>
           </div>
 
-          <div className={`hero-actions duration-700 ${enterClass("delay-[1150ms]")}`}>
+          <div className="hero-actions hero-enter" style={heroDelayStyle(980)}>
             <ActionLink href="#contact" className="hero-primary-cta">
               {t.hero.primaryCta}
             </ActionLink>
@@ -52,20 +52,18 @@ const Hero = () => {
             </ActionLink>
           </div>
 
-          <p className={`hero-support-line duration-700 ${enterClass("delay-[1250ms]")}`}>
+          <p className="hero-support-line hero-enter" style={heroDelayStyle(1120)}>
             {t.hero.imageLabel}
           </p>
         </div>
 
-        <div
-          className={`hero-visual-column duration-[1000ms] ${enterClass("delay-[800ms]")}`}
-        >
+        <div className="hero-visual-column hero-enter-visual" style={heroDelayStyle(520)}>
           <div className="hero-visual-stage">
             <div className="hero-visual-backplate" />
             <div className="hero-visual-ring" />
 
             <div className="hero-visual-wrap hero-visual-wrap-square mt-2">
-              <div className="hero-card-glow absolute inset-[-24px] z-0 rounded-full bg-primary opacity-[0.35] blur-[80px]" />
+              <div className="hero-card-glow" />
               <div
                 className="hero-visual-shell"
                 style={{ willChange: "transform", backfaceVisibility: "hidden", transform: "translateZ(0)" }}

@@ -241,7 +241,31 @@
       radial-gradient(circle at top right, rgba(35, 102, 255, 0.26), transparent 24%),
       linear-gradient(180deg, rgba(2, 8, 28, 0.94) 0%, rgba(4, 10, 36, 0.97) 100%);
     backdrop-filter: blur(24px);
+    transform: translate3d(0, -10px, 0);
+    filter: blur(8px);
+    transition:
+      opacity 0.34s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.34s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.34s cubic-bezier(0.16, 1, 0.3, 1);
   }
+
+.header-mobile-panel-open {
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
+.header-mobile-panel-shell {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition:
+    opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header-mobile-panel-open .header-mobile-panel-shell {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
 
   .header-mobile-link {
     display: block;
@@ -251,14 +275,27 @@
     font-size: 2rem;
     font-weight: 700;
     color: #e8f0ff;
+    filter: blur(10px);
     transition:
       color 0.3s ease,
-      transform 0.3s ease,
-      opacity 0.3s ease;
+      transform 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--mobile-link-delay, 0ms);
   }
 
   .header-mobile-link:hover {
     color: #57a0ff;
+  }
+
+  .header-mobile-panel-open .header-mobile-link,
+  .header-mobile-panel-open .header-mobile-cta {
+    filter: blur(0);
+  }
+
+  .header-mobile-cta {
+    transition-delay: var(--mobile-link-delay, 0ms);
+    filter: blur(10px);
   }
 
   .contact-overlay-root {
@@ -331,6 +368,12 @@
     transform: translateY(0) scale(1);
   }
 
+  .contact-overlay-content-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
   .contact-overlay-header {
     position: relative;
     display: flex;
@@ -338,6 +381,39 @@
     justify-content: space-between;
     gap: 1rem;
     margin-bottom: 1.2rem;
+  }
+
+  .contact-overlay-copy-cluster,
+  .contact-overlay-close,
+  .contact-overlay-form {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    filter: blur(10px);
+    transition:
+      opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact-overlay-panel-open .contact-overlay-copy-cluster {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+    transition-delay: 0.1s;
+  }
+
+  .contact-overlay-panel-open .contact-overlay-close {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+    transition-delay: 0.16s;
+  }
+
+  .contact-overlay-panel-open .contact-overlay-form {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+    transition-delay: 0.2s;
   }
 
   .contact-overlay-title {
@@ -431,14 +507,17 @@
     box-shadow: 0 20px 70px rgba(0, 12, 44, 0.44);
     opacity: 0;
     pointer-events: none;
-    transform: translateX(-50%) translateY(18px) scale(0.97);
+    filter: blur(10px);
+    transform: translateX(-50%) translateY(18px) scale(0.95);
     transition:
       opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.32s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .contact-success-banner-open {
     opacity: 1;
+    filter: blur(0);
     transform: translateX(-50%) translateY(0) scale(1);
   }
 

@@ -6,7 +6,7 @@
   :root {
     --site-shell-max: 80rem;
     --contact-shell-max: 52rem;
-    --section-space-y: clamp(2.75rem, 4.2vw, 4.25rem);
+    --section-space-y: clamp(3rem, 4.8vw, 4.75rem);
     --measure-title-max: 22ch;
     --measure-copy-max: 42ch;
     --measure-copy-wide-max: 50ch;
@@ -102,25 +102,25 @@
   .section-copy-dark {
     color: #9cb8e9;
     font-family: "DM Sans", sans-serif;
-    font-size: 0.97rem;
+    font-size: 1rem;
     font-weight: 400;
-    line-height: 1.7;
+    line-height: 1.74;
   }
 
   .section-copy-light {
     color: #42526b;
     font-family: "DM Sans", sans-serif;
-    font-size: 0.97rem;
+    font-size: 1rem;
     font-weight: 400;
-    line-height: 1.7;
+    line-height: 1.74;
   }
 
   .section-copy-accent {
     color: rgba(255, 255, 255, 0.82);
     font-family: "DM Sans", sans-serif;
-    font-size: 0.97rem;
+    font-size: 1rem;
     font-weight: 400;
-    line-height: 1.68;
+    line-height: 1.72;
   }
 
   .heading-balance {
@@ -200,6 +200,49 @@
     box-shadow: 0 8px 32px rgba(0, 89, 255, 0.15);
   }
 
+  .card-surface-editorial {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 250, 255, 0.98)),
+      linear-gradient(135deg, rgba(104, 158, 255, 0.08), rgba(104, 158, 255, 0));
+    border-color: rgba(102, 151, 255, 0.14);
+    box-shadow:
+      0 18px 42px rgba(8, 32, 86, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  }
+
+  .card-surface-showcase {
+    background:
+      radial-gradient(circle at top right, rgba(128, 181, 255, 0.24), transparent 30%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(243, 248, 255, 0.98));
+    border-color: rgba(118, 164, 255, 0.2);
+    box-shadow:
+      0 24px 56px rgba(12, 42, 104, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.42),
+      inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  }
+
+  .card-surface-deep {
+    background:
+      linear-gradient(160deg, rgba(15, 34, 88, 0.98), rgba(7, 17, 48, 0.98)),
+      radial-gradient(circle at top right, rgba(90, 149, 255, 0.12), transparent 28%);
+    border-color: rgba(118, 164, 255, 0.16);
+    box-shadow:
+      0 24px 64px rgba(2, 10, 34, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 0 0 1px rgba(86, 146, 255, 0.04);
+  }
+
+  .card-surface-summary {
+    background:
+      radial-gradient(circle at top right, rgba(134, 189, 255, 0.18), transparent 28%),
+      linear-gradient(160deg, rgba(10, 32, 84, 0.98), rgba(4, 14, 44, 1));
+    border-color: rgba(132, 184, 255, 0.18);
+    box-shadow:
+      0 30px 72px rgba(1, 10, 34, 0.38),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 0 1px rgba(102, 151, 255, 0.06);
+  }
+
   .section-light .card-surface {
     background: #ffffff;
     border-color: #e2e8f0;
@@ -208,6 +251,20 @@
   .section-light .card-surface:hover {
     border-color: #0059ff;
     box-shadow: 0 8px 32px rgba(0, 89, 255, 0.1);
+  }
+
+  .section-light .card-surface.card-surface-editorial,
+  .section-light .card-surface.card-surface-showcase {
+    box-shadow:
+      0 18px 42px rgba(8, 32, 86, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  }
+
+  .section-light .card-surface.card-surface-showcase {
+    box-shadow:
+      0 24px 56px rgba(12, 42, 104, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.42),
+      inset 0 1px 0 rgba(255, 255, 255, 0.78);
   }
 
   .card-surface-spotlight {
@@ -465,23 +522,26 @@
 
   .reveal {
     opacity: 0;
-    will-change: opacity, transform;
+    filter: blur(12px);
+    will-change: opacity, transform, filter;
     transition:
       opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .reveal-direction-up {
-    transform: translateY(40px);
+    transform: translate3d(0, 38px, 0) scale(0.985);
   }
 
   .reveal-direction-left {
-    transform: translateX(-20px);
+    transform: translate3d(-24px, 0, 0);
   }
 
   .reveal-visible {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+    filter: blur(0);
   }
 }
 

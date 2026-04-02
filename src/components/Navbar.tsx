@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useI18n, type Locale } from "@/lib/i18n";
@@ -193,14 +193,14 @@ const Navbar = () => {
 
       <div
         id="mobile-navigation-panel"
-        className={`header-mobile-panel fixed inset-x-0 top-0 z-40 flex h-dvh flex-col justify-start overflow-y-auto px-8 pb-10 pt-24 transition-opacity duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
-          menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        className={`header-mobile-panel fixed inset-x-0 top-0 z-40 flex h-dvh flex-col justify-start overflow-y-auto px-8 pb-10 pt-24 lg:hidden ${
+          menuOpen ? "pointer-events-auto opacity-100 header-mobile-panel-open" : "pointer-events-none opacity-0"
         }`}
       >
         <div className="pointer-events-none absolute right-0 top-0 h-[260px] w-[260px] rounded-full bg-primary/20 blur-[100px]" />
 
-        <div className="relative z-10">
-          {t.nav.links.map((link) => (
+        <div className="header-mobile-panel-shell relative z-10">
+          {t.nav.links.map((link, index) => (
             <Link
               key={link.href}
               to={resolveSectionHref(link.href)}
@@ -208,6 +208,7 @@ const Navbar = () => {
               className={`header-mobile-link ${
                 menuOpen ? "translate-x-0 opacity-100" : "-translate-x-6 opacity-0"
               }`}
+              style={{ "--mobile-link-delay": `${120 + index * 55}ms` } as CSSProperties}
             >
               {link.label}
             </Link>
@@ -216,9 +217,10 @@ const Navbar = () => {
           <ActionLink
             href={contactHref}
             onClick={handleContactClick}
-            className={`mt-8 inline-flex w-full justify-center py-3.5 text-[15px] transition-all duration-300 ${
+            className={`header-mobile-cta mt-8 inline-flex w-full justify-center py-3.5 text-[15px] transition-all duration-300 ${
               menuOpen ? "translate-x-0 opacity-100" : "-translate-x-6 opacity-0"
             }`}
+            style={{ "--mobile-link-delay": `${120 + t.nav.links.length * 55}ms` } as CSSProperties}
           >
             {t.nav.cta}
           </ActionLink>

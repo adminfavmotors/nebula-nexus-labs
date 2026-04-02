@@ -59,7 +59,7 @@ export function SectionHeader({
   className,
 }: SectionHeaderProps) {
   return (
-    <div className={cx("mb-10 flex flex-col items-start justify-between gap-5 md:mb-12 sm:flex-row sm:items-center sm:gap-6", className)}>
+    <div className={cx("mb-12 flex flex-col items-start justify-between gap-6 md:mb-14 sm:flex-row sm:items-center sm:gap-8", className)}>
       <SectionTitle tone={tone} className={titleClassName}>
         {title}
       </SectionTitle>

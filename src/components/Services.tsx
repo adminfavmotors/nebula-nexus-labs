@@ -10,12 +10,12 @@ const Services = () => {
   const services = getServiceCatalog(locale);
 
   return (
-    <Section id="services" tone="light">
-      <Reveal as={SectionTitle} tone="light" className="mb-10 max-w-[20ch] md:mb-12 md:max-w-[22ch]" delay={0.05}>
+    <Section id="services" tone="light" className="section-light-listing">
+      <Reveal as={SectionTitle} tone="light" className="mb-12 max-w-[19ch] md:mb-14 md:max-w-[20ch]" delay={0.05}>
         {t.services.title}
       </Reveal>
 
-      <div className="space-y-0">
+      <div className="services-list-shell space-y-0">
         {services.map((service, i) => (
           <div key={i}>
             <div className="section-divider" />
@@ -24,16 +24,16 @@ const Services = () => {
               to={`/uslugi/${service.slug}`}
               direction="left"
               delay={i * 0.07}
-              className="group -mx-3 grid grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-x-4 gap-y-3 rounded-xl px-3 py-6 transition-colors duration-300 hover:bg-primary/[0.04] sm:-mx-4 sm:px-4 lg:grid-cols-[auto_minmax(0,1fr)_minmax(9rem,12rem)_auto] lg:items-center lg:gap-x-8 2xl:grid-cols-[auto_minmax(0,1fr)_minmax(11rem,14rem)_auto]"
+              className="group -mx-3 grid grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-x-4 gap-y-3 rounded-xl px-3 py-7 transition-colors duration-300 hover:bg-primary/[0.04] sm:-mx-4 sm:px-4 sm:py-8 lg:grid-cols-[auto_minmax(0,1fr)_minmax(9rem,12rem)_auto] lg:items-center lg:gap-x-8 2xl:grid-cols-[auto_minmax(0,1fr)_minmax(11rem,14rem)_auto]"
             >
-              <span className="min-w-7 pt-0.5 font-body text-[13px] font-semibold text-[#2979ff] lg:pt-0">
+              <span className="min-w-7 pt-1 font-body text-[12px] font-semibold tracking-[0.16em] text-[#2979ff] lg:pt-0 lg:text-[13px]">
                 {service.num}
               </span>
-              <span className="heading-balance min-w-0 max-w-[24ch] font-body text-[18px] font-semibold leading-snug text-[#0a0a0a] md:max-w-[34ch] lg:max-w-[42ch] 2xl:max-w-[48ch]">
+              <span className="heading-balance min-w-0 max-w-[23ch] font-body text-[19px] font-semibold leading-[1.18] tracking-[-0.022em] text-[#0a0a0a] md:max-w-[31ch] md:text-[20px] lg:max-w-[38ch] 2xl:max-w-[44ch]">
                 {service.listName}
               </span>
-              <span className="section-copy-light col-start-2 text-[0.95rem] lg:hidden">{service.priceFrom}</span>
-              <span className="section-copy-light hidden whitespace-nowrap text-right text-[0.95rem] lg:block">
+              <span className="section-copy-light col-start-2 mt-0.5 text-[0.98rem] lg:hidden">{service.priceFrom}</span>
+              <span className="section-copy-light hidden whitespace-nowrap text-right text-[0.98rem] lg:block">
                 {service.priceFrom}
               </span>
 

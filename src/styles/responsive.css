@@ -50,7 +50,7 @@
 
   .about-layout {
     grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
-    gap: 3rem;
+    gap: 3.5rem;
   }
 
   .about-theses {
@@ -59,7 +59,7 @@
   }
 
   .faq-layout {
-    gap: 1.55rem;
+    gap: 1.75rem;
   }
 
   .service-page-hero-shell {
@@ -117,7 +117,7 @@
 
   .about-layout {
     grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
-    gap: 3.75rem;
+    gap: 4.25rem;
   }
 
   .about-theses {
@@ -125,7 +125,7 @@
   }
 
   .faq-layout {
-    gap: 1.75rem;
+    gap: 1.95rem;
   }
 
   .service-page-hero-title {
@@ -159,7 +159,7 @@
 
   .about-layout {
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-    gap: 5rem;
+    gap: 5.4rem;
   }
 
   .about-theses {
@@ -167,7 +167,7 @@
   }
 
   .faq-layout {
-    gap: 1.9rem;
+    gap: 2.1rem;
   }
 
   .service-page-hero-title {
@@ -222,21 +222,17 @@
   }
 
   .faq-layout {
-    gap: 1.2rem;
-  }
-
-  .faq-header {
-    gap: 0.7rem;
+    gap: 1.35rem;
   }
 
   .faq-intro-panel {
     align-items: stretch;
-    padding: 1.2rem 1.15rem;
+    padding: 1.3rem 1.2rem;
     border-radius: 1.25rem;
   }
 
   .faq-intro-copy {
-    gap: 0.6rem;
+    gap: 0.7rem;
   }
 
   .faq-contact-button {
@@ -416,8 +412,27 @@
     animation: none !important;
   }
 
+  .hero-enter,
+  .hero-enter-word,
+  .hero-enter-visual,
+  .header-mobile-panel,
+  .header-mobile-panel-shell,
+  .header-mobile-link,
+  .header-mobile-cta,
+  .contact-overlay-copy-cluster,
+  .contact-overlay-close,
+  .contact-overlay-form,
+  .contact-success-banner {
+    animation: none !important;
+    filter: none !important;
+    transform: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
   .reveal {
     opacity: 1;
+    filter: none;
     transform: none;
     transition-duration: 0.01ms;
     transition-delay: 0ms !important;

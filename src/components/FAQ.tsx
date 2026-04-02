@@ -12,25 +12,23 @@ const FAQ = () => {
   const { openContactOverlay } = useContactOverlay();
 
   return (
-    <Section id="faq" tone="light">
+    <Section id="faq" tone="light" className="section-light-atmosphere">
       <div className="faq-layout">
-        <Reveal className="faq-header">
-          <div className="faq-intro-panel">
-            <div className="faq-intro-copy">
-              <SectionTitle tone="light" className="faq-title">
-                {t.faq.title}
-              </SectionTitle>
-              <p className="faq-intro-text section-copy-light">{t.faq.email}</p>
-            </div>
-
-            <ActionButton
-              className="faq-contact-button"
-              onClick={openContactOverlay}
-              aria-label={t.nav.cta}
-            >
-              {t.nav.cta}
-            </ActionButton>
+        <Reveal className="faq-intro-panel">
+          <div className="faq-intro-copy">
+            <SectionTitle tone="light" className="faq-title">
+              {t.faq.title}
+            </SectionTitle>
+            <p className="faq-intro-text section-copy-light">{t.faq.email}</p>
           </div>
+
+          <ActionButton
+            className="faq-contact-button"
+            onClick={openContactOverlay}
+            aria-label={t.nav.cta}
+          >
+            {t.nav.cta}
+          </ActionButton>
         </Reveal>
 
         <div className="faq-list space-y-0">
@@ -42,9 +40,9 @@ const FAQ = () => {
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? -1 : i)}
-                  className="group flex w-full items-center justify-between py-6 text-left"
+                  className="group flex w-full items-center justify-between py-7 text-left md:py-8"
                 >
-                  <span className={`heading-balance max-w-[36ch] pr-3 font-body text-[15px] font-semibold transition-colors duration-300 2xl:max-w-[38ch] ${isOpen ? "text-primary" : "text-[#0a0a0a]"}`}>
+                  <span className={`heading-balance max-w-[34ch] pr-3 font-body text-[16px] font-semibold leading-[1.28] tracking-[-0.02em] transition-colors duration-300 md:max-w-[36ch] md:text-[17px] 2xl:max-w-[38ch] ${isOpen ? "text-primary" : "text-[#0a0a0a]"}`}>
                     {item.question}
                   </span>
                   <ChevronDown
@@ -54,7 +52,7 @@ const FAQ = () => {
                 </button>
                 <div className={`grid overflow-hidden transition-all duration-300 ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
                   <div className="min-h-0">
-                    <p className="section-copy-light copy-pretty measure-copy-wide pb-6">
+                    <p className="section-copy-light copy-pretty measure-copy-wide pb-7 md:pb-8">
                       {item.answer}
                     </p>
                   </div>

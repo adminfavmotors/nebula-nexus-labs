@@ -140,25 +140,27 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
                   aria-labelledby="contact-overlay-title"
                   className={`contact-overlay-panel neon-frame-soft ${isOpen ? "contact-overlay-panel-open" : ""}`}
                 >
-                  <div className="contact-overlay-header">
-                    <div className="space-y-3">
-                      <span className="hero-badge cursor-default">{copy.eyebrow}</span>
-                      <h2 id="contact-overlay-title" className="contact-overlay-title">
-                        {copy.title}
-                      </h2>
-                      <p className="contact-overlay-copy">{copy.body}</p>
-                    </div>
+                  <div className="contact-overlay-content-stack">
+                    <div className="contact-overlay-header">
+                      <div className="contact-overlay-copy-cluster space-y-3">
+                        <span className="hero-badge contact-overlay-eyebrow cursor-default">{copy.eyebrow}</span>
+                        <h2 id="contact-overlay-title" className="contact-overlay-title">
+                          {copy.title}
+                        </h2>
+                        <p className="contact-overlay-copy">{copy.body}</p>
+                      </div>
 
-                    <button
-                      type="button"
-                      className="contact-overlay-close"
-                      onClick={closeContactOverlay}
-                      aria-label={copy.closeLabel}
-                    >
-                      <X size={18} />
-                    </button>
+                      <button
+                        type="button"
+                        className="contact-overlay-close"
+                        onClick={closeContactOverlay}
+                        aria-label={copy.closeLabel}
+                      >
+                        <X size={18} />
+                      </button>
+                    </div>
+                    <ContactFormPanel className="contact-overlay-form" mode="modal" autoFocus={isOpen} onSuccess={handleSuccess} />
                   </div>
-                  <ContactFormPanel mode="modal" autoFocus={isOpen} onSuccess={handleSuccess} />
                 </div>
               </div>
 

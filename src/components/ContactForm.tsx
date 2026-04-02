@@ -7,11 +7,11 @@ const ContactForm = () => {
   const { t } = useI18n();
 
   return (
-    <Section id="contact" tone="light" containerClassName="contact-shell">
+    <Section id="contact" tone="light" className="section-light-atmosphere" containerClassName="contact-shell">
       <Reveal
         as={SectionTitle}
         tone="light"
-        className="mx-auto mb-10 max-w-[16ch] text-center md:mb-12 md:max-w-[17ch] 2xl:max-w-[18ch]"
+        className="mx-auto mb-12 max-w-[15ch] text-center text-[clamp(2.05rem,4vw,2.95rem)] leading-[1.04] tracking-[-0.04em] md:mb-14 md:max-w-[16ch] 2xl:max-w-[17ch]"
         delay={0.05}
       >
         {t.contact.title}
