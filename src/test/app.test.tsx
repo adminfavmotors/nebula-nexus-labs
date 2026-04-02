@@ -64,6 +64,20 @@ describe("critical user flows", () => {
     expect(description?.getAttribute("content")).toContain("digital experiences");
   });
 
+  it("opens the mobile navigation menu", async () => {
+    renderApp();
+
+    const menuButton = screen.getByRole("button", { name: "Otwórz menu" });
+    fireEvent.click(menuButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Zamknij menu" })).toBeInTheDocument();
+    });
+
+    const mobileLinks = document.querySelectorAll(".header-mobile-link.translate-x-0.opacity-100");
+    expect(mobileLinks).toHaveLength(4);
+  });
+
   it("submits the contact form to the configured email endpoint", async () => {
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,

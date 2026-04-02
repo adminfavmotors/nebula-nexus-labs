@@ -124,7 +124,7 @@ const Navbar = () => {
       </nav>
 
       <div
-        className={`header-mobile-panel fixed inset-0 z-40 flex flex-col justify-center px-8 pt-24 transition-opacity duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
+        className={`header-mobile-panel fixed inset-x-0 top-0 z-40 flex h-dvh flex-col justify-start overflow-y-auto px-8 pb-10 pt-24 transition-opacity duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
           menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
