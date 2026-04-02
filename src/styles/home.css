@@ -916,6 +916,25 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
+.cta-card,
+.cta-panel {
+  min-height: 0;
+}
+
+.cta-card-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.cta-panel:hover {
+  border-color: rgba(173, 210, 255, 0.38);
+  transform: translateY(-5px);
+  box-shadow:
+    0 34px 90px rgba(0, 60, 182, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
 .cta-panel > * {
   position: relative;
   z-index: 1;
