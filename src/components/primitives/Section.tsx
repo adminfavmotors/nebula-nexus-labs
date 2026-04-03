@@ -15,7 +15,7 @@ type SectionProps = ComponentPropsWithoutRef<"section"> & {
 };
 
 export const Section = forwardRef<HTMLElement, SectionProps>(function Section(
-  { tone, className, containerClassName, deferRendering = true, children, ...props },
+  { tone, className, containerClassName, deferRendering = false, children, ...props },
   ref,
 ) {
   return (

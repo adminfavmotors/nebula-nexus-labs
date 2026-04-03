@@ -7,11 +7,16 @@
     --site-shell-max: 80rem;
     --contact-shell-max: 52rem;
     --section-space-y: clamp(3rem, 4.8vw, 4.75rem);
-    --measure-title-max: 22ch;
-    --measure-copy-max: 42ch;
-    --measure-copy-wide-max: 50ch;
-    --measure-card-max: 31ch;
+    --measure-tight-max: 17ch;
+    --measure-title-max: 22.75ch;
+    --measure-copy-max: 43ch;
+    --measure-copy-wide-max: 52ch;
+    --measure-card-max: 32.5ch;
     --hero-visual-max: 32rem;
+    --font-body-size-adjust: 0.52;
+    --font-display-size-adjust: 0.49;
+    --font-body-tracking: -0.008em;
+    --font-display-tracking: -0.038em;
     --background: 225 100% 9%;
     --foreground: 216 100% 95%;
     --card: 226 80% 18%;
@@ -46,14 +51,12 @@
 
   body {
     @apply bg-background text-foreground font-body antialiased;
+    font-size-adjust: var(--font-body-size-adjust);
+    font-synthesis-weight: none;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
   }
 
-  @supports (content-visibility: auto) {
-    .section-render-auto {
-      content-visibility: auto;
-      contain-intrinsic-size: 960px;
-    }
-  }
 }
 
 @layer components {
@@ -95,7 +98,9 @@
     font-family: "Space Grotesk", sans-serif;
     font-size: clamp(2rem, 4vw, 2.75rem);
     font-weight: 700;
-    line-height: 1.08;
+    line-height: 1.06;
+    letter-spacing: var(--font-display-tracking);
+    font-size-adjust: var(--font-display-size-adjust);
   }
 
   .section-title-dark {
@@ -103,7 +108,9 @@
     font-family: "Space Grotesk", sans-serif;
     font-size: clamp(2rem, 4vw, 2.75rem);
     font-weight: 700;
-    line-height: 1.08;
+    line-height: 1.06;
+    letter-spacing: var(--font-display-tracking);
+    font-size-adjust: var(--font-display-size-adjust);
   }
 
   .section-copy-dark {
@@ -111,7 +118,9 @@
     font-family: "DM Sans", sans-serif;
     font-size: 1rem;
     font-weight: 400;
-    line-height: 1.74;
+    line-height: 1.72;
+    letter-spacing: var(--font-body-tracking);
+    font-size-adjust: var(--font-body-size-adjust);
   }
 
   .section-copy-light {
@@ -119,7 +128,9 @@
     font-family: "DM Sans", sans-serif;
     font-size: 1rem;
     font-weight: 400;
-    line-height: 1.74;
+    line-height: 1.72;
+    letter-spacing: var(--font-body-tracking);
+    font-size-adjust: var(--font-body-size-adjust);
   }
 
   .section-copy-accent {
@@ -127,7 +138,9 @@
     font-family: "DM Sans", sans-serif;
     font-size: 1rem;
     font-weight: 400;
-    line-height: 1.72;
+    line-height: 1.7;
+    letter-spacing: var(--font-body-tracking);
+    font-size-adjust: var(--font-body-size-adjust);
   }
 
   .heading-balance {
@@ -139,7 +152,7 @@
   }
 
   .measure-tight {
-    max-width: 16ch;
+    max-width: var(--measure-tight-max);
   }
 
   .measure-title {
@@ -383,6 +396,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    font-size-adjust: var(--font-body-size-adjust);
   }
 
   .btn-pill::before,
@@ -491,6 +505,7 @@
     color: #0059ff;
     font-family: "DM Sans", sans-serif;
     font-size: 11px;
+    letter-spacing: 0.015em;
     padding: 0.25rem 0.75rem;
   }
 
@@ -502,6 +517,7 @@
     color: rgb(17 24 39);
     font-family: "DM Sans", sans-serif;
     font-size: 0.875rem;
+    letter-spacing: var(--font-body-tracking);
     padding: 0.875rem 1.25rem;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }

@@ -20,13 +20,13 @@ const WhyUs = () => {
       <Reveal as={SectionTitle} tone="deep" className="mb-12 max-w-[19ch] md:mb-14 md:max-w-[21ch]" delay={0.05}>
         {t.whyUs.title}
       </Reveal>
-      <div className="why-us-grid grid items-start grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="why-us-grid grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
         {items.map((item, i) => (
           <Reveal
             as={SurfaceCard}
             key={i}
             variant="deep"
-            className="self-start p-5 sm:p-6"
+            className="h-full self-stretch p-5 sm:p-6"
             delay={i * 0.12}
           >
             <div className="why-us-card-stack">

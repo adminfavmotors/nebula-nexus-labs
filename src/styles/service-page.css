@@ -17,7 +17,7 @@
     font-size: 0.92rem;
     font-weight: 600;
     line-height: 1.36;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.004em;
     transition: color 0.22s ease, opacity 0.22s ease;
   }
 
@@ -54,19 +54,19 @@
   }
 
   .service-page-hero-title {
-    max-width: 15ch;
+    max-width: 15.6ch;
     font-family: "Space Grotesk", sans-serif;
     font-size: clamp(2.45rem, 3.9vw, 4.35rem);
     font-weight: 700;
-    line-height: 1.01;
-    letter-spacing: -0.042em;
+    line-height: 0.99;
+    letter-spacing: -0.048em;
     text-wrap: balance;
   }
 
   .service-page-hero-copy {
-    max-width: 46ch;
-    font-size: clamp(1.02rem, 1.06vw, 1.12rem);
-    line-height: 1.76;
+    max-width: 47ch;
+    font-size: clamp(1rem, 1.04vw, 1.1rem);
+    line-height: 1.72;
   }
 
   .service-page-section {
@@ -74,24 +74,24 @@
   }
 
   .service-page-section-title {
-    max-width: 17ch;
+    max-width: 17.8ch;
     font-family: "Space Grotesk", sans-serif;
     font-size: clamp(1.95rem, 3.35vw, 2.9rem);
     font-weight: 700;
-    line-height: 1.04;
-    letter-spacing: -0.038em;
+    line-height: 1.02;
+    letter-spacing: -0.044em;
     text-wrap: balance;
   }
 
   .service-page-card-copy {
-    font-size: 1rem;
-    line-height: 1.72;
+    font-size: 0.99rem;
+    line-height: 1.69;
   }
 
   .service-page-copy {
-    max-width: 62ch;
-    font-size: 1.02rem;
-    line-height: 1.78;
+    max-width: 63ch;
+    font-size: 1rem;
+    line-height: 1.72;
   }
 
   .service-page-prose {

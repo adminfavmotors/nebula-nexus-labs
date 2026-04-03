@@ -1,7 +1,6 @@
 import { createRoot } from "react-dom/client";
-import "@fontsource-variable/dm-sans";
-import "@fontsource-variable/space-grotesk";
 import App from "./App.tsx";
+import "./styles/fonts.css";
 import "./index.css";
 import "./styles/home.css";
 import "./styles/shell.css";
