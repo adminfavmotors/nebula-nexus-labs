@@ -62,6 +62,14 @@
     gap: 1.75rem;
   }
 
+  .cta-card-copy-primary {
+    max-width: 37rem;
+  }
+
+  .cta-card-body {
+    max-width: 46ch;
+  }
+
 }
 
 @media (min-width: 1280px) {
@@ -339,6 +347,33 @@
   .contact-overlay-title {
     max-width: 10ch;
     font-size: clamp(1.9rem, 10vw, 2.7rem);
+  }
+
+  .cta-card {
+    min-height: auto;
+  }
+
+  .cta-card-inner {
+    gap: 0.95rem;
+  }
+
+  .cta-card-copy {
+    gap: 0.62rem;
+  }
+
+  .cta-card-body {
+    max-width: none;
+    font-size: 0.96rem;
+    line-height: 1.58;
+  }
+
+  .cta-card-actions {
+    width: 100%;
+  }
+
+  .cta-card-actions > a {
+    width: 100%;
+    justify-content: center;
   }
 
   .header-panel {
