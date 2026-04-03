@@ -12,6 +12,8 @@ import { getServicePageDetail } from "@/lib/service-page-details";
 import { usePageSeo } from "@/lib/seo";
 import { getServicePageStructuredData } from "@/lib/service-page-seo";
 import { useContactOverlay } from "@/components/contact/contact-overlay-context";
+import "@/styles/service-page.css";
+import "@/styles/service-page-responsive.css";
 
 const pageCopy = {
   pl: {

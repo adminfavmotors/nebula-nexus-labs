@@ -23,13 +23,15 @@
       content="Projektujemy szybkie strony internetowe, landing page'e i doświadczenia cyfrowe dla firm, które chcą wyglądać nowocześnie i sprzedawać skuteczniej."
     />
     <meta name="twitter:card" content="summary_large_image" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="image"
+      href="/hero/hero-workspace.jpg"
+      imagesrcset="/hero/hero-workspace-mobile.jpg 640w, /hero/hero-workspace.jpg 1024w"
+      imagesizes="(max-width: 767px) 72vw, (max-width: 1023px) 28rem, 32rem"
+      fetchpriority="high"
     />
+
   </head>
   <body>
     <div id="root"></div>

@@ -969,26 +969,77 @@
 }
 
   .cta-action {
+    position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    isolation: isolate;
+    overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.1);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06)),
+      rgba(255, 255, 255, 0.08);
     color: white;
     font-family: "DM Sans", sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
     padding: 0.625rem 1.25rem;
-    transition: background 0.3s ease, transform 0.3s ease;
+    transition:
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cta-action::before,
+  .cta-action::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .cta-action::before {
+    inset: 1px;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.16), transparent 32%, transparent 72%, rgba(255, 255, 255, 0.08));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .cta-action::after {
+    inset: auto -18% -120% -18%;
+    height: 180%;
+    background: radial-gradient(circle at center, rgba(173, 220, 255, 0.34), transparent 56%);
+    opacity: 0;
+    transform: translate3d(0, 24%, 0) scale(0.82);
+    transition:
+      opacity 0.34s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.34s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .cta-action:hover {
-    background: rgba(255, 255, 255, 0.2);
+    transform: translate3d(0, -2px, 0);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08)),
+      rgba(255, 255, 255, 0.12);
+    border-color: rgba(173, 220, 255, 0.32);
+    box-shadow:
+      0 14px 34px rgba(7, 18, 52, 0.22),
+      0 0 24px rgba(120, 197, 255, 0.14);
+  }
+
+  .cta-action:hover::before,
+  .cta-action:hover::after {
+    opacity: 1;
+  }
+
+  .cta-action:hover::after {
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
   .cta-action:active {
-    transform: scale(0.97);
+    transform: translate3d(0, 0, 0) scale(0.975);
   }
 
   .brand-mark-motif {

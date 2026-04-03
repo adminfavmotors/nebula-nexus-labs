@@ -1,0 +1,49 @@
+@media (min-width: 1024px) {
+  .service-page-hero-shell {
+    grid-template-columns: minmax(0, 1.08fr) minmax(24rem, 0.92fr);
+    gap: 3.5rem;
+  }
+
+  .service-page-summary-card {
+    align-self: center;
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .service-page-hero-title {
+    max-width: 15ch;
+  }
+}
+
+@media (min-width: 1920px) {
+  .service-page-hero-title {
+    max-width: 15.5ch;
+  }
+}
+
+@media (max-width: 767px) {
+  .service-page-hero {
+    padding-top: 6rem;
+  }
+
+  .service-page-breadcrumbs {
+    gap: 0.65rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .service-page-breadcrumb-link {
+    font-size: 0.88rem;
+  }
+
+  .service-page-hero-title {
+    max-width: none;
+    font-size: clamp(2.1rem, 11.5vw, 3.45rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+
+  .service-page-hero-copy {
+    max-width: none;
+  }
+}

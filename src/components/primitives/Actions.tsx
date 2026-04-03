@@ -19,7 +19,7 @@ export const ActionLink = forwardRef<HTMLAnchorElement, ActionLinkProps>(functio
 ) {
   return (
     <a ref={ref} className={cx(variantClassMap[variant], className)} {...props}>
-      {children}
+      <span className="btn-label">{children}</span>
     </a>
   );
 });
@@ -34,7 +34,7 @@ export const ActionButton = forwardRef<HTMLButtonElement, ActionButtonProps>(fun
 ) {
   return (
     <button ref={ref} type={type} className={cx(variantClassMap[variant], className)} {...props}>
-      {children}
+      <span className="btn-label">{children}</span>
     </button>
   );
 });

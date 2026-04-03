@@ -1,7 +1,8 @@
 import { useI18n } from "@/lib/i18n";
 import { ActionLink } from "@/components/primitives/Actions";
-import workspaceImage from "../../img/hero-workspace.jpg";
-import workspaceImageMobile from "../../img/hero-workspace-mobile.jpg";
+
+const workspaceImage = "/hero/hero-workspace.jpg";
+const workspaceImageMobile = "/hero/hero-workspace-mobile.jpg";
 
 const Hero = () => {
   const { t } = useI18n();
@@ -79,6 +80,7 @@ const Hero = () => {
                     className="hero-visual-image"
                     width={1024}
                     height={1024}
+                    loading="eager"
                     decoding="async"
                     fetchpriority="high"
                   />
