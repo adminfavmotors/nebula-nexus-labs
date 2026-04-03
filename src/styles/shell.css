@@ -45,12 +45,17 @@
       0 0 44px rgba(0, 89, 255, 0.12);
   }
 
+.header-brand-slot {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
 .header-brand-shell {
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-width: 0;
-  flex: 1 1 auto;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .brand-logo {
@@ -244,6 +249,23 @@
   }
 
   .header-mobile-panel {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    padding: 1.25rem 1.5rem 2.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    color: inherit;
+    outline: none;
     background:
       radial-gradient(circle at top right, rgba(35, 102, 255, 0.26), transparent 24%),
       linear-gradient(180deg, rgba(2, 8, 28, 0.94) 0%, rgba(4, 10, 36, 0.97) 100%);
@@ -255,6 +277,11 @@
       transform 0.34s cubic-bezier(0.16, 1, 0.3, 1),
       filter 0.34s cubic-bezier(0.16, 1, 0.3, 1);
   }
+
+.header-mobile-panel::backdrop {
+  background: rgba(2, 8, 28, 0.72);
+  backdrop-filter: blur(14px);
+}
 
 .header-mobile-panel-open {
   transform: translate3d(0, 0, 0);

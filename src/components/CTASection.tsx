@@ -25,12 +25,12 @@ const CTASection = () => {
           </div>
         </Reveal>
 
-        <Reveal as={SurfaceCard} variant="deep" className="cta-card cta-card-accent self-start p-6 sm:p-7 lg:p-8" delay={0}>
+        <Reveal as={SurfaceCard} variant="deep" className="cta-card cta-card-accent self-start p-5 sm:p-6 lg:p-7" delay={0}>
           <div className="brand-mark-motif brand-mark-motif-cta" aria-hidden="true" />
-          <div className="glow-orb -right-10 -top-10 h-[180px] w-[180px] bg-white opacity-[0.14] blur-[80px]" />
-          <div className="cta-card-inner relative z-10">
+          <div className="glow-orb -right-8 -top-8 h-[150px] w-[150px] bg-white opacity-[0.12] blur-[72px]" />
+          <div className="cta-card-inner cta-card-inner-accent relative z-10">
             <div className="cta-card-copy cta-card-copy-accent">
-              <h2 className="heading-balance max-w-[11.8ch] font-display text-[clamp(24px,2.8vw,35px)] font-bold leading-[1.01] tracking-[-0.05em] text-white sm:max-w-[12.4ch]">
+              <h2 className="heading-balance max-w-[10.8ch] font-display text-[clamp(22px,2.55vw,32px)] font-bold leading-[1.02] tracking-[-0.05em] text-white sm:max-w-[11.4ch]">
                 {t.cta.availabilityTitle}
               </h2>
               <p className="section-copy-accent copy-pretty cta-card-body">

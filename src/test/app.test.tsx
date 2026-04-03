@@ -43,6 +43,15 @@ describe("critical user flows", () => {
         disconnect() {}
       },
     );
+    if (typeof HTMLDialogElement !== "undefined") {
+      HTMLDialogElement.prototype.showModal ??= function showModal() {
+        this.setAttribute("open", "");
+      };
+      HTMLDialogElement.prototype.close ??= function close() {
+        this.removeAttribute("open");
+        this.dispatchEvent(new Event("close"));
+      };
+    }
     window.scrollTo = vi.fn();
     setScrollPosition(0);
     Element.prototype.scrollIntoView = vi.fn();

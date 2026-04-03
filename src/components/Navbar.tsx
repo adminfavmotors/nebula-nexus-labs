@@ -10,12 +10,17 @@ import { useContactOverlay } from "@/components/contact/contact-overlay-context"
 const HEADER_REVEAL_OFFSET = 24;
 const HEADER_HIDE_OFFSET = 120;
 const HEADER_SCROLL_DELTA = 6;
+const mobileNavigationLabel = {
+  pl: "Nawigacja mobilna",
+  en: "Mobile navigation",
+} as const;
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(false);
   const [headerPinned, setHeaderPinned] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const mobileDialogRef = useRef<HTMLDialogElement>(null);
   const lastScrollY = useRef(0);
   const rafId = useRef<number | null>(null);
   const scrolledRef = useRef(false);
@@ -93,27 +98,61 @@ const Navbar = () => {
   }, [menuOpen]);
 
   useEffect(() => {
-    document.documentElement.style.overflow = menuOpen ? "hidden" : "";
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => {
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-    };
-  }, [menuOpen]);
-
-  useEffect(() => {
     setMenuOpen(false);
     headerPinnedRef.current = true;
     setHeaderPinned(true);
   }, [location.hash, location.pathname]);
 
   useEffect(() => {
+    const dialog = mobileDialogRef.current;
+    if (!dialog) {
+      return;
+    }
+
+    if (menuOpen) {
+      if (!dialog.open) {
+        dialog.showModal();
+      }
+    } else if (dialog.open) {
+      dialog.close();
+    }
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const dialog = mobileDialogRef.current;
+    if (!dialog) {
+      return;
+    }
+
+    const handleClose = () => {
+      setMenuOpen(false);
+    };
+
+    const handleCancel = () => {
+      setMenuOpen(false);
+    };
+
+    dialog.addEventListener("close", handleClose);
+    dialog.addEventListener("cancel", handleCancel);
+
+    return () => {
+      dialog.removeEventListener("close", handleClose);
+      dialog.removeEventListener("cancel", handleCancel);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!menuOpen) {
       return;
     }
 
+    const dialog = mobileDialogRef.current;
+    if (!dialog) {
+      return;
+    }
+
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && dialog.open) {
         setMenuOpen(false);
       }
     };
@@ -133,9 +172,11 @@ const Navbar = () => {
         } ${menuOpen ? "max-lg:pointer-events-none max-lg:opacity-0 max-lg:-translate-y-2" : ""}`}
       >
         <div className={cx("header-panel", scrolled ? "header-panel-scrolled" : "header-panel-idle")}>
-          <div className="header-brand-shell min-w-0 flex-1">
-            <span className="logo-neon-ring" aria-hidden="true" />
-            <BrandLogo href="/#home" />
+          <div className="header-brand-slot min-w-0 flex-1">
+            <div className="header-brand-shell">
+              <span className="logo-neon-ring" aria-hidden="true" />
+              <BrandLogo href="/#home" />
+            </div>
           </div>
 
           <div className="hidden items-center gap-1 lg:flex">
@@ -191,11 +232,16 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <div
+      <dialog
+        ref={mobileDialogRef}
         id="mobile-navigation-panel"
-        className={`header-mobile-panel fixed inset-x-0 top-0 z-60 flex h-dvh flex-col justify-start overflow-y-auto px-6 pb-10 pt-5 lg:hidden ${
-          menuOpen ? "pointer-events-auto opacity-100 header-mobile-panel-open" : "pointer-events-none opacity-0"
-        }`}
+        aria-label={mobileNavigationLabel[locale]}
+        className={`header-mobile-panel lg:hidden ${menuOpen ? "header-mobile-panel-open" : ""}`}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) {
+            closeMenu();
+          }
+        }}
       >
         <div className="pointer-events-none absolute right-0 top-0 h-[260px] w-[260px] rounded-full bg-primary/20 blur-[100px]" />
 
@@ -237,7 +283,7 @@ const Navbar = () => {
             {t.nav.cta}
           </ActionLink>
         </div>
-      </div>
+      </dialog>
     </>
   );
 };
