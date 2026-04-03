@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { ContactOverlayProvider } from "@/components/contact/ContactOverlay";
+import CookieConsentBanner from "@/components/CookieConsentBanner";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import Index from "./pages/Index.tsx";
 
@@ -80,6 +81,7 @@ const AppShell = () => {
             </Routes>
           </Suspense>
         </div>
+        <CookieConsentBanner />
       </ContactOverlayProvider>
     </BrowserRouter>
   );

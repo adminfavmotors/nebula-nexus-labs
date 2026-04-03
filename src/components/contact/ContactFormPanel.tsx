@@ -18,6 +18,14 @@ const CONTACT_FORM_MESSAGE_MAX_LENGTH = 2_000;
 const markupPattern = /<[^>]+>/;
 const repeatedCharPattern = /(.)\1{6,}/;
 
+function setContactFormCooldown(timestamp: number) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.sessionStorage.setItem(CONTACT_FORM_COOLDOWN_KEY, String(timestamp));
+}
+
 function countLinks(value: string) {
   return (value.match(/https?:\/\/|www\./gi) ?? []).length;
 }
@@ -50,6 +58,7 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
   const legal = legalContent[locale];
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [hasAttemptedSubmission, setHasAttemptedSubmission] = useState(false);
   const startedAtRef = useRef(Date.now());
   const nameInputRef = useRef<HTMLInputElement>(null);
 
@@ -76,13 +85,12 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
     const honeyValue = String(formData.get("_honey") ?? "").trim();
     const websiteValue = String(formData.get("website") ?? "").trim();
     const companyValue = String(formData.get("company") ?? "").trim();
-    const startedAt = Number(formData.get("_startedAt") ?? startedAtRef.current);
     const lastAttemptAt =
       typeof window === "undefined" ? 0 : Number(window.sessionStorage.getItem(CONTACT_FORM_COOLDOWN_KEY) ?? 0);
     const isCoolingDown = lastAttemptAt > 0 && Date.now() - lastAttemptAt < CONTACT_FORM_COOLDOWN_MS;
-    const isTooFast = Number.isFinite(startedAt) && Date.now() - startedAt < CONTACT_FORM_MIN_COMPLETION_MS;
+    const isTooFast = Date.now() - startedAtRef.current < CONTACT_FORM_MIN_COMPLETION_MS;
     const looksSuspicious =
-      !hasInteracted ||
+      (!hasInteracted && !hasAttemptedSubmission) ||
       honeyValue.length > 0 ||
       websiteValue.length > 0 ||
       companyValue.length > 0 ||
@@ -105,16 +113,13 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
     }
 
     setStatus("submitting");
+    setHasAttemptedSubmission(true);
     formData.append("_replyto", String(formData.get("email") ?? ""));
     formData.append("_subject", `NODE48 inquiry (${locale.toUpperCase()})`);
     formData.append("_template", "table");
     formData.append("_captcha", "false");
     formData.append("_cc", siteConfig.contactCcEmails.join(","));
     formData.append("locale", locale);
-
-    if (typeof window !== "undefined") {
-      window.sessionStorage.setItem(CONTACT_FORM_COOLDOWN_KEY, String(Date.now()));
-    }
 
     try {
       const response = await fetch(formEndpoint, {
@@ -132,9 +137,11 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
         throw new Error("Form submission failed");
       }
 
+      setContactFormCooldown(Date.now());
       form.reset();
       startedAtRef.current = Date.now();
       setHasInteracted(false);
+      setHasAttemptedSubmission(false);
       setStatus("success");
 
       if (mode === "modal") {
@@ -209,7 +216,7 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
         required
       />
 
-      <input type="hidden" name="_startedAt" defaultValue={String(startedAtRef.current)} />
+      <input type="hidden" name="_startedAt" value={String(startedAtRef.current)} readOnly />
 
       <div className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden opacity-0" aria-hidden="true">
         <label htmlFor={`${mode}-contact-website`}>Website</label>

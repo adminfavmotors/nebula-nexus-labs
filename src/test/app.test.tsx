@@ -5,6 +5,8 @@ import App from "@/App";
 import { I18nProvider } from "@/lib/i18n";
 import { formEndpoint } from "@/lib/site-config";
 
+const COOKIE_CONSENT_KEY = "node48-cookie-consent";
+
 function renderWithI18n(component: React.ReactElement) {
   return render(<I18nProvider>{component}</I18nProvider>);
 }
@@ -21,11 +23,17 @@ function setScrollPosition(value: number) {
   });
 }
 
+function removeAnalyticsArtifacts() {
+  document.getElementById("node48-gtm-script")?.remove();
+  document.getElementById("node48-gtm-noscript")?.remove();
+}
+
 describe("critical user flows", () => {
   beforeEach(() => {
     window.history.pushState({}, "", "/");
     window.localStorage.clear();
     window.sessionStorage.clear();
+    removeAnalyticsArtifacts();
     document.head.innerHTML = '<meta name="description" content="" />';
     vi.stubGlobal(
       "ResizeObserver",
@@ -41,6 +49,7 @@ describe("critical user flows", () => {
   });
 
   afterEach(() => {
+    removeAnalyticsArtifacts();
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
   });
@@ -72,6 +81,35 @@ describe("critical user flows", () => {
 
     const description = document.querySelector('meta[name="description"]');
     expect(description?.getAttribute("content")).toContain("digital experiences");
+  });
+
+  it("loads analytics only after cookie consent is accepted", async () => {
+    renderApp();
+
+    expect(document.getElementById("node48-gtm-script")).toBeNull();
+    expect(window.localStorage.getItem(COOKIE_CONSENT_KEY)).toBeNull();
+
+    fireEvent.click(screen.getByRole("button", { name: "Akceptuję" }));
+
+    await waitFor(() => {
+      expect(document.getElementById("node48-gtm-script")).toBeInstanceOf(HTMLScriptElement);
+    });
+
+    expect(window.localStorage.getItem(COOKIE_CONSENT_KEY)).toBe("granted");
+    expect(document.getElementById("node48-gtm-noscript")).toBeInstanceOf(HTMLElement);
+  });
+
+  it("keeps analytics disabled when cookie consent is declined", async () => {
+    renderApp();
+
+    fireEvent.click(screen.getByRole("button", { name: "Odrzucam" }));
+
+    await waitFor(() => {
+      expect(window.localStorage.getItem(COOKIE_CONSENT_KEY)).toBe("denied");
+    });
+
+    expect(document.getElementById("node48-gtm-script")).toBeNull();
+    expect(document.getElementById("node48-gtm-noscript")).toBeNull();
   });
 
   it("opens the mobile navigation menu", async () => {
@@ -165,8 +203,10 @@ describe("critical user flows", () => {
       ok: true,
       json: async () => ({ success: "true" }),
     });
+    const nowSpy = vi.spyOn(Date, "now");
 
     vi.stubGlobal("fetch", fetchMock);
+    nowSpy.mockReturnValue(10_000);
 
     renderWithI18n(<ContactForm />);
 
@@ -174,8 +214,7 @@ describe("critical user flows", () => {
     fireEvent.change(textboxes[0], { target: { value: "Jan Kowalski" } });
     fireEvent.change(textboxes[1], { target: { value: "jan@example.com" } });
     fireEvent.change(textboxes[2], { target: { value: "Potrzebuje nowego landing page." } });
-    const startedAtInput = document.querySelector('input[name="_startedAt"]') as HTMLInputElement;
-    startedAtInput.value = String(Date.now() - 5_000);
+    nowSpy.mockReturnValue(15_000);
 
     fireEvent.submit(screen.getByRole("button").closest("form")!);
 
@@ -197,8 +236,10 @@ describe("critical user flows", () => {
       ok: false,
       json: async () => ({ success: "false" }),
     });
+    const nowSpy = vi.spyOn(Date, "now");
 
     vi.stubGlobal("fetch", fetchMock);
+    nowSpy.mockReturnValue(20_000);
 
     renderWithI18n(<ContactForm />);
 
@@ -206,12 +247,49 @@ describe("critical user flows", () => {
     fireEvent.change(textboxes[0], { target: { value: "Jan Kowalski" } });
     fireEvent.change(textboxes[1], { target: { value: "jan@example.com" } });
     fireEvent.change(textboxes[2], { target: { value: "Potrzebuje nowego landing page." } });
-    const startedAtInput = document.querySelector('input[name="_startedAt"]') as HTMLInputElement;
-    startedAtInput.value = String(Date.now() - 5_000);
+    nowSpy.mockReturnValue(25_000);
 
     fireEvent.click(screen.getByRole("button"));
 
     expect(await screen.findByRole("alert")).toBeInTheDocument();
+  });
+
+  it("allows retrying immediately after a failed contact form request", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce({
+        ok: false,
+        json: async () => ({ success: "false" }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: "true" }),
+      });
+    const nowSpy = vi.spyOn(Date, "now");
+
+    vi.stubGlobal("fetch", fetchMock);
+    nowSpy.mockReturnValue(30_000);
+
+    renderWithI18n(<ContactForm />);
+
+    const textboxes = screen.getAllByRole("textbox");
+    fireEvent.change(textboxes[0], { target: { value: "Jan Kowalski" } });
+    fireEvent.change(textboxes[1], { target: { value: "jan@example.com" } });
+    fireEvent.change(textboxes[2], { target: { value: "Potrzebuje nowego landing page." } });
+    nowSpy.mockReturnValue(35_000);
+
+    fireEvent.click(screen.getByRole("button"));
+
+    expect(await screen.findByRole("alert")).toBeInTheDocument();
+
+    nowSpy.mockReturnValue(35_500);
+    fireEvent.click(screen.getByRole("button"));
+
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+    });
+
+    expect(await screen.findByRole("status")).toBeInTheDocument();
   });
 
   it("blocks suspicious form submissions before the network request is sent", async () => {
