@@ -130,7 +130,7 @@ const Navbar = () => {
           visible ? "opacity-100 blur-0" : "opacity-0 blur-[6px]"
         } ${
           headerPinned ? "translate-y-0" : "-translate-y-[calc(100%+1.25rem)]"
-        }`}
+        } ${menuOpen ? "max-lg:pointer-events-none max-lg:opacity-0 max-lg:-translate-y-2" : ""}`}
       >
         <div className={cx("header-panel", scrolled ? "header-panel-scrolled" : "header-panel-idle")}>
           <div className="header-brand-shell">
@@ -193,13 +193,25 @@ const Navbar = () => {
 
       <div
         id="mobile-navigation-panel"
-        className={`header-mobile-panel fixed inset-x-0 top-0 z-40 flex h-dvh flex-col justify-start overflow-y-auto px-8 pb-10 pt-24 lg:hidden ${
+        className={`header-mobile-panel fixed inset-x-0 top-0 z-60 flex h-dvh flex-col justify-start overflow-y-auto px-6 pb-10 pt-5 lg:hidden ${
           menuOpen ? "pointer-events-auto opacity-100 header-mobile-panel-open" : "pointer-events-none opacity-0"
         }`}
       >
         <div className="pointer-events-none absolute right-0 top-0 h-[260px] w-[260px] rounded-full bg-primary/20 blur-[100px]" />
 
         <div className="header-mobile-panel-shell relative z-10">
+          <div className="header-mobile-topbar">
+            <BrandLogo href="/#home" />
+            <button
+              type="button"
+              className="header-mobile-close"
+              onClick={closeMenu}
+              aria-label={t.nav.closeMenuLabel}
+            >
+              <X size={18} />
+            </button>
+          </div>
+
           {t.nav.links.map((link, index) => (
             <Link
               key={link.href}
