@@ -8,7 +8,7 @@ const Hero = () => {
   const heroDelayStyle = (delayMs: number) => ({ animationDelay: `${delayMs}ms` });
 
   return (
-    <section id="home" className="hero-section relative flex min-h-screen items-center overflow-hidden">
+    <section id="home" className="hero-section relative flex min-h-screen items-center overflow-hidden max-md:min-h-0 max-md:items-start">
       <div className="hero-section-aurora" />
       <div className="hero-section-mesh" />
       <div className="hero-section-grid" />

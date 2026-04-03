@@ -176,6 +176,10 @@
 }
 
 @media (max-width: 1023px) {
+  .hero-section {
+    min-height: auto;
+  }
+
   .header-panel {
     gap: 0.75rem;
     padding-right: 0.85rem;
@@ -195,11 +199,11 @@
 
   .hero-shell {
     padding-top: 6.7rem;
-    padding-bottom: 3.8rem;
+    padding-bottom: 3.2rem;
   }
 
   .hero-visual-stage {
-    padding-bottom: 3rem;
+    padding-bottom: 2.45rem;
   }
 }
 
@@ -217,8 +221,8 @@
   }
 
   .hero-shell {
-    padding-top: 6.15rem;
-    padding-bottom: 3.2rem;
+    padding-top: 5.95rem;
+    padding-bottom: 2.8rem;
   }
 
   .faq-layout {
@@ -297,7 +301,7 @@
 
   .hero-visual-stage {
     padding-inline: 0.1rem;
-    padding-bottom: 2.1rem;
+    padding-bottom: 1.6rem;
   }
 
   .hero-visual-backplate {

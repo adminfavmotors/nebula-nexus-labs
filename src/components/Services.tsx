@@ -24,7 +24,7 @@ const Services = () => {
               to={`/uslugi/${service.slug}`}
               direction="left"
               delay={i * 0.07}
-              className="group -mx-3 grid grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-x-4 gap-y-3 rounded-xl px-3 py-7 transition-colors duration-300 hover:bg-primary/[0.04] sm:-mx-4 sm:px-4 sm:py-8 lg:grid-cols-[auto_minmax(0,1fr)_minmax(9rem,12rem)_auto] lg:items-center lg:gap-x-8 2xl:grid-cols-[auto_minmax(0,1fr)_minmax(11rem,14rem)_auto]"
+              className="group -mx-3 grid grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-x-4 gap-y-3 rounded-xl px-3 py-7 transition-colors duration-300 hover:bg-primary/[0.04] sm:-mx-4 sm:px-4 sm:py-8 lg:grid-cols-[auto_minmax(0,1fr)_minmax(10.5rem,13rem)_auto] lg:items-center lg:gap-x-10 2xl:grid-cols-[auto_minmax(0,1fr)_minmax(12rem,14.5rem)_auto]"
             >
               <span className="min-w-7 pt-1 font-body text-[12px] font-semibold tracking-[0.16em] text-[#2979ff] lg:pt-0 lg:text-[13px]">
                 {service.num}
@@ -33,11 +33,11 @@ const Services = () => {
                 {service.listName}
               </span>
               <span className="section-copy-light col-start-2 mt-0.5 text-[0.98rem] lg:hidden">{service.priceFrom}</span>
-              <span className="section-copy-light hidden whitespace-nowrap text-right text-[0.98rem] lg:block">
+              <span className="section-copy-light hidden whitespace-nowrap pr-3 text-right text-[0.98rem] lg:block xl:pr-4">
                 {service.priceFrom}
               </span>
 
-              <div className="icon-circle row-span-2 shrink-0 self-start group-hover:bg-primary group-hover:shadow-[0_0_16px_rgba(0,89,255,0.6)] lg:row-span-1 lg:self-center">
+              <div className="icon-circle row-span-2 shrink-0 self-start group-hover:bg-primary group-hover:shadow-[0_0_16px_rgba(0,89,255,0.6)] lg:row-span-1 lg:ml-1 lg:self-center xl:ml-2">
                 <ArrowRight size={16} className="text-primary transition-colors duration-300 group-hover:text-primary-foreground" />
               </div>
             </Reveal>

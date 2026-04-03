@@ -906,7 +906,6 @@
 .cta-card {
   position: relative;
   display: flex;
-  min-height: clamp(18rem, 24vw, 21rem);
   flex-direction: column;
   justify-content: space-between;
   gap: 1.75rem;
