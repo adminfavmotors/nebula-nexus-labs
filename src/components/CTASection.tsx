@@ -10,7 +10,7 @@ const CTASection = () => {
 
   return (
     <Section tone="deep" className="cta-section-stage">
-      <div className="grid grid-cols-1 items-start gap-5 md:gap-6 lg:grid-cols-[minmax(0,1.04fr)_minmax(0,0.96fr)] lg:gap-7">
+      <div className="grid grid-cols-1 items-start gap-5 md:gap-6 xl:grid-cols-2 xl:gap-7">
         <Reveal as={SurfaceCard} variant="deep" className="cta-card cta-card-primary self-start p-6 sm:p-7 lg:p-8" delay={0}>
           <div className="cta-card-inner">
             <div className="cta-card-copy cta-card-copy-primary">
@@ -25,12 +25,12 @@ const CTASection = () => {
           </div>
         </Reveal>
 
-        <Reveal as={SurfaceCard} variant="deep" className="cta-card cta-card-accent self-start p-5 sm:p-6 lg:p-7" delay={0}>
+        <Reveal as={SurfaceCard} variant="deep" className="cta-card cta-card-accent self-start p-6 sm:p-7 lg:p-8" delay={0}>
           <div className="brand-mark-motif brand-mark-motif-cta" aria-hidden="true" />
           <div className="glow-orb -right-8 -top-8 h-[150px] w-[150px] bg-white opacity-[0.12] blur-[72px]" />
           <div className="cta-card-inner cta-card-inner-accent relative z-10">
             <div className="cta-card-copy cta-card-copy-accent">
-              <h2 className="heading-balance max-w-[10.8ch] font-display text-[clamp(22px,2.55vw,32px)] font-bold leading-[1.02] tracking-[-0.05em] text-white sm:max-w-[11.4ch]">
+              <h2 className="heading-balance max-w-[12.4ch] font-display text-[clamp(23px,2.7vw,34px)] font-bold leading-[1.02] tracking-[-0.05em] text-white sm:max-w-[13ch]">
                 {t.cta.availabilityTitle}
               </h2>
               <p className="section-copy-accent copy-pretty cta-card-body">
