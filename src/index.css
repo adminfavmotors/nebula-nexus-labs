@@ -7,6 +7,10 @@
     --site-shell-max: 80rem;
     --contact-shell-max: 52rem;
     --section-space-y: clamp(3rem, 4.8vw, 4.75rem);
+    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+    --floating-layer-gap: 1rem;
+    --cookie-banner-offset: 0px;
+    --floating-layer-bottom: calc(var(--floating-layer-gap) + var(--safe-area-bottom));
     --measure-tight-max: 17ch;
     --measure-title-max: 22.75ch;
     --measure-copy-max: 43ch;

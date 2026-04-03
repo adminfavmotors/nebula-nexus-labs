@@ -49,6 +49,8 @@
   position: relative;
   display: inline-flex;
   align-items: center;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .brand-logo {
@@ -162,6 +164,7 @@
     position: relative;
     z-index: 1;
     display: inline-flex;
+    flex-shrink: 0;
     align-items: center;
     padding: 0.22rem;
     border: 1px solid rgba(129, 171, 255, 0.12);
@@ -228,6 +231,7 @@
   .header-mobile-trigger {
     position: relative;
     z-index: 1;
+    flex-shrink: 0;
     width: 2.7rem;
     height: 2.7rem;
     align-items: center;
@@ -520,7 +524,7 @@
   .contact-success-banner {
     position: fixed;
     left: 50%;
-    bottom: 1.25rem;
+    bottom: calc(var(--floating-layer-bottom) + var(--cookie-banner-offset));
     z-index: 72;
     width: min(calc(100% - 2rem), 30rem);
     padding: 1rem 1.15rem;
@@ -580,7 +584,7 @@
   .scroll-top-button {
     position: fixed;
     right: 1rem;
-    bottom: 1rem;
+    bottom: calc(var(--floating-layer-bottom) + var(--cookie-banner-offset));
     z-index: 45;
     display: inline-flex;
     align-items: center;

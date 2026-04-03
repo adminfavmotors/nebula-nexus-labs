@@ -50,6 +50,7 @@ describe("critical user flows", () => {
 
   afterEach(() => {
     removeAnalyticsArtifacts();
+    document.documentElement.style.removeProperty("--cookie-banner-offset");
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
   });
@@ -88,6 +89,7 @@ describe("critical user flows", () => {
 
     expect(document.getElementById("node48-gtm-script")).toBeNull();
     expect(window.localStorage.getItem(COOKIE_CONSENT_KEY)).toBeNull();
+    expect(screen.getByText(/Ładujemy Google Tag Manager/i)).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Akceptuję" }));
 
@@ -97,6 +99,7 @@ describe("critical user flows", () => {
 
     expect(window.localStorage.getItem(COOKIE_CONSENT_KEY)).toBe("granted");
     expect(document.getElementById("node48-gtm-noscript")).toBeInstanceOf(HTMLElement);
+    expect(document.documentElement.style.getPropertyValue("--cookie-banner-offset")).toBe("0px");
   });
 
   it("keeps analytics disabled when cookie consent is declined", async () => {

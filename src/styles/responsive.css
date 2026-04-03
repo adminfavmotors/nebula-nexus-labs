@@ -5,7 +5,7 @@
 
   .scroll-top-button {
     right: 1.35rem;
-    bottom: 1.35rem;
+    bottom: calc(var(--floating-layer-bottom) + var(--cookie-banner-offset));
     width: 3.2rem;
     height: 3.2rem;
   }
@@ -382,6 +382,10 @@
     backdrop-filter: none;
   }
 
+  .header-controls {
+    min-width: 0;
+  }
+
   .brand-logo {
     padding-right: 0.2rem;
   }
@@ -401,6 +405,49 @@
     padding: 0.5rem 0.72rem;
     font-size: 0.62rem;
     letter-spacing: 0.1em;
+  }
+}
+
+@media (max-width: 389px) {
+  .header-panel {
+    gap: 0.45rem;
+    padding: 0.66rem 0.62rem 0.66rem 0.78rem;
+  }
+
+  .brand-logo {
+    padding: 0.2rem 0.24rem 0.2rem 0.08rem;
+  }
+
+  .brand-logo::before {
+    left: -0.22rem;
+    width: 2.45rem;
+    height: 2.45rem;
+    filter: blur(10px);
+  }
+
+  .brand-logo-prefix,
+  .brand-logo-suffix {
+    font-size: 0.9rem;
+    letter-spacing: 0.048em;
+  }
+
+  .header-controls {
+    gap: 0.4rem;
+  }
+
+  .header-locale-shell {
+    padding: 0.16rem;
+  }
+
+  .header-locale-button {
+    padding: 0.44rem 0.56rem;
+    font-size: 0.56rem;
+    letter-spacing: 0.08em;
+  }
+
+  .header-mobile-trigger {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 }
 

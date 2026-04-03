@@ -126,14 +126,14 @@ const Navbar = () => {
     <>
       <nav
         data-header-visibility={headerPinned ? "visible" : "hidden"}
-        className={`fixed inset-x-0 top-0 z-50 px-4 pt-4 transition-[opacity,transform,filter] duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4 transition-[opacity,transform,filter] duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
           visible ? "opacity-100 blur-0" : "opacity-0 blur-[6px]"
         } ${
           headerPinned ? "translate-y-0" : "-translate-y-[calc(100%+1.25rem)]"
         } ${menuOpen ? "max-lg:pointer-events-none max-lg:opacity-0 max-lg:-translate-y-2" : ""}`}
       >
         <div className={cx("header-panel", scrolled ? "header-panel-scrolled" : "header-panel-idle")}>
-          <div className="header-brand-shell">
+          <div className="header-brand-shell min-w-0 flex-1">
             <span className="logo-neon-ring" aria-hidden="true" />
             <BrandLogo href="/#home" />
           </div>
@@ -150,7 +150,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="header-controls flex shrink-0 items-center gap-2 sm:gap-3">
             <div
               className={`header-locale-shell ${
                 isTransitioningLocale ? "scale-[0.985] opacity-[0.85]" : "scale-100 opacity-100"
