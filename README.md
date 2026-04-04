@@ -19,7 +19,7 @@ Default locale is Polish (`pl`) with an English switcher (`en`) in the navbar.
 Implemented and active:
 
 - responsive desktop, mobile, and ultrawide layout system
-- rebuilt homepage visual layer with stronger hero, trust strip, CTA stage, and section backgrounds
+- rebuilt homepage visual layer with stronger hero, trust strip, simplified CTA card section, and section backgrounds
 - cleaned motion system based on shared `Reveal` primitives instead of DOM-wide reveal hooks
 - route-level lazy loading for service and legal pages
 - deferred portfolio showcase mount so carousel code loads near viewport
@@ -34,6 +34,7 @@ Implemented and active:
 
 Recent internal documentation:
 
+- [CTA Section Retrospective - 2026-04-04](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\cta-section-retrospective-2026-04-04.md)
 - [Chat Report - 2026-04-02](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\chat-report-2026-04-02.md)
 - [Production Deployments](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\production-deployments.md)
 - [Chat Report - 2026-03-29](C:\Users\Admin\Desktop\project\nebula-nexus-labs\docs\chat-report-2026-03-29.md)
@@ -77,6 +78,7 @@ The app runs on the Vite development server configured in [C:\Users\Admin\Deskto
 npm run dev
 npm run build
 npm run preview
+npm run check:text
 npm run lint
 npm run test
 ```
@@ -144,6 +146,7 @@ docs/
 
 Current main checks:
 
+- `npm run check:text`
 - `npm run lint`
 - `npm run build`
 - `npm run test`
