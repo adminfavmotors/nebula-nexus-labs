@@ -742,10 +742,7 @@
 
   .btn-pill,
   .btn-pill::before,
-  .btn-pill::after,
-  .cta-action,
-  .cta-action::before,
-  .cta-action::after {
+  .btn-pill::after {
     transition: none;
   }
 }

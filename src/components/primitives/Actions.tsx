@@ -1,12 +1,11 @@
 import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes } from "react";
 import { cx } from "@/lib/cx";
 
-type ActionVariant = "primary" | "ghost" | "cta";
+type ActionVariant = "primary" | "ghost";
 
 const variantClassMap: Record<ActionVariant, string> = {
   primary: "btn-primary",
   ghost: "btn-ghost",
-  cta: "cta-action",
 };
 
 type ActionLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
