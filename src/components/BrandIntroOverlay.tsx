@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import { siteConfig } from "@/lib/site-config";
 import { cx } from "@/lib/cx";
 import { useI18n } from "@/lib/i18n";
+import { brandIntroMotionTimings } from "@/lib/motion";
 
 type BrandIntroOverlayProps = {
   phase: "preparing" | "running" | "exiting";
@@ -23,6 +24,11 @@ const BrandIntroOverlay = ({ phase }: BrandIntroOverlayProps) => {
   const { locale } = useI18n();
   const copy = introCopy[locale];
   const overlayRef = useRef<HTMLDivElement>(null);
+  const introMotionStyle = {
+    "--brand-intro-letter-duration": `${brandIntroMotionTimings.letterDurationMs}ms`,
+    "--brand-intro-letter-stagger": `${brandIntroMotionTimings.letterStaggerMs}ms`,
+    "--brand-intro-exit-duration": `${brandIntroMotionTimings.exitDurationMs}ms`,
+  } as CSSProperties;
 
   useLayoutEffect(() => {
     overlayRef.current?.focus();
@@ -42,6 +48,7 @@ const BrandIntroOverlay = ({ phase }: BrandIntroOverlayProps) => {
       aria-labelledby="brand-intro-title"
       aria-describedby="brand-intro-description"
       tabIndex={-1}
+      style={introMotionStyle}
     >
       <p id="brand-intro-title" className="sr-only">
         {copy.title}

@@ -1,13 +1,35 @@
+import { siteConfig } from "@/lib/site-config";
+
 export const localeMotionTimings = {
   changeDelayMs: 110,
   settleDelayMs: 240,
 } as const;
 
-export const brandIntroMotionTimings = {
-  exitDelayMs: 860,
-  totalDurationMs: 1380,
+const rawBrandIntroMotionTimings = {
+  letterDurationMs: 760,
+  letterStaggerMs: 64,
+  settleDelayMs: 260,
+  exitDurationMs: 460,
   fontReadyTimeoutMs: 1200,
 } as const;
+
+function getBrandIntroTimeline(letterCount: number) {
+  const safeLetterCount = Math.max(1, letterCount);
+  const entryDurationMs =
+    rawBrandIntroMotionTimings.letterDurationMs +
+    rawBrandIntroMotionTimings.letterStaggerMs * (safeLetterCount - 1);
+  const exitDelayMs = entryDurationMs + rawBrandIntroMotionTimings.settleDelayMs;
+  const totalDurationMs = exitDelayMs + rawBrandIntroMotionTimings.exitDurationMs;
+
+  return {
+    ...rawBrandIntroMotionTimings,
+    entryDurationMs,
+    exitDelayMs,
+    totalDurationMs,
+  };
+}
+
+export const brandIntroMotionTimings = getBrandIntroTimeline(siteConfig.brandName.length);
 
 export const heroMotionDelays = {
   default: {
