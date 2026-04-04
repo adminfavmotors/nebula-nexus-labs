@@ -165,7 +165,7 @@ const Navbar = () => {
     <>
       <nav
         data-header-visibility={headerPinned ? "visible" : "hidden"}
-        className={`fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4 transition-[opacity,transform,filter] duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
+        className={`header-root fixed inset-x-0 top-0 px-3 pt-3 sm:px-4 sm:pt-4 transition-[opacity,transform,filter] duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
           visible ? "opacity-100 blur-0" : "opacity-0 blur-[6px]"
         } ${
           headerPinned ? "translate-y-0" : "-translate-y-[calc(100%+1.25rem)]"

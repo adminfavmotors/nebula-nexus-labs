@@ -12,7 +12,12 @@ import CTASection from "@/components/CTASection";
 import { useI18n } from "@/lib/i18n";
 import { usePageSeo } from "@/lib/seo";
 
-const Index = () => {
+type IndexProps = {
+  heroReady?: boolean;
+  useIntroTimings?: boolean;
+};
+
+const Index = ({ heroReady = true, useIntroTimings = false }: IndexProps) => {
   const { t } = useI18n();
 
   usePageSeo({
@@ -23,7 +28,7 @@ const Index = () => {
 
   return (
     <SiteLayout>
-      <Hero />
+      <Hero introReady={heroReady} useIntroTimings={useIntroTimings} />
       <TrustStrip />
       <About />
       <Services />

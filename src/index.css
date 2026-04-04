@@ -11,6 +11,12 @@
     --floating-layer-gap: 1rem;
     --cookie-banner-offset: 0px;
     --floating-layer-bottom: calc(var(--floating-layer-gap) + var(--safe-area-bottom));
+    --z-scroll-top: 45;
+    --z-header: 50;
+    --z-cookie-banner: 68;
+    --z-floating-banner: 72;
+    --z-contact-overlay: 80;
+    --z-brand-intro: 95;
     --measure-tight-max: 17ch;
     --measure-title-max: 22.75ch;
     --measure-copy-max: 43ch;
@@ -82,6 +88,11 @@
     opacity: 0.82;
     filter: blur(8px);
     transform: translateY(4px) scale(0.995);
+  }
+
+  .app-shell-intro-active {
+    pointer-events: none;
+    user-select: none;
   }
 
   .section-spacing {

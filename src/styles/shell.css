@@ -19,6 +19,10 @@
   will-change: transform, opacity;
 }
 
+.header-root {
+  z-index: var(--z-header);
+}
+
   .header-panel::before {
     content: "";
     position: absolute;
@@ -132,6 +136,100 @@
   transition:
     opacity 0.3s ease,
     box-shadow 0.3s ease;
+}
+
+.brand-intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-brand-intro);
+  display: grid;
+  place-items: center;
+  overflow: clip;
+  background:
+    radial-gradient(circle at 20% 24%, rgba(86, 142, 255, 0.18), transparent 20%),
+    radial-gradient(circle at 78% 18%, rgba(49, 203, 255, 0.14), transparent 22%),
+    linear-gradient(180deg, rgba(2, 8, 31, 0.98), rgba(5, 14, 46, 0.995));
+  transition:
+    opacity 0.44s ease,
+    transform 0.62s cubic-bezier(0.22, 1, 0.36, 1),
+    clip-path 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform, clip-path;
+}
+
+.cookie-consent-layer {
+  z-index: var(--z-cookie-banner);
+}
+
+.brand-intro-backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(8, 43, 117, 0.18), transparent 0 46%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 32%);
+  pointer-events: none;
+}
+
+.brand-intro-word {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: clamp(0.02em, 0.01em + 0.08vw, 0.08em);
+  padding-inline: 1.2rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(3.5rem, 11vw, 9rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: clamp(0.015em, 0.004em + 0.08vw, 0.05em);
+  text-transform: uppercase;
+  text-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.34),
+    0 0 42px rgba(0, 89, 255, 0.16);
+}
+
+.brand-intro-slot {
+  display: inline-block;
+  overflow: hidden;
+  padding-block: 0.08em 0.12em;
+}
+
+.brand-intro-letter {
+  display: inline-block;
+  color: rgba(245, 249, 255, 0.98);
+  transform: translateY(112%);
+  opacity: 0.001;
+  will-change: transform, opacity;
+}
+
+.brand-intro-letter-accent {
+  color: #31cbff;
+  text-shadow:
+    0 0 18px rgba(49, 203, 255, 0.34),
+    0 0 44px rgba(0, 89, 255, 0.18);
+}
+
+.brand-intro-overlay-running .brand-intro-letter,
+.brand-intro-overlay-exiting .brand-intro-letter {
+  animation: brand-intro-letter-rise 0.64s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--brand-intro-index) * 72ms);
+}
+
+.brand-intro-overlay-exiting {
+  opacity: 0;
+  transform: translateY(-4%);
+  clip-path: inset(0 0 100% 0 round 0);
+}
+
+@keyframes brand-intro-letter-rise {
+  from {
+    transform: translateY(112%);
+    opacity: 0.001;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .header-brand-shell:hover .logo-neon-ring,
@@ -357,7 +455,7 @@
   .contact-overlay-root {
     position: fixed;
     inset: 0;
-    z-index: 70;
+    z-index: var(--z-contact-overlay);
     display: grid;
     place-items: center;
     padding: 1rem;
@@ -552,7 +650,7 @@
     position: fixed;
     left: 50%;
     bottom: calc(var(--floating-layer-bottom) + var(--cookie-banner-offset));
-    z-index: 72;
+    z-index: var(--z-floating-banner);
     width: min(calc(100% - 2rem), 30rem);
     padding: 1rem 1.15rem;
     border: 1px solid rgba(108, 177, 255, 0.18);
@@ -612,7 +710,7 @@
     position: fixed;
     right: 1rem;
     bottom: calc(var(--floating-layer-bottom) + var(--cookie-banner-offset));
-    z-index: 45;
+    z-index: var(--z-scroll-top);
     display: inline-flex;
     align-items: center;
     justify-content: center;

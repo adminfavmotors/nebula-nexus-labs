@@ -99,7 +99,7 @@ const CookieConsentBanner = () => {
   return (
     <div
       ref={bannerRef}
-      className="fixed inset-x-4 bottom-[var(--floating-layer-bottom)] z-[80] sm:inset-x-auto sm:right-5 sm:w-[min(30rem,calc(100vw-2.5rem))]"
+      className="cookie-consent-layer fixed inset-x-4 bottom-[var(--floating-layer-bottom)] sm:inset-x-auto sm:right-5 sm:w-[min(30rem,calc(100vw-2.5rem))]"
     >
       <div className="neon-frame-soft overflow-hidden rounded-[1.5rem] border border-[rgba(132,184,255,0.18)] bg-[linear-gradient(180deg,rgba(8,20,62,0.96),rgba(4,12,40,0.99))] p-5 shadow-[0_24px_70px_rgba(0,10,34,0.42)] backdrop-blur-xl">
         <p className="mb-2 font-display text-[1.2rem] font-bold tracking-[-0.03em] text-white">

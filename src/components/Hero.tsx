@@ -1,11 +1,38 @@
+import { cx } from "@/lib/cx";
 import { useI18n } from "@/lib/i18n";
 import { ActionLink } from "@/components/primitives/Actions";
 
 const workspaceImage = "/hero/hero-workspace.jpg";
 const workspaceImageMobile = "/hero/hero-workspace-mobile.jpg";
 
-const Hero = () => {
+type HeroProps = {
+  introReady?: boolean;
+  useIntroTimings?: boolean;
+};
+
+const defaultHeroDelays = {
+  badge: 260,
+  wordStart: 380,
+  wordStep: 120,
+  body: 840,
+  visual: 520,
+  actions: 980,
+  support: 1120,
+} as const;
+
+const introHeroDelays = {
+  badge: 50,
+  wordStart: 120,
+  wordStep: 90,
+  body: 320,
+  visual: 140,
+  actions: 430,
+  support: 560,
+} as const;
+
+const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
   const { t } = useI18n();
+  const heroDelays = useIntroTimings ? introHeroDelays : defaultHeroDelays;
   const heroDelayStyle = (delayMs: number) => ({ animationDelay: `${delayMs}ms` });
 
   return (
@@ -22,7 +49,10 @@ const Hero = () => {
 
       <div className="site-shell hero-layout hero-shell">
         <div className="hero-content-stack">
-          <div className="hero-enter inline-flex" style={heroDelayStyle(260)}>
+          <div
+            className={cx("hero-enter inline-flex", !introReady && "hero-enter-pending")}
+            style={heroDelayStyle(heroDelays.badge)}
+          >
             <span className="hero-badge cursor-default">{t.hero.badge}</span>
           </div>
 
@@ -31,20 +61,26 @@ const Hero = () => {
               {t.hero.words.map((word, i) => (
                 <span
                   key={i}
-                  className="hero-enter-word block"
-                  style={heroDelayStyle(380 + i * 120)}
+                  className={cx("hero-enter-word block", !introReady && "hero-enter-word-pending")}
+                  style={heroDelayStyle(heroDelays.wordStart + i * heroDelays.wordStep)}
                 >
                   {i === 1 ? <span className="hero-title-accent">{word}</span> : word}
                 </span>
               ))}
             </h1>
 
-            <p className="hero-body hero-enter" style={heroDelayStyle(840)}>
+            <p
+              className={cx("hero-body hero-enter", !introReady && "hero-enter-pending")}
+              style={heroDelayStyle(heroDelays.body)}
+            >
               {t.hero.body}
             </p>
           </div>
 
-          <div className="hero-actions hero-enter" style={heroDelayStyle(980)}>
+          <div
+            className={cx("hero-actions hero-enter", !introReady && "hero-enter-pending")}
+            style={heroDelayStyle(heroDelays.actions)}
+          >
             <ActionLink href="#contact" className="hero-primary-cta">
               {t.hero.primaryCta}
             </ActionLink>
@@ -53,12 +89,18 @@ const Hero = () => {
             </ActionLink>
           </div>
 
-          <p className="hero-support-line hero-enter" style={heroDelayStyle(1120)}>
+          <p
+            className={cx("hero-support-line hero-enter", !introReady && "hero-enter-pending")}
+            style={heroDelayStyle(heroDelays.support)}
+          >
             {t.hero.imageLabel}
           </p>
         </div>
 
-        <div className="hero-visual-column hero-enter-visual" style={heroDelayStyle(520)}>
+        <div
+          className={cx("hero-visual-column hero-enter-visual", !introReady && "hero-enter-visual-pending")}
+          style={heroDelayStyle(heroDelays.visual)}
+        >
           <div className="hero-visual-stage">
             <div className="hero-visual-backplate" />
             <div className="hero-visual-ring" />

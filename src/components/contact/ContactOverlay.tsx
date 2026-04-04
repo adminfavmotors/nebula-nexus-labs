@@ -12,6 +12,7 @@ import { X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import ContactFormPanel from "@/components/contact/ContactFormPanel";
 import { ContactOverlayContext } from "@/components/contact/contact-overlay-context";
+import { usePageScrollLock } from "@/lib/page-scroll-lock";
 
 const overlayCopy = {
   pl: {
@@ -45,6 +46,8 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
   const [showBanner, setShowBanner] = useState(false);
   const bannerTimeoutRef = useRef<number | null>(null);
 
+  usePageScrollLock(isOpen);
+
   const closeContactOverlay = useCallback(() => {
     setIsOpen(false);
   }, []);
@@ -72,16 +75,6 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
     document.addEventListener("keydown", handleKeydown);
     return () => document.removeEventListener("keydown", handleKeydown);
   }, [closeContactOverlay, isOpen]);
-
-  useEffect(() => {
-    document.documentElement.style.overflow = isOpen ? "hidden" : "";
-    document.body.style.overflow = isOpen ? "hidden" : "";
-
-    return () => {
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
 
   useEffect(() => {
     setIsOpen(false);

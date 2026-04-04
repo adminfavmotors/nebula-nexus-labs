@@ -105,6 +105,25 @@
   animation-duration: 1.2s;
 }
 
+.hero-enter-pending,
+.hero-enter-word-pending,
+.hero-enter-visual-pending {
+  opacity: 0;
+  animation: none;
+}
+
+.hero-enter-pending {
+  transform: translateY(34px);
+}
+
+.hero-enter-word-pending {
+  transform: translateY(112%);
+}
+
+.hero-enter-visual-pending {
+  transform: translateY(40px) scale(0.985);
+}
+
   .trust-strip-section {
     position: relative;
     z-index: 2;

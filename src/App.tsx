@@ -1,8 +1,10 @@
 import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import BrandIntroOverlay from "@/components/BrandIntroOverlay";
 import { ContactOverlayProvider } from "@/components/contact/ContactOverlay";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 import { I18nProvider, useI18n } from "@/lib/i18n";
+import { useBrandIntro } from "@/lib/use-brand-intro";
 import Index from "./pages/Index.tsx";
 
 const ServicePage = lazy(() => import("./pages/ServicePage.tsx"));
@@ -63,17 +65,23 @@ const RouteHashScrollManager = () => {
   return null;
 };
 
-const AppShell = () => {
+const AppFrame = () => {
+  const location = useLocation();
   const { isTransitioningLocale } = useI18n();
+  const { didPlayIntro, heroReady, overlayPhase } = useBrandIntro(location.pathname);
 
   return (
-    <BrowserRouter>
+    <>
       <RouteHashScrollManager />
       <ContactOverlayProvider>
-        <div className={`app-shell ${isTransitioningLocale ? "app-shell-transitioning" : ""}`}>
+        <div
+          className={`app-shell ${isTransitioningLocale ? "app-shell-transitioning" : ""} ${
+            overlayPhase ? "app-shell-intro-active" : ""
+          }`}
+        >
           <Suspense fallback={null}>
             <Routes>
-              <Route path="/" element={<Index />} />
+              <Route path="/" element={<Index heroReady={heroReady} useIntroTimings={didPlayIntro} />} />
               <Route path="/uslugi/:slug" element={<ServicePage />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
@@ -81,11 +89,18 @@ const AppShell = () => {
             </Routes>
           </Suspense>
         </div>
+        {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} /> : null}
         <CookieConsentBanner />
       </ContactOverlayProvider>
-    </BrowserRouter>
+    </>
   );
 };
+
+const AppShell = () => (
+  <BrowserRouter>
+    <AppFrame />
+  </BrowserRouter>
+);
 
 const App = () => (
   <I18nProvider>
