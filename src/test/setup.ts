@@ -24,3 +24,13 @@ Object.defineProperty(window, "IntersectionObserver", {
   writable: true,
   value: MockIntersectionObserver,
 });
+
+Object.defineProperty(document, "fonts", {
+  configurable: true,
+  writable: true,
+  value: {
+    ready: Promise.resolve(undefined),
+    load: () => Promise.resolve([]),
+    check: () => true,
+  },
+});

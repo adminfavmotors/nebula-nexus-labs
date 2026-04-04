@@ -1,11 +1,22 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+import BrandIntroOverlay from "@/components/BrandIntroOverlay";
 import ContactForm from "@/components/ContactForm";
+import { ContactOverlayProvider } from "@/components/contact/ContactOverlay";
+import { useContactOverlay } from "@/components/contact/contact-overlay-context";
 import App from "@/App";
 import { I18nProvider } from "@/lib/i18n";
+import { brandIntroMotionTimings } from "@/lib/motion";
 import { formEndpoint } from "@/lib/site-config";
+import { BRAND_INTRO_STORAGE_KEY, useBrandIntro } from "@/lib/use-brand-intro";
 
 const COOKIE_CONSENT_KEY = "node48-cookie-consent";
+const BRAND_INTRO_DIALOG_NAME = /node48.*intro|intro.*node48/i;
+const ROUTER_FUTURE_FLAGS = {
+  v7_relativeSplatPath: true,
+  v7_startTransition: true,
+} as const;
 
 function renderWithI18n(component: React.ReactElement) {
   return render(<I18nProvider>{component}</I18nProvider>);
@@ -13,6 +24,32 @@ function renderWithI18n(component: React.ReactElement) {
 
 function renderApp() {
   return render(<App />);
+}
+
+function ContactOverlayScrollLockHarness() {
+  const { overlayPhase } = useBrandIntro("/");
+  const { openContactOverlay } = useContactOverlay();
+
+  return (
+    <>
+      {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} /> : null}
+      <button type="button" onClick={openContactOverlay}>
+        Open contact overlay
+      </button>
+    </>
+  );
+}
+
+function renderContactOverlayScrollLockHarness() {
+  return render(
+    <I18nProvider>
+      <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
+        <ContactOverlayProvider>
+          <ContactOverlayScrollLockHarness />
+        </ContactOverlayProvider>
+      </BrowserRouter>
+    </I18nProvider>,
+  );
 }
 
 function setScrollPosition(value: number) {
@@ -28,11 +65,40 @@ function removeAnalyticsArtifacts() {
   document.getElementById("node48-gtm-noscript")?.remove();
 }
 
+function resetDocumentFonts() {
+  Object.defineProperty(document, "fonts", {
+    configurable: true,
+    writable: true,
+    value: {
+      ready: Promise.resolve(undefined),
+      load: () => Promise.resolve([]),
+      check: () => true,
+    },
+  });
+}
+
+function createDeferredPromise<T>() {
+  let resolve!: (value: T | PromiseLike<T>) => void;
+  const promise = new Promise<T>((nextResolve) => {
+    resolve = nextResolve;
+  });
+
+  return { promise, resolve };
+}
+
+function finishBrandIntro() {
+  act(() => {
+    vi.advanceTimersByTime(brandIntroMotionTimings.totalDurationMs);
+  });
+}
+
 describe("critical user flows", () => {
   beforeEach(() => {
     window.history.pushState({}, "", "/");
     window.localStorage.clear();
     window.sessionStorage.clear();
+    window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, "1");
+    resetDocumentFonts();
     removeAnalyticsArtifacts();
     document.head.innerHTML = '<meta name="description" content="" />';
     vi.stubGlobal(
@@ -60,8 +126,224 @@ describe("critical user flows", () => {
   afterEach(() => {
     removeAnalyticsArtifacts();
     document.documentElement.style.removeProperty("--cookie-banner-offset");
+    vi.useRealTimers();
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
+  });
+
+  it("renders the homepage intro immediately and makes the app shell inert", () => {
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+
+    renderApp();
+
+    const introDialog = screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME });
+    const appShell = document.querySelector(".app-shell");
+
+    expect(introDialog).toBeInTheDocument();
+    expect(introDialog).toHaveFocus();
+    expect(appShell).toHaveAttribute("aria-hidden", "true");
+    expect(appShell).toHaveAttribute("inert");
+  });
+
+  it("waits for the wordmark font before starting the homepage intro timers", async () => {
+    vi.useFakeTimers();
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+    const loadDeferred = createDeferredPromise<unknown[]>();
+    const readyDeferred = createDeferredPromise<unknown>();
+
+    Object.defineProperty(document, "fonts", {
+      configurable: true,
+      writable: true,
+      value: {
+        ready: readyDeferred.promise,
+        load: () => loadDeferred.promise,
+        check: () => false,
+      },
+    });
+
+    renderApp();
+
+    act(() => {
+      vi.advanceTimersByTime(brandIntroMotionTimings.totalDurationMs);
+    });
+
+    expect(screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).toBeInTheDocument();
+
+    await act(async () => {
+      loadDeferred.resolve([]);
+      readyDeferred.resolve(undefined);
+      await Promise.resolve();
+    });
+
+    act(() => {
+      vi.advanceTimersByTime(brandIntroMotionTimings.totalDurationMs);
+    });
+
+    expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
+  });
+
+  it("falls back to starting the homepage intro when font readiness takes too long", async () => {
+    vi.useFakeTimers();
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+    const never = new Promise<unknown>(() => {});
+
+    Object.defineProperty(document, "fonts", {
+      configurable: true,
+      writable: true,
+      value: {
+        ready: never,
+        load: () => never,
+        check: () => false,
+      },
+    });
+
+    renderApp();
+
+    act(() => {
+      vi.advanceTimersByTime(brandIntroMotionTimings.totalDurationMs);
+    });
+
+    expect(screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).toBeInTheDocument();
+
+    await act(async () => {
+      vi.advanceTimersByTime(brandIntroMotionTimings.fontReadyTimeoutMs);
+      await Promise.resolve();
+    });
+
+    act(() => {
+      vi.advanceTimersByTime(brandIntroMotionTimings.totalDurationMs);
+    });
+
+    expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
+  });
+
+  it("restores app shell access after the homepage intro finishes", () => {
+    vi.useFakeTimers();
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+
+    renderApp();
+
+    const appShell = document.querySelector(".app-shell");
+    expect(appShell).toHaveAttribute("inert");
+
+    act(() => {
+      vi.advanceTimersByTime(brandIntroMotionTimings.totalDurationMs);
+    });
+
+    expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
+    expect(appShell).not.toHaveAttribute("aria-hidden");
+    expect(appShell).not.toHaveAttribute("inert");
+  });
+
+  it("skips the homepage intro when reduced motion is preferred", () => {
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn((query: string) => ({
+        matches: query === "(prefers-reduced-motion: reduce)",
+        media: query,
+        onchange: null,
+        addListener: () => {},
+        removeListener: () => {},
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        dispatchEvent: () => false,
+      })),
+    );
+
+    renderApp();
+
+    const appShell = document.querySelector(".app-shell");
+
+    expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
+    expect(appShell).not.toHaveAttribute("aria-hidden");
+    expect(appShell).not.toHaveAttribute("inert");
+  });
+
+  it("shows the homepage intro only on the root route", () => {
+    window.history.pushState({}, "", "/uslugi/strona-wizytowka");
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+
+    renderApp();
+
+    const appShell = document.querySelector(".app-shell");
+
+    expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
+    expect(appShell).not.toHaveAttribute("aria-hidden");
+    expect(appShell).not.toHaveAttribute("inert");
+  });
+
+  it("does not replay the homepage intro within the same session", () => {
+    vi.useFakeTimers();
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+
+    const firstRender = renderApp();
+
+    expect(screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).toBeInTheDocument();
+
+    finishBrandIntro();
+
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe("1");
+
+    firstRender.unmount();
+    renderApp();
+
+    expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
+  });
+
+  it("keeps the cookie consent banner inert while the homepage intro is active", () => {
+    vi.useFakeTimers();
+    window.localStorage.removeItem(COOKIE_CONSENT_KEY);
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+
+    renderApp();
+
+    const cookieBanner = document.querySelector(".cookie-consent-layer");
+
+    expect(screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).toBeInTheDocument();
+    expect(cookieBanner).toHaveAttribute("aria-hidden", "true");
+    expect(cookieBanner).toHaveAttribute("inert");
+
+    finishBrandIntro();
+
+    expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
+    expect(cookieBanner).not.toHaveAttribute("aria-hidden");
+    expect(cookieBanner).not.toHaveAttribute("inert");
+  });
+
+  it("keeps scroll locking correct when the contact overlay opens after the homepage intro", async () => {
+    vi.useFakeTimers();
+    window.localStorage.removeItem(COOKIE_CONSENT_KEY);
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+
+    renderContactOverlayScrollLockHarness();
+
+    expect(document.documentElement.style.overflow).toBe("hidden");
+    expect(document.body.style.overflow).toBe("hidden");
+
+    finishBrandIntro();
+    vi.useRealTimers();
+
+    expect(document.documentElement.style.overflow).toBe("");
+    expect(document.body.style.overflow).toBe("");
+
+    fireEvent.click(screen.getByRole("button", { name: /open contact overlay/i }));
+
+    await waitFor(() => {
+      expect(document.querySelector(".contact-overlay-root-open")).toBeInstanceOf(HTMLDivElement);
+      expect(document.querySelector(".contact-overlay-panel-open")).toBeInstanceOf(HTMLDivElement);
+      expect(document.documentElement.style.overflow).toBe("hidden");
+      expect(document.body.style.overflow).toBe("hidden");
+    });
+
+    fireEvent.click(screen.getAllByRole("button", { name: /zamknij okno kontaktowe|close contact dialog/i })[0]);
+
+    await waitFor(() => {
+      expect(document.querySelector(".contact-overlay-root-open")).toBeNull();
+      expect(document.querySelector(".contact-overlay-panel-open")).toBeNull();
+      expect(document.documentElement.style.overflow).toBe("");
+      expect(document.body.style.overflow).toBe("");
+    });
   });
 
   it("uses Polish by default and switches to English", async () => {
@@ -187,6 +469,29 @@ describe("critical user flows", () => {
       expect(window.location.pathname).toBe("/");
       expect(window.location.hash).toBe("#services");
       expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
+    });
+  });
+
+  it("scrolls to top from the shared route manager when navigating between service pages", async () => {
+    window.history.pushState({}, "", "/uslugi/strona-wizytowka");
+
+    renderApp();
+
+    await waitFor(() => {
+      expect(document.querySelectorAll('a[href^="/uslugi/"]').length).toBeGreaterThan(1);
+    });
+
+    const relatedServiceLink = Array.from(document.querySelectorAll('a[href^="/uslugi/"]')).find(
+      (link) => (link as HTMLAnchorElement).getAttribute("href") !== "/uslugi/strona-wizytowka",
+    );
+
+    expect(relatedServiceLink).toBeInstanceOf(HTMLAnchorElement);
+
+    fireEvent.click(relatedServiceLink as HTMLAnchorElement);
+
+    await waitFor(() => {
+      expect(window.location.pathname).not.toBe("/uslugi/strona-wizytowka");
+      expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: "auto" });
     });
   });
 

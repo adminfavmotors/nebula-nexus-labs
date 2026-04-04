@@ -1,5 +1,6 @@
 import { cx } from "@/lib/cx";
 import { useI18n } from "@/lib/i18n";
+import { heroMotionDelays } from "@/lib/motion";
 import { ActionLink } from "@/components/primitives/Actions";
 
 const workspaceImage = "/hero/hero-workspace.jpg";
@@ -10,29 +11,9 @@ type HeroProps = {
   useIntroTimings?: boolean;
 };
 
-const defaultHeroDelays = {
-  badge: 260,
-  wordStart: 380,
-  wordStep: 120,
-  body: 840,
-  visual: 520,
-  actions: 980,
-  support: 1120,
-} as const;
-
-const introHeroDelays = {
-  badge: 50,
-  wordStart: 120,
-  wordStep: 90,
-  body: 320,
-  visual: 140,
-  actions: 430,
-  support: 560,
-} as const;
-
 const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
   const { t } = useI18n();
-  const heroDelays = useIntroTimings ? introHeroDelays : defaultHeroDelays;
+  const heroDelays = useIntroTimings ? heroMotionDelays.intro : heroMotionDelays.default;
   const heroDelayStyle = (delayMs: number) => ({ animationDelay: `${delayMs}ms` });
 
   return (
@@ -107,10 +88,7 @@ const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
 
             <div className="hero-visual-wrap hero-visual-wrap-square mt-2">
               <div className="hero-card-glow" />
-              <div
-                className="hero-visual-shell"
-                style={{ willChange: "transform", backfaceVisibility: "hidden", transform: "translateZ(0)" }}
-              >
+              <div className="hero-visual-shell">
                 <div className="hero-visual-rim" />
                 <div className="hero-visual-mask card-neon-border">
                   <div className="hero-visual-grain" />

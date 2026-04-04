@@ -1,4 +1,4 @@
-import { useEffect, type MouseEvent } from "react";
+import { type MouseEvent } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import SiteLayout from "@/components/SiteLayout";
 import ContactForm from "@/components/ContactForm";
@@ -39,10 +39,6 @@ const ServicePage = () => {
   const copy = pageCopy[locale];
   const { openContactOverlay } = useContactOverlay();
   const pagePath = `/uslugi/${canonicalSlug ?? slug}`;
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "auto" });
-  }, [slug]);
 
   usePageSeo({
     title: detail?.metaTitle ?? service?.metaTitle ?? "NODE48",

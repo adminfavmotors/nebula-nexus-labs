@@ -1,25 +1,56 @@
-import type { CSSProperties } from "react";
+import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import { siteConfig } from "@/lib/site-config";
 import { cx } from "@/lib/cx";
+import { useI18n } from "@/lib/i18n";
 
 type BrandIntroOverlayProps = {
-  phase: "running" | "exiting";
+  phase: "preparing" | "running" | "exiting";
 };
 
 const digitPattern = /\d/;
+const introCopy = {
+  pl: {
+    title: `${siteConfig.brandName} - intro strony głównej`,
+    description: "Animacja startowa jest aktywna. Główna zawartość strony jest chwilowo niedostępna.",
+  },
+  en: {
+    title: `${siteConfig.brandName} homepage intro`,
+    description: "The intro animation is active. The main page content is temporarily unavailable.",
+  },
+} as const;
 
 const BrandIntroOverlay = ({ phase }: BrandIntroOverlayProps) => {
+  const { locale } = useI18n();
+  const copy = introCopy[locale];
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    overlayRef.current?.focus();
+  }, []);
+
   return (
     <div
+      ref={overlayRef}
       className={cx(
         "brand-intro-overlay",
+        phase === "preparing" && "brand-intro-overlay-preparing",
         phase === "running" && "brand-intro-overlay-running",
         phase === "exiting" && "brand-intro-overlay-exiting",
       )}
-      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="brand-intro-title"
+      aria-describedby="brand-intro-description"
+      tabIndex={-1}
     >
+      <p id="brand-intro-title" className="sr-only">
+        {copy.title}
+      </p>
+      <p id="brand-intro-description" className="sr-only">
+        {copy.description}
+      </p>
       <div className="brand-intro-backdrop" />
-      <div className="brand-intro-word" aria-label={siteConfig.brandName}>
+      <div className="brand-intro-word" aria-hidden="true">
         {Array.from(siteConfig.brandName).map((character, index) => (
           <span className="brand-intro-slot" key={`${character}-${index}`}>
             <span

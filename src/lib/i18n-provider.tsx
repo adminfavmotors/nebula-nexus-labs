@@ -1,6 +1,7 @@
 import { startTransition, useEffect, useRef, useState, type ReactNode } from "react";
 import { I18nContext } from "@/lib/i18n-context";
 import { STORAGE_KEY, translations, type Locale } from "@/lib/i18n-data";
+import { localeMotionTimings } from "@/lib/motion";
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(() => {
@@ -34,8 +35,8 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
       settleTimerRef.current = window.setTimeout(() => {
         setIsTransitioningLocale(false);
-      }, 240);
-    }, 110);
+      }, localeMotionTimings.settleDelayMs);
+    }, localeMotionTimings.changeDelayMs);
   };
 
   useEffect(() => {

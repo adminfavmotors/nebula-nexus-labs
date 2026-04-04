@@ -1,39 +1,133 @@
 import { useEffect, useMemo, useState } from "react";
+import { brandIntroMotionTimings } from "@/lib/motion";
+import { siteConfig } from "@/lib/site-config";
 import { usePageScrollLock } from "@/lib/page-scroll-lock";
 
 export const BRAND_INTRO_STORAGE_KEY = "node48-brand-intro-played";
-export const BRAND_INTRO_EXIT_DELAY_MS = 860;
-export const BRAND_INTRO_TOTAL_MS = 1380;
+export const BRAND_INTRO_EXIT_DELAY_MS = brandIntroMotionTimings.exitDelayMs;
+export const BRAND_INTRO_FONT_READY_TIMEOUT_MS = brandIntroMotionTimings.fontReadyTimeoutMs;
+export const BRAND_INTRO_TOTAL_MS = brandIntroMotionTimings.totalDurationMs;
+const BRAND_INTRO_FONT = '700 1em "Space Grotesk"';
 
-type BrandIntroPhase = "done" | "running" | "exiting";
+type BrandIntroPhase = "done" | "preparing" | "running" | "exiting";
 
 type BrandIntroState = {
   didPlayIntro: boolean;
   heroReady: boolean;
-  overlayPhase: Extract<BrandIntroPhase, "running" | "exiting"> | null;
+  overlayPhase: Exclude<BrandIntroPhase, "done"> | null;
 };
 
+type BrandIntroSnapshot = {
+  didPlayIntro: boolean;
+  phase: BrandIntroPhase;
+};
+
+function shouldPlayBrandIntro(pathname: string) {
+  if (typeof window === "undefined" || pathname !== "/") {
+    return false;
+  }
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hasPlayed = window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY) === "1";
+
+  return !prefersReducedMotion && !hasPlayed;
+}
+
+function isBrandIntroFontReady() {
+  if (typeof document === "undefined" || !("fonts" in document)) {
+    return true;
+  }
+
+  return typeof document.fonts.check !== "function"
+    ? true
+    : document.fonts.check(BRAND_INTRO_FONT, siteConfig.brandName);
+}
+
+function createBrandIntroSnapshot(pathname: string): BrandIntroSnapshot {
+  const playIntro = shouldPlayBrandIntro(pathname);
+
+  return {
+    didPlayIntro: playIntro,
+    phase: playIntro ? (isBrandIntroFontReady() ? "running" : "preparing") : "done",
+  };
+}
+
 export function useBrandIntro(pathname: string): BrandIntroState {
-  const [phase, setPhase] = useState<BrandIntroPhase>("done");
-  const [didPlayIntro, setDidPlayIntro] = useState(false);
+  const [introState, setIntroState] = useState<BrandIntroSnapshot>(() => createBrandIntroSnapshot(pathname));
+  const { didPlayIntro, phase } = introState;
 
   useEffect(() => {
-    if (typeof window === "undefined") {
+    if (!shouldPlayBrandIntro(pathname)) {
+      setIntroState((currentState) =>
+        currentState.phase === "done" && !currentState.didPlayIntro
+          ? currentState
+          : { didPlayIntro: false, phase: "done" },
+      );
       return;
     }
 
-    if (pathname !== "/") {
-      setDidPlayIntro(false);
-      setPhase("done");
+    setIntroState((currentState) =>
+      currentState.phase === "done"
+        ? { didPlayIntro: true, phase: isBrandIntroFontReady() ? "running" : "preparing" }
+        : currentState,
+    );
+  }, [pathname]);
+
+  useEffect(() => {
+    if (phase !== "preparing" || typeof window === "undefined") {
       return;
     }
 
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const hasPlayed = window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY) === "1";
+    window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, "1");
 
-    if (prefersReducedMotion || hasPlayed) {
-      setDidPlayIntro(false);
-      setPhase("done");
+    if (typeof document === "undefined" || !("fonts" in document)) {
+      setIntroState((currentState) =>
+        currentState.phase === "preparing"
+          ? { ...currentState, phase: "running" }
+          : currentState,
+      );
+      return;
+    }
+
+    let cancelled = false;
+    let timeoutId: number | null = null;
+
+    const loadPromise =
+      typeof document.fonts.load === "function"
+        ? document.fonts.load(BRAND_INTRO_FONT, siteConfig.brandName).catch(() => undefined)
+        : Promise.resolve(undefined);
+
+    const readyPromise = Promise.resolve(document.fonts.ready).catch(() => undefined);
+    const timeoutPromise = new Promise<void>((resolve) => {
+      timeoutId = window.setTimeout(resolve, BRAND_INTRO_FONT_READY_TIMEOUT_MS);
+    });
+
+    void Promise.race([
+      Promise.allSettled([loadPromise, readyPromise]).then(() => undefined),
+      timeoutPromise,
+    ]).then(() => {
+      if (cancelled) {
+        return;
+      }
+
+      setIntroState((currentState) =>
+        currentState.phase === "preparing"
+          ? { ...currentState, phase: "running" }
+          : currentState,
+      );
+    });
+
+    return () => {
+      cancelled = true;
+
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, [phase]);
+
+  useEffect(() => {
+    if ((phase !== "running" && phase !== "exiting") || typeof window === "undefined") {
       return;
     }
 
@@ -41,15 +135,21 @@ export function useBrandIntro(pathname: string): BrandIntroState {
     let doneTimeoutId: number | null = null;
 
     window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, "1");
-    setDidPlayIntro(true);
-    setPhase("running");
 
     exitTimeoutId = window.setTimeout(() => {
-      setPhase("exiting");
+      setIntroState((currentState) =>
+        currentState.phase === "running"
+          ? { ...currentState, phase: "exiting" }
+          : currentState,
+      );
     }, BRAND_INTRO_EXIT_DELAY_MS);
 
     doneTimeoutId = window.setTimeout(() => {
-      setPhase("done");
+      setIntroState((currentState) =>
+        currentState.phase === "done"
+          ? currentState
+          : { didPlayIntro: currentState.didPlayIntro, phase: "done" },
+      );
     }, BRAND_INTRO_TOTAL_MS);
 
     return () => {
@@ -61,7 +161,7 @@ export function useBrandIntro(pathname: string): BrandIntroState {
         window.clearTimeout(doneTimeoutId);
       }
     };
-  }, [pathname]);
+  }, [phase]);
 
   usePageScrollLock(phase !== "done");
 

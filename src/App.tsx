@@ -1,11 +1,16 @@
-import { lazy, Suspense, useEffect } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef } from "react";
+import { BrowserRouter, Route, Routes, useLocation, useNavigationType } from "react-router-dom";
 import BrandIntroOverlay from "@/components/BrandIntroOverlay";
 import { ContactOverlayProvider } from "@/components/contact/ContactOverlay";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import { useBrandIntro } from "@/lib/use-brand-intro";
 import Index from "./pages/Index.tsx";
+
+const ROUTER_FUTURE_FLAGS = {
+  v7_relativeSplatPath: true,
+  v7_startTransition: true,
+} as const;
 
 const ServicePage = lazy(() => import("./pages/ServicePage.tsx"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.tsx"));
@@ -17,9 +22,18 @@ const HASH_SCROLL_RETRY_DELAY_MS = 120;
 
 const RouteHashScrollManager = () => {
   const location = useLocation();
+  const navigationType = useNavigationType();
+  const previousPathnameRef = useRef(location.pathname);
 
   useEffect(() => {
+    const pathnameChanged = previousPathnameRef.current !== location.pathname;
+    previousPathnameRef.current = location.pathname;
+
     if (!location.hash) {
+      if (pathnameChanged && navigationType !== "POP") {
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+
       return;
     }
 
@@ -60,7 +74,7 @@ const RouteHashScrollManager = () => {
         window.clearTimeout(timeoutId);
       }
     };
-  }, [location.hash, location.pathname]);
+  }, [location.hash, location.pathname, navigationType]);
 
   return null;
 };
@@ -69,15 +83,34 @@ const AppFrame = () => {
   const location = useLocation();
   const { isTransitioningLocale } = useI18n();
   const { didPlayIntro, heroReady, overlayPhase } = useBrandIntro(location.pathname);
+  const appShellRef = useRef<HTMLDivElement>(null);
+  const introActive = overlayPhase !== null;
+
+  useLayoutEffect(() => {
+    const shellElement = appShellRef.current;
+
+    if (!shellElement) {
+      return;
+    }
+
+    if (introActive) {
+      shellElement.setAttribute("inert", "");
+      return;
+    }
+
+    shellElement.removeAttribute("inert");
+  }, [introActive]);
 
   return (
     <>
       <RouteHashScrollManager />
       <ContactOverlayProvider>
         <div
+          ref={appShellRef}
           className={`app-shell ${isTransitioningLocale ? "app-shell-transitioning" : ""} ${
-            overlayPhase ? "app-shell-intro-active" : ""
+            introActive ? "app-shell-intro-active" : ""
           }`}
+          aria-hidden={introActive || undefined}
         >
           <Suspense fallback={null}>
             <Routes>
@@ -90,14 +123,14 @@ const AppFrame = () => {
           </Suspense>
         </div>
         {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} /> : null}
-        <CookieConsentBanner />
+        <CookieConsentBanner isBlocked={introActive} />
       </ContactOverlayProvider>
     </>
   );
 };
 
 const AppShell = () => (
-  <BrowserRouter>
+  <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
     <AppFrame />
   </BrowserRouter>
 );

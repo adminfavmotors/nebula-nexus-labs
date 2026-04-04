@@ -151,9 +151,12 @@
     linear-gradient(180deg, rgba(2, 8, 31, 0.98), rgba(5, 14, 46, 0.995));
   transition:
     opacity 0.44s ease,
-    transform 0.62s cubic-bezier(0.22, 1, 0.36, 1),
-    clip-path 0.62s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform, clip-path;
+    transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.brand-intro-overlay-preparing .brand-intro-letter {
+  opacity: 0.001;
 }
 
 .cookie-consent-layer {
@@ -216,8 +219,8 @@
 
 .brand-intro-overlay-exiting {
   opacity: 0;
-  transform: translateY(-4%);
-  clip-path: inset(0 0 100% 0 round 0);
+  transform: translateY(-6%) scale(1.015);
+  pointer-events: none;
 }
 
 @keyframes brand-intro-letter-rise {
