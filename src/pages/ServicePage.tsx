@@ -70,10 +70,10 @@ const ServicePage = () => {
 
   return (
     <SiteLayout>
-      <main className="bg-[#f5f7ff] text-[#0a0a0a]">
+      <main className="service-page-root">
         <section className="hero-section service-page-hero relative overflow-hidden">
-          <div className="glow-orb left-[12%] top-[12%] h-[240px] w-[240px] opacity-20 blur-[120px]" />
-          <div className="glow-orb glow-orb-b bottom-[10%] right-[14%] h-[220px] w-[220px] opacity-20 blur-[120px]" />
+          <div className="glow-orb section-orb section-orb-service-a" />
+          <div className="glow-orb glow-orb-b section-orb section-orb-service-b" />
 
           <div className="site-shell">
             <div className="service-page-breadcrumbs">
@@ -111,10 +111,10 @@ const ServicePage = () => {
             </div>
 
             <SurfaceCard variant="summary" className="service-page-summary-card p-7 sm:p-8 lg:p-10">
-              <p className="service-page-overline mb-3 text-[#8fb4ff]">
+              <p className="service-page-overline service-page-summary-overline">
                 {copy.heroSummaryTitle}
               </p>
-              <h2 className="service-page-section-title mb-4 text-foreground">{service.listName}</h2>
+              <h2 className="service-page-section-title service-page-summary-title">{service.listName}</h2>
               <p className="service-page-summary-price mb-6 text-white">
                 {detail.pricingPrice}
               </p>
@@ -132,9 +132,9 @@ const ServicePage = () => {
         </section>
 
         <Section tone="light" className="service-page-section">
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.9fr)] lg:gap-10">
+          <div className="service-page-audience-grid">
             <div className="space-y-5">
-              <h2 className="service-page-section-title text-[#0a0a0a]">{detail.audienceTitle}</h2>
+              <h2 className="service-page-section-title">{detail.audienceTitle}</h2>
               <div className="service-page-prose">
                 {detail.audienceIntro.map((paragraph) => (
                   <p key={paragraph} className="section-copy-light copy-pretty service-page-copy">
@@ -165,7 +165,7 @@ const ServicePage = () => {
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             {detail.deliverablesItems.map((item, index) => (
               <SurfaceCard key={item.title} variant="deep" spotlight className="relative p-6 sm:p-7">
-                <span className="service-page-overline text-[#8fb4ff]">
+                <span className="service-page-overline">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3 className="service-page-card-title mt-4 text-white">
@@ -180,9 +180,9 @@ const ServicePage = () => {
         </Section>
 
         <Section tone="light" className="service-page-section">
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-10">
+          <div className="service-page-process-grid">
             <div className="space-y-5">
-              <h2 className="service-page-section-title text-[#0a0a0a]">{detail.processTitle}</h2>
+              <h2 className="service-page-section-title">{detail.processTitle}</h2>
 
               {detail.processIntro.length > 0 ? (
                 <div className="service-page-prose">
@@ -206,7 +206,7 @@ const ServicePage = () => {
                   <div className="service-page-step-grid">
                     <span className="service-page-step-number">{String(index + 1).padStart(2, "0")}.</span>
                     <div className="space-y-3">
-                      <h3 className="service-page-card-title text-[#0a0a0a]">
+                      <h3 className="service-page-card-title">
                         {step.title}
                       </h3>
                       {step.body ? (
@@ -221,10 +221,10 @@ const ServicePage = () => {
         </Section>
 
         <Section tone="deep" className="service-page-section">
-          <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+          <div className="service-page-related-grid">
             <SurfaceCard variant="deep" className="p-7 sm:p-8">
               <h2 className="service-page-section-title mb-5 text-foreground">{detail.pricingTitle}</h2>
-              <p className="mb-6 font-display text-[1.65rem] font-bold tracking-[-0.03em] text-white sm:text-[2rem]">
+              <p className="service-page-price">
                 {detail.pricingPrice}
               </p>
               <div className="service-page-prose">

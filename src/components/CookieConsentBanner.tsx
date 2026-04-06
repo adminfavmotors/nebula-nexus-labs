@@ -102,15 +102,15 @@ const CookieConsentBanner = ({ isBlocked = false }: CookieConsentBannerProps) =>
   return (
     <div
       ref={bannerRef}
-      className="cookie-consent-layer fixed inset-x-4 bottom-[var(--floating-layer-bottom)] sm:inset-x-auto sm:right-5 sm:w-[min(30rem,calc(100vw-2.5rem))]"
+      className="cookie-consent-layer cookie-consent-banner"
       aria-hidden={isBlocked || undefined}
       inert={isBlocked ? "" : undefined}
     >
-      <div className="neon-frame-soft overflow-hidden rounded-[1.5rem] border border-[rgba(132,184,255,0.18)] bg-[linear-gradient(180deg,rgba(8,20,62,0.96),rgba(4,12,40,0.99))] p-5 shadow-[0_24px_70px_rgba(0,10,34,0.42)] backdrop-blur-xl">
-        <p className="mb-2 font-display text-[1.2rem] font-bold tracking-[-0.03em] text-white">
+      <div className="neon-frame-soft cookie-consent-panel">
+        <p className="cookie-consent-title">
           {copy.title}
         </p>
-        <p className="section-copy-dark mb-4 max-w-[44ch] text-[0.95rem] leading-7">
+        <p className="cookie-consent-copy">
           {copy.body}
         </p>
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
@@ -122,7 +122,7 @@ const CookieConsentBanner = ({ isBlocked = false }: CookieConsentBannerProps) =>
           </ActionButton>
           <Link
             to="/cookie-policy"
-            className="text-center font-body text-[0.92rem] font-medium text-[#8fb4ff] underline underline-offset-4 transition-opacity hover:opacity-80 sm:ml-auto"
+            className="cookie-consent-link"
           >
             {copy.policy}
           </Link>

@@ -7,10 +7,7 @@ import { ViewportMount } from "@/components/primitives/ViewportMount";
 const PortfolioShowcase = lazy(() => import("@/components/portfolio/PortfolioShowcase"));
 
 const ProjectsFallback = () => (
-  <div
-    className="mt-8 overflow-hidden rounded-[1.5rem] border border-primary/10 bg-white/[0.72] px-5 py-6 shadow-[0_18px_50px_rgba(0,31,88,0.08)] md:px-6 md:py-7"
-    aria-hidden="true"
-  >
+  <div className="projects-fallback" aria-hidden="true">
     <div className="flex items-center justify-between gap-4">
       <div className="h-4 w-28 rounded-full bg-primary/10" />
       <div className="flex gap-3">
@@ -19,14 +16,11 @@ const ProjectsFallback = () => (
       </div>
     </div>
 
-    <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-      {Array.from({ length: 3 }).map((_, index) => (
-        <div
-          key={`projects-skeleton-${index}`}
-          className="min-h-[24rem] rounded-[1.35rem] border border-primary/10 bg-white/80"
-        />
-      ))}
-    </div>
+      <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div key={`projects-skeleton-${index}`} className="projects-fallback-card" />
+        ))}
+      </div>
   </div>
 );
 
@@ -38,7 +32,7 @@ const Projects = () => {
       <SectionHeader
         tone="light"
         title={<Reveal as="span" delay={0.05} className="inline-block">{t.projects.title}</Reveal>}
-        titleClassName="max-w-[18ch] md:max-w-[20ch]"
+        titleClassName="projects-title"
       />
 
       <div className="projects-frame">

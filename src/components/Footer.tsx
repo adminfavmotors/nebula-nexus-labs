@@ -20,20 +20,20 @@ const Footer = () => {
               <Link
                 key={link.href}
                 to={resolveSectionHref(link.href)}
-                className="font-body text-[0.95rem] text-muted-foreground transition-colors duration-300 hover:text-foreground"
+                className="footer-link"
               >
                 {link.label}
               </Link>
             ))}
             <Link
               to="/privacy-policy"
-              className="font-body text-[0.95rem] text-muted-foreground transition-colors duration-300 hover:text-foreground"
+              className="footer-link"
             >
               {legal.footer.privacy}
             </Link>
             <Link
               to="/cookie-policy"
-              className="font-body text-[0.95rem] text-muted-foreground transition-colors duration-300 hover:text-foreground"
+              className="footer-link"
             >
               {legal.footer.cookies}
             </Link>

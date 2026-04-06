@@ -23,9 +23,9 @@ const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
       <div className="hero-section-grid" />
       <div className="brand-mark-motif brand-mark-motif-hero" aria-hidden="true" />
 
-      <div className="glow-orb -top-20 left-[10%] h-[350px] w-[350px] opacity-30 blur-[120px]" />
-      <div className="glow-orb glow-orb-b left-[55%] top-[40%] h-[250px] w-[250px] opacity-30 blur-[120px]" />
-      <div className="glow-orb glow-orb-c bottom-[10%] left-[25%] h-[200px] w-[200px] opacity-30 blur-[120px]" />
+      <div className="glow-orb section-orb section-orb-hero-a" />
+      <div className="glow-orb glow-orb-b section-orb section-orb-hero-b" />
+      <div className="glow-orb glow-orb-c section-orb section-orb-hero-c" />
       <div className="hero-section-beam" />
 
       <div className="site-shell hero-layout hero-shell">

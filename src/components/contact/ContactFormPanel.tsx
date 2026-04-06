@@ -218,12 +218,12 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
 
       <input type="hidden" name="_startedAt" value={String(startedAtRef.current)} readOnly />
 
-      <div className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden opacity-0" aria-hidden="true">
+      <div className="contact-form-honeypot" aria-hidden="true">
         <label htmlFor={`${mode}-contact-website`}>Website</label>
         <input id={`${mode}-contact-website`} type="text" name="website" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <div className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden opacity-0" aria-hidden="true">
+      <div className="contact-form-honeypot" aria-hidden="true">
         <label htmlFor={`${mode}-contact-company`}>Company</label>
         <input id={`${mode}-contact-company`} type="text" name="company" tabIndex={-1} autoComplete="off" />
       </div>
@@ -241,7 +241,7 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
 
         <p className={cx(mode === "modal" ? "contact-overlay-legal" : "section-copy-light measure-copy-wide")}>
           {legal.formNotice.prefix}{" "}
-          <a href="/privacy-policy" className="text-[#7eb2ff] underline underline-offset-4 transition-opacity hover:opacity-75">
+          <a href="/privacy-policy" className="contact-form-legal-link">
             {legal.formNotice.linkLabel}
           </a>{" "}
           {legal.formNotice.suffix}
@@ -253,16 +253,16 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
           aria-live="polite"
           role={status === "error" ? "alert" : "status"}
           className={cx(
-            "text-[0.95rem] font-body leading-7",
+            "contact-form-status",
             status === "success"
-              ? "text-[#0f7b0f]"
+              ? "contact-form-status-success"
               : status === "error"
                 ? mode === "modal"
-                  ? "text-[#ffc2bd]"
-                  : "text-[#b42318]"
+                  ? "contact-form-status-error-modal"
+                  : "contact-form-status-error"
                 : mode === "modal"
-                  ? "text-[#dbe8ff]"
-                  : "text-[#42526b]",
+                  ? "contact-form-status-submitting-modal"
+                  : "contact-form-status-submitting",
           )}
         >
           {t.contact.status[status]}

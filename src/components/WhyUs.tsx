@@ -14,10 +14,10 @@ const WhyUs = () => {
 
   return (
     <Section id="why-us" tone="deep" className="section-deep-focus">
-      <div className="glow-orb right-[15%] top-0 h-[300px] w-[300px] opacity-20 blur-[120px]" />
-      <div className="glow-orb glow-orb-b bottom-0 left-[10%] h-[200px] w-[200px] opacity-20 blur-[100px]" />
+      <div className="glow-orb section-orb section-orb-why-a" />
+      <div className="glow-orb glow-orb-b section-orb section-orb-why-b" />
 
-      <Reveal as={SectionTitle} tone="deep" className="mb-12 max-w-[19ch] md:mb-14 md:max-w-[21ch]" delay={0.05}>
+      <Reveal as={SectionTitle} tone="deep" className="why-us-title" delay={0.05}>
         {t.whyUs.title}
       </Reveal>
       <div className="why-us-grid grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -26,7 +26,7 @@ const WhyUs = () => {
             as={SurfaceCard}
             key={i}
             variant="deep"
-            className="h-full self-stretch p-5 sm:p-6"
+            className="why-us-card"
             delay={i * 0.12}
           >
             <div className="why-us-card-stack">

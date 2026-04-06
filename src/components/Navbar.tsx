@@ -165,11 +165,12 @@ const Navbar = () => {
     <>
       <nav
         data-header-visibility={headerPinned ? "visible" : "hidden"}
-        className={`header-root fixed inset-x-0 top-0 px-3 pt-3 sm:px-4 sm:pt-4 transition-[opacity,transform,filter] duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
-          visible ? "opacity-100 blur-0" : "opacity-0 blur-[6px]"
-        } ${
-          headerPinned ? "translate-y-0" : "-translate-y-[calc(100%+1.25rem)]"
-        } ${menuOpen ? "max-lg:pointer-events-none max-lg:opacity-0 max-lg:-translate-y-2" : ""}`}
+        className={cx(
+          "header-root header-shell",
+          visible ? "header-shell-visible" : "header-shell-hidden",
+          headerPinned ? "header-shell-pinned" : "header-shell-unpinned",
+          menuOpen && "header-shell-menu-open",
+        )}
       >
         <div className={cx("header-panel", scrolled ? "header-panel-scrolled" : "header-panel-idle")}>
           <div className="header-brand-slot min-w-0 flex-1">
@@ -193,9 +194,10 @@ const Navbar = () => {
 
           <div className="header-controls flex shrink-0 items-center gap-2 sm:gap-3">
             <div
-              className={`header-locale-shell ${
-                isTransitioningLocale ? "scale-[0.985] opacity-[0.85]" : "scale-100 opacity-100"
-              }`}
+              className={cx(
+                "header-locale-shell",
+                isTransitioningLocale ? "header-locale-shell-transitioning" : "header-locale-shell-steady",
+              )}
               aria-label={t.nav.languageLabel}
             >
               {(["pl", "en"] as Locale[]).map((nextLocale) => {
@@ -236,14 +238,14 @@ const Navbar = () => {
         ref={mobileDialogRef}
         id="mobile-navigation-panel"
         aria-label={mobileNavigationLabel[locale]}
-        className={`header-mobile-panel lg:hidden ${menuOpen ? "header-mobile-panel-open" : ""}`}
+        className={cx("header-mobile-panel lg:hidden", menuOpen && "header-mobile-panel-open")}
         onClick={(event) => {
           if (event.target === event.currentTarget) {
             closeMenu();
           }
         }}
       >
-        <div className="pointer-events-none absolute right-0 top-0 h-[260px] w-[260px] rounded-full bg-primary/20 blur-[100px]" />
+        <div className="header-mobile-glow" />
 
         <div className="header-mobile-panel-shell relative z-10">
           <div className="header-mobile-topbar">
@@ -275,9 +277,10 @@ const Navbar = () => {
           <ActionLink
             href={contactHref}
             onClick={handleContactClick}
-            className={`header-mobile-cta mt-8 inline-flex w-full justify-center py-3.5 text-[15px] transition-all duration-300 ${
-              menuOpen ? "translate-x-0 opacity-100" : "-translate-x-6 opacity-0"
-            }`}
+            className={cx(
+              "header-mobile-cta header-mobile-cta-base mt-8 inline-flex w-full justify-center py-3.5 transition-all duration-300",
+              menuOpen ? "translate-x-0 opacity-100" : "-translate-x-6 opacity-0",
+            )}
             style={{ "--mobile-link-delay": `${120 + t.nav.links.length * 55}ms` } as CSSProperties}
           >
             {t.nav.cta}

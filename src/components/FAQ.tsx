@@ -42,15 +42,15 @@ const FAQ = () => {
                   onClick={() => setOpen(isOpen ? -1 : i)}
                   className="group flex w-full items-center justify-between py-7 text-left md:py-8"
                 >
-                  <span className={`heading-balance max-w-[34ch] pr-3 font-body text-[16px] font-semibold leading-[1.28] tracking-[-0.02em] transition-colors duration-300 md:max-w-[36ch] md:text-[17px] 2xl:max-w-[38ch] ${isOpen ? "text-primary" : "text-[#0a0a0a]"}`}>
+                  <span className={isOpen ? "faq-item-question faq-item-question-open" : "faq-item-question faq-item-question-closed"}>
                     {item.question}
                   </span>
                   <ChevronDown
                     size={18}
-                    className={`ml-4 shrink-0 text-[#7a9acc] transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                    className={isOpen ? "faq-item-chevron faq-item-chevron-open" : "faq-item-chevron"}
                   />
                 </button>
-                <div className={`grid overflow-hidden transition-all duration-300 ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+                <div className={isOpen ? "faq-item-panel faq-item-panel-open" : "faq-item-panel faq-item-panel-closed"}>
                   <div className="min-h-0">
                     <p className="section-copy-light copy-pretty measure-copy-wide pb-7 md:pb-8">
                       {item.answer}

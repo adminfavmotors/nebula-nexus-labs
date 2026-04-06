@@ -8,7 +8,8 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "check:text": "node scripts/check-text-integrity.mjs",
-    "lint": "eslint src eslint.config.js",
+    "check:styles": "node scripts/check-style-architecture.mjs",
+    "lint": "node scripts/check-style-architecture.mjs && eslint src eslint.config.js",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest"

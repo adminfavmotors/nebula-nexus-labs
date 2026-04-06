@@ -38,24 +38,24 @@ export default function LegalDocumentPage({ documentKey }: LegalDocumentPageProp
   }, [documentContent.metaDescription, documentContent.metaTitle, t.meta.description, t.meta.title]);
 
   return (
-    <div className="min-h-screen bg-[#f5f7ff] text-[#0a0a0a]">
+    <div className="legal-page">
       <div className="site-shell py-10 md:py-14">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <Link
             to="/"
-            className="inline-flex items-center rounded-full border border-[#d7e2f8] bg-white px-4 py-2 font-body text-sm font-medium text-[#0a0a0a] transition-colors duration-300 hover:border-[#0059ff] hover:text-[#0059ff]"
+            className="legal-back-link"
           >
             {content.common.backHome}
           </Link>
           <p className="section-copy-light">{content.common.contactLabel}</p>
         </div>
 
-        <div className="rounded-[28px] border border-[#dbe6fb] bg-white p-6 shadow-[0_24px_80px_rgba(0,89,255,0.08)] md:p-10">
-          <div className="max-w-[42rem]">
-            <p className="mb-3 font-body text-sm font-medium uppercase tracking-[0.18em] text-[#0059ff]">
+        <div className="legal-panel">
+          <div className="legal-doc-shell">
+            <p className="legal-meta">
               {content.common.updatedLabel}: {documentContent.updatedAt}
             </p>
-            <h1 className="font-display text-[clamp(34px,5vw,56px)] leading-[1.06] tracking-[-0.04em] text-[#0a0a0a]">
+            <h1 className="legal-title">
               {documentContent.title}
             </h1>
             <p className="section-copy-light measure-copy-wide mt-5">
@@ -65,16 +65,16 @@ export default function LegalDocumentPage({ documentKey }: LegalDocumentPageProp
 
           <div className="mt-10 space-y-8">
             {documentContent.sections.map((section) => (
-              <section key={section.title} className="max-w-[42rem] border-t border-[#ecf1fb] pt-6 first:border-t-0 first:pt-0">
-                <h2 className="font-display text-[clamp(22px,3vw,30px)] leading-[1.1] tracking-[-0.03em] text-[#0a0a0a]">
+              <section key={section.title} className="legal-section">
+                <h2 className="legal-section-heading">
                   {section.title}
                 </h2>
-                <div className="measure-copy-wide mt-4 space-y-4 font-body text-[0.98rem] leading-[1.82] text-[#334155]">
+                <div className="legal-prose">
                   {section.paragraphs.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
                   {section.items ? (
-                    <ul className="space-y-2 pl-5 text-[#334155]">
+                    <ul className="legal-list">
                       {section.items.map((item) => (
                         <li key={item} className="list-disc">
                           {item}
