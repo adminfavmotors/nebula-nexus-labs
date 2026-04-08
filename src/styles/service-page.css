@@ -4,6 +4,10 @@
 
   .service-page-hero-surface {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: auto;
     overflow: hidden;
   }
 
@@ -36,15 +40,22 @@
     line-height: 1;
   }
 
-  .service-page-hero-shell {
-    padding-bottom: clamp(2.75rem, 4.5vw, 4rem);
+  .service-page-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
     align-items: start;
     gap: 2.5rem;
+  }
+
+  .service-page-hero-shell {
+    padding-bottom: clamp(2.75rem, 4.5vw, 4rem);
   }
 
   .service-page-hero-content {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 44rem;
     gap: 1.25rem;
   }
 
@@ -70,6 +81,7 @@
 
   .service-page-summary-card {
     width: 100%;
+    max-width: none;
   }
 
   .service-page-summary-panel {
@@ -77,12 +89,12 @@
   }
 
 .service-page-hero-title {
-  max-width: 15.6ch;
+  max-width: 11.2ch;
   color: hsl(var(--foreground));
   font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(2.45rem, 3.9vw, 4.35rem);
+  font-size: clamp(2.7rem, 4.8vw, 4.9rem);
     font-weight: 700;
-    line-height: 0.99;
+    line-height: 1;
     letter-spacing: -0.048em;
     text-wrap: balance;
   }

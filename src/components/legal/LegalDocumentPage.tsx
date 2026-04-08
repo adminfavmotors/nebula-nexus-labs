@@ -47,7 +47,7 @@ export default function LegalDocumentPage({ documentKey }: LegalDocumentPageProp
           >
             {content.common.backHome}
           </Link>
-          <p className="section-copy-light">{content.common.contactLabel}</p>
+          <p className="section-copy-light legal-contact">{content.common.contactLabel}</p>
         </div>
 
         <div className="legal-panel">

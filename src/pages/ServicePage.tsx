@@ -87,7 +87,7 @@ const ServicePage = () => {
             </div>
           </div>
 
-          <div className="site-shell hero-layout service-page-hero-shell">
+          <div className="site-shell service-page-hero-shell service-page-hero-grid">
             <div className="service-page-hero-content">
               <span className="hero-badge">{ui.eyebrow}</span>
 

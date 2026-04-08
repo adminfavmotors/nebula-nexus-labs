@@ -167,6 +167,24 @@ Key files:
 - [index.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/index.css)
 - [home.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/home.css)
 
+### 8. Typography regression cleanup
+
+Completed:
+
+- Found and fixed a service-page hero regression caused by inheriting the homepage hero layout contract.
+- Broke the coupling between homepage `hero-section` layout and service-page hero composition.
+- Gave service pages their own hero grid and calmer text measure so long service titles no longer collapse into a broken narrow column.
+- Added a dedicated legal header contact class so long contact strings wrap safely on narrow screens instead of relying on a generic body-copy style.
+- Re-verified homepage, service pages, premium service page, privacy policy and cookie policy on desktop and narrow mobile widths.
+
+Key files:
+
+- [ServicePage.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/pages/ServicePage.tsx)
+- [service-page.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page.css)
+- [service-page-responsive.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page-responsive.css)
+- [LegalDocumentPage.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/legal/LegalDocumentPage.tsx)
+- [index.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/index.css)
+
 ## Verification Snapshot
 
 Verified on 2026-04-08:
@@ -177,10 +195,10 @@ Verified on 2026-04-08:
 - `npm run test` passed
 - `npm run build` passed
 
-Current build snapshot after the latest motion cleanup:
+Current build snapshot after the latest typography cleanup:
 
-- main JS: `258.22 kB` raw / `84.43 kB` gzip
-- main CSS: `76.01 kB` raw / `15.07 kB` gzip
+- main JS: `257.72 kB` raw / `84.22 kB` gzip
+- main CSS: `76.24 kB` raw / `15.19 kB` gzip
 
 ## Remaining Backlog
 
@@ -201,6 +219,10 @@ Priority order for the next steps:
 4. Continue a broader visual stability pass.
    Goal:
    check that the site feels deliberate rather than effect-heavy.
+
+5. Continue cross-route typography audits.
+   Goal:
+   keep page-specific text contracts independent from homepage layout assumptions.
 
 ## Sources Used So Far
 
