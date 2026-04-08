@@ -293,6 +293,21 @@ Key files:
 - [service-page.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page.css)
 - [service-page-responsive.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page-responsive.css)
 
+### 14. Service hero column relation refinement
+
+Completed:
+
+- Rechecked the corrected service hero and confirmed that the remaining issue was no longer the overall surface, but the desktop relationship between the left text block and the right summary card.
+- Identified the main source of the visual gap: `justify-content: space-between` combined with an underweighted right track on large screens.
+- Replaced the distributed desktop spacing with a controlled grid gap and widened the summary-card column so the card can support the hero composition without competing with the main heading.
+- Strengthened the summary card through width and internal rhythm rather than by turning it into a second dominant heading block.
+- Revalidated the result on representative medium and long-title service pages after the change.
+
+Key files:
+
+- [service-page.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page.css)
+- [service-page-responsive.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page-responsive.css)
+
 ## Verification Snapshot
 
 Verified on 2026-04-08:

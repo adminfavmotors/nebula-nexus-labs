@@ -1,14 +1,14 @@
 @media (min-width: 1024px) {
   .service-page-hero-shell {
-    grid-template-columns: minmax(0, 44rem) minmax(20rem, 24.5rem);
-    justify-content: space-between;
-    gap: clamp(2.3rem, 3.6vw, 3.6rem);
+    grid-template-columns: minmax(0, 43rem) minmax(24rem, 27rem);
+    justify-content: start;
+    gap: clamp(1.8rem, 2.6vw, 2.8rem);
   }
 
   .service-page-summary-card {
     align-self: start;
-    margin-top: 0.3rem;
-    max-width: 24.5rem;
+    margin-top: 0.2rem;
+    max-width: 27rem;
   }
 }
 

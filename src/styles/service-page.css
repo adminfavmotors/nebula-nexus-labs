@@ -86,7 +86,7 @@
   }
 
   .service-page-summary-panel {
-    padding: 1.7rem;
+    padding: 1.85rem;
   }
 
   .service-page-hero-title {
@@ -192,7 +192,7 @@
     margin-bottom: 1.45rem;
     color: white;
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(1.48rem, 1.65vw, 1.82rem);
+    font-size: clamp(1.52rem, 1.75vw, 1.9rem);
     font-weight: 700;
     line-height: 1.08;
     letter-spacing: -0.03em;
@@ -320,8 +320,8 @@
   .service-page-summary-title {
     margin-bottom: 0.95rem;
     color: hsl(var(--foreground));
-    max-width: 11.6ch;
-    font-size: clamp(1.58rem, 1.95vw, 2.08rem);
+    max-width: 12.4ch;
+    font-size: clamp(1.62rem, 2.05vw, 2.14rem);
     line-height: 1.06;
     letter-spacing: -0.034em;
     text-wrap: balance;
