@@ -67,11 +67,13 @@ const ServicePage = () => {
   return (
     <SiteLayout>
       <main className="service-page-root">
-        <section className="hero-section service-page-hero service-page-hero-surface">
+        <section className="service-page-hero service-page-hero-surface">
+          <div className="service-page-hero-aurora" />
+          <div className="service-page-hero-grid-overlay" />
           <div className="glow-orb section-orb section-orb-service-a" />
           <div className="glow-orb glow-orb-b section-orb section-orb-service-b" />
 
-          <div className="site-shell">
+          <div className="site-shell service-page-hero-frame">
             <div className="service-page-breadcrumbs">
               <Link to="/" className="service-page-breadcrumb-link">
                 NODE48
@@ -80,50 +82,50 @@ const ServicePage = () => {
               <Link to="/#services" className="service-page-breadcrumb-link">
                 {ui.secondaryCta}
               </Link>
-            </div>
-          </div>
-
-          <div className="site-shell service-page-hero-shell service-page-hero-grid">
-            <div className="service-page-hero-content">
-              <span className="hero-badge">{ui.eyebrow}</span>
-
-              <div className="service-page-tag-row">
-                <span className="tag-pill">{service.listName}</span>
-                <span className="tag-pill">{service.priceFrom}</span>
               </div>
 
-              <h1 className="service-page-hero-title">{detail.heroTitle}</h1>
+            <div className="service-page-hero-shell service-page-hero-grid">
+              <div className="service-page-hero-content">
+                <span className="hero-badge">{ui.eyebrow}</span>
 
-              <p className="section-copy-dark copy-pretty service-page-hero-copy">{detail.heroLead}</p>
+                <div className="service-page-tag-row">
+                  <span className="tag-pill">{service.listName}</span>
+                  <span className="tag-pill">{service.priceFrom}</span>
+                </div>
 
-              <div className="service-page-action-row">
-                <ActionLink href="#contact" onClick={handleContactClick}>
-                  {detail.heroCta}
-                </ActionLink>
-                <Link to="/#services" className="btn-ghost">
-                  {ui.secondaryCta}
-                </Link>
+                <h1 className="service-page-hero-title">{detail.heroTitle}</h1>
+
+                <p className="section-copy-dark copy-pretty service-page-hero-copy">{detail.heroLead}</p>
+
+                <div className="service-page-action-row">
+                  <ActionLink href="#contact" onClick={handleContactClick}>
+                    {detail.heroCta}
+                  </ActionLink>
+                  <Link to="/#services" className="btn-ghost">
+                    {ui.secondaryCta}
+                  </Link>
+                </div>
               </div>
-            </div>
 
-            <SurfaceCard variant="summary" className="service-page-summary-card service-page-summary-panel">
-              <p className="service-page-overline service-page-summary-overline">
-                {copy.heroSummaryTitle}
-              </p>
-              <h2 className="service-page-section-title service-page-summary-title">{service.listName}</h2>
-              <p className="service-page-summary-price">
-                {detail.pricingPrice}
-              </p>
-              <div className="glow-divider service-page-summary-divider" />
-              <ul className="service-page-list">
-                {heroHighlights.map((item) => (
-                  <li key={item.title} className="service-page-list-item section-copy-dark service-page-card-copy">
-                    <span className="service-page-list-dot" />
-                    <span>{item.title}</span>
-                  </li>
-                ))}
-              </ul>
-            </SurfaceCard>
+              <SurfaceCard variant="summary" className="service-page-summary-card service-page-summary-panel">
+                <p className="service-page-overline service-page-summary-overline">
+                  {copy.heroSummaryTitle}
+                </p>
+                <h2 className="service-page-section-title service-page-summary-title">{service.listName}</h2>
+                <p className="service-page-summary-price">
+                  {detail.pricingPrice}
+                </p>
+                <div className="glow-divider service-page-summary-divider" />
+                <ul className="service-page-list">
+                  {heroHighlights.map((item) => (
+                    <li key={item.title} className="service-page-list-item section-copy-dark service-page-card-copy">
+                      <span className="service-page-list-dot" />
+                      <span>{item.title}</span>
+                    </li>
+                  ))}
+                </ul>
+              </SurfaceCard>
+            </div>
           </div>
         </section>
 

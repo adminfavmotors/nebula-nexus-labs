@@ -253,6 +253,23 @@ Key files:
 - [service-page.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page.css)
 - [service-page-responsive.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page-responsive.css)
 
+### 12. Service hero layout decoupling
+
+Completed:
+
+- Rechecked the service-page hero after the earlier report note and confirmed that the remaining empty space problem was structural, not typographic alone.
+- Identified the root cause: service pages were still inheriting the homepage `hero-section` contract, including the full-screen first-screen logic and poster-like spacing.
+- Rebuilt the service hero as its own route-specific layout surface instead of continuing to piggyback on the homepage hero container.
+- Moved breadcrumbs and hero content into one shared frame so the first screen reads as a single editorial block instead of two detached vertical regions.
+- Tightened desktop spacing by reducing the theatrical first-screen height, calming the title scale, and bringing the summary card closer to the main content column.
+- Revalidated the updated service hero visually on representative desktop routes after the structural change.
+
+Key files:
+
+- [ServicePage.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/pages/ServicePage.tsx)
+- [service-page.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page.css)
+- [service-page-responsive.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page-responsive.css)
+
 ## Verification Snapshot
 
 Verified on 2026-04-08:
@@ -298,7 +315,7 @@ Priority order for the next steps:
 
 7. Continue reducing empty hero space where content does not justify a poster-style first screen.
    Goal:
-   keep service pages editorial and readable rather than theatrical.
+   keep service pages editorial and readable rather than theatrical across all internal routes, not only the service hero.
 
 ## Sources Used So Far
 
