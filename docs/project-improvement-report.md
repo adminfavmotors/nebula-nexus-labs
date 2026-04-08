@@ -234,6 +234,25 @@ Key files:
 - [service-page.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page.css)
 - [service-page-responsive.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page-responsive.css)
 
+### 11. Service page whitespace and composition tightening
+
+Completed:
+
+- Revisited the service-page hero after the first typography pass and confirmed that the remaining issue was not broken CSS, but over-dramatic whitespace and an imbalanced left/right composition.
+- Tightened the hero composition by reducing the effective display scale, widening the headline measure, and slightly reducing the supporting copy span so the left column stops behaving like a poster instead of a content block.
+- Reduced the visual mismatch between the main hero and the right summary card by giving the summary title and price a calmer scale more appropriate for a compact sidebar.
+- Rebalanced the desktop hero grid so the summary panel no longer feels detached from the main content column.
+- Tuned the narrow-screen title scale so the service hero keeps better rhythm without oversized line breaks on mobile.
+- Rechecked representative service pages after the change:
+  `strona-wizytowka`,
+  `strona-firmowa`,
+  `strona-premium-dla-wymagajacych-firm`.
+
+Key files:
+
+- [service-page.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page.css)
+- [service-page-responsive.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page-responsive.css)
+
 ## Verification Snapshot
 
 Verified on 2026-04-08:
@@ -276,6 +295,10 @@ Priority order for the next steps:
 6. Monitor indexation after deployment.
    Goal:
    confirm in Search Console that the prerendered service/legal URLs begin receiving real crawls and selected canonicals match the clean route URLs.
+
+7. Continue reducing empty hero space where content does not justify a poster-style first screen.
+   Goal:
+   keep service pages editorial and readable rather than theatrical.
 
 ## Sources Used So Far
 
