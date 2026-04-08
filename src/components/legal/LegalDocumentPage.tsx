@@ -39,8 +39,8 @@ export default function LegalDocumentPage({ documentKey }: LegalDocumentPageProp
 
   return (
     <div className="legal-page">
-      <div className="site-shell py-10 md:py-14">
-        <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+      <div className="site-shell legal-shell">
+        <div className="legal-header">
           <Link
             to="/"
             className="legal-back-link"
@@ -58,12 +58,12 @@ export default function LegalDocumentPage({ documentKey }: LegalDocumentPageProp
             <h1 className="legal-title">
               {documentContent.title}
             </h1>
-            <p className="section-copy-light measure-copy-wide mt-5">
+            <p className="legal-intro">
               {documentContent.intro}
             </p>
           </div>
 
-          <div className="mt-10 space-y-8">
+          <div className="legal-sections">
             {documentContent.sections.map((section) => (
               <section key={section.title} className="legal-section">
                 <h2 className="legal-section-heading">
@@ -76,7 +76,7 @@ export default function LegalDocumentPage({ documentKey }: LegalDocumentPageProp
                   {section.items ? (
                     <ul className="legal-list">
                       {section.items.map((item) => (
-                        <li key={item} className="list-disc">
+                        <li key={item} className="legal-list-item">
                           {item}
                         </li>
                       ))}

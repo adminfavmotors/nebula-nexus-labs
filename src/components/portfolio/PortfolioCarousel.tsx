@@ -59,10 +59,10 @@ const PortfolioCarousel = ({
 
         <div className="portfolio-carousel__actions">
           <IconButton onClick={() => emblaApi?.scrollPrev()} aria-label={previousLabel}>
-            <ChevronLeft size={16} className="text-primary" />
+            <ChevronLeft size={16} className="icon-circle-glyph" />
           </IconButton>
           <IconButton onClick={() => emblaApi?.scrollNext()} aria-label={nextLabel}>
-            <ChevronRight size={16} className="text-primary" />
+            <ChevronRight size={16} className="icon-circle-glyph" />
           </IconButton>
         </div>
       </div>

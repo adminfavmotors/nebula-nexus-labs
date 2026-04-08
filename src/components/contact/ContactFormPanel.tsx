@@ -158,15 +158,15 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
   return (
     <form
       ref={ref}
-      className={cx(mode === "section" ? "space-y-6" : "space-y-5", className)}
+      className={cx("contact-form-panel", mode === "section" ? "contact-form-panel-section" : "contact-form-panel-modal", className)}
       onSubmit={handleSubmit}
       onChangeCapture={() => setHasInteracted(true)}
       onFocusCapture={() => setHasInteracted(true)}
       aria-busy={status === "submitting"}
       {...props}
     >
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <label className="sr-only" htmlFor={`${mode}-contact-name`}>
+      <div className="contact-form-grid">
+        <label className="visually-hidden" htmlFor={`${mode}-contact-name`}>
           {t.contact.namePlaceholder}
         </label>
         <FormInput
@@ -182,7 +182,7 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
           minLength={2}
           required
         />
-        <label className="sr-only" htmlFor={`${mode}-contact-email`}>
+        <label className="visually-hidden" htmlFor={`${mode}-contact-email`}>
           {t.contact.emailPlaceholder}
         </label>
         <FormInput
@@ -201,7 +201,7 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
         />
       </div>
 
-      <label className="sr-only" htmlFor={`${mode}-contact-message`}>
+      <label className="visually-hidden" htmlFor={`${mode}-contact-message`}>
         {t.contact.messagePlaceholder}
       </label>
       <FormTextarea
@@ -228,18 +228,18 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
         <input id={`${mode}-contact-company`} type="text" name="company" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
+      <input type="text" name="_honey" className="contact-form-hidden-field" tabIndex={-1} autoComplete="off" />
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="contact-form-actions">
         <ActionButton
           type="submit"
-          className={cx(mode === "modal" ? "w-full justify-center sm:w-auto" : "w-full sm:w-auto")}
+          className={cx(mode === "modal" ? "contact-form-submit-modal" : "contact-form-submit-section")}
           disabled={status === "submitting"}
         >
           {status === "submitting" ? t.contact.status.submitting : t.contact.submit}
         </ActionButton>
 
-        <p className={cx(mode === "modal" ? "contact-overlay-legal" : "section-copy-light measure-copy-wide")}>
+        <p className={cx(mode === "modal" ? "contact-overlay-legal" : "contact-form-legal-copy-section")}>
           {legal.formNotice.prefix}{" "}
           <a href="/privacy-policy" className="contact-form-legal-link">
             {legal.formNotice.linkLabel}

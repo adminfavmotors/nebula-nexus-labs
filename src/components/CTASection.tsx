@@ -10,11 +10,11 @@ const CTASection = () => {
 
   return (
     <Section tone="deep" className="section-deep-focus">
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+      <div className="cta-card-grid">
         <Reveal as={SurfaceCard} variant="deep" className="cta-card" delay={0}>
           <div className="cta-card-stack">
             <div className="icon-circle">
-              <MessageCircle size={20} className="text-primary" />
+              <MessageCircle size={20} className="icon-circle-glyph" />
             </div>
             <div className="cta-card-copy-cluster">
               <h2 className="cta-card-title">
@@ -31,7 +31,7 @@ const CTASection = () => {
         <Reveal as={SurfaceCard} variant="deep" className="cta-card" delay={0.08}>
           <div className="cta-card-stack">
             <div className="icon-circle">
-              <CircleHelp size={20} className="text-primary" />
+              <CircleHelp size={20} className="icon-circle-glyph" />
             </div>
             <div className="cta-card-copy-cluster">
               <h2 className="cta-card-title cta-card-title-compact">
@@ -42,10 +42,10 @@ const CTASection = () => {
               </p>
             </div>
             <div className="cta-card-actions cta-card-actions-wide">
-              <ActionLink href="#contact" className="w-full justify-center sm:w-auto">
+              <ActionLink href="#contact" className="cta-card-action-button">
                 <MessageCircle size={14} /> {t.cta.quickActions.form}
               </ActionLink>
-              <ActionLink href="#faq" variant="ghost" className="w-full justify-center sm:w-auto">
+              <ActionLink href="#faq" variant="ghost" className="cta-card-action-button">
                 <CircleHelp size={14} /> {t.cta.quickActions.faq}
               </ActionLink>
             </div>

@@ -10,12 +10,12 @@ const Footer = () => {
   const resolveSectionHref = (href: string) => `/${href}`;
 
   return (
-    <footer className="pb-12 pt-8">
+    <footer className="footer-shell">
       <div className="site-shell">
-        <div className="glow-divider mb-10" />
-        <div className="flex flex-col items-center justify-between gap-6 md:flex-row md:items-start">
-          <BrandLogo href="/#home" className="justify-center md:justify-start" />
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 md:justify-end">
+        <div className="glow-divider footer-divider-top" />
+        <div className="footer-layout">
+          <BrandLogo href="/#home" className="footer-brand" />
+          <div className="footer-links-shell">
             {t.nav.links.map((link) => (
               <Link
                 key={link.href}
@@ -39,8 +39,8 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-        <div className="glow-divider mb-6 mt-10" />
-        <p className="text-center font-body text-sm text-muted-foreground">
+        <div className="glow-divider footer-divider-bottom" />
+        <p className="footer-copy">
           {"\u00A9"} {siteConfig.currentYear} {siteConfig.brandName}. {t.footer.rights}
         </p>
       </div>

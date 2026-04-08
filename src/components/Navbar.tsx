@@ -173,14 +173,14 @@ const Navbar = () => {
         )}
       >
         <div className={cx("header-panel", scrolled ? "header-panel-scrolled" : "header-panel-idle")}>
-          <div className="header-brand-slot min-w-0 flex-1">
+          <div className="header-brand-slot">
             <div className="header-brand-shell">
               <span className="logo-neon-ring" aria-hidden="true" />
               <BrandLogo href="/#home" />
             </div>
           </div>
 
-          <div className="hidden items-center gap-1 lg:flex">
+          <div className="header-desktop-nav">
             {t.nav.links.map((link) => (
               <Link
                 key={link.href}
@@ -192,7 +192,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          <div className="header-controls flex shrink-0 items-center gap-2 sm:gap-3">
+          <div className="header-controls">
             <div
               className={cx(
                 "header-locale-shell",
@@ -216,13 +216,13 @@ const Navbar = () => {
               })}
             </div>
 
-            <ActionLink href={contactHref} onClick={handleContactClick} className="header-cta hidden md:inline-flex">
+            <ActionLink href={contactHref} onClick={handleContactClick} className="header-cta header-cta-desktop">
               {t.nav.cta}
             </ActionLink>
 
             <button
               type="button"
-              className="header-mobile-trigger inline-flex lg:hidden"
+              className="header-mobile-trigger"
               onClick={() => setMenuOpen((open) => !open)}
               aria-label={menuOpen ? t.nav.closeMenuLabel : t.nav.openMenuLabel}
               aria-expanded={menuOpen}
@@ -238,7 +238,7 @@ const Navbar = () => {
         ref={mobileDialogRef}
         id="mobile-navigation-panel"
         aria-label={mobileNavigationLabel[locale]}
-        className={cx("header-mobile-panel lg:hidden", menuOpen && "header-mobile-panel-open")}
+        className={cx("header-mobile-panel", menuOpen && "header-mobile-panel-open")}
         onClick={(event) => {
           if (event.target === event.currentTarget) {
             closeMenu();
@@ -247,7 +247,7 @@ const Navbar = () => {
       >
         <div className="header-mobile-glow" />
 
-        <div className="header-mobile-panel-shell relative z-10">
+        <div className="header-mobile-panel-shell header-mobile-panel-content">
           <div className="header-mobile-topbar">
             <BrandLogo href="/#home" />
             <button
@@ -265,9 +265,10 @@ const Navbar = () => {
               key={link.href}
               to={resolveSectionHref(link.href)}
               onClick={closeMenu}
-              className={`header-mobile-link ${
-                menuOpen ? "translate-x-0 opacity-100" : "-translate-x-6 opacity-0"
-              }`}
+              className={cx(
+                "header-mobile-link",
+                menuOpen ? "header-mobile-link-open" : "header-mobile-link-closed",
+              )}
               style={{ "--mobile-link-delay": `${120 + index * 55}ms` } as CSSProperties}
             >
               {link.label}
@@ -278,8 +279,8 @@ const Navbar = () => {
             href={contactHref}
             onClick={handleContactClick}
             className={cx(
-              "header-mobile-cta header-mobile-cta-base mt-8 inline-flex w-full justify-center py-3.5 transition-all duration-300",
-              menuOpen ? "translate-x-0 opacity-100" : "-translate-x-6 opacity-0",
+              "header-mobile-cta header-mobile-cta-base",
+              menuOpen ? "header-mobile-cta-open" : "header-mobile-cta-closed",
             )}
             style={{ "--mobile-link-delay": `${120 + t.nav.links.length * 55}ms` } as CSSProperties}
           >

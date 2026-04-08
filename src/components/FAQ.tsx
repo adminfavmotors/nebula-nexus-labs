@@ -31,7 +31,7 @@ const FAQ = () => {
           </ActionButton>
         </Reveal>
 
-        <div className="faq-list space-y-0">
+        <div className="faq-list">
           {t.faq.items.map((item, i) => {
             const isOpen = open === i;
             return (
@@ -40,7 +40,7 @@ const FAQ = () => {
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? -1 : i)}
-                  className="group flex w-full items-center justify-between py-7 text-left md:py-8"
+                  className="faq-item-trigger"
                 >
                   <span className={isOpen ? "faq-item-question faq-item-question-open" : "faq-item-question faq-item-question-closed"}>
                     {item.question}
@@ -51,8 +51,8 @@ const FAQ = () => {
                   />
                 </button>
                 <div className={isOpen ? "faq-item-panel faq-item-panel-open" : "faq-item-panel faq-item-panel-closed"}>
-                  <div className="min-h-0">
-                    <p className="section-copy-light copy-pretty measure-copy-wide pb-7 md:pb-8">
+                  <div className="faq-item-body">
+                    <p className="section-copy-light copy-pretty measure-copy-wide faq-item-copy">
                       {item.answer}
                     </p>
                   </div>

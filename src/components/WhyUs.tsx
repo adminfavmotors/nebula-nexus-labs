@@ -20,7 +20,7 @@ const WhyUs = () => {
       <Reveal as={SectionTitle} tone="deep" className="why-us-title" delay={0.05}>
         {t.whyUs.title}
       </Reveal>
-      <div className="why-us-grid grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="why-us-grid">
         {items.map((item, i) => (
           <Reveal
             as={SurfaceCard}
@@ -31,9 +31,9 @@ const WhyUs = () => {
           >
             <div className="why-us-card-stack">
               <div className="icon-circle">
-                <item.icon size={20} className="text-primary" />
+                <item.icon size={20} className="icon-circle-glyph" />
               </div>
-              <h3 className="heading-balance measure-tight font-body font-semibold text-foreground">{item.title}</h3>
+              <h3 className="feature-card-title">{item.title}</h3>
               <p className="section-copy-dark copy-pretty why-us-card-copy">{item.desc}</p>
             </div>
           </Reveal>

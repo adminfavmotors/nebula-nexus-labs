@@ -12,12 +12,12 @@ const NotFound = () => {
   });
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-muted-foreground">{t.notFound.title}</p>
+    <div className="not-found-shell">
+      <div className="not-found-panel">
+        <h1 className="not-found-code">404</h1>
+        <p className="not-found-title">{t.notFound.title}</p>
         <p className="not-found-copy">{t.notFound.body}</p>
-        <a href="/" className="text-primary underline hover:text-primary/90">
+        <a href="/" className="not-found-link">
           {t.notFound.cta}
         </a>
       </div>

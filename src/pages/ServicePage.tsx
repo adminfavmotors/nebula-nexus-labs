@@ -71,7 +71,7 @@ const ServicePage = () => {
   return (
     <SiteLayout>
       <main className="service-page-root">
-        <section className="hero-section service-page-hero relative overflow-hidden">
+        <section className="hero-section service-page-hero service-page-hero-surface">
           <div className="glow-orb section-orb section-orb-service-a" />
           <div className="glow-orb glow-orb-b section-orb section-orb-service-b" />
 
@@ -89,18 +89,18 @@ const ServicePage = () => {
 
           <div className="site-shell hero-layout service-page-hero-shell">
             <div className="service-page-hero-content">
-              <span className="hero-badge cursor-default">{ui.eyebrow}</span>
+              <span className="hero-badge">{ui.eyebrow}</span>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="service-page-tag-row">
                 <span className="tag-pill">{service.listName}</span>
                 <span className="tag-pill">{service.priceFrom}</span>
               </div>
 
-              <h1 className="service-page-hero-title text-foreground">{detail.heroTitle}</h1>
+              <h1 className="service-page-hero-title">{detail.heroTitle}</h1>
 
               <p className="section-copy-dark copy-pretty service-page-hero-copy">{detail.heroLead}</p>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="service-page-action-row">
                 <ActionLink href="#contact" onClick={handleContactClick}>
                   {detail.heroCta}
                 </ActionLink>
@@ -110,15 +110,15 @@ const ServicePage = () => {
               </div>
             </div>
 
-            <SurfaceCard variant="summary" className="service-page-summary-card p-7 sm:p-8 lg:p-10">
+            <SurfaceCard variant="summary" className="service-page-summary-card service-page-summary-panel">
               <p className="service-page-overline service-page-summary-overline">
                 {copy.heroSummaryTitle}
               </p>
               <h2 className="service-page-section-title service-page-summary-title">{service.listName}</h2>
-              <p className="service-page-summary-price mb-6 text-white">
+              <p className="service-page-summary-price">
                 {detail.pricingPrice}
               </p>
-              <div className="glow-divider mb-6" />
+              <div className="glow-divider service-page-summary-divider" />
               <ul className="service-page-list">
                 {heroHighlights.map((item) => (
                   <li key={item.title} className="service-page-list-item section-copy-dark service-page-card-copy">
@@ -133,7 +133,7 @@ const ServicePage = () => {
 
         <Section tone="light" className="service-page-section">
           <div className="service-page-audience-grid">
-            <div className="space-y-5">
+            <div className="service-page-section-stack">
               <h2 className="service-page-section-title">{detail.audienceTitle}</h2>
               <div className="service-page-prose">
                 {detail.audienceIntro.map((paragraph) => (
@@ -144,7 +144,7 @@ const ServicePage = () => {
               </div>
             </div>
 
-            <SurfaceCard variant="editorial" spotlight className="self-start p-6 sm:p-7">
+            <SurfaceCard variant="editorial" spotlight className="service-page-editorial-panel">
               <ul className="service-page-list">
                 {detail.audienceBullets.map((item) => (
                   <li key={item} className="service-page-list-item section-copy-light service-page-card-copy">
@@ -158,21 +158,21 @@ const ServicePage = () => {
         </Section>
 
         <Section tone="deep" className="service-page-section">
-          <div className="mb-10 md:mb-12">
-            <h2 className="service-page-section-title text-foreground">{detail.deliverablesTitle}</h2>
+          <div className="service-page-section-heading-wrap">
+            <h2 className="service-page-section-title service-page-section-title-deep">{detail.deliverablesTitle}</h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="service-page-deliverables-grid">
             {detail.deliverablesItems.map((item, index) => (
-              <SurfaceCard key={item.title} variant="deep" spotlight className="relative p-6 sm:p-7">
+              <SurfaceCard key={item.title} variant="deep" spotlight className="service-page-deliverable-card">
                 <span className="service-page-overline">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="service-page-card-title mt-4 text-white">
+                <h3 className="service-page-card-title-featured">
                   {item.title}
                 </h3>
                 {item.body ? (
-                  <p className="section-copy-dark copy-pretty service-page-card-copy mt-4">{item.body}</p>
+                  <p className="service-page-card-copy-block">{item.body}</p>
                 ) : null}
               </SurfaceCard>
             ))}
@@ -181,7 +181,7 @@ const ServicePage = () => {
 
         <Section tone="light" className="service-page-section">
           <div className="service-page-process-grid">
-            <div className="space-y-5">
+            <div className="service-page-section-stack">
               <h2 className="service-page-section-title">{detail.processTitle}</h2>
 
               {detail.processIntro.length > 0 ? (
@@ -200,12 +200,12 @@ const ServicePage = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+            <div className="service-page-steps-grid">
               {detail.processSteps.map((step, index) => (
-                <SurfaceCard key={step.title} variant="editorial" spotlight className="service-page-step-card p-5 sm:p-6">
+                <SurfaceCard key={step.title} variant="editorial" spotlight className="service-page-step-card service-page-step-panel">
                   <div className="service-page-step-grid">
                     <span className="service-page-step-number">{String(index + 1).padStart(2, "0")}.</span>
-                    <div className="space-y-3">
+                    <div className="service-page-step-copy">
                       <h3 className="service-page-card-title">
                         {step.title}
                       </h3>
@@ -222,8 +222,8 @@ const ServicePage = () => {
 
         <Section tone="deep" className="service-page-section">
           <div className="service-page-related-grid">
-            <SurfaceCard variant="deep" className="p-7 sm:p-8">
-              <h2 className="service-page-section-title mb-5 text-foreground">{detail.pricingTitle}</h2>
+            <SurfaceCard variant="deep" className="service-page-deep-panel">
+              <h2 className="service-page-section-title service-page-panel-title">{detail.pricingTitle}</h2>
               <p className="service-page-price">
                 {detail.pricingPrice}
               </p>
@@ -236,16 +236,16 @@ const ServicePage = () => {
               </div>
             </SurfaceCard>
 
-            <SurfaceCard variant="deep" className="p-7 sm:p-8">
-              <h2 className="service-page-section-title mb-5 text-foreground">{detail.closingTitle}</h2>
-              <div className="service-page-prose mb-8">
+            <SurfaceCard variant="deep" className="service-page-deep-panel">
+              <h2 className="service-page-section-title service-page-panel-title">{detail.closingTitle}</h2>
+              <div className="service-page-prose service-page-prose-spacious">
                 {detail.closingBody.map((paragraph) => (
                   <p key={paragraph} className="section-copy-dark copy-pretty service-page-copy">
                     {paragraph}
                   </p>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-4">
+              <div className="service-page-action-row">
                 <ActionLink href="#contact" onClick={handleContactClick}>
                   {detail.closingPrimaryCta}
                 </ActionLink>
@@ -258,10 +258,10 @@ const ServicePage = () => {
             </SurfaceCard>
           </div>
 
-          <div className="mt-6 xl:mt-8">
-            <SurfaceCard variant="deep" className="p-7 sm:p-8">
-              <p className="section-copy-dark copy-pretty service-page-copy mb-6">{copy.relatedBody}</p>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="service-page-related-shell">
+            <SurfaceCard variant="deep" className="service-page-deep-panel">
+              <p className="service-page-related-copy">{copy.relatedBody}</p>
+              <div className="service-page-related-list">
                 {related.map((item) => (
                   <Link
                     key={item.slug}
@@ -269,8 +269,8 @@ const ServicePage = () => {
                     className="service-page-related-card"
                   >
                     <p className="service-page-related-number">{item.num}</p>
-                    <h3 className="service-page-related-title text-white">{item.listName}</h3>
-                    <p className="section-copy-dark service-page-card-copy mt-3">{item.priceFrom}</p>
+                    <h3 className="service-page-related-title service-page-related-title-light">{item.listName}</h3>
+                    <p className="section-copy-dark service-page-card-copy service-page-related-price">{item.priceFrom}</p>
                   </Link>
                 ))}
               </div>

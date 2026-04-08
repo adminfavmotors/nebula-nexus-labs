@@ -418,7 +418,7 @@ describe("critical user flows", () => {
       expect(menuButton).toHaveAttribute("aria-expanded", "true");
     });
 
-    const mobileLinks = document.querySelectorAll(".header-mobile-link.translate-x-0.opacity-100");
+    const mobileLinks = document.querySelectorAll(".header-mobile-link.header-mobile-link-open");
     expect(mobileLinks).toHaveLength(4);
   });
 

@@ -15,7 +15,7 @@ const HowWeWork = () => {
       <SectionHeader
         tone="deep"
         title={
-          <Reveal as="span" delay={0.05} className="inline-block">
+          <Reveal as="span" delay={0.05} className="section-title-inline">
             {t.howWeWork.title}
           </Reveal>
         }
@@ -27,12 +27,12 @@ const HowWeWork = () => {
         }
       />
 
-      <div className="process-grid grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="process-grid">
         {t.howWeWork.steps.map((step, i) => (
           <Reveal as={SurfaceCard} key={i} variant="deep" className="process-card" delay={i * 0.12}>
             <div className="glow-orb section-orb section-orb-process-card" />
             <span className="process-step-number">{step.num}</span>
-            <h3 className="heading-balance measure-tight mb-2 mt-4 font-body font-semibold text-foreground">{step.title}</h3>
+            <h3 className="feature-card-title process-card-title">{step.title}</h3>
             <p className="section-copy-dark copy-pretty measure-card">{step.desc}</p>
           </Reveal>
         ))}

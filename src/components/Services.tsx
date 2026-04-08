@@ -15,7 +15,7 @@ const Services = () => {
         {t.services.title}
       </Reveal>
 
-      <div className="services-list-shell space-y-0">
+      <div className="services-list-shell">
         {services.map((service, i) => (
           <div key={i}>
             <div className="section-divider" />
@@ -38,7 +38,7 @@ const Services = () => {
               </span>
 
               <div className="icon-circle services-item-icon">
-                <ArrowRight size={16} className="text-primary transition-colors duration-300 group-hover:text-primary-foreground" />
+                <ArrowRight size={16} className="services-item-arrow" />
               </div>
             </Reveal>
           </div>

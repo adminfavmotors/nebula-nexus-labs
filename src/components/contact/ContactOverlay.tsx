@@ -135,8 +135,8 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
                 >
                   <div className="contact-overlay-content-stack">
                     <div className="contact-overlay-header">
-                      <div className="contact-overlay-copy-cluster space-y-3">
-                        <span className="hero-badge contact-overlay-eyebrow cursor-default">{copy.eyebrow}</span>
+                      <div className="contact-overlay-copy-cluster">
+                        <span className="hero-badge contact-overlay-eyebrow">{copy.eyebrow}</span>
                         <h2 id="contact-overlay-title" className="contact-overlay-title">
                           {copy.title}
                         </h2>

@@ -113,11 +113,11 @@ const CookieConsentBanner = ({ isBlocked = false }: CookieConsentBannerProps) =>
         <p className="cookie-consent-copy">
           {copy.body}
         </p>
-        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-          <ActionButton type="button" className="justify-center" onClick={() => updateConsent("granted")}>
+        <div className="cookie-consent-actions">
+          <ActionButton type="button" className="cookie-consent-button" onClick={() => updateConsent("granted")}>
             {copy.accept}
           </ActionButton>
-          <ActionButton type="button" variant="ghost" className="justify-center" onClick={() => updateConsent("denied")}>
+          <ActionButton type="button" variant="ghost" className="cookie-consent-button" onClick={() => updateConsent("denied")}>
             {copy.decline}
           </ActionButton>
           <Link

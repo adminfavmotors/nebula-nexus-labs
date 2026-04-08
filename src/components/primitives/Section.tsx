@@ -22,7 +22,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(function Section(
     <section
       ref={ref}
       className={cx(
-        "section-spacing scroll-mt-28 md:scroll-mt-24",
+        "section-spacing section-anchor-offset",
         deferRendering && "section-render-auto",
         toneClassMap[tone],
         className,
@@ -69,7 +69,7 @@ export function SectionHeader({
   className,
 }: SectionHeaderProps) {
   return (
-    <div className={cx("mb-12 flex flex-col items-start justify-between gap-6 md:mb-14 sm:flex-row sm:items-center sm:gap-8", className)}>
+    <div className={cx("section-header-shell", className)}>
       <SectionTitle tone={tone} className={titleClassName}>
         {title}
       </SectionTitle>

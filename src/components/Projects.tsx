@@ -8,19 +8,19 @@ const PortfolioShowcase = lazy(() => import("@/components/portfolio/PortfolioSho
 
 const ProjectsFallback = () => (
   <div className="projects-fallback" aria-hidden="true">
-    <div className="flex items-center justify-between gap-4">
-      <div className="h-4 w-28 rounded-full bg-primary/10" />
-      <div className="flex gap-3">
-        <div className="h-10 w-10 rounded-full bg-primary/10" />
-        <div className="h-10 w-10 rounded-full bg-primary/10" />
+    <div className="projects-fallback-header">
+      <div className="projects-fallback-bar" />
+      <div className="projects-fallback-nav">
+        <div className="projects-fallback-dot" />
+        <div className="projects-fallback-dot" />
       </div>
     </div>
 
-      <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {Array.from({ length: 3 }).map((_, index) => (
-          <div key={`projects-skeleton-${index}`} className="projects-fallback-card" />
-        ))}
-      </div>
+    <div className="projects-fallback-grid">
+      {Array.from({ length: 3 }).map((_, index) => (
+        <div key={`projects-skeleton-${index}`} className="projects-fallback-card" />
+      ))}
+    </div>
   </div>
 );
 
@@ -31,7 +31,7 @@ const Projects = () => {
     <Section id="projects" tone="light" className="section-light-showcase projects-stage">
       <SectionHeader
         tone="light"
-        title={<Reveal as="span" delay={0.05} className="inline-block">{t.projects.title}</Reveal>}
+        title={<Reveal as="span" delay={0.05} className="section-title-inline">{t.projects.title}</Reveal>}
         titleClassName="projects-title"
       />
 

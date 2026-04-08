@@ -45,7 +45,7 @@ const TrustStrip = () => {
                   delay={0.08 + index * 0.07}
                 >
                   <div className="trust-strip-icon">
-                    <Icon size={16} className="text-primary" />
+                    <Icon size={16} className="icon-circle-glyph" />
                   </div>
 
                   <div className="trust-strip-copy">

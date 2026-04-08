@@ -45,7 +45,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
   ref,
 ) {
   return (
-    <button ref={ref} type={type} className={cx("icon-circle hover:bg-primary/20", className)} {...props}>
+    <button ref={ref} type={type} className={cx("icon-circle icon-button", className)} {...props}>
       {children}
     </button>
   );

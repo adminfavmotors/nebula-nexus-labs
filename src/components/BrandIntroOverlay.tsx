@@ -50,10 +50,10 @@ const BrandIntroOverlay = ({ phase }: BrandIntroOverlayProps) => {
       tabIndex={-1}
       style={introMotionStyle}
     >
-      <p id="brand-intro-title" className="sr-only">
+      <p id="brand-intro-title" className="visually-hidden">
         {copy.title}
       </p>
-      <p id="brand-intro-description" className="sr-only">
+      <p id="brand-intro-description" className="visually-hidden">
         {copy.description}
       </p>
       <div className="brand-intro-backdrop" />

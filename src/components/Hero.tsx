@@ -17,24 +17,21 @@ const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
   const heroDelayStyle = (delayMs: number) => ({ animationDelay: `${delayMs}ms` });
 
   return (
-    <section id="home" className="hero-section relative flex min-h-screen items-center overflow-hidden max-md:min-h-0 max-md:items-start">
+    <section id="home" className="hero-section">
       <div className="hero-section-aurora" />
-      <div className="hero-section-mesh" />
       <div className="hero-section-grid" />
       <div className="brand-mark-motif brand-mark-motif-hero" aria-hidden="true" />
 
       <div className="glow-orb section-orb section-orb-hero-a" />
       <div className="glow-orb glow-orb-b section-orb section-orb-hero-b" />
-      <div className="glow-orb glow-orb-c section-orb section-orb-hero-c" />
-      <div className="hero-section-beam" />
 
       <div className="site-shell hero-layout hero-shell">
         <div className="hero-content-stack">
           <div
-            className={cx("hero-enter inline-flex", !introReady && "hero-enter-pending")}
+            className={cx("hero-enter hero-badge-shell", !introReady && "hero-enter-pending")}
             style={heroDelayStyle(heroDelays.badge)}
           >
-            <span className="hero-badge cursor-default">{t.hero.badge}</span>
+            <span className="hero-badge">{t.hero.badge}</span>
           </div>
 
           <div className="hero-copy-cluster">
@@ -42,7 +39,7 @@ const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
               {t.hero.words.map((word, i) => (
                 <span
                   key={i}
-                  className={cx("hero-enter-word block", !introReady && "hero-enter-word-pending")}
+                  className={cx("hero-enter-word hero-title-word", !introReady && "hero-enter-word-pending")}
                   style={heroDelayStyle(heroDelays.wordStart + i * heroDelays.wordStep)}
                 >
                   {i === 1 ? <span className="hero-title-accent">{word}</span> : word}
@@ -86,12 +83,10 @@ const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
             <div className="hero-visual-backplate" />
             <div className="hero-visual-ring" />
 
-            <div className="hero-visual-wrap hero-visual-wrap-square mt-2">
-              <div className="hero-card-glow" />
+            <div className="hero-visual-wrap hero-visual-wrap-square">
               <div className="hero-visual-shell">
                 <div className="hero-visual-rim" />
                 <div className="hero-visual-mask card-neon-border">
-                  <div className="hero-visual-grain" />
                   <img
                     src={workspaceImage}
                     srcSet={`${workspaceImageMobile} 640w, ${workspaceImage} 1024w`}
@@ -104,7 +99,6 @@ const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
                     decoding="async"
                     fetchpriority="high"
                   />
-                  <div className="hero-visual-sheen" />
                   <div className="hero-visual-vignette" />
                 </div>
               </div>

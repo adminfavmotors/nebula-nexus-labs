@@ -9,7 +9,7 @@ type SiteLayoutProps = {
 
 const SiteLayout = ({ children }: SiteLayoutProps) => {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-background">
+    <div className="site-layout-root">
       <Navbar />
       {children}
       <Footer />

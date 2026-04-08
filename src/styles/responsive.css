@@ -168,7 +168,7 @@
   .header-panel {
     gap: 0.75rem;
     padding-right: 0.85rem;
-    backdrop-filter: blur(10px) saturate(120%);
+    backdrop-filter: blur(calc(var(--shell-frost-blur) - 1px)) saturate(120%);
   }
 
   .brand-logo-prefix,
@@ -193,15 +193,10 @@
 }
 
 @media (max-width: 767px) {
-  .hero-section-mesh,
   .hero-section-grid,
-  .hero-section-beam,
   .glow-orb,
   .hero-visual-backplate,
-  .hero-visual-ring,
-  .hero-card-glow,
-  .hero-visual-grain,
-  .hero-visual-sheen {
+  .hero-visual-ring {
     display: none;
   }
 
@@ -292,7 +287,7 @@
   .hero-visual-backplate {
     inset: 10% 0 14%;
     border-radius: 1.45rem;
-    transform: rotate(-5deg);
+    transform: rotate(-3deg);
   }
 
   .hero-visual-ring {
@@ -301,7 +296,6 @@
 
   .hero-visual-shell {
     padding: 0.65rem;
-    animation: none;
   }
 
   .hero-visual-mask {
@@ -313,7 +307,7 @@
 
   .hero-visual-image {
     transform: none;
-    filter: saturate(0.9) contrast(1) brightness(0.92);
+    filter: saturate(0.95) contrast(1) brightness(0.94);
   }
 
   .hero-visual-vignette {

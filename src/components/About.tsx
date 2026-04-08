@@ -7,7 +7,7 @@ const About = () => {
 
   return (
     <Section id="about" tone="light" className="section-light-editorial">
-      <div className="about-layout mb-14 md:mb-16">
+      <div className="about-layout">
         <Reveal
           as={SectionTitle}
           tone="light"
@@ -20,10 +20,10 @@ const About = () => {
           <span>{t.about.titleLine2end} </span>
           <span>{t.about.titleLine3}</span>
         </Reveal>
-        <div className="about-theses flex w-full flex-col gap-5 self-center md:gap-6">
+        <div className="about-theses">
           {t.about.theses.map((item, i) => (
             <Reveal key={i} direction="left" delay={0.15 + i * 0.15}>
-              <div className="about-thesis-card flex items-start gap-4 md:gap-5">
+              <div className="about-thesis-card">
                 <span className="about-thesis-number">
                   {item.num}
                 </span>
