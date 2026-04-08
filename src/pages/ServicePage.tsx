@@ -67,9 +67,7 @@ const ServicePage = () => {
   return (
     <SiteLayout>
       <main className="service-page-root">
-        <section className="service-page-hero service-page-hero-surface">
-          <div className="service-page-hero-aurora" />
-          <div className="service-page-hero-grid-overlay" />
+        <section className="hero-section service-page-hero service-page-hero-surface">
           <div className="glow-orb section-orb section-orb-service-a" />
           <div className="glow-orb glow-orb-b section-orb section-orb-service-b" />
 
@@ -82,7 +80,7 @@ const ServicePage = () => {
               <Link to="/#services" className="service-page-breadcrumb-link">
                 {ui.secondaryCta}
               </Link>
-              </div>
+            </div>
 
             <div className="service-page-hero-shell service-page-hero-grid">
               <div className="service-page-hero-content">

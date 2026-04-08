@@ -1,32 +1,33 @@
 @media (min-width: 1024px) {
   .service-page-hero-shell {
-    grid-template-columns: minmax(0, 42rem) minmax(18.5rem, 23rem);
-    gap: clamp(2rem, 3.2vw, 3rem);
+    grid-template-columns: minmax(0, 44rem) minmax(20rem, 24.5rem);
+    justify-content: space-between;
+    gap: clamp(2.3rem, 3.6vw, 3.6rem);
   }
 
   .service-page-summary-card {
     align-self: start;
-    margin-top: 0.15rem;
-    max-width: 23rem;
+    margin-top: 0.3rem;
+    max-width: 24.5rem;
   }
 }
 
 @media (min-width: 1440px) {
   .service-page-hero-title {
-    max-width: 13.8ch;
+    max-width: 13.9ch;
   }
 }
 
 @media (min-width: 1920px) {
   .service-page-hero-title {
-    max-width: 14ch;
+    max-width: 14.2ch;
   }
 }
 
 @media (max-width: 767px) {
   .service-page-hero-frame {
-    padding-top: 5.75rem;
-    padding-bottom: 2rem;
+    padding-top: 5.85rem;
+    padding-bottom: 2.35rem;
   }
 
   .service-page-breadcrumbs {
@@ -38,9 +39,9 @@
   }
 
   .service-page-hero-title {
-    max-width: 11.4ch;
-    font-size: clamp(1.9rem, 7.1vw, 2.6rem);
-    line-height: 1.05;
+    max-width: 11.2ch;
+    font-size: clamp(2rem, 7.8vw, 2.95rem);
+    line-height: 1.03;
     letter-spacing: -0.03em;
   }
 

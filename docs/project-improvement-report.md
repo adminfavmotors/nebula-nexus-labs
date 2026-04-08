@@ -270,6 +270,29 @@ Key files:
 - [service-page.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page.css)
 - [service-page-responsive.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page-responsive.css)
 
+Outcome note:
+
+- This iteration reduced whitespace, but it also proved that fully decoupling the service hero from the homepage hero surface weakened brand consistency and overall composition quality. The next pass corrected that regression instead of extending it.
+
+### 13. Service hero dependency correction
+
+Completed:
+
+- Re-ran the analysis after the previous service-hero pass and confirmed that the real regression came from introducing a parallel hero surface rather than from the spacing changes alone.
+- Restored the shared homepage `hero-section` surface for service pages so the first screen keeps the same brand-level visual language as the rest of the site.
+- Removed the local service-only hero clone and kept service-specific behavior only where it belongs: grid proportions, text measure, sidebar width, and vertical rhythm.
+- Rebalanced the service hero against three content ranges:
+  `strona-wizytowka`,
+  `strona-firmowa`,
+  `strona-premium-dla-wymagajacych-firm`.
+- Verified that the current version keeps the service pages denser and more editorial without fragmenting the shared hero system.
+
+Key files:
+
+- [ServicePage.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/pages/ServicePage.tsx)
+- [service-page.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page.css)
+- [service-page-responsive.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page-responsive.css)
+
 ## Verification Snapshot
 
 Verified on 2026-04-08:

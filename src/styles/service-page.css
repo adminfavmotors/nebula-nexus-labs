@@ -1,51 +1,6 @@
-  .service-page-hero {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    background:
-      radial-gradient(circle at top right, rgba(42, 104, 255, 0.2), transparent 30%),
-      radial-gradient(circle at 14% 18%, rgba(88, 142, 255, 0.14), transparent 26%),
-      linear-gradient(180deg, #02081f 0%, #050d2e 54%, #07133b 100%);
-  }
-
-  .service-page-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(circle at 8% 12%, rgba(98, 152, 255, 0.12), transparent 22%),
-      radial-gradient(circle at 84% 10%, rgba(0, 89, 255, 0.14), transparent 18%),
-      linear-gradient(180deg, rgba(5, 15, 46, 0.08), rgba(5, 15, 46, 0));
-    opacity: 0.88;
-  }
-
   .service-page-hero-surface {
     min-height: auto;
-  }
-
-  .service-page-hero-aurora,
-  .service-page-hero-grid-overlay {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .service-page-hero-aurora {
-    background:
-      radial-gradient(circle at 16% 22%, rgba(42, 104, 255, 0.18), transparent 24%),
-      radial-gradient(circle at 78% 16%, rgba(110, 163, 255, 0.1), transparent 18%),
-      radial-gradient(circle at 64% 76%, rgba(0, 89, 255, 0.1), transparent 26%);
-    opacity: 0.46;
-  }
-
-  .service-page-hero-grid-overlay {
-    background-image:
-      linear-gradient(rgba(138, 177, 255, 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(138, 177, 255, 0.045) 1px, transparent 1px);
-    background-size: 120px 120px;
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.22), transparent 84%);
-    opacity: 0.16;
+    align-items: stretch;
   }
 
   .service-page-hero-frame {
@@ -53,9 +8,9 @@
     z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: clamp(1.5rem, 2.6vw, 2.3rem);
-    padding-top: clamp(6rem, 6.8vw, 6.9rem);
-    padding-bottom: clamp(2.3rem, 3.8vw, 3.2rem);
+    gap: clamp(1.15rem, 2vw, 1.7rem);
+    padding-top: clamp(6rem, 7vw, 7.1rem);
+    padding-bottom: clamp(2.75rem, 4.4vw, 3.7rem);
   }
 
   .service-page-breadcrumbs {
@@ -63,7 +18,6 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 0.85rem;
-    margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
     color: rgba(232, 240, 255, 0.84);
   }
 
@@ -91,7 +45,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     align-items: start;
-    gap: clamp(2rem, 3.2vw, 2.8rem);
+    gap: clamp(2.1rem, 3vw, 3rem);
   }
 
   .service-page-hero-shell {
@@ -102,8 +56,8 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 41rem;
-    gap: 1.15rem;
+    max-width: 42rem;
+    gap: 1.2rem;
   }
 
   .service-page-tag-row,
@@ -132,24 +86,24 @@
   }
 
   .service-page-summary-panel {
-    padding: 1.55rem;
+    padding: 1.7rem;
   }
 
   .service-page-hero-title {
-    max-width: 13.2ch;
+    max-width: 13.5ch;
     color: hsl(var(--foreground));
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(2.25rem, 3.5vw, 3.8rem);
+    font-size: clamp(2.35rem, 3.75vw, 4rem);
     font-weight: 700;
-    line-height: 1.04;
-    letter-spacing: -0.042em;
+    line-height: 1.03;
+    letter-spacing: -0.044em;
     text-wrap: balance;
   }
 
   .service-page-hero-copy {
-    max-width: 41ch;
+    max-width: 42ch;
     font-size: clamp(1rem, 1.04vw, 1.1rem);
-    line-height: 1.68;
+    line-height: 1.7;
   }
 
   .service-page-section {
@@ -235,17 +189,17 @@
   }
 
   .service-page-summary-price {
-    margin-bottom: 1.35rem;
+    margin-bottom: 1.45rem;
     color: white;
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(1.4rem, 1.45vw, 1.72rem);
+    font-size: clamp(1.48rem, 1.65vw, 1.82rem);
     font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.028em;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
   }
 
 .service-page-summary-divider {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.4rem;
 }
 
   .service-page-step-card {
@@ -364,12 +318,12 @@
   }
 
   .service-page-summary-title {
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.95rem;
     color: hsl(var(--foreground));
-    max-width: 11.8ch;
-    font-size: clamp(1.5rem, 1.85vw, 1.95rem);
-    line-height: 1.08;
-    letter-spacing: -0.03em;
+    max-width: 11.6ch;
+    font-size: clamp(1.58rem, 1.95vw, 2.08rem);
+    line-height: 1.06;
+    letter-spacing: -0.034em;
     text-wrap: balance;
   }
 
