@@ -214,6 +214,26 @@ Key files:
 - [index.html](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/index.html)
 - [.htaccess](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/public/.htaccess)
 
+### 10. Service page hero typography rebalance
+
+Completed:
+
+- Diagnosed the visual issue as a service-page typography contract problem, not as a single broken headline.
+- Reduced the hero display scale so long service titles stop collapsing into a narrow vertical stack.
+- Expanded the hero headline measure and tightened supporting copy measure so the left column feels intentional instead of stretched and uneven.
+- Gave the summary card its own smaller heading and price scale instead of reusing a near section-title size inside a compact sidebar.
+- Rebalanced the desktop hero grid so the main copy column and summary panel feel visually related across short, medium and long service titles.
+- Adjusted the mobile hero title scale so narrow screens keep better rhythm without oversized line breaks.
+- Verified the result visually on representative service routes with short, medium and long hero titles:
+  `strona-wizytowka`,
+  `strona-firmowa`,
+  `strona-premium-dla-wymagajacych-firm`.
+
+Key files:
+
+- [service-page.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page.css)
+- [service-page-responsive.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page-responsive.css)
+
 ## Verification Snapshot
 
 Verified on 2026-04-08:
@@ -284,6 +304,8 @@ Official references used across the completed work:
 - [Google Search Central: Meta tags and attributes that Google supports](https://developers.google.com/search/docs/crawling-indexing/special-tags)
 - [Google Search Central: Control your snippets in search results](https://developers.google.com/search/docs/appearance/snippet)
 - [React DOM Client: `hydrateRoot`](https://react.dev/reference/react-dom/client/hydrateRoot)
+- [web.dev Typography](https://web.dev/learn/design/typography)
+- [MDN: text-wrap](https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap)
 
 Forum/community references used as secondary confirmation:
 

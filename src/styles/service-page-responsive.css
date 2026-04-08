@@ -1,26 +1,26 @@
 @media (min-width: 1024px) {
   .service-page-hero-shell {
-    grid-template-columns: minmax(0, 42rem) minmax(20rem, 28rem);
+    grid-template-columns: minmax(0, 46rem) minmax(21rem, 26rem);
     justify-content: space-between;
-    gap: 3rem;
+    gap: clamp(2.5rem, 4vw, 4.5rem);
   }
 
   .service-page-summary-card {
     align-self: start;
-    margin-top: 0.5rem;
-    max-width: 28rem;
+    margin-top: 0.35rem;
+    max-width: 26rem;
   }
 }
 
 @media (min-width: 1440px) {
   .service-page-hero-title {
-    max-width: 11.6ch;
+    max-width: 14ch;
   }
 }
 
 @media (min-width: 1920px) {
   .service-page-hero-title {
-    max-width: 12ch;
+    max-width: 14.4ch;
   }
 }
 
@@ -39,8 +39,8 @@
   }
 
   .service-page-hero-title {
-    max-width: 9.5ch;
-    font-size: clamp(2rem, 9.8vw, 3.15rem);
+    max-width: 11.2ch;
+    font-size: clamp(1.95rem, 8vw, 2.85rem);
     line-height: 1.02;
     letter-spacing: -0.03em;
   }

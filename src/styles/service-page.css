@@ -55,7 +55,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 44rem;
+    max-width: 40.5rem;
     gap: 1.25rem;
   }
 
@@ -88,19 +88,19 @@
     padding: 1.75rem;
   }
 
-.service-page-hero-title {
-  max-width: 11.2ch;
-  color: hsl(var(--foreground));
-  font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(2.7rem, 4.8vw, 4.9rem);
+  .service-page-hero-title {
+    max-width: 13.6ch;
+    color: hsl(var(--foreground));
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(2.5rem, 3.9vw, 4.15rem);
     font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.048em;
+    line-height: 1.02;
+    letter-spacing: -0.046em;
     text-wrap: balance;
   }
 
   .service-page-hero-copy {
-    max-width: 47ch;
+    max-width: 44ch;
     font-size: clamp(1rem, 1.04vw, 1.1rem);
     line-height: 1.72;
   }
@@ -187,15 +187,15 @@
     text-transform: uppercase;
   }
 
-.service-page-summary-price {
-  margin-bottom: 1.5rem;
-  color: white;
+  .service-page-summary-price {
+    margin-bottom: 1.5rem;
+    color: white;
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(1.78rem, 2.2vw, 2.15rem);
+    font-size: clamp(1.55rem, 1.8vw, 1.95rem);
     font-weight: 700;
-    line-height: 1.05;
-  letter-spacing: -0.04em;
-}
+    line-height: 1.08;
+    letter-spacing: -0.032em;
+  }
 
 .service-page-summary-divider {
   margin-bottom: 1.5rem;
@@ -319,6 +319,11 @@
   .service-page-summary-title {
     margin-bottom: 1rem;
     color: hsl(var(--foreground));
+    max-width: 11.4ch;
+    font-size: clamp(1.68rem, 2.15vw, 2.35rem);
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
   }
 
   .service-page-audience-grid {
