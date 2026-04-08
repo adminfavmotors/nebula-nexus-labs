@@ -9,8 +9,8 @@ import NotFound from "@/pages/NotFound";
 import { useI18n } from "@/lib/i18n";
 import { getCanonicalServiceSlug, getServiceCatalog, getServiceBySlug, getServicePageUi } from "@/lib/service-pages";
 import { getServicePageDetail } from "@/lib/service-page-details";
+import { getServicePageSeo } from "@/lib/seo-routes";
 import { usePageSeo } from "@/lib/seo";
-import { getServicePageStructuredData } from "@/lib/service-page-seo";
 import { useContactOverlay } from "@/components/contact/contact-overlay-context";
 import "@/styles/service-page.css";
 import "@/styles/service-page-responsive.css";
@@ -38,20 +38,16 @@ const ServicePage = () => {
   const ui = getServicePageUi(locale);
   const copy = pageCopy[locale];
   const { openContactOverlay } = useContactOverlay();
-  const pagePath = `/uslugi/${canonicalSlug ?? slug}`;
+  const seo =
+    getServicePageSeo(locale, canonicalSlug ?? slug) ??
+    {
+      title: "NODE48",
+      description: "",
+      path: `/uslugi/${canonicalSlug ?? slug}`,
+      robots: "noindex,nofollow" as const,
+    };
 
-  usePageSeo({
-    title: detail?.metaTitle ?? service?.metaTitle ?? "NODE48",
-    description: detail?.metaDescription ?? service?.metaDescription ?? "",
-    path: pagePath,
-    structuredData: getServicePageStructuredData({
-      locale,
-      slug,
-      serviceName: service?.listName ?? "NODE48",
-      title: detail?.metaTitle ?? service?.metaTitle ?? "NODE48",
-      description: detail?.metaDescription ?? service?.metaDescription ?? "",
-    }),
-  });
+  usePageSeo(seo);
 
   if (canonicalSlug && canonicalSlug !== slug) {
     return <Navigate to={`/uslugi/${canonicalSlug}`} replace />;

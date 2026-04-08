@@ -1,15 +1,26 @@
 import { useEffect } from "react";
 import { siteConfig } from "@/lib/site-config";
 
-type SeoOptions = {
+export type StructuredDataEntry = {
+  id: string;
+  schema: Record<string, unknown>;
+};
+
+export type PageSeo = {
   title: string;
   description: string;
   path: string;
   robots?: string;
-  structuredData?: Array<{
-    id: string;
-    schema: Record<string, unknown>;
-  }>;
+  structuredData?: StructuredDataEntry[];
+};
+
+export type SeoSnapshot = {
+  title: string;
+  description: string;
+  path: string;
+  canonicalUrl: string;
+  robots: string;
+  structuredData: StructuredDataEntry[];
 };
 
 function upsertMeta(selector: string, attributes: Record<string, string>) {
@@ -43,7 +54,7 @@ function upsertCanonical(href: string) {
   link.href = href;
 }
 
-function syncStructuredData(structuredData: SeoOptions["structuredData"] = []) {
+function syncStructuredData(structuredData: StructuredDataEntry[] = []) {
   const managedSelector = 'script[type="application/ld+json"][data-managed-structured-data="true"]';
 
   document.head.querySelectorAll(managedSelector).forEach((node) => node.remove());
@@ -58,28 +69,86 @@ function syncStructuredData(structuredData: SeoOptions["structuredData"] = []) {
   });
 }
 
-export function usePageSeo({ title, description, path, robots = "index,follow", structuredData = [] }: SeoOptions) {
-  const structuredDataSignature = JSON.stringify(structuredData);
+function escapeHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function escapeAttribute(value: string) {
+  return escapeHtml(value).replaceAll('"', "&quot;");
+}
+
+export function createSeoSnapshot({
+  title,
+  description,
+  path,
+  robots = "index,follow",
+  structuredData = [],
+}: PageSeo): SeoSnapshot {
+  return {
+    title,
+    description,
+    path,
+    canonicalUrl: new URL(path, siteConfig.siteUrl).toString(),
+    robots,
+    structuredData,
+  };
+}
+
+export function createSeoHeadMarkup(snapshot: SeoSnapshot) {
+  const tags = [
+    `<title>${escapeHtml(snapshot.title)}</title>`,
+    `<meta name="description" content="${escapeAttribute(snapshot.description)}" />`,
+    `<link rel="canonical" href="${escapeAttribute(snapshot.canonicalUrl)}" />`,
+    `<meta name="robots" content="${escapeAttribute(snapshot.robots)}" />`,
+    `<meta property="og:type" content="website" />`,
+    `<meta property="og:title" content="${escapeAttribute(snapshot.title)}" />`,
+    `<meta property="og:description" content="${escapeAttribute(snapshot.description)}" />`,
+    `<meta property="og:url" content="${escapeAttribute(snapshot.canonicalUrl)}" />`,
+    `<meta name="twitter:title" content="${escapeAttribute(snapshot.title)}" />`,
+    `<meta name="twitter:description" content="${escapeAttribute(snapshot.description)}" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
+  ];
+
+  for (const { id, schema } of snapshot.structuredData) {
+    const serializedSchema = JSON.stringify(schema).replaceAll("<", "\\u003c");
+
+    tags.push(
+      `<script type="application/ld+json" data-managed-structured-data="true" data-structured-data-id="${escapeAttribute(id)}">${serializedSchema}</script>`,
+    );
+  }
+
+  return tags.join("\n    ");
+}
+
+export function applySeoSnapshot(snapshot: SeoSnapshot) {
+  document.title = snapshot.title;
+  upsertCanonical(snapshot.canonicalUrl);
+  upsertMeta('meta[name="description"]', { name: "description", content: snapshot.description });
+  upsertMeta('meta[property="og:title"]', { property: "og:title", content: snapshot.title });
+  upsertMeta('meta[property="og:description"]', { property: "og:description", content: snapshot.description });
+  upsertMeta('meta[property="og:url"]', { property: "og:url", content: snapshot.canonicalUrl });
+  upsertMeta('meta[property="og:type"]', { property: "og:type", content: "website" });
+  upsertMeta('meta[name="twitter:title"]', { name: "twitter:title", content: snapshot.title });
+  upsertMeta('meta[name="twitter:description"]', { name: "twitter:description", content: snapshot.description });
+  upsertMeta('meta[name="twitter:card"]', { name: "twitter:card", content: "summary_large_image" });
+  upsertMeta('meta[name="robots"]', { name: "robots", content: snapshot.robots });
+  syncStructuredData(snapshot.structuredData);
+}
+
+export function usePageSeo(input: PageSeo) {
+  const snapshot = createSeoSnapshot(input);
+  const snapshotSignature = JSON.stringify(snapshot);
 
   useEffect(() => {
-    const canonicalUrl = new URL(path, siteConfig.siteUrl).toString();
-    const normalizedStructuredData = JSON.parse(structuredDataSignature) as NonNullable<SeoOptions["structuredData"]>;
+    const normalizedSnapshot = JSON.parse(snapshotSignature) as SeoSnapshot;
 
-    document.title = title;
-    upsertCanonical(canonicalUrl);
-    upsertMeta('meta[name="description"]', { name: "description", content: description });
-    upsertMeta('meta[property="og:title"]', { property: "og:title", content: title });
-    upsertMeta('meta[property="og:description"]', { property: "og:description", content: description });
-    upsertMeta('meta[property="og:url"]', { property: "og:url", content: canonicalUrl });
-    upsertMeta('meta[property="og:type"]', { property: "og:type", content: "website" });
-    upsertMeta('meta[name="twitter:title"]', { name: "twitter:title", content: title });
-    upsertMeta('meta[name="twitter:description"]', { name: "twitter:description", content: description });
-    upsertMeta('meta[name="twitter:card"]', { name: "twitter:card", content: "summary_large_image" });
-    upsertMeta('meta[name="robots"]', { name: "robots", content: robots });
-    syncStructuredData(normalizedStructuredData);
+    applySeoSnapshot(normalizedSnapshot);
 
     return () => {
       syncStructuredData([]);
     };
-  }, [description, path, robots, structuredDataSignature, title]);
+  }, [snapshotSignature]);
 }

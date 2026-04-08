@@ -10,6 +10,7 @@ import FAQ from "@/components/FAQ";
 import ContactForm from "@/components/ContactForm";
 import CTASection from "@/components/CTASection";
 import { useI18n } from "@/lib/i18n";
+import { getHomePageSeo } from "@/lib/seo-routes";
 import { usePageSeo } from "@/lib/seo";
 
 type IndexProps = {
@@ -18,13 +19,9 @@ type IndexProps = {
 };
 
 const Index = ({ heroReady = true, useIntroTimings = false }: IndexProps) => {
-  const { t } = useI18n();
+  const { locale } = useI18n();
 
-  usePageSeo({
-    title: t.meta.title,
-    description: t.meta.description,
-    path: "/",
-  });
+  usePageSeo(getHomePageSeo(locale));
 
   return (
     <SiteLayout>

@@ -185,6 +185,35 @@ Key files:
 - [LegalDocumentPage.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/legal/LegalDocumentPage.tsx)
 - [index.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/index.css)
 
+### 9. SEO and indexing contract rebuild
+
+Completed:
+
+- Diagnosed the real indexing problem as a delivery-model issue, not a missing-tag issue:
+  live service and legal URLs were returning the same client-only shell with homepage metadata and an empty `#root` before JavaScript.
+- Replaced route-level ad hoc metadata with shared SEO data functions used by both runtime and build-time generation.
+- Moved legal pages away from manual `document.title` mutations and onto the same SEO contract as homepage and service pages.
+- Added build-time prerender for all indexed URLs:
+  homepage,
+  canonical service pages,
+  privacy policy,
+  cookie policy.
+- Rebuilt `sitemap.xml` from the same indexed-route manifest instead of maintaining it manually.
+- Updated the client bootstrap to hydrate prerendered HTML only when the prerendered state actually matches client state; otherwise it falls back to a clean client render.
+- Extended Apache routing so clean URLs can resolve to prerendered `.../index.html` files without relying on trailing-slash redirects.
+
+Key files:
+
+- [seo.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/seo.ts)
+- [seo-routes.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/seo-routes.ts)
+- [render-app.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/prerender/render-app.tsx)
+- [PrerenderedApp.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/prerender/PrerenderedApp.tsx)
+- [generate-sitemap.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/scripts/generate-sitemap.ts)
+- [prerender.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/scripts/prerender.ts)
+- [main.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/main.tsx)
+- [index.html](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/index.html)
+- [.htaccess](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/public/.htaccess)
+
 ## Verification Snapshot
 
 Verified on 2026-04-08:
@@ -195,10 +224,10 @@ Verified on 2026-04-08:
 - `npm run test` passed
 - `npm run build` passed
 
-Current build snapshot after the latest typography cleanup:
+Current build snapshot after the SEO/prerender rebuild:
 
-- main JS: `257.72 kB` raw / `84.22 kB` gzip
-- main CSS: `76.24 kB` raw / `15.19 kB` gzip
+- main JS: `282.37 kB` raw / `93.25 kB` gzip
+- main CSS: `76.58 kB` raw / `15.26 kB` gzip
 
 ## Remaining Backlog
 
@@ -224,6 +253,10 @@ Priority order for the next steps:
    Goal:
    keep page-specific text contracts independent from homepage layout assumptions.
 
+6. Monitor indexation after deployment.
+   Goal:
+   confirm in Search Console that the prerendered service/legal URLs begin receiving real crawls and selected canonicals match the clean route URLs.
+
 ## Sources Used So Far
 
 Official references used across the completed work:
@@ -248,6 +281,9 @@ Official references used across the completed work:
 - [Tailwind: Functions and directives](https://tailwindcss.com/docs/functions-and-directives)
 - [React Router future flags](https://reactrouter.com/v6/upgrading/future)
 - [update-browserslist-db README](https://github.com/browserslist/update-db#readme)
+- [Google Search Central: Meta tags and attributes that Google supports](https://developers.google.com/search/docs/crawling-indexing/special-tags)
+- [Google Search Central: Control your snippets in search results](https://developers.google.com/search/docs/appearance/snippet)
+- [React DOM Client: `hydrateRoot`](https://react.dev/reference/react-dom/client/hydrateRoot)
 
 Forum/community references used as secondary confirmation:
 
@@ -258,6 +294,7 @@ Forum/community references used as secondary confirmation:
 - [Stack Overflow: backdrop-filter slow on Android Chrome](https://stackoverflow.com/questions/74035280/css-backdrop-filter-slow-on-android-chrome)
 - [Stack Overflow: getBoundingClientRect glitch discussion](https://stackoverflow.com/questions/73786110/what-causes-the-glitch-in-getboundingclientrect)
 - [Tailwind discussion: repeated classes and extraction](https://github.com/tailwindlabs/tailwindcss/discussions/15524)
+- [Webmasters Stack Exchange: Google will render but not index my SPA site](https://webmasters.stackexchange.com/questions/115435/google-will-render-but-not-index-my-spa-site)
 
 ## Update Template
 

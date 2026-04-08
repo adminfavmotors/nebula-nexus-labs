@@ -493,3 +493,7 @@ export function getServiceBySlug(locale: Locale, slug: string) {
 export function getCanonicalServiceSlug(slug: string) {
   return findServiceEntryBySlug(slug)?.slug ?? null;
 }
+
+export function getCanonicalServiceSlugs() {
+  return serviceEntries.map((entry) => entry.slug);
+}
