@@ -34,7 +34,14 @@ export function loadGoogleTagManager() {
   if (!document.getElementById(GTM_NOSCRIPT_ID)) {
     const noscript = document.createElement("noscript");
     noscript.id = GTM_NOSCRIPT_ID;
-    noscript.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.googletagmanager.com/ns.html?id=${gtmId}`;
+    iframe.height = "0";
+    iframe.width = "0";
+    iframe.hidden = true;
+    iframe.setAttribute("aria-hidden", "true");
+    iframe.tabIndex = -1;
+    noscript.appendChild(iframe);
     document.body.prepend(noscript);
   }
 }

@@ -308,6 +308,83 @@ Key files:
 - [service-page.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page.css)
 - [service-page-responsive.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/service-page-responsive.css)
 
+### 15. Contact form provider-side spam protection restore
+
+Completed:
+
+- Revisited the contact form security review and confirmed that the biggest gap was not input validation itself, but the fact that the provider-side anti-spam layer had been explicitly disabled.
+- Removed the `_captcha=false` override from the FormSubmit AJAX payload so the external form provider can enforce its own reCAPTCHA and abuse filtering again.
+- Kept the existing client-side heuristics only as a preflight UX filter, not as the sole anti-spam barrier.
+- Extended the form submission test so the request contract now verifies that provider-side protection is no longer disabled.
+
+Key files:
+
+- [ContactFormPanel.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/contact/ContactFormPanel.tsx)
+- [app.test.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/test/app.test.tsx)
+
+### 16. CSP hardening and analytics sink cleanup
+
+Completed:
+
+- Rebuilt the previous minimal CSP into an actual fetch policy tied to the app's real runtime dependencies.
+- Added explicit directives for `default-src`, `script-src`, `connect-src`, `frame-src`, `img-src`, `style-src`, `font-src`, and `manifest-src` instead of relying on a mostly empty policy shell.
+- Constrained third-party runtime sources to the current analytics and form-delivery providers:
+  `googletagmanager.com`,
+  `google-analytics.com`,
+  `formsubmit.co`.
+- Added `upgrade-insecure-requests` so mixed-content downgrades are rejected at policy level.
+- Removed the `innerHTML` GTM noscript injection path and replaced it with DOM-based iframe creation to reduce HTML injection surface and make the analytics bootstrap more CSP-friendly.
+
+Key files:
+
+- [public/.htaccess](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/public/.htaccess)
+- [analytics.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/analytics.ts)
+
+### 17. HTTPS enforcement and HSTS rollout
+
+Completed:
+
+- Added an explicit permanent redirect from insecure `http` requests to `https` before route rewrites and SPA fallbacks.
+- Added `Strict-Transport-Security` with a 1-year `max-age`, scoped so it is emitted only for HTTPS responses.
+- Kept the rollout conservative by not enabling `includeSubDomains` or `preload` yet, because those should only be used after a verified subdomain inventory and HTTPS-only confirmation across the domain surface.
+- Made the redirect logic tolerant of proxy setups that already pass `X-Forwarded-Proto: https`.
+
+Key files:
+
+- [public/.htaccess](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/public/.htaccess)
+
+### 18. Client-side email routing cleanup
+
+Completed:
+
+- Removed the hidden secondary recipient from the public client configuration.
+- Deleted the `_cc` field from the FormSubmit payload so the browser no longer exposes or controls duplicate recipient routing.
+- Reduced the contact form to a single explicit public contact route instead of shipping a second private mailbox in the frontend bundle.
+- Extended the form submission test so the request contract now guarantees that no `_cc` routing field is sent.
+
+Key files:
+
+- [site-config.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/site-config.ts)
+- [ContactFormPanel.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/contact/ContactFormPanel.tsx)
+- [app.test.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/test/app.test.tsx)
+
+### 19. Dependency audit cleanup and toolchain refresh
+
+Completed:
+
+- Ran a full dependency audit pass and first applied the non-breaking security updates available through the current major versions.
+- Then completed the remaining security work by upgrading the dev toolchain to versions that close the lingering `vite/esbuild` and `jsdom/http-proxy-agent` advisories.
+- Upgraded the stack to `Vite 8`, `Vitest 4`, and `jsdom 29`, then revalidated linting, tests, build, and text integrity.
+- Followed the new Vite 8 recommendation and replaced `@vitejs/plugin-react-swc` with `@vitejs/plugin-react`, because the project does not use custom SWC plugins and the new toolchain explicitly warns against the previous setup.
+- Brought the repository to a clean `npm audit` state with `0 vulnerabilities`.
+
+Key files:
+
+- [package.json](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/package.json)
+- [package-lock.json](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/package-lock.json)
+- [vite.config.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/vite.config.ts)
+- [vitest.config.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/vitest.config.ts)
+
 ## Verification Snapshot
 
 Verified on 2026-04-08:

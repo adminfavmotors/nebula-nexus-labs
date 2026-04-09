@@ -545,6 +545,15 @@ describe("critical user flows", () => {
       );
     });
 
+    const requestConfig = fetchMock.mock.calls[0]?.[1];
+    const submittedFormData = requestConfig?.body as FormData;
+
+    expect(submittedFormData.get("_replyto")).toBe("jan@example.com");
+    expect(submittedFormData.get("_template")).toBe("table");
+    expect(submittedFormData.get("_captcha")).toBeNull();
+    expect(submittedFormData.get("_cc")).toBeNull();
+    expect(submittedFormData.get("_honey")).toBe("");
+
     expect(await screen.findByRole("status")).toBeInTheDocument();
   });
 

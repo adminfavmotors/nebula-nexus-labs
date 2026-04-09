@@ -46,7 +46,19 @@ For a static site deployed from GitHub Actions in 2026, the reliable rollback pa
 - create immutable production tags after every successful release
 - make rollback a redeploy of a known good Git ref
 
-That approach is especially important for FTP-based hosting, where the platform itself usually does not provide instant version rollback.
+That approach is especially important for shared hosting, where the platform itself usually does not provide instant version rollback.
+
+## Transport Security Requirement
+
+Production deploys now assume `SFTP` over SSH, not plain `FTP`.
+
+Before the workflow can deploy successfully:
+
+1. Enable `SSH` access for the hosting account in the SEOHOST customer panel.
+2. Keep using the main hosting account credentials already stored in GitHub Actions secrets.
+3. Add a production environment secret named `SEOHOST_SSH_KNOWN_HOSTS` that contains the verified `known_hosts` entry for `h79.seohost.pl`.
+
+This keeps deployment traffic encrypted in transit and prevents the runner from silently trusting a different SSH host key.
 
 ## Optional Hardening In GitHub Settings
 
