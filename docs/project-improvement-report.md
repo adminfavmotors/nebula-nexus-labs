@@ -456,10 +456,27 @@ Key files:
 - [vite.config.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/vite.config.ts)
 - [dist/index.html](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/dist/index.html)
 
+### 23. CI Node runtime correction
+
+Completed:
+
+- Investigated the failing `Deploy SEOHOST` GitHub Actions run instead of treating it as a deploy transport problem.
+- Confirmed the failure point was `npm ci`, not SFTP or SSH deployment.
+- Reproduced the underlying issue locally by running install under `Node.js 20.18.1` with strict engine checks enabled.
+- Identified the real root cause: after the Vite 8 toolchain upgrade, the dependency tree now requires `Node.js 20.19+` or `22.12+`, while the workflow still requested the generic `20` line.
+- Fixed the reusable deployment workflow by moving it to `Node.js 22`.
+- Added an explicit `engines.node` contract to `package.json` so the supported runtime now lives in the repository itself instead of only in CI configuration.
+
+Key files:
+
+- [_deploy-seohost-reusable.yml](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.github/workflows/_deploy-seohost-reusable.yml)
+- [package.json](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/package.json)
+
 ## Verification Snapshot
 
 Verified on 2026-04-09:
 
+- `npm ci` passed
 - `npm run check:text` passed
 - `npm run check:styles` passed
 - `npm run lint` passed
