@@ -385,6 +385,39 @@ Key files:
 - [vite.config.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/vite.config.ts)
 - [vitest.config.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/vitest.config.ts)
 
+### 20. Permissions-Policy hardening
+
+Completed:
+
+- Audited the codebase for browser capability APIs before changing the header contract.
+- Confirmed the app does not rely on privileged features such as camera, microphone, geolocation, payments, USB, HID, serial, or display capture.
+- Added a deny-by-default `Permissions-Policy` so unsupported or unnecessary browser capabilities cannot be requested by this site or delegated to embedded content.
+- Kept only self-scoped allowances where they are harmless and conventional for a marketing site:
+  `autoplay=(self)`,
+  `fullscreen=(self)`,
+  `publickey-credentials-get=(self)`.
+
+Key files:
+
+- [public/.htaccess](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/public/.htaccess)
+
+### 21. Live production verification pass
+
+Completed:
+
+- Checked the live production site directly at `https://node48.pl/` instead of only validating the repository state.
+- Confirmed that the site is live, prerendered pages are being served, and route-level SEO output exists on production service pages.
+- Confirmed that `http://node48.pl/` redirects to `https://node48.pl/` on the live host.
+- Confirmed that the latest repo-level security header hardening is not yet visible on production:
+  the live site still returns the older minimal CSP and does not yet emit `Strict-Transport-Security` or `Permissions-Policy`.
+- Narrowed the remaining issue down to deployment state rather than implementation state:
+  the repo contains the hardening, but production has not yet picked it up.
+
+Key files:
+
+- [public/.htaccess](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/public/.htaccess)
+- [project-improvement-report.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/project-improvement-report.md)
+
 ## Verification Snapshot
 
 Verified on 2026-04-08:
