@@ -1,4 +1,4 @@
-import { siteConfig } from "@/lib/site-config";
+import { brandName } from "@/lib/site-identity";
 
 export const localeMotionTimings = {
   changeDelayMs: 110,
@@ -29,7 +29,7 @@ function getBrandIntroTimeline(letterCount: number) {
   };
 }
 
-export const brandIntroMotionTimings = getBrandIntroTimeline(siteConfig.brandName.length);
+export const brandIntroMotionTimings = getBrandIntroTimeline(brandName.length);
 
 export const heroMotionDelays = {
   default: {

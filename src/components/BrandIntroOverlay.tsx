@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, type CSSProperties } from "react";
-import { siteConfig } from "@/lib/site-config";
+import { brandName } from "@/lib/site-identity";
 import { cx } from "@/lib/cx";
 import { useI18n } from "@/lib/i18n";
 import { brandIntroMotionTimings } from "@/lib/motion";
@@ -11,11 +11,11 @@ type BrandIntroOverlayProps = {
 const digitPattern = /\d/;
 const introCopy = {
   pl: {
-    title: `${siteConfig.brandName} - intro strony głównej`,
+    title: `${brandName} - intro strony głównej`,
     description: "Animacja startowa jest aktywna. Główna zawartość strony jest chwilowo niedostępna.",
   },
   en: {
-    title: `${siteConfig.brandName} homepage intro`,
+    title: `${brandName} homepage intro`,
     description: "The intro animation is active. The main page content is temporarily unavailable.",
   },
 } as const;
@@ -58,7 +58,7 @@ const BrandIntroOverlay = ({ phase }: BrandIntroOverlayProps) => {
       </p>
       <div className="brand-intro-backdrop" />
       <div className="brand-intro-word" aria-hidden="true">
-        {Array.from(siteConfig.brandName).map((character, index) => (
+        {Array.from(brandName).map((character, index) => (
           <span className="brand-intro-slot" key={`${character}-${index}`}>
             <span
               className={cx(

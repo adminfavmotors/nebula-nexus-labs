@@ -1,5 +1,6 @@
-import { siteConfig } from "@/lib/site-config";
+import { businessPhone, contactEmail, dataControllerName } from "@/lib/contact-config";
 import type { Locale } from "@/lib/i18n-data";
+import { brandName } from "@/lib/site-identity";
 
 type LegalSection = {
   title: string;
@@ -40,7 +41,7 @@ export const legalContent: Record<Locale, LegalContent> = {
     common: {
       updatedLabel: "Aktualizacja",
       backHome: "Wróć na stronę główną",
-      contactLabel: `Kontakt: ${siteConfig.contactEmail} | ${siteConfig.businessPhone}`,
+      contactLabel: `Kontakt: ${contactEmail} | ${businessPhone}`,
     },
     footer: {
       privacy: "Polityka prywatności",
@@ -62,8 +63,8 @@ export const legalContent: Record<Locale, LegalContent> = {
         {
           title: "1. Administrator danych",
           paragraphs: [
-            `${siteConfig.dataControllerName}, działający pod marką ${siteConfig.brandName}, jest administratorem danych osobowych przetwarzanych w związku z korzystaniem z tej strony i formularza kontaktowego.`,
-            `W sprawach dotyczących prywatności możesz skontaktować się z nami pod adresem ${siteConfig.contactEmail} lub telefonicznie: ${siteConfig.businessPhone}.`,
+            `${dataControllerName}, działający pod marką ${brandName}, jest administratorem danych osobowych przetwarzanych w związku z korzystaniem z tej strony i formularza kontaktowego.`,
+            `W sprawach dotyczących prywatności możesz skontaktować się z nami pod adresem ${contactEmail} lub telefonicznie: ${businessPhone}.`,
           ],
         },
         {
@@ -179,7 +180,7 @@ export const legalContent: Record<Locale, LegalContent> = {
     common: {
       updatedLabel: "Last updated",
       backHome: "Back to home",
-      contactLabel: `Contact: ${siteConfig.contactEmail} | ${siteConfig.businessPhone}`,
+      contactLabel: `Contact: ${contactEmail} | ${businessPhone}`,
     },
     footer: {
       privacy: "Privacy policy",
@@ -201,8 +202,8 @@ export const legalContent: Record<Locale, LegalContent> = {
         {
           title: "1. Data controller",
           paragraphs: [
-            `${siteConfig.dataControllerName}, operating under the ${siteConfig.brandName} brand, is the controller of personal data processed in connection with this website and its contact form.`,
-            `For privacy-related matters, you can contact us at ${siteConfig.contactEmail} or by phone at ${siteConfig.businessPhone}.`,
+            `${dataControllerName}, operating under the ${brandName} brand, is the controller of personal data processed in connection with this website and its contact form.`,
+            `For privacy-related matters, you can contact us at ${contactEmail} or by phone at ${businessPhone}.`,
           ],
         },
         {

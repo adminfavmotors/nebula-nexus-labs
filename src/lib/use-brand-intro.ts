@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { brandIntroMotionTimings } from "@/lib/motion";
-import { siteConfig } from "@/lib/site-config";
+import { brandName } from "@/lib/site-identity";
 import { usePageScrollLock } from "@/lib/page-scroll-lock";
 
 export const BRAND_INTRO_STORAGE_KEY = "node48-brand-intro-played";
@@ -40,7 +40,7 @@ function isBrandIntroFontReady() {
 
   return typeof document.fonts.check !== "function"
     ? true
-    : document.fonts.check(BRAND_INTRO_FONT, siteConfig.brandName);
+    : document.fonts.check(BRAND_INTRO_FONT, brandName);
 }
 
 function createBrandIntroSnapshot(pathname: string): BrandIntroSnapshot {
@@ -94,7 +94,7 @@ export function useBrandIntro(pathname: string): BrandIntroState {
 
     const loadPromise =
       typeof document.fonts.load === "function"
-        ? document.fonts.load(BRAND_INTRO_FONT, siteConfig.brandName).catch(() => undefined)
+        ? document.fonts.load(BRAND_INTRO_FONT, brandName).catch(() => undefined)
         : Promise.resolve(undefined);
 
     const readyPromise = Promise.resolve(document.fonts.ready).catch(() => undefined);

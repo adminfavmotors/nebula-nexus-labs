@@ -1,9 +1,10 @@
-import { translations, type Locale } from "@/lib/i18n-data";
+import { type Locale } from "@/lib/i18n-data";
 import { legalContent } from "@/lib/legal-content";
 import { type PageSeo } from "@/lib/seo";
 import { getServicePageStructuredData } from "@/lib/service-page-seo";
 import { getServicePageDetail } from "@/lib/service-page-details";
 import { getCanonicalServiceSlug, getCanonicalServiceSlugs, getServiceBySlug } from "@/lib/service-pages";
+import { homePageMeta } from "@/lib/site-meta";
 
 export type LegalDocumentKey = "privacy" | "cookies";
 
@@ -13,7 +14,7 @@ export type IndexedRouteEntry = {
 };
 
 export function getHomePageSeo(locale: Locale): PageSeo {
-  const { meta } = translations[locale];
+  const meta = homePageMeta[locale];
 
   return {
     title: meta.title,

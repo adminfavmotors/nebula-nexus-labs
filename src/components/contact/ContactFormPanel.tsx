@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useRef, useState, type ComponentPropsWithoutRef } from "react";
 import { useI18n } from "@/lib/i18n";
-import { legalContent } from "@/lib/legal-content";
-import { formEndpoint } from "@/lib/site-config";
+import { legalUiCopy } from "@/lib/legal-ui";
+import { formEndpoint } from "@/lib/contact-config";
 import { cx } from "@/lib/cx";
 import { ActionButton } from "@/components/primitives/Actions";
 import { FormInput, FormTextarea } from "@/components/primitives/FormFields";
@@ -55,7 +55,7 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
   ...props
 }, ref) {
   const { locale, t } = useI18n();
-  const legal = legalContent[locale];
+  const legal = legalUiCopy[locale];
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [hasInteracted, setHasInteracted] = useState(false);
   const [hasAttemptedSubmission, setHasAttemptedSubmission] = useState(false);

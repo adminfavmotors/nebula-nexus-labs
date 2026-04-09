@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { siteConfig } from "@/lib/site-config";
+import { siteUrl } from "@/lib/site-identity";
 
 export type StructuredDataEntry = {
   id: string;
@@ -91,7 +91,7 @@ export function createSeoSnapshot({
     title,
     description,
     path,
-    canonicalUrl: new URL(path, siteConfig.siteUrl).toString(),
+    canonicalUrl: new URL(path, siteUrl).toString(),
     robots,
     structuredData,
   };

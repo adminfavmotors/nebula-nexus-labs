@@ -1,3 +1,5 @@
+import { homePageMeta } from "@/lib/site-meta";
+
 export type Locale = "pl" | "en";
 
 type NavLink = { label: string; href: string };
@@ -102,11 +104,7 @@ export type TranslationSet = {
 
 export const translations = {
   pl: {
-    meta: {
-      title: "NODE48 | Strony i produkty cyfrowe",
-      description:
-        "Projektujemy szybkie strony internetowe, landing page'e i doświadczenia cyfrowe dla firm, które chcą wyglądać nowocześnie i sprzedawać skuteczniej.",
-    },
+    meta: homePageMeta.pl,
     nav: {
       links: [
         { label: "Start", href: "#home" },
@@ -246,11 +244,7 @@ export const translations = {
     },
   },
   en: {
-    meta: {
-      title: "NODE48 | Websites and digital products",
-      description:
-        "We design fast websites, landing pages and digital experiences for companies that want a modern presence and stronger conversion.",
-    },
+    meta: homePageMeta.en,
     nav: {
       links: [
         { label: "Home", href: "#home" },

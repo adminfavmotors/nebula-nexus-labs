@@ -1,12 +1,12 @@
 import type { Locale } from "@/lib/i18n-data";
+import {
+  getCanonicalServiceSlug as getCatalogCanonicalServiceSlug,
+  getCanonicalServiceSlugs as getCatalogCanonicalServiceSlugs,
+  getServiceCatalog as getCatalogServiceCatalog,
+  type ServiceKey,
+} from "@/lib/service-catalog";
 
-export type ServiceKey =
-  | "one-page"
-  | "landing-page"
-  | "company-website"
-  | "corporate-website"
-  | "redesign"
-  | "technical-support";
+export type { ServiceKey } from "@/lib/service-catalog";
 
 type LocalizedServiceContent = {
   listName: string;
@@ -460,12 +460,7 @@ export const serviceEntries: ServiceEntry[] = [
 ];
 
 export function getServiceCatalog(locale: Locale) {
-  return serviceEntries.map((entry, index) => ({
-    key: entry.key,
-    slug: entry.slug,
-    num: `${String(index + 1).padStart(2, "0")}.`,
-    ...entry.content[locale],
-  }));
+  return getCatalogServiceCatalog(locale);
 }
 
 export function getServicePageUi(locale: Locale) {
@@ -491,9 +486,9 @@ export function getServiceBySlug(locale: Locale, slug: string) {
 }
 
 export function getCanonicalServiceSlug(slug: string) {
-  return findServiceEntryBySlug(slug)?.slug ?? null;
+  return getCatalogCanonicalServiceSlug(slug);
 }
 
 export function getCanonicalServiceSlugs() {
-  return serviceEntries.map((entry) => entry.slug);
+  return getCatalogCanonicalServiceSlugs();
 }

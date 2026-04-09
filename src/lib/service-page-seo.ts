@@ -1,5 +1,6 @@
-import { siteConfig } from "@/lib/site-config";
+import { businessPhone, contactEmail } from "@/lib/contact-config";
 import type { Locale } from "@/lib/i18n-data";
+import { brandName, siteUrl } from "@/lib/site-identity";
 
 type ServiceStructuredDataInput = {
   locale: Locale;
@@ -16,8 +17,8 @@ export function getServicePageStructuredData({
   title,
   description,
 }: ServiceStructuredDataInput) {
-  const pageUrl = new URL(`/uslugi/${slug}`, siteConfig.siteUrl).toString();
-  const homeUrl = new URL("/", siteConfig.siteUrl).toString();
+  const pageUrl = new URL(`/uslugi/${slug}`, siteUrl).toString();
+  const homeUrl = new URL("/", siteUrl).toString();
 
   return [
     {
@@ -29,7 +30,7 @@ export function getServicePageStructuredData({
           {
             "@type": "ListItem",
             position: 1,
-            name: siteConfig.brandName,
+            name: brandName,
             item: homeUrl,
           },
           {
@@ -57,10 +58,10 @@ export function getServicePageStructuredData({
         availableLanguage: locale === "pl" ? ["pl", "en"] : ["en", "pl"],
         provider: {
           "@type": "Organization",
-          name: siteConfig.brandName,
-          url: siteConfig.siteUrl,
-          email: siteConfig.contactEmail,
-          telephone: siteConfig.businessPhone,
+          name: brandName,
+          url: siteUrl,
+          email: contactEmail,
+          telephone: businessPhone,
         },
         mainEntityOfPage: {
           "@type": "WebPage",

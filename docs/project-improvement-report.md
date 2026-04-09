@@ -1,6 +1,6 @@
 # Project Improvement Report
 
-Last updated: 2026-04-08
+Last updated: 2026-04-09
 Workspace: `C:\Users\Admin\Desktop\project\nebula-nexus-labs`
 Status: in progress
 
@@ -418,9 +418,47 @@ Key files:
 - [public/.htaccess](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/public/.htaccess)
 - [project-improvement-report.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/project-improvement-report.md)
 
+### 22. Homepage SEO/runtime import graph cleanup
+
+Completed:
+
+- Revisited the reported post-SEO slowdown and confirmed that the likely regression was not caused by security headers, but by the runtime dependency graph created during the SEO/indexing rebuild.
+- Isolated the real issue: homepage-critical code still pulled route-only data into the initial client graph through an over-broad shared config and legal/SEO dependencies.
+- Split the old aggregated site config into narrower runtime modules for:
+  brand/site identity,
+  contact delivery,
+  analytics configuration.
+- Moved homepage-critical consumers onto those narrower modules so the root route no longer depends on the route-level SEO/legal data contract.
+- Removed the now-dead aggregated site config layer after all imports were migrated.
+- Fixed text-integrity regressions in the new homepage SEO/catalog source files so the performance refactor did not leave encoding debt behind.
+- Rebalanced manual chunking so homepage runtime data stays in the homepage-friendly chunk instead of creating a new bridge back into route-only data.
+- Verified the result in the built output:
+  `dist/index.html` no longer preloads `route-data-*.js` on the homepage.
+
+Key files:
+
+- [site-identity.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/site-identity.ts)
+- [contact-config.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/contact-config.ts)
+- [analytics-config.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/analytics-config.ts)
+- [home-page-seo.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/home-page-seo.ts)
+- [site-meta.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/site-meta.ts)
+- [service-catalog.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/service-catalog.ts)
+- [legal-ui.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/legal-ui.ts)
+- [BrandIntroOverlay.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/BrandIntroOverlay.tsx)
+- [BrandLogo.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/BrandLogo.tsx)
+- [Footer.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/Footer.tsx)
+- [ContactFormPanel.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/contact/ContactFormPanel.tsx)
+- [analytics.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/analytics.ts)
+- [seo.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/seo.ts)
+- [service-page-seo.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/service-page-seo.ts)
+- [use-brand-intro.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/use-brand-intro.ts)
+- [motion.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/motion.ts)
+- [vite.config.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/vite.config.ts)
+- [dist/index.html](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/dist/index.html)
+
 ## Verification Snapshot
 
-Verified on 2026-04-08:
+Verified on 2026-04-09:
 
 - `npm run check:text` passed
 - `npm run check:styles` passed
@@ -430,8 +468,11 @@ Verified on 2026-04-08:
 
 Current build snapshot after the SEO/prerender rebuild:
 
-- main JS: `282.37 kB` raw / `93.25 kB` gzip
-- main CSS: `76.58 kB` raw / `15.26 kB` gzip
+- homepage entry preload no longer includes `route-data-*.js`
+- homepage entry chunk: `31.38 kB` raw / `9.69 kB` gzip
+- homepage data chunk: `3.66 kB` raw / `1.72 kB` gzip
+- route-data chunk: `58.05 kB` raw / `20.34 kB` gzip
+- main CSS: `71.50 kB` raw / `14.90 kB` gzip
 
 ## Remaining Backlog
 

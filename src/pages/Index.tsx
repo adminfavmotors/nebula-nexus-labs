@@ -9,8 +9,8 @@ import WhyUs from "@/components/WhyUs";
 import FAQ from "@/components/FAQ";
 import ContactForm from "@/components/ContactForm";
 import CTASection from "@/components/CTASection";
+import { getHomePageSeo } from "@/lib/home-page-seo";
 import { useI18n } from "@/lib/i18n";
-import { getHomePageSeo } from "@/lib/seo-routes";
 import { usePageSeo } from "@/lib/seo";
 
 type IndexProps = {

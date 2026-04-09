@@ -8,7 +8,7 @@ import { useContactOverlay } from "@/components/contact/contact-overlay-context"
 import App from "@/App";
 import { I18nProvider } from "@/lib/i18n";
 import { brandIntroMotionTimings } from "@/lib/motion";
-import { formEndpoint } from "@/lib/site-config";
+import { formEndpoint } from "@/lib/contact-config";
 import { BRAND_INTRO_STORAGE_KEY, useBrandIntro } from "@/lib/use-brand-intro";
 
 const COOKIE_CONSENT_KEY = "node48-cookie-consent";

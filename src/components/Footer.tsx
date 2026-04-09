@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
-import { legalContent } from "@/lib/legal-content";
-import { siteConfig } from "@/lib/site-config";
+import { legalUiCopy } from "@/lib/legal-ui";
+import { brandName, currentYear } from "@/lib/site-identity";
 import BrandLogo from "@/components/BrandLogo";
 
 const Footer = () => {
   const { locale, t } = useI18n();
-  const legal = legalContent[locale];
+  const legal = legalUiCopy[locale];
   const resolveSectionHref = (href: string) => `/${href}`;
 
   return (
@@ -41,7 +41,7 @@ const Footer = () => {
         </div>
         <div className="glow-divider footer-divider-bottom" />
         <p className="footer-copy">
-          {"\u00A9"} {siteConfig.currentYear} {siteConfig.brandName}. {t.footer.rights}
+          {"\u00A9"} {currentYear} {brandName}. {t.footer.rights}
         </p>
       </div>
     </footer>

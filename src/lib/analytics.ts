@@ -1,4 +1,4 @@
-import { siteConfig } from "@/lib/site-config";
+import { googleTagManagerId } from "@/lib/analytics-config";
 
 const GTM_SCRIPT_ID = "node48-gtm-script";
 const GTM_NOSCRIPT_ID = "node48-gtm-noscript";
@@ -12,7 +12,7 @@ export function loadGoogleTagManager() {
     return;
   }
 
-  const gtmId = siteConfig.googleTagManagerId;
+  const gtmId = googleTagManagerId;
 
   if (!gtmId || document.getElementById(GTM_SCRIPT_ID)) {
     return;
