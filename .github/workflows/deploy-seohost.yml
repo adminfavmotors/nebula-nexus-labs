@@ -16,7 +16,28 @@ permissions:
   contents: write
 
 jobs:
+  verify:
+    name: Verify build on Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production bundle
+        run: npm run build
+
   deploy:
+    needs: verify
     uses: ./.github/workflows/_deploy-seohost-reusable.yml
     with:
       deploy_ref: ${{ inputs.deploy_ref }}

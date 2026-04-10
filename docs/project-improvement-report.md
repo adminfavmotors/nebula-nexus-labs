@@ -1,6 +1,6 @@
 # Project Improvement Report
 
-Last updated: 2026-04-09
+Last updated: 2026-04-10
 Workspace: `C:\Users\Admin\Desktop\project\nebula-nexus-labs`
 Status: in progress
 
@@ -471,6 +471,20 @@ Key files:
 
 - [_deploy-seohost-reusable.yml](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.github/workflows/_deploy-seohost-reusable.yml)
 - [package.json](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/package.json)
+
+### 24. Deploy pipeline verification gate
+
+Completed:
+
+- Kept the site and client-hosting contract simple:
+  the project still builds to a plain static `dist` folder and the client server does not need Docker, Node services, or any custom deployment runtime.
+- Added a dedicated Ubuntu verification job to the production deployment workflow instead of pushing more complexity into the app or the client server.
+- The deploy job now waits for a clean Linux `npm ci` and `npm run build` pass before any production upload begins.
+- This moves the fragile dependency/install validation into GitHub Actions, where production-like Linux checks belong, without making the project itself harder to transfer or sell.
+
+Key files:
+
+- [deploy-seohost.yml](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.github/workflows/deploy-seohost.yml)
 
 ## Verification Snapshot
 
