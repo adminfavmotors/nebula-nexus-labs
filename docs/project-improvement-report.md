@@ -505,6 +505,21 @@ Current build snapshot after the SEO/prerender rebuild:
 - route-data chunk: `58.05 kB` raw / `20.34 kB` gzip
 - main CSS: `71.50 kB` raw / `14.90 kB` gzip
 
+### Update 2026-04-10
+
+- Goal:
+  restore GitHub Actions deployment readiness after `Verify build on Ubuntu` started failing before deploy.
+- Root cause addressed:
+  `npm ci` on the Ubuntu runner failed because `package-lock.json` was missing the Linux-validated optional dependency entries for `@emnapi/core@1.9.2` and `@emnapi/runtime@1.9.2`, even though `rolldown` expected them through the wasm binding tree.
+- Files changed:
+  [package-lock.json](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/package-lock.json)
+- Checks run:
+  `npm run check:text`, `npm run lint`, `npm run test`, `npm run build`
+- Result:
+  the fix stays narrow to the lockfile, keeps the project as a plain `Vite -> dist` static site, and removes the install-layer mismatch that was blocking GitHub Actions before the deploy step.
+- Follow-up:
+  rerun the GitHub workflow and confirm that `Verify build on Ubuntu` now passes and releases control to the deploy job.
+
 ## Remaining Backlog
 
 Priority order for the next steps:
