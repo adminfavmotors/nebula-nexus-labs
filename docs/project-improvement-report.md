@@ -550,6 +550,21 @@ Current build snapshot after the SEO/prerender rebuild:
 - Follow-up:
   rerun the deployment and confirm the job can reach the remote host and begin mirroring `dist`.
 
+### Update 2026-04-11
+
+- Goal:
+  remove the final naming mismatch that still blocked the SSH-based deploy.
+- Root cause addressed:
+  the workflow expected `SEOHOST_SSH_PRIVATE_KEY`, but the repository secret actually created in GitHub was `SEOHOST_GITHUB_ACTIONS_RSA`, so the deploy job still received an empty value before any SSH connection started.
+- Files changed:
+  [_deploy-seohost-reusable.yml](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.github/workflows/_deploy-seohost-reusable.yml)
+- Checks run:
+  workflow diff review, GitHub Actions log comparison, `git diff --check`
+- Result:
+  the reusable deploy workflow now reads the secret name that already exists in the repository settings, so no extra GitHub secret setup is required before rerunning the job.
+- Follow-up:
+  rerun the deployment and confirm the job advances past `Prepare SEOHOST SSH key` into the actual SFTP mirror step.
+
 ## Remaining Backlog
 
 Priority order for the next steps:

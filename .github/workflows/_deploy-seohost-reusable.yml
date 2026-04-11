@@ -79,10 +79,10 @@ jobs:
 
       - name: Prepare SEOHOST SSH key
         env:
-          SEOHOST_SSH_PRIVATE_KEY: ${{ secrets.SEOHOST_SSH_PRIVATE_KEY }}
+          SEOHOST_SSH_PRIVATE_KEY: ${{ secrets.SEOHOST_GITHUB_ACTIONS_RSA }}
         run: |
           if [ -z "${SEOHOST_SSH_PRIVATE_KEY}" ]; then
-            echo "Missing required secret: SEOHOST_SSH_PRIVATE_KEY" >&2
+            echo "Missing required secret: SEOHOST_GITHUB_ACTIONS_RSA" >&2
             exit 1
           fi
 
