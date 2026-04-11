@@ -595,6 +595,21 @@ Current build snapshot after the SEO/prerender rebuild:
 - Follow-up:
   rerun the deployment and confirm `rsync` authenticates as `srv110507` and mirrors `dist` into `/domains/node48.pl/public_html/`.
 
+### Update 2026-04-11
+
+- Goal:
+  eliminate secret-format drift as the remaining blocker in the SSH deploy flow.
+- Root cause addressed:
+  after the `rsync` migration, the runner reached the SSH client but failed with `Load key ".../seohost_deploy_key": error in libcrypto`, which indicates the private key file written from the GitHub secret is malformed for OpenSSH on the Linux runner.
+- Files changed:
+  [_deploy-seohost-reusable.yml](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.github/workflows/_deploy-seohost-reusable.yml)
+- Checks run:
+  GitHub Actions log review, workflow diff review
+- Result:
+  the workflow now normalizes Windows-style line endings before writing the key file and validates the resulting private key with `ssh-keygen -yf` before attempting deploy. This either fixes CRLF-related corruption automatically or fails earlier with a precise key-validation signal.
+- Follow-up:
+  rerun the deployment and confirm the key validation passes before the `rsync` step starts.
+
 ## Remaining Backlog
 
 Priority order for the next steps:

@@ -87,8 +87,16 @@ jobs:
           fi
 
           install -d -m 700 "${HOME}/.ssh"
-          printf '%s\n' "${SEOHOST_SSH_PRIVATE_KEY}" > "${HOME}/.ssh/seohost_deploy_key"
+          python - <<'PY'
+          import os
+          from pathlib import Path
+
+          key = os.environ["SEOHOST_SSH_PRIVATE_KEY"].replace("\r\n", "\n").replace("\r", "\n").strip() + "\n"
+          key_path = Path(os.environ["HOME"]) / ".ssh" / "seohost_deploy_key"
+          key_path.write_text(key, encoding="utf-8", newline="\n")
+          PY
           chmod 600 "${HOME}/.ssh/seohost_deploy_key"
+          ssh-keygen -yf "${HOME}/.ssh/seohost_deploy_key" > /dev/null
 
       - name: Deploy to SEOHOST over SSH
         run: |
