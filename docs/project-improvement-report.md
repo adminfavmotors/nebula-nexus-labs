@@ -625,6 +625,21 @@ Current build snapshot after the SEO/prerender rebuild:
 - Follow-up:
   replace the GitHub secret with a base64-encoded version of the same private key, rerun the workflow, and confirm the key validation step passes before `rsync`.
 
+### Update 2026-04-11
+
+- Goal:
+  fix the last remaining SEOHOST deploy blocker after SSH authentication started succeeding.
+- Root cause addressed:
+  the deploy workflow targeted `/domains/node48.pl/public_html/` as an absolute path, but the SSH session for `srv110507` lands in the account home and does not expose that absolute path. The logs confirmed this by failing with `mkdir "/domains/node48.pl/public_html" failed: No such file or directory`.
+- Files changed:
+  [_deploy-seohost-reusable.yml](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.github/workflows/_deploy-seohost-reusable.yml)
+- Checks run:
+  GitHub Actions log review, workflow diff review
+- Result:
+  the deploy now targets the domain document root as a home-relative DirectAdmin path: `domains/node48.pl/public_html/`. This keeps the SSH transport unchanged and fixes only the server-side destination contract.
+- Follow-up:
+  rerun the deployment and confirm `rsync` starts transferring files into the domain document root instead of failing on directory creation.
+
 ## Remaining Backlog
 
 Priority order for the next steps:

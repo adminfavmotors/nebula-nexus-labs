@@ -118,7 +118,7 @@ jobs:
           rsync -az --delete \
             -e "ssh -i ${HOME}/.ssh/seohost_deploy_key -p 57185 -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
             ./dist/ \
-            srv110507@h79.seohost.pl:/domains/node48.pl/public_html/
+            srv110507@h79.seohost.pl:domains/node48.pl/public_html/
 
       - name: Create immutable production tag
         shell: bash
