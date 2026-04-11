@@ -88,12 +88,27 @@ jobs:
 
           install -d -m 700 "${HOME}/.ssh"
           python - <<'PY'
+          import base64
+          import binascii
           import os
           from pathlib import Path
 
-          key = os.environ["SEOHOST_SSH_PRIVATE_KEY"].replace("\r\n", "\n").replace("\r", "\n").strip() + "\n"
           key_path = Path(os.environ["HOME"]) / ".ssh" / "seohost_deploy_key"
-          key_path.write_text(key, encoding="utf-8", newline="\n")
+          secret = os.environ["SEOHOST_SSH_PRIVATE_KEY"].strip()
+
+          if "BEGIN " in secret and "PRIVATE KEY" in secret:
+            key = secret.replace("\r\n", "\n").replace("\r", "\n").strip() + "\n"
+            key_path.write_text(key, encoding="utf-8", newline="\n")
+          else:
+            compact = "".join(secret.split())
+            try:
+              key_bytes = base64.b64decode(compact, validate=True)
+            except binascii.Error as exc:
+              raise SystemExit(
+                "SEOHOST_GITHUB_ACTIONS_RSA must be a valid private key or base64-encoded private key"
+              ) from exc
+
+            key_path.write_bytes(key_bytes)
           PY
           chmod 600 "${HOME}/.ssh/seohost_deploy_key"
           ssh-keygen -yf "${HOME}/.ssh/seohost_deploy_key" > /dev/null

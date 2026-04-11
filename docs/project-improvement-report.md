@@ -610,6 +610,21 @@ Current build snapshot after the SEO/prerender rebuild:
 - Follow-up:
   rerun the deployment and confirm the key validation passes before the `rsync` step starts.
 
+### Update 2026-04-11
+
+- Goal:
+  stop treating the SSH private key as a fragile multiline secret and make the deploy contract resilient to GitHub secret formatting.
+- Root cause addressed:
+  the previous workflow assumed `SEOHOST_GITHUB_ACTIONS_RSA` would always survive GitHub UI copy/paste as a valid multiline OpenSSH key, but the repeated `error in libcrypto` failures showed that this assumption was too brittle for the actual operator workflow.
+- Files changed:
+  [_deploy-seohost-reusable.yml](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.github/workflows/_deploy-seohost-reusable.yml)
+- Checks run:
+  workflow diff review, YAML syntax review, `git diff --check`
+- Result:
+  the deploy workflow now accepts `SEOHOST_GITHUB_ACTIONS_RSA` in either raw private-key form or base64-encoded form. This lets the secret be stored as a single safe line, which removes newline/clipboard corruption as a deploy blocker while keeping the server-side deploy contract unchanged.
+- Follow-up:
+  replace the GitHub secret with a base64-encoded version of the same private key, rerun the workflow, and confirm the key validation step passes before `rsync`.
+
 ## Remaining Backlog
 
 Priority order for the next steps:
