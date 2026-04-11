@@ -84,7 +84,7 @@ const AppFrame = () => {
   const { isTransitioningLocale } = useI18n();
   const { didPlayIntro, heroReady, overlayPhase } = useBrandIntro(location.pathname);
   const appShellRef = useRef<HTMLDivElement>(null);
-  const introActive = overlayPhase !== null;
+  const introBlocking = overlayPhase === "preparing" || overlayPhase === "running";
 
   useLayoutEffect(() => {
     const shellElement = appShellRef.current;
@@ -93,13 +93,13 @@ const AppFrame = () => {
       return;
     }
 
-    if (introActive) {
+    if (introBlocking) {
       shellElement.setAttribute("inert", "");
       return;
     }
 
     shellElement.removeAttribute("inert");
-  }, [introActive]);
+  }, [introBlocking]);
 
   return (
     <>
@@ -108,9 +108,9 @@ const AppFrame = () => {
         <div
           ref={appShellRef}
           className={`app-shell ${isTransitioningLocale ? "app-shell-transitioning" : ""} ${
-            introActive ? "app-shell-intro-active" : ""
+            introBlocking ? "app-shell-intro-blocked" : ""
           }`}
-          aria-hidden={introActive || undefined}
+          aria-hidden={introBlocking || undefined}
         >
           <Suspense fallback={null}>
             <Routes>
@@ -123,7 +123,7 @@ const AppFrame = () => {
           </Suspense>
         </div>
         {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} /> : null}
-        <CookieConsentBanner isBlocked={introActive} />
+        <CookieConsentBanner isBlocked={introBlocking} />
       </ContactOverlayProvider>
     </>
   );

@@ -163,7 +163,7 @@ export function useBrandIntro(pathname: string): BrandIntroState {
     };
   }, [phase]);
 
-  usePageScrollLock(phase !== "done");
+  usePageScrollLock(phase === "preparing" || phase === "running");
 
   return useMemo(
     () => ({

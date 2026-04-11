@@ -96,7 +96,9 @@
     transform: translateY(2px) scale(0.998);
   }
 
-  .app-shell-intro-active {
+  .app-shell-intro-blocked {
+    opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     user-select: none;
   }

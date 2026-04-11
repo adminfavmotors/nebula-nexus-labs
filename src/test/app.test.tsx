@@ -92,6 +92,12 @@ function finishBrandIntro() {
   });
 }
 
+function advanceBrandIntroToExit() {
+  act(() => {
+    vi.advanceTimersByTime(brandIntroMotionTimings.exitDelayMs);
+  });
+}
+
 describe("critical user flows", () => {
   beforeEach(() => {
     window.history.pushState({}, "", "/");
@@ -291,24 +297,42 @@ describe("critical user flows", () => {
     expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
   });
 
-  it("keeps the cookie consent banner inert while the homepage intro is active", () => {
+  it("does not render the cookie consent banner while the homepage intro is blocking the page", () => {
     vi.useFakeTimers();
     window.localStorage.removeItem(COOKIE_CONSENT_KEY);
     window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
 
     renderApp();
 
-    const cookieBanner = document.querySelector(".cookie-consent-layer");
+    expect(screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).toBeInTheDocument();
+    expect(document.querySelector(".cookie-consent-layer")).toBeNull();
+
+    advanceBrandIntroToExit();
 
     expect(screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).toBeInTheDocument();
-    expect(cookieBanner).toHaveAttribute("aria-hidden", "true");
-    expect(cookieBanner).toHaveAttribute("inert");
+    expect(document.querySelector(".cookie-consent-layer")).toBeInstanceOf(HTMLDivElement);
+  });
 
-    finishBrandIntro();
+  it("releases intro scroll locking as soon as the overlay starts exiting", () => {
+    vi.useFakeTimers();
+    window.localStorage.removeItem(COOKIE_CONSENT_KEY);
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
 
-    expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
-    expect(cookieBanner).not.toHaveAttribute("aria-hidden");
-    expect(cookieBanner).not.toHaveAttribute("inert");
+    renderApp();
+
+    const appShell = document.querySelector(".app-shell");
+
+    expect(document.documentElement.style.overflow).toBe("hidden");
+    expect(document.body.style.overflow).toBe("hidden");
+    expect(appShell).toHaveAttribute("inert");
+
+    advanceBrandIntroToExit();
+
+    expect(screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).toBeInTheDocument();
+    expect(document.documentElement.style.overflow).toBe("");
+    expect(document.body.style.overflow).toBe("");
+    expect(appShell).not.toHaveAttribute("inert");
+    expect(document.querySelector(".cookie-consent-layer")).toBeInstanceOf(HTMLDivElement);
   });
 
   it("keeps scroll locking correct when the contact overlay opens after the homepage intro", async () => {
@@ -411,6 +435,7 @@ describe("critical user flows", () => {
 
     const menuButton = document.querySelector('[aria-controls="mobile-navigation-panel"]');
     expect(menuButton).toBeInstanceOf(HTMLButtonElement);
+    expect(document.querySelector("#mobile-navigation-panel")).not.toHaveAttribute("open");
 
     fireEvent.click(menuButton as HTMLButtonElement);
 

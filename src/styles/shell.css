@@ -477,6 +477,10 @@
   }
 
   .header-mobile-panel {
+    display: none;
+  }
+
+  .header-mobile-panel[open] {
     position: fixed;
     inset: 0;
     display: flex;

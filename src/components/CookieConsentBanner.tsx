@@ -95,7 +95,7 @@ const CookieConsentBanner = ({ isBlocked = false }: CookieConsentBannerProps) =>
     setConsent(nextConsent);
   };
 
-  if (consent !== "unknown") {
+  if (consent !== "unknown" || isBlocked) {
     return null;
   }
 
@@ -103,8 +103,6 @@ const CookieConsentBanner = ({ isBlocked = false }: CookieConsentBannerProps) =>
     <div
       ref={bannerRef}
       className="cookie-consent-layer cookie-consent-banner"
-      aria-hidden={isBlocked || undefined}
-      inert={isBlocked ? "" : undefined}
     >
       <div className="neon-frame-soft cookie-consent-panel">
         <p className="cookie-consent-title">

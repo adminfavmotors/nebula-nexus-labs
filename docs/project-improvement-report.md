@@ -658,6 +658,26 @@ Current build snapshot after the SEO/prerender rebuild:
 - Follow-up:
   keep the direct browser-to-FormSubmit architecture on the security backlog, because the client-side form remains an abuse surface even after the heuristic fix.
 
+### Update 2026-04-11
+
+- Goal:
+  fix the intro/cookie/mobile-header regressions that made the first visit feel visually broken and temporarily unresponsive.
+- Root cause addressed:
+  the intro was treated as blocking until the full `done` phase even though the UI already transitioned into the visual exit phase; the cookie banner was still mounted underneath that blocking phase; and the mobile navigation `dialog` was forced to `display: flex` by CSS even when it was closed, which left the mobile menu surface visible in the background.
+- Files changed:
+  [App.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/App.tsx),
+  [use-brand-intro.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/use-brand-intro.ts),
+  [CookieConsentBanner.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/CookieConsentBanner.tsx),
+  [index.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/index.css),
+  [shell.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/shell.css),
+  [app.test.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/test/app.test.tsx)
+- Checks run:
+  `npm run test`, `npm run lint`, `npm run build`
+- Result:
+  homepage content and the cookie banner no longer flash before the intro finishes blocking; scroll lock is released as soon as the intro starts exiting instead of waiting for the full timeline to end; cookie interaction becomes available at the same moment; and the mobile menu `dialog` is now hidden unless it actually has the `open` attribute.
+- Follow-up:
+  if any first-load visual glitch still remains on the live site, verify it against production timing rather than local dev timing, because this fix changes the blocking contract but not the intro animation asset itself.
+
 ## Remaining Backlog
 
 Priority order for the next steps:
