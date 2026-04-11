@@ -565,6 +565,21 @@ Current build snapshot after the SEO/prerender rebuild:
 - Follow-up:
   rerun the deployment and confirm the job advances past `Prepare SEOHOST SSH key` into the actual SFTP mirror step.
 
+### Update 2026-04-11
+
+- Goal:
+  fix the remaining SSH authentication failure after the private key started loading correctly.
+- Root cause addressed:
+  `lftp` was opening `sftp://srv110507@h79.seohost.pl:57185` while the custom `sftp:connect-program` hardcoded the SSH transport, which resulted in the SSH process authenticating as the runner user instead of the SEOHOST account. The logs confirmed this by showing `runner@h79.seohost.pl: Permission denied (publickey,...)`.
+- Files changed:
+  [_deploy-seohost-reusable.yml](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.github/workflows/_deploy-seohost-reusable.yml)
+- Checks run:
+  GitHub Actions log review against the `lftp` transport contract, workflow diff review, `git diff --check`
+- Result:
+  the workflow now lets `lftp` pass the remote user and port through `open -u ... -p ...`, while `sftp:connect-program` only provides the SSH key and client options. This matches the documented `lftp` contract for SFTP transports.
+- Follow-up:
+  rerun the deployment and confirm the SFTP session authenticates as `srv110507` and starts mirroring `dist`.
+
 ## Remaining Backlog
 
 Priority order for the next steps:

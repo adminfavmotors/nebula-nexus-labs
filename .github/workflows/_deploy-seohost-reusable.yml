@@ -98,8 +98,8 @@ jobs:
             set net:max-retries 2;
             set net:reconnect-interval-base 5;
             set sftp:auto-confirm yes;
-            set sftp:connect-program 'ssh -a -x -i ${HOME}/.ssh/seohost_deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new -p 57185';
-            open sftp://srv110507@h79.seohost.pl:57185;
+            set sftp:connect-program 'ssh -a -x -i ${HOME}/.ssh/seohost_deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new';
+            open -u srv110507 -p 57185 sftp://h79.seohost.pl;
             mirror -R --verbose --parallel=2 ./dist /domains/node48.pl/public_html;
             bye
           "
