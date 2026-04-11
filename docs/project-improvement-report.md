@@ -752,6 +752,24 @@ Priority order for the next steps:
 - Follow-up:
   do a browser visual pass on mobile and desktop specifically for perceived smoothness in header open/close, contact overlay entry, and long-scroll sections with decorative dividers.
 
+### Update 2026-04-11
+
+- Goal:
+  fix the production CSP error and resulting React hydration failures on first load without weakening the security policy.
+- Root cause addressed:
+  the first-visit intro bootstrap lived in an inline `<script>` inside [index.html](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/index.html), but the active CSP allows only `script-src 'self' https://www.googletagmanager.com;`, so the browser blocked that script, the pending intro state was never applied early enough, and the prerendered HTML no longer matched the client boot path.
+- Files changed:
+  [index.html](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/index.html)
+  [public/brand-intro-bootstrap.js](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/public/brand-intro-bootstrap.js)
+- Checks run:
+  `npm run lint`
+  `npm run test`
+  `npm run build`
+- Result:
+  the intro bootstrap now runs as an external same-origin script that is compatible with the existing CSP, preserving the early `data-brand-intro-pending` behavior without requiring `unsafe-inline`, hashes, or nonces.
+- Follow-up:
+  verify production after deploy to confirm the CSP console error disappears and React hydration mismatch errors `#418` and `#423` are gone on a true first visit.
+
 ## Sources Used So Far
 
 Official references used across the completed work:
