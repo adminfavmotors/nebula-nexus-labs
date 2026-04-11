@@ -678,6 +678,27 @@ Current build snapshot after the SEO/prerender rebuild:
 - Follow-up:
   if any first-load visual glitch still remains on the live site, verify it against production timing rather than local dev timing, because this fix changes the blocking contract but not the intro animation asset itself.
 
+### Update 2026-04-11
+
+- Goal:
+  remove the remaining first-load flash where prerendered homepage content and the cookie banner appeared before the intro takeover.
+- Root cause addressed:
+  the prerendered homepage HTML still shipped a visible `.app-shell` and cookie banner, but on a true first visit the client bootstrap decided not to hydrate and instead mounted a fresh app with the intro. That created a prerender-to-client mismatch:
+  prerendered page and cookies appeared first,
+  then the client intro replaced them,
+  then the app appeared again.
+- Files changed:
+  [index.html](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/index.html),
+  [main.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/main.tsx),
+  [App.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/App.tsx),
+  [app.test.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/test/app.test.tsx)
+- Checks run:
+  `npm run test`, `npm run lint`, `npm run build`
+- Result:
+  a tiny inline bootstrap now marks first-visit intro mode before React loads, prerendered homepage/cookie layers are hidden during that pending state, and non-hydrated first-visit boot clears old prerendered markup before `createRoot`. This removes the visible flash and reduces the extra layout churn that came from replacing already-painted homepage markup.
+- Follow-up:
+  if any residual first-load stutter remains after deployment, the next place to profile is the cost of loading the main JS bundle itself rather than the intro/cookie state contract.
+
 ## Remaining Backlog
 
 Priority order for the next steps:

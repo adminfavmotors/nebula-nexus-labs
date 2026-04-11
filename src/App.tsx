@@ -11,6 +11,7 @@ const ROUTER_FUTURE_FLAGS = {
   v7_relativeSplatPath: true,
   v7_startTransition: true,
 } as const;
+const BRAND_INTRO_PENDING_ATTRIBUTE = "data-brand-intro-pending";
 
 const ServicePage = lazy(() => import("./pages/ServicePage.tsx"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.tsx"));
@@ -99,6 +100,15 @@ const AppFrame = () => {
     }
 
     shellElement.removeAttribute("inert");
+  }, [introBlocking]);
+
+  useLayoutEffect(() => {
+    if (introBlocking) {
+      document.documentElement.setAttribute(BRAND_INTRO_PENDING_ATTRIBUTE, "");
+      return;
+    }
+
+    document.documentElement.removeAttribute(BRAND_INTRO_PENDING_ATTRIBUTE);
   }, [introBlocking]);
 
   return (

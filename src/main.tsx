@@ -8,12 +8,19 @@ import "./styles/home.css";
 import "./styles/shell.css";
 import "./styles/responsive.css";
 
-function shouldHydratePrerenderedMarkup() {
-  const storedLocale = window.localStorage.getItem(STORAGE_KEY);
+const BRAND_INTRO_PENDING_ATTRIBUTE = "data-brand-intro-pending";
+
+function shouldPlayBrandIntroOnBoot() {
   const pathname = window.location.pathname;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const hasPlayedIntro = window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY) === "1";
-  const shouldPlayIntro = pathname === "/" && !prefersReducedMotion && !hasPlayedIntro;
+
+  return pathname === "/" && !prefersReducedMotion && !hasPlayedIntro;
+}
+
+function shouldHydratePrerenderedMarkup() {
+  const storedLocale = window.localStorage.getItem(STORAGE_KEY);
+  const shouldPlayIntro = shouldPlayBrandIntroOnBoot();
 
   return storedLocale !== "en" && !shouldPlayIntro;
 }
@@ -24,8 +31,13 @@ if (!container) {
   throw new Error("Root container was not found.");
 }
 
+if (shouldPlayBrandIntroOnBoot()) {
+  document.documentElement.setAttribute(BRAND_INTRO_PENDING_ATTRIBUTE, "");
+}
+
 if (container.hasChildNodes() && shouldHydratePrerenderedMarkup()) {
   hydrateRoot(container, <App />);
 } else {
+  container.innerHTML = "";
   createRoot(container).render(<App />);
 }

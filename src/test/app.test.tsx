@@ -447,6 +447,21 @@ describe("critical user flows", () => {
     expect(mobileLinks).toHaveLength(4);
   });
 
+  it("clears the prerender intro-hiding attribute once the intro starts exiting", () => {
+    vi.useFakeTimers();
+    window.localStorage.removeItem(COOKIE_CONSENT_KEY);
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+    document.documentElement.setAttribute("data-brand-intro-pending", "");
+
+    renderApp();
+
+    expect(document.documentElement).toHaveAttribute("data-brand-intro-pending");
+
+    advanceBrandIntroToExit();
+
+    expect(document.documentElement).not.toHaveAttribute("data-brand-intro-pending");
+  });
+
   it("closes the mobile navigation menu when Escape is pressed", async () => {
     renderApp();
 
