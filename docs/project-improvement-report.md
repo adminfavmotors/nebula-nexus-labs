@@ -520,6 +520,21 @@ Current build snapshot after the SEO/prerender rebuild:
 - Follow-up:
   rerun the GitHub workflow and confirm that `Verify build on Ubuntu` now passes and releases control to the deploy job.
 
+### Update 2026-04-11
+
+- Goal:
+  unblock production deploys without requiring a manually managed `SEOHOST_SSH_KNOWN_HOSTS` secret.
+- Root cause addressed:
+  the SFTP deploy hardening introduced a strict `known_hosts` prerequisite that blocked releases until an SSH host key was manually sourced from SEOHOST and stored in GitHub Actions secrets.
+- Files changed:
+  [_deploy-seohost-reusable.yml](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.github/workflows/_deploy-seohost-reusable.yml)
+- Checks run:
+  workflow logic review and local YAML diff inspection.
+- Result:
+  deploy now uses `StrictHostKeyChecking=accept-new` and no longer requires the `SEOHOST_SSH_KNOWN_HOSTS` secret, which restores a simpler transfer path while keeping SFTP in place.
+- Follow-up:
+  rerun the GitHub deployment and verify that the workflow now advances past the SFTP connection step.
+
 ## Remaining Backlog
 
 Priority order for the next steps:
