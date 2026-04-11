@@ -580,6 +580,21 @@ Current build snapshot after the SEO/prerender rebuild:
 - Follow-up:
   rerun the deployment and confirm the SFTP session authenticates as `srv110507` and starts mirroring `dist`.
 
+### Update 2026-04-11
+
+- Goal:
+  remove the unstable `lftp` transport layer and use a simpler deploy path that matches the project shape.
+- Root cause addressed:
+  even after the secret, port, and user fixes, `lftp` still invoked the SSH transport as `runner@h79.seohost.pl`, which kept breaking key authentication. This was no longer a website or SSH-secret problem, but a bad fit between `lftp`'s SFTP abstraction and this SEOHOST key-auth setup.
+- Files changed:
+  [_deploy-seohost-reusable.yml](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.github/workflows/_deploy-seohost-reusable.yml)
+- Checks run:
+  GitHub Actions log review, official `lftp` man page review, official `rsync` man page review, workflow diff review
+- Result:
+  production deploy now uses `rsync` over plain SSH with the same private key, host, user, and port. This removes the failing `lftp` layer while keeping the client-server contract simple: upload the built static `dist` directory and nothing else.
+- Follow-up:
+  rerun the deployment and confirm `rsync` authenticates as `srv110507` and mirrors `dist` into `/domains/node48.pl/public_html/`.
+
 ## Remaining Backlog
 
 Priority order for the next steps:

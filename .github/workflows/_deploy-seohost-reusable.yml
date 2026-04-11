@@ -72,10 +72,10 @@ jobs:
       - name: Build production bundle
         run: npm run build
 
-      - name: Install lftp
+      - name: Install rsync
         run: |
           sudo apt-get update
-          sudo apt-get install -y lftp
+          sudo apt-get install -y rsync
 
       - name: Prepare SEOHOST SSH key
         env:
@@ -90,19 +90,12 @@ jobs:
           printf '%s\n' "${SEOHOST_SSH_PRIVATE_KEY}" > "${HOME}/.ssh/seohost_deploy_key"
           chmod 600 "${HOME}/.ssh/seohost_deploy_key"
 
-      - name: Deploy to SEOHOST over SFTP
+      - name: Deploy to SEOHOST over SSH
         run: |
-          lftp -e "
-            set cmd:fail-exit true;
-            set net:timeout 20;
-            set net:max-retries 2;
-            set net:reconnect-interval-base 5;
-            set sftp:auto-confirm yes;
-            set sftp:connect-program 'ssh -a -x -i ${HOME}/.ssh/seohost_deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new';
-            open -u srv110507 -p 57185 sftp://h79.seohost.pl;
-            mirror -R --verbose --parallel=2 ./dist /domains/node48.pl/public_html;
-            bye
-          "
+          rsync -az --delete \
+            -e "ssh -i ${HOME}/.ssh/seohost_deploy_key -p 57185 -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
+            ./dist/ \
+            srv110507@h79.seohost.pl:/domains/node48.pl/public_html/
 
       - name: Create immutable production tag
         shell: bash
