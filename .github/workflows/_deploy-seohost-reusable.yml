@@ -77,10 +77,20 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y lftp
 
-      - name: Deploy to SEOHOST over SFTP
+      - name: Prepare SEOHOST SSH key
         env:
-          SEOHOST_FTP_USERNAME: ${{ secrets.SEOHOST_FTP_USERNAME }}
-          SEOHOST_FTP_PASSWORD: ${{ secrets.SEOHOST_FTP_PASSWORD }}
+          SEOHOST_SSH_PRIVATE_KEY: ${{ secrets.SEOHOST_SSH_PRIVATE_KEY }}
+        run: |
+          if [ -z "${SEOHOST_SSH_PRIVATE_KEY}" ]; then
+            echo "Missing required secret: SEOHOST_SSH_PRIVATE_KEY" >&2
+            exit 1
+          fi
+
+          install -d -m 700 "${HOME}/.ssh"
+          printf '%s\n' "${SEOHOST_SSH_PRIVATE_KEY}" > "${HOME}/.ssh/seohost_deploy_key"
+          chmod 600 "${HOME}/.ssh/seohost_deploy_key"
+
+      - name: Deploy to SEOHOST over SFTP
         run: |
           lftp -e "
             set cmd:fail-exit true;
@@ -88,8 +98,8 @@ jobs:
             set net:max-retries 2;
             set net:reconnect-interval-base 5;
             set sftp:auto-confirm yes;
-            set sftp:connect-program 'ssh -a -x -o StrictHostKeyChecking=accept-new';
-            open -u ${SEOHOST_FTP_USERNAME},${SEOHOST_FTP_PASSWORD} sftp://h79.seohost.pl:22;
+            set sftp:connect-program 'ssh -a -x -i ${HOME}/.ssh/seohost_deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new -p 57185';
+            open sftp://srv110507@h79.seohost.pl:57185;
             mirror -R --verbose --parallel=2 ./dist /domains/node48.pl/public_html;
             bye
           "

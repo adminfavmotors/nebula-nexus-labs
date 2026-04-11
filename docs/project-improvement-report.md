@@ -535,6 +535,21 @@ Current build snapshot after the SEO/prerender rebuild:
 - Follow-up:
   rerun the GitHub deployment and verify that the workflow now advances past the SFTP connection step.
 
+### Update 2026-04-11
+
+- Goal:
+  align the production deploy workflow with the actual SSH access model enabled on SEOHOST.
+- Root cause addressed:
+  the simplified SFTP deploy still assumed password auth on port `22`, but SEOHOST activated SSH access for user `srv110507` on port `57185` and requires key-based login.
+- Files changed:
+  [_deploy-seohost-reusable.yml](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.github/workflows/_deploy-seohost-reusable.yml)
+- Checks run:
+  workflow logic review against the SSH activation email and current GitHub Actions failure logs.
+- Result:
+  deploy now prepares `SEOHOST_SSH_PRIVATE_KEY`, connects with `IdentitiesOnly=yes`, targets `h79.seohost.pl:57185`, and no longer depends on password-based SFTP authentication.
+- Follow-up:
+  rerun the deployment and confirm the job can reach the remote host and begin mirroring `dist`.
+
 ## Remaining Backlog
 
 Priority order for the next steps:
