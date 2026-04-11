@@ -412,6 +412,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .glow-orb,
+  .section-divider::after,
+  .faq-divider::after,
+  .glow-divider::after,
   .card-neon-border,
   .hero-visual-shell,
   .hero-badge::after {
@@ -427,7 +430,8 @@
   .header-mobile-cta,
   .contact-overlay-copy-cluster,
   .contact-overlay-close,
-  .contact-overlay-form {
+  .contact-overlay-form,
+  .contact-success-banner {
     animation: none !important;
     filter: none !important;
     transform: none !important;

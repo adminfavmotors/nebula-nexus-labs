@@ -731,6 +731,27 @@ Priority order for the next steps:
    Goal:
    keep service pages editorial and readable rather than theatrical across all internal routes, not only the service hero.
 
+### Update 2026-04-11
+
+- Goal:
+  complete the next motion cleanup pass after the intro/prerender fixes and remove remaining animation contracts that still relied on paint-heavy blur or overly busy decorative loops.
+- Root cause addressed:
+  the core intro, hero, and reveal systems were already on `transform + opacity`, but the shell layer still animated `filter` in header/mobile/contact states, and decorative dividers/orbs were still running with unnecessarily aggressive always-on timing.
+- Files changed:
+  [src/styles/shell.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/shell.css)
+  [src/index.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/index.css)
+  [src/styles/responsive.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/responsive.css)
+- Checks run:
+  `npm run lint`
+  `npm run test`
+  `npm run build`
+- Result:
+  header hide/show, mobile menu, contact overlay, and success banner no longer animate `filter`; they now use `transform + opacity` only.
+  Persistent `will-change` was removed from `.btn-pill`.
+  Decorative divider sheen and orb pulses were slowed down and weakened, and `prefers-reduced-motion` now disables those decorative tracks as well.
+- Follow-up:
+  do a browser visual pass on mobile and desktop specifically for perceived smoothness in header open/close, contact overlay entry, and long-scroll sections with decorative dividers.
+
 ## Sources Used So Far
 
 Official references used across the completed work:
