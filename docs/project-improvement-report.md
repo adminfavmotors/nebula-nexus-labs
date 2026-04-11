@@ -1,6 +1,6 @@
 # Project Improvement Report
 
-Last updated: 2026-04-10
+Last updated: 2026-04-11
 Workspace: `C:\Users\Admin\Desktop\project\nebula-nexus-labs`
 Status: in progress
 
@@ -639,6 +639,24 @@ Current build snapshot after the SEO/prerender rebuild:
   the deploy now targets the domain document root as a home-relative DirectAdmin path: `domains/node48.pl/public_html/`. This keeps the SSH transport unchanged and fixes only the server-side destination contract.
 - Follow-up:
   rerun the deployment and confirm `rsync` starts transferring files into the domain document root instead of failing on directory creation.
+
+### Update 2026-04-11
+
+- Goal:
+  remove local repo noise, repair the corrupted contact-form anti-spam heuristic, and bring deployment docs back in sync with the deploy workflow that now actually works.
+- Root cause addressed:
+  the uppercase-spam regex in the contact form had been text-corrupted into mojibake, which made the heuristic unreliable for Polish input; temporary GitHub log folders were not ignored; and the deployment docs still described the abandoned `known_hosts` flow instead of the live SSH-key + `rsync` contract.
+- Files changed:
+  [ContactFormPanel.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/contact/ContactFormPanel.tsx),
+  [app.test.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/test/app.test.tsx),
+  [.gitignore](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.gitignore),
+  [production-deployments.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/production-deployments.md)
+- Checks run:
+  `npm run check:text`, `npm run lint`, `npm run test`
+- Result:
+  uppercase-heavy submissions are now evaluated with Unicode-aware letter detection instead of a broken hardcoded character list, the regression is covered by a real submit-path test, local GitHub log dumps no longer pollute repo status, and the deploy documentation now reflects the actual `SEOHOST_GITHUB_ACTIONS_RSA` + SSH + `rsync` workflow.
+- Follow-up:
+  keep the direct browser-to-FormSubmit architecture on the security backlog, because the client-side form remains an abuse surface even after the heuristic fix.
 
 ## Remaining Backlog
 

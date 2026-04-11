@@ -48,17 +48,25 @@ For a static site deployed from GitHub Actions in 2026, the reliable rollback pa
 
 That approach is especially important for shared hosting, where the platform itself usually does not provide instant version rollback.
 
-## Transport Security Requirement
+## Transport Contract
 
-Production deploys now assume `SFTP` over SSH, not plain `FTP`.
+Production deploys now use `rsync` over `SSH`, not plain `FTP`.
 
 Before the workflow can deploy successfully:
 
-1. Enable `SSH` access for the hosting account in the SEOHOST customer panel.
-2. Keep using the main hosting account credentials already stored in GitHub Actions secrets.
-3. Add a production environment secret named `SEOHOST_SSH_KNOWN_HOSTS` that contains the verified `known_hosts` entry for `h79.seohost.pl`.
+1. Enable `SSH` access for the SEOHOST hosting account.
+2. Add the GitHub Actions public key to SEOHOST in `Funkcje zaawansowane -> Klucze SSH` and authorize it.
+3. Store the matching private key in a GitHub Actions secret named `SEOHOST_GITHUB_ACTIONS_RSA`.
+   The workflow accepts either the raw private key or a base64-encoded version of the same key.
 
-This keeps deployment traffic encrypted in transit and prevents the runner from silently trusting a different SSH host key.
+The current workflow deploys with these project-specific SEOHOST values:
+
+- host: `h79.seohost.pl`
+- user: `srv110507`
+- port: `57185`
+- target path: `domains/node48.pl/public_html/`
+
+This keeps deployment traffic encrypted in transit while matching the SSH contract that is actually active on the hosting account.
 
 ## Optional Hardening In GitHub Settings
 

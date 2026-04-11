@@ -640,4 +640,30 @@ describe("critical user flows", () => {
 
     expect(await screen.findByRole("alert")).toBeInTheDocument();
   });
+
+  it("blocks uppercase-heavy submissions with Polish diacritics before the network request is sent", async () => {
+    const fetchMock = vi.fn();
+    const nowSpy = vi.spyOn(Date, "now");
+
+    vi.stubGlobal("fetch", fetchMock);
+    nowSpy.mockReturnValue(40_000);
+
+    renderWithI18n(<ContactForm />);
+
+    const textboxes = screen.getAllByRole("textbox");
+    fireEvent.change(textboxes[0], { target: { value: "Jan Kowalski" } });
+    fireEvent.change(textboxes[1], { target: { value: "jan@example.com" } });
+    fireEvent.change(textboxes[2], {
+      target: { value: "ZAŻÓŁĆ GĘŚLĄ JAŹŃ I KRZYKLIWE OFERTY CZEKAJĄ TERAZ NATYCHMIAST" },
+    });
+    nowSpy.mockReturnValue(45_000);
+
+    fireEvent.submit(screen.getByRole("button").closest("form")!);
+
+    await waitFor(() => {
+      expect(fetchMock).not.toHaveBeenCalled();
+    });
+
+    expect(await screen.findByRole("alert")).toBeInTheDocument();
+  });
 });

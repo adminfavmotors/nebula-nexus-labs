@@ -17,6 +17,8 @@ const CONTACT_FORM_MESSAGE_MAX_LENGTH = 2_000;
 
 const markupPattern = /<[^>]+>/;
 const repeatedCharPattern = /(.)\1{6,}/;
+const nonLetterPattern = /[^\p{L}]/gu;
+const nonUppercaseLetterPattern = /[^\p{Lu}]/gu;
 
 function setContactFormCooldown(timestamp: number) {
   if (typeof window === "undefined") {
@@ -31,13 +33,13 @@ function countLinks(value: string) {
 }
 
 function hasTooManyUppercase(value: string) {
-  const letters = value.replace(/[^a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/g, "");
+  const letters = value.replace(nonLetterPattern, "");
 
   if (letters.length < 12) {
     return false;
   }
 
-  const uppercaseLetters = letters.replace(/[^A-ZĄĆĘŁŃÓŚŹŻ]/g, "");
+  const uppercaseLetters = letters.replace(nonUppercaseLetterPattern, "");
   return uppercaseLetters.length / letters.length > 0.7;
 }
 
