@@ -161,6 +161,8 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
                 className={`contact-success-banner ${showBanner ? "contact-success-banner-open" : ""}`}
                 role="status"
                 aria-live="polite"
+                aria-hidden={!showBanner}
+                hidden={!showBanner}
               >
                 <div className="contact-success-banner-glow" />
                 <p className="contact-success-banner-title">{copy.successTitle}</p>

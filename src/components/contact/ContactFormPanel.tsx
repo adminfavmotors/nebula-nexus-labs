@@ -20,6 +20,15 @@ const repeatedCharPattern = /(.)\1{6,}/;
 const nonLetterPattern = /[^\p{L}]/gu;
 const nonUppercaseLetterPattern = /[^\p{Lu}]/gu;
 
+function isSuccessfulFormSubmitResponse(payload: unknown) {
+  if (!payload || typeof payload !== "object") {
+    return false;
+  }
+
+  const success = (payload as { success?: unknown }).success;
+  return success === true || success === "true";
+}
+
 function setContactFormCooldown(timestamp: number) {
   if (typeof window === "undefined") {
     return;
@@ -135,6 +144,12 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
 
       if (!response.ok) {
         throw new Error("Form submission failed");
+      }
+
+      const responsePayload = await response.json().catch(() => null);
+
+      if (!isSuccessfulFormSubmitResponse(responsePayload)) {
+        throw new Error("Form submission was not accepted");
       }
 
       setContactFormCooldown(Date.now());

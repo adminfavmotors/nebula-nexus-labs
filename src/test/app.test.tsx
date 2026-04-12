@@ -52,6 +52,16 @@ function renderContactOverlayScrollLockHarness() {
   );
 }
 
+function renderContactOverlay(children: React.ReactNode = <button type="button">noop</button>) {
+  return render(
+    <I18nProvider>
+      <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
+        <ContactOverlayProvider>{children}</ContactOverlayProvider>
+      </BrowserRouter>
+    </I18nProvider>,
+  );
+}
+
 function setScrollPosition(value: number) {
   Object.defineProperty(window, "scrollY", {
     configurable: true,
@@ -370,6 +380,20 @@ describe("critical user flows", () => {
     });
   });
 
+  it("keeps the contact success banner hidden until a modal submission succeeds", async () => {
+    renderContactOverlay();
+
+    await waitFor(() => {
+      expect(document.querySelector(".contact-success-banner")).toBeInstanceOf(HTMLDivElement);
+    });
+
+    const banner = document.querySelector(".contact-success-banner");
+
+    expect(banner).toHaveAttribute("hidden");
+    expect(banner).toHaveAttribute("aria-hidden", "true");
+    expect(banner).not.toHaveClass("contact-success-banner-open");
+  });
+
   it("uses Polish by default and switches to English", async () => {
     renderApp();
 
@@ -656,6 +680,41 @@ describe("critical user flows", () => {
     });
 
     expect(await screen.findByRole("status")).toBeInTheDocument();
+  });
+
+  it("does not show modal success when the provider returns HTTP 200 with a failed payload", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ success: "false" }),
+    });
+    const nowSpy = vi.spyOn(Date, "now");
+
+    vi.stubGlobal("fetch", fetchMock);
+    nowSpy.mockReturnValue(50_000);
+
+    renderContactOverlayScrollLockHarness();
+
+    fireEvent.click(screen.getByRole("button", { name: /open contact overlay/i }));
+
+    await waitFor(() => {
+      expect(document.querySelector(".contact-overlay-panel-open")).toBeInstanceOf(HTMLDivElement);
+    });
+
+    const nameInput = document.querySelector('input[name="name"]') as HTMLInputElement;
+    const emailInput = document.querySelector('input[name="email"]') as HTMLInputElement;
+    const messageInput = document.querySelector('textarea[name="message"]') as HTMLTextAreaElement;
+    const overlayForm = document.querySelector("form.contact-overlay-form") as HTMLFormElement;
+
+    fireEvent.change(nameInput, { target: { value: "Jan Kowalski" } });
+    fireEvent.change(emailInput, { target: { value: "jan@example.com" } });
+    fireEvent.change(messageInput, { target: { value: "Potrzebuje nowego landing page." } });
+    nowSpy.mockReturnValue(55_000);
+
+    fireEvent.submit(overlayForm);
+
+    expect(await screen.findByRole("alert")).toBeInTheDocument();
+    expect(document.querySelector(".contact-success-banner")).toHaveAttribute("hidden");
+    expect(document.querySelector(".contact-success-banner")).not.toHaveClass("contact-success-banner-open");
   });
 
   it("blocks suspicious form submissions before the network request is sent", async () => {

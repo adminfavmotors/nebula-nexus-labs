@@ -430,8 +430,7 @@
   .header-mobile-cta,
   .contact-overlay-copy-cluster,
   .contact-overlay-close,
-  .contact-overlay-form,
-  .contact-success-banner {
+  .contact-overlay-form {
     animation: none !important;
     filter: none !important;
     transform: none !important;
@@ -443,6 +442,7 @@
   .contact-success-banner {
     animation: none !important;
     filter: none !important;
+    opacity: 0 !important;
     transform: translateX(-50%) translateY(18px) scale(0.95) !important;
     transition-duration: 0.01ms !important;
     transition-delay: 0ms !important;
