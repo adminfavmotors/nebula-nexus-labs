@@ -770,6 +770,23 @@ Priority order for the next steps:
 - Follow-up:
   verify production after deploy to confirm the CSP console error disappears and React hydration mismatch errors `#418` and `#423` are gone on a true first visit.
 
+### Update 2026-04-12
+
+- Goal:
+  remove the overly strict minimum message length in the contact form while keeping the anti-spam guard intact.
+- Root cause addressed:
+  the message field enforced `minLength=20`, which blocked legitimate short inquiries before any request was sent, even though spam protection already relied on honeypots, cooldowns, fast-submit detection, link limits, markup/repetition checks, uppercase heuristics, and provider-side filtering.
+- Files changed:
+  [src/components/contact/ContactFormPanel.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/contact/ContactFormPanel.tsx)
+- Checks run:
+  `npm run lint`
+  `npm run test`
+  `npm run build`
+- Result:
+  the form now accepts any non-empty message, and the existing anti-spam layers remain in place.
+- Follow-up:
+  observe production submissions for a short period to confirm that the lower threshold improves usability without increasing spam noise.
+
 ## Sources Used So Far
 
 Official references used across the completed work:
