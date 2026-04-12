@@ -29,6 +29,15 @@ function isSuccessfulFormSubmitResponse(payload: unknown) {
   return success === true || success === "true";
 }
 
+function getFormSubmitMessage(payload: unknown) {
+  if (!payload || typeof payload !== "object") {
+    return null;
+  }
+
+  const message = (payload as { message?: unknown }).message;
+  return typeof message === "string" && message.trim().length > 0 ? message.trim() : null;
+}
+
 function setContactFormCooldown(timestamp: number) {
   if (typeof window === "undefined") {
     return;
@@ -68,6 +77,7 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
   const { locale, t } = useI18n();
   const legal = legalUiCopy[locale];
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [hasAttemptedSubmission, setHasAttemptedSubmission] = useState(false);
   const startedAtRef = useRef(Date.now());
@@ -119,16 +129,22 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
       hasTooManyUppercase(message);
 
     if (isCoolingDown || looksSuspicious) {
+      setStatusMessage(null);
       setStatus("error");
       return;
     }
 
+    setStatusMessage(null);
     setStatus("submitting");
     setHasAttemptedSubmission(true);
     formData.append("_replyto", String(formData.get("email") ?? ""));
     formData.append("_subject", `NODE48 inquiry (${locale.toUpperCase()})`);
     formData.append("_template", "table");
     formData.append("locale", locale);
+    formData.append(
+      "_url",
+      typeof window === "undefined" ? "https://node48.pl/" : window.location.href,
+    );
 
     try {
       const response = await fetch(formEndpoint, {
@@ -138,7 +154,6 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
         },
         cache: "no-store",
         credentials: "omit",
-        referrerPolicy: "no-referrer",
         body: formData,
       });
 
@@ -149,6 +164,7 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
       const responsePayload = await response.json().catch(() => null);
 
       if (!isSuccessfulFormSubmitResponse(responsePayload)) {
+        setStatusMessage(getFormSubmitMessage(responsePayload));
         throw new Error("Form submission was not accepted");
       }
 
@@ -157,6 +173,7 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
       startedAtRef.current = Date.now();
       setHasInteracted(false);
       setHasAttemptedSubmission(false);
+      setStatusMessage(null);
       setStatus("success");
 
       if (mode === "modal") {
@@ -280,7 +297,7 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
                   : "contact-form-status-submitting",
           )}
         >
-          {t.contact.status[status]}
+          {status === "error" && statusMessage ? statusMessage : t.contact.status[status]}
         </p>
       ) : null}
     </form>
