@@ -2,29 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://node48.pl/</loc>
+    <lastmod>2026-04-13</lastmod>
+    <priority>1.0</priority>
   </url>
   <url>
     <loc>https://node48.pl/uslugi/strona-wizytowka</loc>
+    <lastmod>2026-04-13</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://node48.pl/uslugi/landing-page</loc>
+    <lastmod>2026-04-13</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://node48.pl/uslugi/strona-firmowa</loc>
+    <lastmod>2026-04-13</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://node48.pl/uslugi/strona-premium-dla-wymagajacych-firm</loc>
+    <lastmod>2026-04-13</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://node48.pl/uslugi/redesign-strony</loc>
+    <lastmod>2026-04-13</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://node48.pl/uslugi/opieka-techniczna</loc>
+    <lastmod>2026-04-13</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://node48.pl/privacy-policy</loc>
+    <lastmod>2026-04-13</lastmod>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://node48.pl/cookie-policy</loc>
+    <lastmod>2026-04-13</lastmod>
+    <priority>0.3</priority>
   </url>
 </urlset>

@@ -4,6 +4,8 @@ import { type PageSeo } from "@/lib/seo";
 import { getServicePageStructuredData } from "@/lib/service-page-seo";
 import { getServicePageDetail } from "@/lib/service-page-details";
 import { getCanonicalServiceSlug, getCanonicalServiceSlugs, getServiceBySlug } from "@/lib/service-pages";
+import { businessPhone, contactEmail } from "@/lib/contact-config";
+import { brandName, ogImageUrl, siteUrl } from "@/lib/site-identity";
 import { homePageMeta } from "@/lib/site-meta";
 
 export type LegalDocumentKey = "privacy" | "cookies";
@@ -20,6 +22,31 @@ export function getHomePageSeo(locale: Locale): PageSeo {
     title: meta.title,
     description: meta.description,
     path: "/",
+    ogImage: ogImageUrl,
+    structuredData: [
+      {
+        id: "organization",
+        schema: {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: brandName,
+          url: siteUrl,
+          logo: ogImageUrl,
+          email: contactEmail,
+          telephone: businessPhone,
+          areaServed: { "@type": "Country", name: "Poland" },
+        },
+      },
+      {
+        id: "website",
+        schema: {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: brandName,
+          url: siteUrl,
+        },
+      },
+    ],
   };
 }
 
@@ -40,6 +67,7 @@ export function getServicePageSeo(locale: Locale, slug: string): PageSeo | null 
     title: detail.metaTitle ?? service.metaTitle,
     description: detail.metaDescription ?? service.metaDescription,
     path: getServicePagePath(canonicalSlug),
+    ogImage: ogImageUrl,
     structuredData: getServicePageStructuredData({
       locale,
       slug: canonicalSlug,

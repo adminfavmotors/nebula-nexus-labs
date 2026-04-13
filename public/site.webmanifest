@@ -1,0 +1,23 @@
+{
+  "name": "NODE48",
+  "short_name": "NODE48",
+  "description": "Projektujemy szybkie strony internetowe, landing page'e i doświadczenia cyfrowe dla firm, które chcą wyglądać nowocześnie i sprzedawać skuteczniej.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#071433",
+  "theme_color": "#071433",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand/node48-logo.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ]
+}

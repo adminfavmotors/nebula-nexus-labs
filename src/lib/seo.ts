@@ -11,6 +11,7 @@ export type PageSeo = {
   description: string;
   path: string;
   robots?: string;
+  ogImage?: string;
   structuredData?: StructuredDataEntry[];
 };
 
@@ -20,6 +21,7 @@ export type SeoSnapshot = {
   path: string;
   canonicalUrl: string;
   robots: string;
+  ogImage?: string;
   structuredData: StructuredDataEntry[];
 };
 
@@ -85,6 +87,7 @@ export function createSeoSnapshot({
   description,
   path,
   robots = "index,follow",
+  ogImage,
   structuredData = [],
 }: PageSeo): SeoSnapshot {
   return {
@@ -93,6 +96,7 @@ export function createSeoSnapshot({
     path,
     canonicalUrl: new URL(path, siteUrl).toString(),
     robots,
+    ogImage,
     structuredData,
   };
 }
@@ -107,9 +111,11 @@ export function createSeoHeadMarkup(snapshot: SeoSnapshot) {
     `<meta property="og:title" content="${escapeAttribute(snapshot.title)}" />`,
     `<meta property="og:description" content="${escapeAttribute(snapshot.description)}" />`,
     `<meta property="og:url" content="${escapeAttribute(snapshot.canonicalUrl)}" />`,
+    ...(snapshot.ogImage ? [`<meta property="og:image" content="${escapeAttribute(snapshot.ogImage)}" />`] : []),
     `<meta name="twitter:title" content="${escapeAttribute(snapshot.title)}" />`,
     `<meta name="twitter:description" content="${escapeAttribute(snapshot.description)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
+    ...(snapshot.ogImage ? [`<meta name="twitter:image" content="${escapeAttribute(snapshot.ogImage)}" />`] : []),
   ];
 
   for (const { id, schema } of snapshot.structuredData) {
@@ -131,6 +137,10 @@ export function applySeoSnapshot(snapshot: SeoSnapshot) {
   upsertMeta('meta[property="og:description"]', { property: "og:description", content: snapshot.description });
   upsertMeta('meta[property="og:url"]', { property: "og:url", content: snapshot.canonicalUrl });
   upsertMeta('meta[property="og:type"]', { property: "og:type", content: "website" });
+  if (snapshot.ogImage) {
+    upsertMeta('meta[property="og:image"]', { property: "og:image", content: snapshot.ogImage });
+    upsertMeta('meta[name="twitter:image"]', { name: "twitter:image", content: snapshot.ogImage });
+  }
   upsertMeta('meta[name="twitter:title"]', { name: "twitter:title", content: snapshot.title });
   upsertMeta('meta[name="twitter:description"]', { name: "twitter:description", content: snapshot.description });
   upsertMeta('meta[name="twitter:card"]', { name: "twitter:card", content: "summary_large_image" });
