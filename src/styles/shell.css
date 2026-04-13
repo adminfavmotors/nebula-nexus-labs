@@ -103,27 +103,36 @@
 .brand-logo {
   position: relative;
   display: inline-flex;
-    align-items: center;
-    justify-content: flex-start;
-    min-width: 0;
-    padding: 0.24rem 0.42rem 0.24rem 0.18rem;
-    isolation: isolate;
-  }
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+  padding: 0.46rem 0.82rem 0.46rem 0.72rem;
+  border: 1px solid rgb(var(--light-cool-rgb) / 0.16);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(10, 22, 62, 0.92), rgba(6, 15, 44, 0.96)),
+    linear-gradient(90deg, rgb(var(--light-cool-rgb) / 0.05), transparent 60%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 10px 24px rgba(0, 8, 28, 0.18);
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    border-color var(--structural-motion-quick) var(--structural-motion-ease),
+    background-color var(--structural-motion-quick) var(--structural-motion-ease),
+    box-shadow var(--structural-motion-quick) var(--structural-motion-ease);
+}
 
-  .brand-logo::before {
-    content: "";
-    position: absolute;
-    left: -0.35rem;
-    top: 50%;
-    width: 3.4rem;
-    height: 3.4rem;
-    border-radius: 999px;
-    background: radial-gradient(circle, rgb(var(--light-cool-rgb) / 0.24) 0%, transparent 72%);
-    transform: translateY(-50%);
-    filter: blur(12px);
-    opacity: 0.92;
-    pointer-events: none;
-  }
+.brand-logo::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 42%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03), transparent 32%, transparent 72%, rgba(108, 188, 255, 0.04));
+  pointer-events: none;
+}
 
   .brand-logo-name {
     position: relative;
@@ -138,7 +147,7 @@
     line-height: 1;
     letter-spacing: 0.03em;
     font-size-adjust: var(--font-display-size-adjust);
-    text-shadow: 0 8px 28px rgba(0, 0, 0, 0.26);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
   }
 
   .brand-logo-prefix,
@@ -153,26 +162,25 @@
   }
 
   .brand-logo-suffix {
-    color: #31cbff;
+    color: #6cbcff;
     text-shadow:
-      0 0 18px rgb(var(--light-line-rgb) / 0.34),
-      0 0 36px rgb(var(--light-cool-rgb) / 0.18);
+      0 0 10px rgb(var(--light-line-rgb) / 0.16);
   }
 
 .logo-neon-ring {
   position: absolute;
-  inset: -6px -14px;
-  border-radius: 12px;
+  inset: -3px -6px;
+  border-radius: 999px;
   pointer-events: none;
   opacity: 0;
-  border: 1px solid var(--light-interactive-border);
-  background: linear-gradient(180deg, rgba(6, 15, 46, 0.92), rgba(6, 15, 46, 0.92));
+  border: 1px solid rgb(var(--light-cool-rgb) / 0.16);
+  background: transparent;
   box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.05),
-      0 0 0 1px var(--light-interactive-ring),
-      0 0 20px var(--light-ambient-soft);
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 8px 18px rgba(0, 8, 28, 0.1);
   transition:
     opacity 0.3s ease,
+    border-color 0.3s ease,
     box-shadow 0.3s ease;
 }
 
@@ -344,11 +352,22 @@
 
 .header-brand-shell:hover .logo-neon-ring,
 .header-brand-shell:focus-within .logo-neon-ring {
-  opacity: 1;
+  opacity: 0.9;
+  border-color: rgb(var(--light-cool-rgb) / 0.22);
   box-shadow:
-    0 0 0 1px var(--light-interactive-ring),
-    0 0 26px var(--light-ambient-base),
-    0 0 32px var(--light-warm-soft);
+    0 0 0 1px rgb(var(--light-cool-rgb) / 0.06),
+    0 12px 22px rgba(0, 8, 28, 0.14);
+}
+
+.header-brand-shell:hover .brand-logo,
+.header-brand-shell:focus-within .brand-logo {
+  border-color: rgb(var(--light-cool-rgb) / 0.2);
+  background:
+    linear-gradient(180deg, rgba(11, 24, 68, 0.94), rgba(7, 17, 48, 0.98)),
+    linear-gradient(90deg, rgb(var(--light-cool-rgb) / 0.06), transparent 60%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 12px 28px rgba(0, 8, 28, 0.22);
 }
 
   .header-nav-link {
