@@ -1,6 +1,5 @@
 import { CircleHelp, MessageCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import { Reveal } from "@/components/primitives/Reveal";
 import { Section } from "@/components/primitives/Section";
 import { SurfaceCard } from "@/components/primitives/SurfaceCard";
 import { ActionLink } from "@/components/primitives/Actions";
@@ -9,9 +8,9 @@ const CTASection = () => {
   const { t } = useI18n();
 
   return (
-    <Section tone="deep" className="section-deep-focus">
+    <Section tone="deep" className="section-deep-focus" pageEntryOrder={8}>
       <div className="cta-card-grid">
-        <Reveal as={SurfaceCard} variant="deep" className="cta-card" delay={0}>
+        <SurfaceCard variant="deep" className="cta-card">
           <div className="cta-card-stack">
             <div className="icon-circle">
               <MessageCircle size={20} className="icon-circle-glyph" />
@@ -26,9 +25,9 @@ const CTASection = () => {
               <ActionLink href="#contact">{t.cta.button}</ActionLink>
             </div>
           </div>
-        </Reveal>
+        </SurfaceCard>
 
-        <Reveal as={SurfaceCard} variant="deep" className="cta-card" delay={0.08}>
+        <SurfaceCard variant="deep" className="cta-card">
           <div className="cta-card-stack">
             <div className="icon-circle">
               <CircleHelp size={20} className="icon-circle-glyph" />
@@ -50,7 +49,7 @@ const CTASection = () => {
               </ActionLink>
             </div>
           </div>
-        </Reveal>
+        </SurfaceCard>
       </div>
     </Section>
   );

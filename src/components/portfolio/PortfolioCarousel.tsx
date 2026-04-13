@@ -4,7 +4,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cx } from "@/lib/cx";
 import type { ProjectCase } from "@/lib/project-cases";
 import { IconButton } from "@/components/primitives/Actions";
-import { Reveal } from "@/components/primitives/Reveal";
 import PortfolioCaseCard from "@/components/portfolio/PortfolioCaseCard";
 import "./portfolio-carousel.css";
 
@@ -53,7 +52,7 @@ const PortfolioCarousel = ({
   }, [emblaApi]);
 
   return (
-    <Reveal className="portfolio-carousel" delay={0.12}>
+    <div className="portfolio-carousel">
       <div className="portfolio-carousel__toolbar">
         <span className="portfolio-carousel__collection">{collectionLabel}</span>
 
@@ -95,7 +94,7 @@ const PortfolioCarousel = ({
           ))}
         </div>
       </div>
-    </Reveal>
+    </div>
   );
 };
 

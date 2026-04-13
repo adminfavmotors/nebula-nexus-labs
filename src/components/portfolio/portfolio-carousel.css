@@ -48,7 +48,6 @@
   display: flex;
   align-items: stretch;
   touch-action: pan-y pinch-zoom;
-  will-change: transform;
 }
 
 .portfolio-carousel__stage {
@@ -111,9 +110,11 @@
     0 10px 26px rgba(0, 61, 179, 0.08);
   isolation: isolate;
   transition:
-    transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.32s ease;
+    transform var(--structural-motion-base) var(--structural-motion-ease),
+    box-shadow var(--structural-motion-base) var(--structural-motion-ease),
+    border-color var(--structural-motion-base) var(--structural-motion-ease),
+    background-color var(--structural-motion-base) var(--structural-motion-ease);
+  outline: none;
 }
 
 .portfolio-card::before,
@@ -173,7 +174,9 @@
   object-fit: cover;
   transform: scale(1.01);
   filter: saturate(0.98) contrast(1.02) brightness(0.95);
-  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    transform calc(var(--structural-motion-slow) + 40ms) var(--structural-motion-ease-strong),
+    filter var(--structural-motion-slow) var(--structural-motion-ease);
 }
 
 .portfolio-card__image-tint {
@@ -277,8 +280,8 @@
   margin-top: auto;
   color: #8cc0ff;
   transition:
-    color 0.24s ease,
-    transform 0.24s ease;
+    color var(--structural-motion-quick) var(--structural-motion-ease),
+    transform var(--structural-motion-quick) var(--structural-motion-ease);
 }
 
 .portfolio-carousel__dots {
@@ -293,12 +296,14 @@
   width: 0.62rem;
   height: 0.52rem;
   border-radius: 999px;
+  outline: none;
   background: rgba(0, 89, 255, 0.16);
   box-shadow: inset 0 0 0 1px rgba(0, 89, 255, 0.08);
   transition:
     width 0.24s ease,
     background-color 0.24s ease,
-    box-shadow 0.24s ease;
+    box-shadow 0.24s ease,
+    transform 0.24s ease;
 }
 
 .portfolio-carousel__dot--active {
@@ -308,28 +313,35 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .portfolio-card:hover {
-    transform: translateY(-0.38rem);
+  .portfolio-card:is(:hover, :focus-within) {
     border-color: rgba(136, 188, 255, 0.22);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 0 0 1px rgba(136, 188, 255, 0.05),
-      0 34px 78px rgba(2, 8, 26, 0.24),
-      0 18px 38px rgba(0, 89, 255, 0.12);
+      0 0 0 1px var(--light-interactive-ring),
+      0 30px 72px rgba(2, 8, 26, 0.24),
+      0 16px 34px rgba(0, 89, 255, 0.1);
   }
 
-  .portfolio-card:hover::after {
+  .portfolio-card:is(:hover, :focus-within)::after {
     opacity: 0.22;
   }
 
-  .portfolio-card:hover .portfolio-card__image {
-    transform: scale(1.018);
+  .portfolio-card:is(:hover, :focus-within) .portfolio-card__image {
+    transform: scale(1.012);
+    filter: saturate(1) contrast(1.01) brightness(0.98);
   }
 
-  .portfolio-card:hover .portfolio-card__cta {
+  .portfolio-card:is(:hover, :focus-within) .portfolio-card__cta {
     color: #ffffff;
-    transform: translateX(0.1rem);
   }
+}
+
+.portfolio-carousel__dot:is(:hover, :focus-visible) {
+  background: rgb(var(--light-cool-rgb) / 0.34);
+  box-shadow:
+    0 0 0 1px rgb(var(--light-cool-rgb) / 0.18),
+    0 0 18px rgb(var(--light-cool-rgb) / 0.16);
+  transform: scaleX(1.08);
 }
 
 @media (min-width: 768px) {

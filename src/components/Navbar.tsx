@@ -6,6 +6,7 @@ import { cx } from "@/lib/cx";
 import { ActionLink } from "@/components/primitives/Actions";
 import BrandLogo from "@/components/BrandLogo";
 import { useContactOverlay } from "@/components/contact/contact-overlay-context";
+import { structuralMotionTimings } from "@/lib/motion";
 
 const HEADER_REVEAL_OFFSET = 24;
 const HEADER_HIDE_OFFSET = 120;
@@ -32,6 +33,7 @@ const Navbar = () => {
   const isHomePage = location.pathname === "/";
   const resolveSectionHref = (href: string) => `/${href}`;
   const contactHref = isHomePage ? "#contact" : "/#contact";
+  const mobileRevealDelayStart = structuralMotionTimings.mobileRevealStartMs;
 
   const handleContactClick = (event: MouseEvent<HTMLAnchorElement>) => {
     if (isHomePage) {
@@ -172,7 +174,13 @@ const Navbar = () => {
           menuOpen && "header-shell-menu-open",
         )}
       >
-        <div className={cx("header-panel", scrolled ? "header-panel-scrolled" : "header-panel-idle")}>
+        <div
+          className={cx(
+            "header-panel",
+            scrolled ? "header-panel-scrolled" : "header-panel-idle",
+            menuOpen && "header-panel-menu-open",
+          )}
+        >
           <div className="header-brand-slot">
             <div className="header-brand-shell">
               <span className="logo-neon-ring" aria-hidden="true" />
@@ -269,7 +277,9 @@ const Navbar = () => {
                 "header-mobile-link",
                 menuOpen ? "header-mobile-link-open" : "header-mobile-link-closed",
               )}
-              style={{ "--mobile-link-delay": `${120 + index * 55}ms` } as CSSProperties}
+              style={{
+                "--mobile-link-delay": `${mobileRevealDelayStart + index * structuralMotionTimings.staggerMs}ms`,
+              } as CSSProperties}
             >
               {link.label}
             </Link>
@@ -282,7 +292,9 @@ const Navbar = () => {
               "header-mobile-cta header-mobile-cta-base",
               menuOpen ? "header-mobile-cta-open" : "header-mobile-cta-closed",
             )}
-            style={{ "--mobile-link-delay": `${120 + t.nav.links.length * 55}ms` } as CSSProperties}
+            style={{
+              "--mobile-link-delay": `${mobileRevealDelayStart + t.nav.links.length * structuralMotionTimings.staggerMs}ms`,
+            } as CSSProperties}
           >
             {t.nav.cta}
           </ActionLink>

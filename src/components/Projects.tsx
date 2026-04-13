@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react";
 import { useI18n } from "@/lib/i18n";
-import { Reveal } from "@/components/primitives/Reveal";
 import { Section, SectionHeader } from "@/components/primitives/Section";
 import { ViewportMount } from "@/components/primitives/ViewportMount";
 
@@ -28,10 +27,10 @@ const Projects = () => {
   const { t } = useI18n();
 
   return (
-    <Section id="projects" tone="light" className="section-light-showcase projects-stage">
+    <Section id="projects" tone="light" className="section-light-showcase projects-stage" pageEntryOrder={4}>
       <SectionHeader
         tone="light"
-        title={<Reveal as="span" delay={0.05} className="section-title-inline">{t.projects.title}</Reveal>}
+        title={<span className="section-title-inline">{t.projects.title}</span>}
         titleClassName="projects-title"
       />
 

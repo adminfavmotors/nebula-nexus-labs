@@ -411,6 +411,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .site-structural-motion-layer,
+  .hero-section-aurora,
+  .header-mobile-glow,
+  .contact-success-banner-glow,
   .glow-orb,
   .section-divider::after,
   .faq-divider::after,
@@ -424,13 +428,16 @@
   .hero-enter,
   .hero-enter-word,
   .hero-enter-visual,
+  .page-entry-shell > section,
+  .cookie-consent-layer,
   .header-mobile-panel,
   .header-mobile-panel-shell,
   .header-mobile-link,
   .header-mobile-cta,
   .contact-overlay-copy-cluster,
   .contact-overlay-close,
-  .contact-overlay-form {
+  .contact-overlay-form,
+  .contact-success-banner {
     animation: none !important;
     filter: none !important;
     transform: none !important;
@@ -442,8 +449,7 @@
   .contact-success-banner {
     animation: none !important;
     filter: none !important;
-    opacity: 0 !important;
-    transform: translateX(-50%) translateY(18px) scale(0.95) !important;
+    transform: translateX(-50%) translateY(var(--structural-motion-distance-md)) !important;
     transition-duration: 0.01ms !important;
     transition-delay: 0ms !important;
   }
@@ -453,11 +459,4 @@
     transform: translateX(-50%) translateY(0) scale(1) !important;
   }
 
-  .reveal {
-    opacity: 1;
-    filter: none;
-    transform: none;
-    transition-duration: 0.01ms;
-    transition-delay: 0ms !important;
-  }
 }

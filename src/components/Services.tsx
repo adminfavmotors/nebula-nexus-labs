@@ -2,7 +2,6 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
 import { getServiceCatalog } from "@/lib/service-catalog";
-import { Reveal } from "@/components/primitives/Reveal";
 import { Section, SectionTitle } from "@/components/primitives/Section";
 
 const Services = () => {
@@ -10,20 +9,17 @@ const Services = () => {
   const services = getServiceCatalog(locale);
 
   return (
-    <Section id="services" tone="light" className="section-light-listing">
-      <Reveal as={SectionTitle} tone="light" className="services-title" delay={0.05}>
+    <Section id="services" tone="light" className="section-light-listing" pageEntryOrder={2}>
+      <SectionTitle tone="light" className="services-title">
         {t.services.title}
-      </Reveal>
+      </SectionTitle>
 
       <div className="services-list-shell">
         {services.map((service, i) => (
           <div key={i}>
             <div className="section-divider" />
-            <Reveal
-              as={Link}
+            <Link
               to={`/uslugi/${service.slug}`}
-              direction="left"
-              delay={i * 0.07}
               className="services-item"
             >
               <span className="services-item-number">
@@ -40,7 +36,7 @@ const Services = () => {
               <div className="icon-circle services-item-icon">
                 <ArrowRight size={16} className="services-item-arrow" />
               </div>
-            </Reveal>
+            </Link>
           </div>
         ))}
         <div className="section-divider" />

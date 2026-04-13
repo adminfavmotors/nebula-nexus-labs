@@ -10,6 +10,7 @@ type SiteLayoutProps = {
 const SiteLayout = ({ children }: SiteLayoutProps) => {
   return (
     <div className="site-layout-root">
+      <div className="site-structural-motion-layer" aria-hidden="true" />
       <Navbar />
       {children}
       <Footer />

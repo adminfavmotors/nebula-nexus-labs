@@ -1,6 +1,5 @@
 import { Shield, Zap, Users } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import { Reveal } from "@/components/primitives/Reveal";
 import { Section, SectionTitle } from "@/components/primitives/Section";
 import { SurfaceCard } from "@/components/primitives/SurfaceCard";
 
@@ -13,22 +12,16 @@ const WhyUs = () => {
   ];
 
   return (
-    <Section id="why-us" tone="deep" className="section-deep-focus">
+    <Section id="why-us" tone="deep" className="section-deep-focus" pageEntryOrder={5}>
       <div className="glow-orb section-orb section-orb-why-a" />
       <div className="glow-orb glow-orb-b section-orb section-orb-why-b" />
 
-      <Reveal as={SectionTitle} tone="deep" className="why-us-title" delay={0.05}>
+      <SectionTitle tone="deep" className="why-us-title">
         {t.whyUs.title}
-      </Reveal>
+      </SectionTitle>
       <div className="why-us-grid">
         {items.map((item, i) => (
-          <Reveal
-            as={SurfaceCard}
-            key={i}
-            variant="deep"
-            className="why-us-card"
-            delay={i * 0.12}
-          >
+          <SurfaceCard key={i} variant="deep" className="why-us-card">
             <div className="why-us-card-stack">
               <div className="icon-circle">
                 <item.icon size={20} className="icon-circle-glyph" />
@@ -36,7 +29,7 @@ const WhyUs = () => {
               <h3 className="feature-card-title">{item.title}</h3>
               <p className="section-copy-dark copy-pretty why-us-card-copy">{item.desc}</p>
             </div>
-          </Reveal>
+          </SurfaceCard>
         ))}
       </div>
     </Section>
