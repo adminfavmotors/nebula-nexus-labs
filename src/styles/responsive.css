@@ -346,12 +346,7 @@
   }
 
   .brand-logo {
-    padding-right: 0.2rem;
-  }
-
-  .brand-logo::before {
-    width: 2.85rem;
-    height: 2.85rem;
+    padding: 0.44rem 0.74rem 0.44rem 0.66rem;
   }
 
   .brand-logo-prefix,
@@ -374,14 +369,7 @@
   }
 
   .brand-logo {
-    padding: 0.2rem 0.24rem 0.2rem 0.08rem;
-  }
-
-  .brand-logo::before {
-    left: -0.22rem;
-    width: 2.45rem;
-    height: 2.45rem;
-    filter: blur(10px);
+    padding: 0.38rem 0.62rem 0.38rem 0.56rem;
   }
 
   .brand-logo-prefix,
@@ -457,6 +445,15 @@
   .contact-success-banner-open {
     opacity: 1 !important;
     transform: translateX(-50%) translateY(0) scale(1) !important;
+  }
+
+  .brand-logo-prefix::before,
+  .brand-logo-prefix::after,
+  .brand-logo-suffix::before,
+  .brand-logo-suffix::after {
+    animation: none !important;
+    opacity: 0 !important;
+    transform: translate3d(0, 0, 0) !important;
   }
 
 }

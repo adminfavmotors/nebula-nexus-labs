@@ -15,8 +15,8 @@ const BrandLogo = ({ href, className }: BrandLogoProps) => {
   return (
     <Link to={href} className={cx("brand-logo", className)} aria-label={`${brandName} - strona główna`}>
       <span className="brand-logo-name" aria-hidden="true">
-        <span className="brand-logo-prefix">{brandPrefix}</span>
-        {brandSuffix ? <span className="brand-logo-suffix">{brandSuffix}</span> : null}
+        <span className="brand-logo-prefix" data-text={brandPrefix}>{brandPrefix}</span>
+        {brandSuffix ? <span className="brand-logo-suffix" data-text={brandSuffix}>{brandSuffix}</span> : null}
       </span>
     </Link>
   );

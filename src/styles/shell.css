@@ -106,15 +106,15 @@
   align-items: center;
   justify-content: flex-start;
   min-width: 0;
-  padding: 0.46rem 0.82rem 0.46rem 0.72rem;
-  border: 1px solid rgb(var(--light-cool-rgb) / 0.16);
+  padding: 0.5rem 0.92rem 0.5rem 0.82rem;
+  border: 1px solid rgb(var(--light-cool-rgb) / 0.14);
   border-radius: 999px;
   background:
-    linear-gradient(180deg, rgba(10, 22, 62, 0.92), rgba(6, 15, 44, 0.96)),
-    linear-gradient(90deg, rgb(var(--light-cool-rgb) / 0.05), transparent 60%);
+    linear-gradient(180deg, rgba(10, 23, 68, 0.96), rgba(6, 16, 48, 0.98)),
+    linear-gradient(90deg, rgb(var(--light-cool-rgb) / 0.04), transparent 64%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 10px 24px rgba(0, 8, 28, 0.18);
+    0 10px 22px rgba(0, 8, 28, 0.16);
   isolation: isolate;
   overflow: hidden;
   transition:
@@ -126,11 +126,11 @@
 .brand-logo::before {
   content: "";
   position: absolute;
-  inset: 1px;
+  inset: 3px;
   border-radius: inherit;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 42%),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03), transparent 32%, transparent 72%, rgba(108, 188, 255, 0.04));
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 40%);
+  border: 1px solid rgb(var(--light-cool-rgb) / 0.14);
   pointer-events: none;
 }
 
@@ -147,11 +147,13 @@
     line-height: 1;
     letter-spacing: 0.03em;
     font-size-adjust: var(--font-display-size-adjust);
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
   }
 
   .brand-logo-prefix,
   .brand-logo-suffix {
+    position: relative;
+    display: inline-block;
     font-size: clamp(1.08rem, 1rem + 0.82vw, 1.48rem);
     font-weight: 700;
     letter-spacing: clamp(0.055em, 0.02em + 0.28vw, 0.115em);
@@ -162,22 +164,55 @@
   }
 
   .brand-logo-suffix {
-    color: #6cbcff;
-    text-shadow:
-      0 0 10px rgb(var(--light-line-rgb) / 0.16);
+    color: #77c5ff;
   }
+
+.brand-logo-prefix::before,
+.brand-logo-prefix::after,
+.brand-logo-suffix::before,
+.brand-logo-suffix::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+}
+
+.brand-logo-prefix::before,
+.brand-logo-suffix::before {
+  clip-path: inset(0 0 58% 0);
+  text-shadow:
+    -1px 0 0 rgba(151, 213, 255, 0.34),
+    1px 0 0 rgba(73, 117, 205, 0.12);
+}
+
+.brand-logo-prefix::after,
+.brand-logo-suffix::after {
+  clip-path: inset(62% 0 0 0);
+  text-shadow:
+    1px 0 0 rgba(92, 160, 255, 0.28),
+    -1px 0 0 rgba(18, 35, 83, 0.36);
+}
+
+.brand-logo-suffix::before,
+.brand-logo-suffix::after {
+  color: #9bd8ff;
+}
 
 .logo-neon-ring {
   position: absolute;
-  inset: -3px -6px;
+  inset: -7px -14px;
   border-radius: 999px;
   pointer-events: none;
-  opacity: 0;
-  border: 1px solid rgb(var(--light-cool-rgb) / 0.16);
-  background: transparent;
+  opacity: 0.56;
+  border: 1px solid rgba(28, 58, 130, 0.64);
+  background:
+    radial-gradient(circle at center, rgb(var(--light-cool-rgb) / 0.05), transparent 74%);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.03),
-    0 8px 18px rgba(0, 8, 28, 0.1);
+    inset 0 1px 0 rgba(255, 255, 255, 0.02),
+    0 0 0 1px rgba(4, 15, 46, 0.32);
   transition:
     opacity 0.3s ease,
     border-color 0.3s ease,
@@ -352,22 +387,129 @@
 
 .header-brand-shell:hover .logo-neon-ring,
 .header-brand-shell:focus-within .logo-neon-ring {
-  opacity: 0.9;
-  border-color: rgb(var(--light-cool-rgb) / 0.22);
+  opacity: 0.92;
+  border-color: rgb(var(--light-cool-rgb) / 0.18);
   box-shadow:
-    0 0 0 1px rgb(var(--light-cool-rgb) / 0.06),
-    0 12px 22px rgba(0, 8, 28, 0.14);
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 0 0 1px rgba(8, 22, 64, 0.28);
 }
 
 .header-brand-shell:hover .brand-logo,
 .header-brand-shell:focus-within .brand-logo {
-  border-color: rgb(var(--light-cool-rgb) / 0.2);
+  border-color: rgb(var(--light-cool-rgb) / 0.16);
   background:
-    linear-gradient(180deg, rgba(11, 24, 68, 0.94), rgba(7, 17, 48, 0.98)),
-    linear-gradient(90deg, rgb(var(--light-cool-rgb) / 0.06), transparent 60%);
+    linear-gradient(180deg, rgba(12, 27, 78, 0.96), rgba(7, 18, 52, 0.98)),
+    linear-gradient(90deg, rgb(var(--light-cool-rgb) / 0.05), transparent 64%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 12px 28px rgba(0, 8, 28, 0.22);
+    0 12px 24px rgba(0, 8, 28, 0.16);
+}
+
+.header-brand-shell:hover .brand-logo-prefix::before,
+.header-brand-shell:focus-within .brand-logo-prefix::before {
+  animation: brand-logo-glitch-upper 360ms steps(2, end) 1;
+}
+
+.header-brand-shell:hover .brand-logo-prefix::after,
+.header-brand-shell:focus-within .brand-logo-prefix::after {
+  animation: brand-logo-glitch-lower 320ms steps(2, end) 1 40ms;
+}
+
+.header-brand-shell:hover .brand-logo-suffix::before,
+.header-brand-shell:focus-within .brand-logo-suffix::before {
+  animation: brand-logo-glitch-upper-strong 420ms steps(2, end) 1;
+}
+
+.header-brand-shell:hover .brand-logo-suffix::after,
+.header-brand-shell:focus-within .brand-logo-suffix::after {
+  animation: brand-logo-glitch-lower-strong 360ms steps(2, end) 1 48ms;
+}
+
+@keyframes brand-logo-glitch-upper {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+
+  18% {
+    opacity: 0.3;
+    transform: translate3d(-1px, -1px, 0);
+  }
+
+  46% {
+    opacity: 0.18;
+    transform: translate3d(2px, 0, 0);
+  }
+
+  72% {
+    opacity: 0.12;
+    transform: translate3d(-1px, 1px, 0);
+  }
+}
+
+@keyframes brand-logo-glitch-lower {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+
+  22% {
+    opacity: 0.22;
+    transform: translate3d(1px, 1px, 0);
+  }
+
+  58% {
+    opacity: 0.14;
+    transform: translate3d(-2px, 0, 0);
+  }
+}
+
+@keyframes brand-logo-glitch-upper-strong {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+
+  14% {
+    opacity: 0.42;
+    transform: translate3d(-2px, -1px, 0);
+  }
+
+  38% {
+    opacity: 0.28;
+    transform: translate3d(2px, 1px, 0);
+  }
+
+  62% {
+    opacity: 0.2;
+    transform: translate3d(-1px, 0, 0);
+  }
+}
+
+@keyframes brand-logo-glitch-lower-strong {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+
+  20% {
+    opacity: 0.3;
+    transform: translate3d(1px, 1px, 0);
+  }
+
+  44% {
+    opacity: 0.2;
+    transform: translate3d(-2px, 0, 0);
+  }
+
+  74% {
+    opacity: 0.12;
+    transform: translate3d(1px, -1px, 0);
+  }
 }
 
   .header-nav-link {
