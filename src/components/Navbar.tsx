@@ -183,7 +183,6 @@ const Navbar = () => {
         >
           <div className="header-brand-slot">
             <div className="header-brand-shell">
-              <span className="logo-neon-ring" aria-hidden="true" />
               <BrandLogo href="/#home" />
             </div>
           </div>
