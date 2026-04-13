@@ -1,16 +1,24 @@
+import { useRef, type CSSProperties } from "react";
 import { CircleHelp, MessageCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { useReveal } from "@/lib/use-reveal";
 import { Section } from "@/components/primitives/Section";
 import { SurfaceCard } from "@/components/primitives/SurfaceCard";
 import { ActionLink } from "@/components/primitives/Actions";
 
 const CTASection = () => {
   const { t } = useI18n();
+  const gridRef = useRef<HTMLDivElement>(null);
+  useReveal(gridRef);
 
   return (
     <Section tone="deep" className="section-deep-focus" pageEntryOrder={8}>
-      <div className="cta-card-grid">
-        <SurfaceCard variant="deep" className="cta-card">
+      <div ref={gridRef} className="cta-card-grid reveal-group">
+        <SurfaceCard
+          variant="deep"
+          className="cta-card reveal-item"
+          style={{ "--reveal-i": 0 } as CSSProperties}
+        >
           <div className="cta-card-stack">
             <div className="icon-circle">
               <MessageCircle size={20} className="icon-circle-glyph" />
@@ -27,7 +35,11 @@ const CTASection = () => {
           </div>
         </SurfaceCard>
 
-        <SurfaceCard variant="deep" className="cta-card">
+        <SurfaceCard
+          variant="deep"
+          className="cta-card reveal-item"
+          style={{ "--reveal-i": 1 } as CSSProperties}
+        >
           <div className="cta-card-stack">
             <div className="icon-circle">
               <CircleHelp size={20} className="icon-circle-glyph" />

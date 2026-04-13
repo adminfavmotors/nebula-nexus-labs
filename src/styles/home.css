@@ -1629,3 +1629,33 @@
     transform: translate3d(0, 0, 0);
   }
 }
+
+/* ─── Scroll Reveal ─────────────────────────────────────────────────────────
+   Usage:
+     1. Add useReveal(ref) hook to the parent container → sets data-reveal="visible"
+     2. Add className="reveal-group" + ref to the container
+     3. Add className="reveal-item" + style={{ "--reveal-i": i }} to each child
+   GPU-only: only transform + opacity animated. Zero layout cost.
+   ──────────────────────────────────────────────────────────────────────── */
+
+.reveal-item {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 380ms ease-out,
+    transform 380ms ease-out;
+  transition-delay: calc(var(--reveal-i, 0) * 72ms);
+}
+
+.reveal-group[data-reveal="visible"] .reveal-item {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

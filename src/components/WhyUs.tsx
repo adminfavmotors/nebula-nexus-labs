@@ -1,10 +1,15 @@
+import { useRef, type CSSProperties } from "react";
 import { Shield, Zap, Users } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { useReveal } from "@/lib/use-reveal";
 import { Section, SectionTitle } from "@/components/primitives/Section";
 import { SurfaceCard } from "@/components/primitives/SurfaceCard";
 
 const WhyUs = () => {
   const { t } = useI18n();
+  const gridRef = useRef<HTMLDivElement>(null);
+  useReveal(gridRef);
+
   const items = [
     { icon: Shield, ...t.whyUs.items[0] },
     { icon: Zap, ...t.whyUs.items[1] },
@@ -19,9 +24,14 @@ const WhyUs = () => {
       <SectionTitle tone="deep" className="why-us-title">
         {t.whyUs.title}
       </SectionTitle>
-      <div className="why-us-grid">
+      <div ref={gridRef} className="why-us-grid reveal-group">
         {items.map((item, i) => (
-          <SurfaceCard key={i} variant="deep" className="why-us-card">
+          <SurfaceCard
+            key={i}
+            variant="deep"
+            className="why-us-card reveal-item"
+            style={{ "--reveal-i": i } as CSSProperties}
+          >
             <div className="why-us-card-stack">
               <div className="icon-circle">
                 <item.icon size={20} className="icon-circle-glyph" />

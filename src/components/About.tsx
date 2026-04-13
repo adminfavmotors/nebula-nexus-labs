@@ -1,8 +1,12 @@
+import { useRef, type CSSProperties } from "react";
 import { useI18n } from "@/lib/i18n";
+import { useReveal } from "@/lib/use-reveal";
 import { Section, SectionTitle } from "@/components/primitives/Section";
 
 const About = () => {
   const { t } = useI18n();
+  const thesesRef = useRef<HTMLDivElement>(null);
+  useReveal(thesesRef, { threshold: 0.08 });
 
   return (
     <Section id="about" tone="light" className="section-light-editorial" pageEntryOrder={1}>
@@ -14,17 +18,15 @@ const About = () => {
           <span>{t.about.titleLine2end} </span>
           <span>{t.about.titleLine3}</span>
         </SectionTitle>
-        <div className="about-theses">
+        <div ref={thesesRef} className="about-theses reveal-group">
           {t.about.theses.map((item, i) => (
-            <div key={i}>
-              <div className="about-thesis-card">
-                <span className="about-thesis-number">
-                  {item.num}
-                </span>
-                <span className="about-thesis-copy">
-                  {item.text}
-                </span>
-              </div>
+            <div
+              key={i}
+              className="about-thesis-card reveal-item"
+              style={{ "--reveal-i": i } as CSSProperties}
+            >
+              <span className="about-thesis-number">{item.num}</span>
+              <span className="about-thesis-copy">{item.text}</span>
             </div>
           ))}
         </div>

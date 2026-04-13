@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import { ChevronDown } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { useReveal } from "@/lib/use-reveal";
 import { Section, SectionTitle } from "@/components/primitives/Section";
 import { ActionButton } from "@/components/primitives/Actions";
 import { useContactOverlay } from "@/components/contact/contact-overlay-context";
@@ -9,6 +10,8 @@ const FAQ = () => {
   const [open, setOpen] = useState(0);
   const { t } = useI18n();
   const { openContactOverlay } = useContactOverlay();
+  const listRef = useRef<HTMLDivElement>(null);
+  useReveal(listRef, { threshold: 0.06 });
 
   return (
     <Section id="faq" tone="light" className="section-light-atmosphere" pageEntryOrder={6}>
@@ -30,13 +33,17 @@ const FAQ = () => {
           </ActionButton>
         </div>
 
-        <div className="faq-list">
+        <div ref={listRef} className="faq-list reveal-group">
           {t.faq.items.map((item, i) => {
             const isOpen = open === i;
             const triggerId = `faq-trigger-${i}`;
             const panelId = `faq-panel-${i}`;
             return (
-              <div key={i}>
+              <div
+                key={i}
+                className="reveal-item"
+                style={{ "--reveal-i": i } as CSSProperties}
+              >
                 <div className="faq-divider" />
                 <button
                   type="button"
@@ -46,9 +53,7 @@ const FAQ = () => {
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                 >
-                  <span className="faq-item-question">
-                    {item.question}
-                  </span>
+                  <span className="faq-item-question">{item.question}</span>
                   <ChevronDown size={18} className="faq-item-chevron" />
                 </button>
                 <div
