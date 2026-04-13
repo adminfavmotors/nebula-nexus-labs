@@ -196,10 +196,10 @@
   }
 
   .trust-strip-eyebrow-brand {
-    color: rgb(var(--light-cool-deep-rgb));
+    color: #144fc5;
     text-shadow:
-      0 0 14px rgb(var(--light-cool-rgb) / 0.16),
-      0 0 18px rgb(var(--light-warm-rgb) / 0.08);
+      0 0 12px rgb(var(--light-cool-rgb) / 0.12),
+      0 0 16px rgb(var(--light-warm-rgb) / 0.06);
   }
 
   .trust-strip-title {
@@ -989,7 +989,7 @@
   .services-item-number {
     min-width: 1.75rem;
     align-self: center;
-    color: #2979ff;
+    color: #144fc5;
     font-family: "DM Sans", sans-serif;
     font-size: 0.75rem;
     font-weight: 600;
@@ -1293,7 +1293,7 @@
   .about-thesis-number {
     margin-top: 0.125rem;
     flex-shrink: 0;
-    color: hsl(var(--primary));
+    color: rgb(var(--light-line-rgb));
     font-family: "Space Grotesk", sans-serif;
     font-size: 13px;
     font-weight: 700;
@@ -1341,7 +1341,7 @@
   .faq-item-chevron {
     margin-left: 1rem;
     flex-shrink: 0;
-    color: #7a9acc;
+    color: #42526b;
     transition:
       color var(--structural-motion-quick) var(--structural-motion-ease),
       transform var(--structural-motion-base) var(--structural-motion-ease);
