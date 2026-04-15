@@ -1,6 +1,6 @@
 # Project Improvement Report
 
-Last updated: 2026-04-11
+Last updated: 2026-04-15
 Workspace: `C:\Users\Admin\Desktop\project\nebula-nexus-labs`
 Status: in progress
 
@@ -786,6 +786,65 @@ Priority order for the next steps:
   the form now accepts any non-empty message, and the existing anti-spam layers remain in place.
 - Follow-up:
   observe production submissions for a short period to confirm that the lower threshold improves usability without increasing spam noise.
+
+### Update 2026-04-15
+
+- Goal:
+  reconcile the documentation layer with the actual repository state after the undocumented implementation cycle that continued beyond the earlier reports.
+- Root cause addressed:
+  `README` and the last dated state/report files still described the site as if it were missing prerender, referenced removed files such as `src/lib/site-config.ts`, and did not capture the more recent contact, metadata, reveal, and header-logo work already present in git history.
+- Files changed:
+  [README.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/README.md),
+  [current-state-2026-04-15.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/current-state-2026-04-15.md),
+  [chat-report-2026-04-15.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/chat-report-2026-04-15.md),
+  [production-deployments.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/production-deployments.md),
+  [project-improvement-report.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/project-improvement-report.md)
+- Checks run:
+  `npm run lint`,
+  `npm run test`,
+  `npm run build`
+- Result:
+  the documentation set now reflects the current prerendered indexing model, the live deploy contract, the real key-file map in `src/lib`, and the newer implementation work that landed after the previous dated reports.
+- Follow-up:
+  keep adding a new `current-state` snapshot and a matching `chat-report` after each meaningful implementation cycle so documentation drift does not accumulate again.
+
+### Update 2026-04-15
+
+- Goal:
+  finish the SEO hardening pass by closing the remaining delivery gaps: soft 404 handling, stale social meta, and the incomplete multilingual route model.
+- Root cause addressed:
+  English content still existed mostly as a client-side locale switch over Polish URLs, which meant no dedicated crawlable entry points, no stable `hreflang`, and no English prerender outputs. At the same time, unknown routes still relied on client-side not-found rendering, and SPA navigation could leave stale `og:image` / `twitter:image` tags in the document head.
+- Files changed:
+  [public/.htaccess](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/public/.htaccess),
+  [scripts/generate-sitemap.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/scripts/generate-sitemap.ts),
+  [scripts/prerender.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/scripts/prerender.ts),
+  [src/App.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/App.tsx),
+  [src/main.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/main.tsx),
+  [src/lib/locale-routes.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/locale-routes.ts),
+  [src/lib/i18n-provider.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/i18n-provider.tsx),
+  [src/lib/seo.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/seo.ts),
+  [src/lib/seo-routes.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/seo-routes.ts),
+  [src/lib/home-page-seo.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/home-page-seo.ts),
+  [src/lib/service-page-seo.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/service-page-seo.ts),
+  [src/prerender/PrerenderedApp.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/prerender/PrerenderedApp.tsx),
+  [src/pages/ServicePage.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/pages/ServicePage.tsx),
+  [src/pages/NotFound.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/pages/NotFound.tsx),
+  [src/components/Navbar.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/Navbar.tsx),
+  [src/components/Footer.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/Footer.tsx),
+  [src/components/Services.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/Services.tsx),
+  [src/components/CookieConsentBanner.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/CookieConsentBanner.tsx),
+  [src/components/contact/ContactFormPanel.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/contact/ContactFormPanel.tsx),
+  [src/components/legal/LegalDocumentPage.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/legal/LegalDocumentPage.tsx),
+  [src/test/app.test.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/test/app.test.tsx)
+- Checks run:
+  `npm run lint`,
+  `npm run test`,
+  `npm run build`
+- Result:
+  unknown routes now terminate through a real `404.html` contract instead of a client-only soft 404, social image tags are removed when the next route has no `og:image`, and English SEO is now route-based rather than UI-only.
+  The site ships dedicated prerendered English routes under `/en`, `/en/uslugi/*`, `/en/privacy-policy`, and `/en/cookie-policy`, with shared canonical and `hreflang` generation from one SEO snapshot layer. The sitemap now includes both locale families and their alternates.
+- Follow-up:
+  after the next production deploy, verify `/en` and a representative English service page directly in Search Console or another crawler-facing inspection tool to confirm the bilingual route family is being seen as intended.
 
 ## Sources Used So Far
 

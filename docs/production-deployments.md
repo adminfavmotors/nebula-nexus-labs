@@ -1,5 +1,7 @@
 # Production Deployments
 
+Last updated: 2026-04-15
+
 ## What Changed
 
 Production deploys now use three GitHub Actions workflows:
@@ -48,6 +50,18 @@ For a static site deployed from GitHub Actions in 2026, the reliable rollback pa
 
 That approach is especially important for shared hosting, where the platform itself usually does not provide instant version rollback.
 
+## Build Artifact Contract
+
+Production deploys ship the output of `npm run build`.
+
+That build currently does all of the following from the deployed Git ref:
+
+1. regenerate `public/sitemap.xml`
+2. build the client bundle with Vite
+3. prerender indexed routes into `dist/**/index.html`
+
+The deploy job should therefore be treated as a static publish of the generated `dist/` directory, not as a runtime server release.
+
 ## Transport Contract
 
 Production deploys now use `rsync` over `SSH`, not plain `FTP`.
@@ -67,6 +81,21 @@ The current workflow deploys with these project-specific SEOHOST values:
 - target path: `domains/node48.pl/public_html/`
 
 This keeps deployment traffic encrypted in transit while matching the SSH contract that is actually active on the hosting account.
+
+## Post-Deploy Verification
+
+Recommended verification checklist after every production deploy or rollback:
+
+1. Open `/` in a clean browser session and confirm the first-visit intro no longer triggers CSP or hydration errors.
+2. Open `/en` and confirm the English homepage resolves as a prerendered route with the correct locale metadata.
+3. Open at least one Polish and one English service page such as `/uslugi/strona-firmowa` and `/en/uslugi/strona-firmowa` and confirm prerendered HTML resolves correctly before hydration.
+4. Confirm `canonical` and `hreflang` tags are correct on both locale variants.
+5. Open `/privacy-policy`, `/cookie-policy`, `/en/privacy-policy`, and `/en/cookie-policy` to confirm legal routes resolve through the prerendered route contract.
+6. Confirm the contact overlay opens and the mobile navigation behaves correctly on a narrow viewport.
+7. Confirm unknown routes now return the dedicated `404.html` response path rather than a soft 404 shell.
+8. Confirm the latest production tag is visible in GitHub after a successful deploy.
+
+If any of these fail, rollback should be treated as a redeploy of the last known good `prod-*` tag rather than an ad hoc hotfix on production.
 
 ## Optional Hardening In GitHub Settings
 
