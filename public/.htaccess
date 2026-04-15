@@ -1,4 +1,5 @@
 Options -Indexes
+ErrorDocument 404 /404.html
 
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
@@ -36,5 +37,5 @@ Options -Indexes
   RewriteRule ^(.+?)/?$ /$1/index.html [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  RewriteRule . - [R=404,L]
 </IfModule>

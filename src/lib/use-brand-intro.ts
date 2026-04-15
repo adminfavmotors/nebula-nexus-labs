@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { isHomePath } from "@/lib/locale-routes";
 import { brandIntroMotionTimings } from "@/lib/motion";
 import { brandName } from "@/lib/site-identity";
 import { usePageScrollLock } from "@/lib/page-scroll-lock";
@@ -23,7 +24,7 @@ type BrandIntroSnapshot = {
 };
 
 function shouldPlayBrandIntro(pathname: string) {
-  if (typeof window === "undefined" || pathname !== "/") {
+  if (typeof window === "undefined" || !isHomePath(pathname)) {
     return false;
   }
 

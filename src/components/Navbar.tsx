@@ -6,6 +6,7 @@ import { cx } from "@/lib/cx";
 import { ActionLink } from "@/components/primitives/Actions";
 import BrandLogo from "@/components/BrandLogo";
 import { useContactOverlay } from "@/components/contact/contact-overlay-context";
+import { getLocalizedHashPath } from "@/lib/locale-routes";
 import { structuralMotionTimings } from "@/lib/motion";
 
 const HEADER_REVEAL_OFFSET = 24;
@@ -30,9 +31,9 @@ const Navbar = () => {
   const { locale, setLocale, isTransitioningLocale, t } = useI18n();
   const { openContactOverlay } = useContactOverlay();
   const closeMenu = () => setMenuOpen(false);
-  const isHomePage = location.pathname === "/";
-  const resolveSectionHref = (href: string) => `/${href}`;
-  const contactHref = isHomePage ? "#contact" : "/#contact";
+  const isHomePage = location.pathname === "/" || location.pathname === "/en";
+  const resolveSectionHref = (href: string) => getLocalizedHashPath(locale, href);
+  const contactHref = isHomePage ? "#contact" : getLocalizedHashPath(locale, "#contact");
   const mobileRevealDelayStart = structuralMotionTimings.mobileRevealStartMs;
 
   const handleContactClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -183,7 +184,7 @@ const Navbar = () => {
         >
           <div className="header-brand-slot">
             <div className="header-brand-shell">
-              <BrandLogo href="/#home" />
+              <BrandLogo href={getLocalizedHashPath(locale, "#home")} />
             </div>
           </div>
 
@@ -256,7 +257,7 @@ const Navbar = () => {
 
         <div className="header-mobile-panel-shell header-mobile-panel-content">
           <div className="header-mobile-topbar">
-            <BrandLogo href="/#home" />
+            <BrandLogo href={getLocalizedHashPath(locale, "#home")} />
             <button
               type="button"
               className="header-mobile-close"

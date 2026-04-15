@@ -1,48 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://node48.pl/</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-15</lastmod>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en" />
   </url>
   <url>
     <loc>https://node48.pl/uslugi/strona-wizytowka</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-15</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/uslugi/strona-wizytowka" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/uslugi/strona-wizytowka" />
   </url>
   <url>
     <loc>https://node48.pl/uslugi/landing-page</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-15</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/uslugi/landing-page" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/uslugi/landing-page" />
   </url>
   <url>
     <loc>https://node48.pl/uslugi/strona-firmowa</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-15</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/uslugi/strona-firmowa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/uslugi/strona-firmowa" />
   </url>
   <url>
     <loc>https://node48.pl/uslugi/strona-premium-dla-wymagajacych-firm</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-15</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/uslugi/strona-premium-dla-wymagajacych-firm" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/uslugi/strona-premium-dla-wymagajacych-firm" />
   </url>
   <url>
     <loc>https://node48.pl/uslugi/redesign-strony</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-15</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/uslugi/redesign-strony" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/uslugi/redesign-strony" />
   </url>
   <url>
     <loc>https://node48.pl/uslugi/opieka-techniczna</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-15</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/uslugi/opieka-techniczna" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/uslugi/opieka-techniczna" />
   </url>
   <url>
     <loc>https://node48.pl/privacy-policy</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-15</lastmod>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/privacy-policy" />
   </url>
   <url>
     <loc>https://node48.pl/cookie-policy</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-15</lastmod>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/cookie-policy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/cookie-policy" />
+  </url>
+  <url>
+    <loc>https://node48.pl/en</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en" />
+  </url>
+  <url>
+    <loc>https://node48.pl/en/uslugi/strona-wizytowka</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/uslugi/strona-wizytowka" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/uslugi/strona-wizytowka" />
+  </url>
+  <url>
+    <loc>https://node48.pl/en/uslugi/landing-page</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/uslugi/landing-page" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/uslugi/landing-page" />
+  </url>
+  <url>
+    <loc>https://node48.pl/en/uslugi/strona-firmowa</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/uslugi/strona-firmowa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/uslugi/strona-firmowa" />
+  </url>
+  <url>
+    <loc>https://node48.pl/en/uslugi/strona-premium-dla-wymagajacych-firm</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/uslugi/strona-premium-dla-wymagajacych-firm" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/uslugi/strona-premium-dla-wymagajacych-firm" />
+  </url>
+  <url>
+    <loc>https://node48.pl/en/uslugi/redesign-strony</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/uslugi/redesign-strony" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/uslugi/redesign-strony" />
+  </url>
+  <url>
+    <loc>https://node48.pl/en/uslugi/opieka-techniczna</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/uslugi/opieka-techniczna" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/uslugi/opieka-techniczna" />
+  </url>
+  <url>
+    <loc>https://node48.pl/en/privacy-policy</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/privacy-policy" />
+  </url>
+  <url>
+    <loc>https://node48.pl/en/cookie-policy</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://node48.pl/cookie-policy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://node48.pl/en/cookie-policy" />
   </url>
 </urlset>

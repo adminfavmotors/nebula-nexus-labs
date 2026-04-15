@@ -7,8 +7,10 @@ import { ContactOverlayProvider } from "@/components/contact/ContactOverlay";
 import { useContactOverlay } from "@/components/contact/contact-overlay-context";
 import App from "@/App";
 import { I18nProvider } from "@/lib/i18n";
+import { getLocalizedAlternates } from "@/lib/locale-routes";
 import { brandIntroMotionTimings } from "@/lib/motion";
 import { formEndpoint } from "@/lib/contact-config";
+import { applySeoSnapshot, createSeoSnapshot } from "@/lib/seo";
 import { BRAND_INTRO_STORAGE_KEY, useBrandIntro } from "@/lib/use-brand-intro";
 
 const COOKIE_CONSENT_KEY = "node48-cookie-consent";
@@ -19,7 +21,11 @@ const ROUTER_FUTURE_FLAGS = {
 } as const;
 
 function renderWithI18n(component: React.ReactElement) {
-  return render(<I18nProvider>{component}</I18nProvider>);
+  return render(
+    <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
+      <I18nProvider>{component}</I18nProvider>
+    </BrowserRouter>,
+  );
 }
 
 function renderApp() {
@@ -42,23 +48,23 @@ function ContactOverlayScrollLockHarness() {
 
 function renderContactOverlayScrollLockHarness() {
   return render(
-    <I18nProvider>
-      <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
+    <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
+      <I18nProvider>
         <ContactOverlayProvider>
           <ContactOverlayScrollLockHarness />
         </ContactOverlayProvider>
-      </BrowserRouter>
-    </I18nProvider>,
+      </I18nProvider>
+    </BrowserRouter>,
   );
 }
 
 function renderContactOverlay(children: React.ReactNode = <button type="button">noop</button>) {
   return render(
-    <I18nProvider>
-      <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
+    <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
+      <I18nProvider>
         <ContactOverlayProvider>{children}</ContactOverlayProvider>
-      </BrowserRouter>
-    </I18nProvider>,
+      </I18nProvider>
+    </BrowserRouter>,
   );
 }
 
@@ -404,10 +410,12 @@ describe("critical user flows", () => {
 
     await waitFor(() => {
       expect(document.documentElement.lang).toBe("en");
+      expect(window.location.pathname).toBe("/en");
       expect(window.localStorage.getItem("node48-locale")).toBe("en");
     });
 
     expect(screen.getAllByRole("link", { name: /services/i }).length).toBeGreaterThan(0);
+    expect(document.querySelector('a[href^="/en/uslugi/"]')).toBeInstanceOf(HTMLAnchorElement);
   });
 
   it("updates document metadata when locale changes", async () => {
@@ -421,6 +429,51 @@ describe("critical user flows", () => {
 
     const description = document.querySelector('meta[name="description"]');
     expect(description?.getAttribute("content")).toContain("digital experiences");
+  });
+
+  it("removes stale social image metadata when the next page has no og image", () => {
+    applySeoSnapshot(
+      createSeoSnapshot({
+        title: "Homepage",
+        description: "Homepage description",
+        path: "/",
+        ogImage: "https://node48.pl/brand/node48-logo.png",
+      }),
+    );
+
+    expect(document.querySelector('meta[property="og:image"]')?.getAttribute("content")).toBe(
+      "https://node48.pl/brand/node48-logo.png",
+    );
+    expect(document.querySelector('meta[name="twitter:image"]')?.getAttribute("content")).toBe(
+      "https://node48.pl/brand/node48-logo.png",
+    );
+
+    applySeoSnapshot(
+      createSeoSnapshot({
+        title: "Privacy Policy",
+        description: "Legal page without social image",
+        path: "/privacy-policy",
+      }),
+    );
+
+    expect(document.querySelector('meta[property="og:image"]')).toBeNull();
+    expect(document.querySelector('meta[name="twitter:image"]')).toBeNull();
+  });
+
+  it("syncs alternate hreflang links for localized pages", () => {
+    applySeoSnapshot(
+      createSeoSnapshot({
+        title: "Homepage",
+        description: "English homepage",
+        path: "/en",
+        locale: "en",
+        alternates: getLocalizedAlternates("/"),
+      }),
+    );
+
+    expect(document.querySelector('link[rel="alternate"][hreflang="pl"]')?.getAttribute("href")).toBe("https://node48.pl/");
+    expect(document.querySelector('link[rel="alternate"][hreflang="en"]')?.getAttribute("href")).toBe("https://node48.pl/en");
+    expect(document.querySelector('link[rel="alternate"][hreflang="x-default"]')?.getAttribute("href")).toBe("https://node48.pl/");
   });
 
   it("loads analytics only after cookie consent is accepted", async () => {
@@ -533,6 +586,19 @@ describe("critical user flows", () => {
       expect(window.location.pathname).toBe("/");
       expect(window.location.hash).toBe("#services");
       expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
+    });
+  });
+
+  it("preserves the equivalent service route when switching locales", async () => {
+    window.history.pushState({}, "", "/uslugi/strona-wizytowka");
+
+    renderApp();
+
+    fireEvent.click(screen.getByRole("button", { name: "en" }));
+
+    await waitFor(() => {
+      expect(window.location.pathname).toBe("/en/uslugi/strona-wizytowka");
+      expect(document.documentElement.lang).toBe("en");
     });
   });
 

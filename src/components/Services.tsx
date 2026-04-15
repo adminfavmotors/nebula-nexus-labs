@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
+import { getLocalizedServicePath } from "@/lib/locale-routes";
 import { getServiceCatalog } from "@/lib/service-catalog";
 import { Section, SectionTitle } from "@/components/primitives/Section";
 
@@ -19,7 +20,7 @@ const Services = () => {
           <div key={i}>
             <div className="section-divider" />
             <Link
-              to={`/uslugi/${service.slug}`}
+              to={getLocalizedServicePath(locale, service.slug)}
               className="services-item"
             >
               <span className="services-item-number">

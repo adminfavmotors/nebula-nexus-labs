@@ -1,5 +1,6 @@
 import { type Locale } from "@/lib/i18n-data";
 import { legalContent } from "@/lib/legal-content";
+import { getLocalizedAlternates, getLocalizedLegalPath, getLocalizedServicePath, localizePath } from "@/lib/locale-routes";
 import { type PageSeo } from "@/lib/seo";
 import { getServicePageStructuredData } from "@/lib/service-page-seo";
 import { getServicePageDetail } from "@/lib/service-page-details";
@@ -21,8 +22,10 @@ export function getHomePageSeo(locale: Locale): PageSeo {
   return {
     title: meta.title,
     description: meta.description,
-    path: "/",
+    path: localizePath("/", locale),
     ogImage: ogImageUrl,
+    locale,
+    alternates: getLocalizedAlternates("/"),
     structuredData: [
       {
         id: "organization",
@@ -66,8 +69,10 @@ export function getServicePageSeo(locale: Locale, slug: string): PageSeo | null 
   return {
     title: detail.metaTitle ?? service.metaTitle,
     description: detail.metaDescription ?? service.metaDescription,
-    path: getServicePagePath(canonicalSlug),
+    path: getLocalizedServicePath(locale, canonicalSlug),
     ogImage: ogImageUrl,
+    locale,
+    alternates: getLocalizedAlternates(getServicePagePath(canonicalSlug)),
     structuredData: getServicePageStructuredData({
       locale,
       slug: canonicalSlug,
@@ -88,26 +93,28 @@ export function getLegalPageSeo(locale: Locale, documentKey: LegalDocumentKey): 
   return {
     title: documentContent.metaTitle,
     description: documentContent.metaDescription,
-    path: getLegalPagePath(documentKey),
+    path: getLocalizedLegalPath(locale, documentKey),
+    locale,
+    alternates: getLocalizedAlternates(getLegalPagePath(documentKey)),
   };
 }
 
 export function getIndexedRouteManifest(locale: Locale = "pl"): IndexedRouteEntry[] {
   return [
     {
-      path: "/",
+      path: localizePath("/", locale),
       seo: getHomePageSeo(locale),
     },
     ...getCanonicalServiceSlugs().map((slug) => ({
-      path: getServicePagePath(slug),
+      path: getLocalizedServicePath(locale, slug),
       seo: getServicePageSeo(locale, slug)!,
     })),
     {
-      path: getLegalPagePath("privacy"),
+      path: getLocalizedLegalPath(locale, "privacy"),
       seo: getLegalPageSeo(locale, "privacy"),
     },
     {
-      path: getLegalPagePath("cookies"),
+      path: getLocalizedLegalPath(locale, "cookies"),
       seo: getLegalPageSeo(locale, "cookies"),
     },
   ];

@@ -1,4 +1,5 @@
 import { type Locale } from "@/lib/i18n-data";
+import { getLocalizedAlternates, localizePath } from "@/lib/locale-routes";
 import { type PageSeo } from "@/lib/seo";
 import { businessPhone, contactEmail } from "@/lib/contact-config";
 import { brandName, ogImageUrl, siteUrl } from "@/lib/site-identity";
@@ -10,8 +11,10 @@ export function getHomePageSeo(locale: Locale): PageSeo {
   return {
     title: meta.title,
     description: meta.description,
-    path: "/",
+    path: localizePath("/", locale),
     ogImage: ogImageUrl,
+    locale,
+    alternates: getLocalizedAlternates("/"),
     structuredData: [
       {
         id: "organization",

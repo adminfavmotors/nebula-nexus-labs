@@ -1,6 +1,6 @@
 import { createRoot, hydrateRoot } from "react-dom/client";
 import App from "./App.tsx";
-import { STORAGE_KEY } from "@/lib/i18n-data";
+import { isHomePath } from "@/lib/locale-routes";
 import { BRAND_INTRO_STORAGE_KEY } from "@/lib/use-brand-intro";
 import "./styles/fonts.css";
 import "./index.css";
@@ -15,14 +15,13 @@ function shouldPlayBrandIntroOnBoot() {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const hasPlayedIntro = window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY) === "1";
 
-  return pathname === "/" && !prefersReducedMotion && !hasPlayedIntro;
+  return isHomePath(pathname) && !prefersReducedMotion && !hasPlayedIntro;
 }
 
 function shouldHydratePrerenderedMarkup() {
-  const storedLocale = window.localStorage.getItem(STORAGE_KEY);
   const shouldPlayIntro = shouldPlayBrandIntroOnBoot();
 
-  return storedLocale !== "en" && !shouldPlayIntro;
+  return !shouldPlayIntro;
 }
 
 const container = document.getElementById("root");

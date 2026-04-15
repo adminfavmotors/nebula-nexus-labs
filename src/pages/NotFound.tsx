@@ -1,14 +1,18 @@
+import { Link } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
+import { getLocalizedAlternates, getLocalizedHashPath, getLocalizedNotFoundPath } from "@/lib/locale-routes";
 import { usePageSeo } from "@/lib/seo";
 
 const NotFound = () => {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
 
   usePageSeo({
     title: `404 | ${t.notFound.title}`,
     description: t.notFound.body,
-    path: "/404",
+    path: getLocalizedNotFoundPath(locale),
     robots: "noindex,nofollow",
+    locale,
+    alternates: getLocalizedAlternates("/404"),
   });
 
   return (
@@ -17,9 +21,9 @@ const NotFound = () => {
         <h1 className="not-found-code">404</h1>
         <p className="not-found-title">{t.notFound.title}</p>
         <p className="not-found-copy">{t.notFound.body}</p>
-        <a href="/" className="not-found-link">
+        <Link to={getLocalizedHashPath(locale, "#home")} className="not-found-link">
           {t.notFound.cta}
-        </a>
+        </Link>
       </div>
     </div>
   );

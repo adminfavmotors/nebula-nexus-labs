@@ -1,6 +1,8 @@
 import { forwardRef, useEffect, useRef, useState, type ComponentPropsWithoutRef } from "react";
+import { Link } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
 import { legalUiCopy } from "@/lib/legal-ui";
+import { getLocalizedLegalPath } from "@/lib/locale-routes";
 import { formEndpoint } from "@/lib/contact-config";
 import { cx } from "@/lib/cx";
 import { ActionButton } from "@/components/primitives/Actions";
@@ -273,9 +275,9 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
 
         <p className={cx(mode === "modal" ? "contact-overlay-legal" : "contact-form-legal-copy-section")}>
           {legal.formNotice.prefix}{" "}
-          <a href="/privacy-policy" className="contact-form-legal-link">
+          <Link to={getLocalizedLegalPath(locale, "privacy")} className="contact-form-legal-link">
             {legal.formNotice.linkLabel}
-          </a>{" "}
+          </Link>{" "}
           {legal.formNotice.suffix}
         </p>
       </div>

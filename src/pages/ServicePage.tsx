@@ -7,6 +7,7 @@ import { SurfaceCard } from "@/components/primitives/SurfaceCard";
 import { ActionLink } from "@/components/primitives/Actions";
 import NotFound from "@/pages/NotFound";
 import { useI18n } from "@/lib/i18n";
+import { getLocalizedHashPath, getLocalizedServicePath } from "@/lib/locale-routes";
 import { getCanonicalServiceSlug, getServiceCatalog, getServiceBySlug, getServicePageUi } from "@/lib/service-pages";
 import { getServicePageDetail } from "@/lib/service-page-details";
 import { getServicePageSeo } from "@/lib/seo-routes";
@@ -43,14 +44,14 @@ const ServicePage = () => {
     {
       title: "NODE48",
       description: "",
-      path: `/uslugi/${canonicalSlug ?? slug}`,
+      path: getLocalizedServicePath(locale, canonicalSlug ?? slug),
       robots: "noindex,nofollow" as const,
     };
 
   usePageSeo(seo);
 
   if (canonicalSlug && canonicalSlug !== slug) {
-    return <Navigate to={`/uslugi/${canonicalSlug}`} replace />;
+    return <Navigate to={getLocalizedServicePath(locale, canonicalSlug)} replace />;
   }
 
   if (!service || !detail) {
@@ -73,11 +74,11 @@ const ServicePage = () => {
 
           <div className="site-shell service-page-hero-frame">
             <div className="service-page-breadcrumbs">
-              <Link to="/" className="service-page-breadcrumb-link">
+              <Link to={getLocalizedHashPath(locale, "#home")} className="service-page-breadcrumb-link">
                 NODE48
               </Link>
               <span className="service-page-breadcrumb-separator">/</span>
-              <Link to="/#services" className="service-page-breadcrumb-link">
+              <Link to={getLocalizedHashPath(locale, "#services")} className="service-page-breadcrumb-link">
                 {ui.secondaryCta}
               </Link>
             </div>
@@ -99,7 +100,7 @@ const ServicePage = () => {
                   <ActionLink href="#contact" onClick={handleContactClick}>
                     {detail.heroCta}
                   </ActionLink>
-                  <Link to="/#services" className="btn-ghost">
+                  <Link to={getLocalizedHashPath(locale, "#services")} className="btn-ghost">
                     {ui.secondaryCta}
                   </Link>
                 </div>
@@ -261,7 +262,7 @@ const ServicePage = () => {
                 {related.map((item) => (
                   <Link
                     key={item.slug}
-                    to={`/uslugi/${item.slug}`}
+                    to={getLocalizedServicePath(locale, item.slug)}
                     className="service-page-related-card"
                   >
                     <p className="service-page-related-number">{item.num}</p>

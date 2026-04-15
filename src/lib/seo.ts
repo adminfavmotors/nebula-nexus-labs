@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import type { Locale } from "@/lib/i18n-data";
+import type { LocalizedAlternateLink } from "@/lib/locale-routes";
 import { siteUrl } from "@/lib/site-identity";
 
 export type StructuredDataEntry = {
@@ -12,6 +14,8 @@ export type PageSeo = {
   path: string;
   robots?: string;
   ogImage?: string;
+  locale?: Locale;
+  alternates?: LocalizedAlternateLink[];
   structuredData?: StructuredDataEntry[];
 };
 
@@ -22,6 +26,8 @@ export type SeoSnapshot = {
   canonicalUrl: string;
   robots: string;
   ogImage?: string;
+  locale: Locale;
+  alternates: Array<LocalizedAlternateLink & { href: string }>;
   structuredData: StructuredDataEntry[];
 };
 
@@ -44,6 +50,10 @@ function upsertMeta(selector: string, attributes: Record<string, string>) {
   return element;
 }
 
+function removeHeadNode(selector: string) {
+  document.head.querySelector(selector)?.remove();
+}
+
 function upsertCanonical(href: string) {
   let link = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
 
@@ -54,6 +64,22 @@ function upsertCanonical(href: string) {
   }
 
   link.href = href;
+}
+
+function syncAlternateLinks(alternates: SeoSnapshot["alternates"]) {
+  const managedSelector = 'link[rel="alternate"][data-managed-alternate="true"]';
+
+  document.head.querySelectorAll(managedSelector).forEach((node) => node.remove());
+
+  alternates.forEach(({ locale, href }) => {
+    const link = document.createElement("link");
+    link.rel = "alternate";
+    link.hreflang = locale;
+    link.href = href;
+    link.setAttribute("data-managed-alternate", "true");
+    link.setAttribute("data-managed-alternate-locale", locale);
+    document.head.appendChild(link);
+  });
 }
 
 function syncStructuredData(structuredData: StructuredDataEntry[] = []) {
@@ -88,6 +114,8 @@ export function createSeoSnapshot({
   path,
   robots = "index,follow",
   ogImage,
+  locale = "pl",
+  alternates = [],
   structuredData = [],
 }: PageSeo): SeoSnapshot {
   return {
@@ -97,6 +125,11 @@ export function createSeoSnapshot({
     canonicalUrl: new URL(path, siteUrl).toString(),
     robots,
     ogImage,
+    locale,
+    alternates: alternates.map((alternate) => ({
+      ...alternate,
+      href: new URL(alternate.path, siteUrl).toString(),
+    })),
     structuredData,
   };
 }
@@ -106,6 +139,10 @@ export function createSeoHeadMarkup(snapshot: SeoSnapshot) {
     `<title>${escapeHtml(snapshot.title)}</title>`,
     `<meta name="description" content="${escapeAttribute(snapshot.description)}" />`,
     `<link rel="canonical" href="${escapeAttribute(snapshot.canonicalUrl)}" />`,
+    ...snapshot.alternates.map(
+      ({ locale, href }) =>
+        `<link rel="alternate" hreflang="${escapeAttribute(locale)}" href="${escapeAttribute(href)}" data-managed-alternate="true" />`,
+    ),
     `<meta name="robots" content="${escapeAttribute(snapshot.robots)}" />`,
     `<meta property="og:type" content="website" />`,
     `<meta property="og:title" content="${escapeAttribute(snapshot.title)}" />`,
@@ -131,7 +168,9 @@ export function createSeoHeadMarkup(snapshot: SeoSnapshot) {
 
 export function applySeoSnapshot(snapshot: SeoSnapshot) {
   document.title = snapshot.title;
+  document.documentElement.lang = snapshot.locale;
   upsertCanonical(snapshot.canonicalUrl);
+  syncAlternateLinks(snapshot.alternates);
   upsertMeta('meta[name="description"]', { name: "description", content: snapshot.description });
   upsertMeta('meta[property="og:title"]', { property: "og:title", content: snapshot.title });
   upsertMeta('meta[property="og:description"]', { property: "og:description", content: snapshot.description });
@@ -140,6 +179,9 @@ export function applySeoSnapshot(snapshot: SeoSnapshot) {
   if (snapshot.ogImage) {
     upsertMeta('meta[property="og:image"]', { property: "og:image", content: snapshot.ogImage });
     upsertMeta('meta[name="twitter:image"]', { name: "twitter:image", content: snapshot.ogImage });
+  } else {
+    removeHeadNode('meta[property="og:image"]');
+    removeHeadNode('meta[name="twitter:image"]');
   }
   upsertMeta('meta[name="twitter:title"]', { name: "twitter:title", content: snapshot.title });
   upsertMeta('meta[name="twitter:description"]', { name: "twitter:description", content: snapshot.description });

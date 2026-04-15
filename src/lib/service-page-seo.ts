@@ -1,5 +1,6 @@
 import { businessPhone, contactEmail } from "@/lib/contact-config";
 import type { Locale } from "@/lib/i18n-data";
+import { localizePath } from "@/lib/locale-routes";
 import { brandName, siteUrl } from "@/lib/site-identity";
 
 type ServiceStructuredDataInput = {
@@ -17,8 +18,8 @@ export function getServicePageStructuredData({
   title,
   description,
 }: ServiceStructuredDataInput) {
-  const pageUrl = new URL(`/uslugi/${slug}`, siteUrl).toString();
-  const homeUrl = new URL("/", siteUrl).toString();
+  const pageUrl = new URL(localizePath(`/uslugi/${slug}`, locale), siteUrl).toString();
+  const homeUrl = new URL(localizePath("/", locale), siteUrl).toString();
 
   return [
     {

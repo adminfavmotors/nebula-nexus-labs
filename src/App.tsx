@@ -125,9 +125,13 @@ const AppFrame = () => {
           <Suspense fallback={null}>
             <Routes>
               <Route path="/" element={<Index heroReady={heroReady} useIntroTimings={didPlayIntro} />} />
+              <Route path="/en" element={<Index heroReady={heroReady} useIntroTimings={didPlayIntro} />} />
               <Route path="/uslugi/:slug" element={<ServicePage />} />
+              <Route path="/en/uslugi/:slug" element={<ServicePage />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/en/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
+              <Route path="/en/cookie-policy" element={<CookiePolicy />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
@@ -139,16 +143,12 @@ const AppFrame = () => {
   );
 };
 
-const AppShell = () => (
-  <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
-    <AppFrame />
-  </BrowserRouter>
-);
-
 const App = () => (
-  <I18nProvider>
-    <AppShell />
-  </I18nProvider>
+  <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
+    <I18nProvider>
+      <AppFrame />
+    </I18nProvider>
+  </BrowserRouter>
 );
 
 export default App;

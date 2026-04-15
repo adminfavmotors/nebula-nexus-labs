@@ -1,14 +1,14 @@
 import { startTransition, useEffect, useRef, useState, type ReactNode } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { I18nContext } from "@/lib/i18n-context";
 import { STORAGE_KEY, translations, type Locale } from "@/lib/i18n-data";
+import { getLocaleSwitchPath, getPathLocale } from "@/lib/locale-routes";
 import { localeMotionTimings } from "@/lib/motion";
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(() => {
-    if (typeof window === "undefined") return "pl";
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    return stored === "en" ? "en" : "pl";
-  });
+  const location = useLocation();
+  const navigate = useNavigate();
+  const locale = getPathLocale(location.pathname);
   const [isTransitioningLocale, setIsTransitioningLocale] = useState(false);
   const changeTimerRef = useRef<number | null>(null);
   const settleTimerRef = useRef<number | null>(null);
@@ -30,7 +30,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
     changeTimerRef.current = window.setTimeout(() => {
       startTransition(() => {
-        setLocaleState(nextLocale);
+        navigate(getLocaleSwitchPath(location.pathname, nextLocale, location.search, location.hash));
       });
 
       settleTimerRef.current = window.setTimeout(() => {

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n-data";
+import { getLocalizedHashPath } from "@/lib/locale-routes";
 import { legalContent } from "@/lib/legal-content";
 import { getLegalPageSeo, type LegalDocumentKey } from "@/lib/seo-routes";
 import { usePageSeo } from "@/lib/seo";
@@ -21,7 +22,7 @@ export default function LegalDocumentPage({ documentKey }: LegalDocumentPageProp
       <div className="site-shell legal-shell">
         <div className="legal-header">
           <Link
-            to="/"
+            to={getLocalizedHashPath(locale, "#home")}
             className="legal-back-link"
           >
             {content.common.backHome}

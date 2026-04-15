@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ActionButton } from "@/components/primitives/Actions";
 import { useI18n } from "@/lib/i18n";
 import { loadGoogleTagManager } from "@/lib/analytics";
+import { getLocalizedLegalPath } from "@/lib/locale-routes";
 
 const COOKIE_CONSENT_STORAGE_KEY = "node48-cookie-consent";
 
@@ -119,7 +120,7 @@ const CookieConsentBanner = ({ isBlocked = false }: CookieConsentBannerProps) =>
             {copy.decline}
           </ActionButton>
           <Link
-            to="/cookie-policy"
+            to={getLocalizedLegalPath(locale, "cookies")}
             className="cookie-consent-link"
           >
             {copy.policy}
