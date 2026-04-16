@@ -22,17 +22,17 @@ export const legalUiCopy: Record<Locale, LegalUiCopy> = {
   pl: {
     common: {
       updatedLabel: "Aktualizacja",
-      backHome: "Wróć na stronę główną",
+      backHome: "Wroc na strone glowna",
       contactLabel: `Kontakt: ${contactEmail} | ${businessPhone}`,
     },
     footer: {
-      privacy: "Polityka prywatności",
+      privacy: "Polityka prywatnosci",
       cookies: "Polityka cookies",
     },
     formNotice: {
-      prefix: "Wysyłając formularz, potwierdzasz, że zapoznałeś się z naszą",
-      linkLabel: "polityką prywatności",
-      suffix: "i rozumiesz, że wiadomość jest przekazywana przez zewnętrzny formularz kontaktowy.",
+      prefix: "Wysylajac formularz, potwierdzasz, ze zapoznales sie z nasza",
+      linkLabel: "polityka prywatnosci",
+      suffix: "i rozumiesz, ze wiadomosc jest przekazywana przez zewnetrzny procesor formularzy.",
     },
   },
   en: {

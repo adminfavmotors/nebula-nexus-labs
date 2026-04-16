@@ -143,10 +143,8 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
     formData.append("_subject", `NODE48 inquiry (${locale.toUpperCase()})`);
     formData.append("_template", "table");
     formData.append("locale", locale);
-    formData.append(
-      "_url",
-      typeof window === "undefined" ? "https://node48.pl/" : window.location.href,
-    );
+    formData.append("pageUrl", typeof window === "undefined" ? "https://node48.pl/" : window.location.href);
+    formData.append("_url", typeof window === "undefined" ? "https://node48.pl/" : window.location.href);
 
     try {
       const response = await fetch(formEndpoint, {
@@ -159,13 +157,9 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error("Form submission failed");
-      }
-
       const responsePayload = await response.json().catch(() => null);
 
-      if (!isSuccessfulFormSubmitResponse(responsePayload)) {
+      if (!response.ok || !isSuccessfulFormSubmitResponse(responsePayload)) {
         setStatusMessage(getFormSubmitMessage(responsePayload));
         throw new Error("Form submission was not accepted");
       }
@@ -250,7 +244,7 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
         required
       />
 
-      <input type="hidden" name="_startedAt" value={String(startedAtRef.current)} readOnly />
+      <input type="hidden" name="startedAt" value={String(startedAtRef.current)} readOnly />
 
       <div className="contact-form-honeypot" aria-hidden="true">
         <label htmlFor={`${mode}-contact-website`}>Website</label>

@@ -40,137 +40,136 @@ export const legalContent: Record<Locale, LegalContent> = {
   pl: {
     common: {
       updatedLabel: "Aktualizacja",
-      backHome: "Wróć na stronę główną",
+      backHome: "Wroc na strone glowna",
       contactLabel: `Kontakt: ${contactEmail} | ${businessPhone}`,
     },
     footer: {
-      privacy: "Polityka prywatności",
+      privacy: "Polityka prywatnosci",
       cookies: "Polityka cookies",
     },
     formNotice: {
-      prefix: "Wysyłając formularz, potwierdzasz, że zapoznałeś się z naszą",
-      linkLabel: "polityką prywatności",
-      suffix: "i rozumiesz, że wiadomość jest przekazywana przez zewnętrzny formularz kontaktowy.",
+      prefix: "Wysylajac formularz, potwierdzasz, ze zapoznales sie z nasza",
+      linkLabel: "polityka prywatnosci",
+      suffix: "i rozumiesz, ze wiadomosc jest przekazywana przez zewnetrzny procesor formularzy.",
     },
     privacy: {
-      metaTitle: "Polityka prywatności | NODE48",
-      metaDescription: "Informacje o przetwarzaniu danych osobowych związanych z marką NODE48.",
-      title: "Polityka prywatności",
+      metaTitle: "Polityka prywatnosci | NODE48",
+      metaDescription: "Informacje o przetwarzaniu danych osobowych zwiazanych z marka NODE48.",
+      title: "Polityka prywatnosci",
       intro:
-        "Poniżej opisujemy, jakie dane osobowe przetwarzamy w ramach tej strony, w jakich celach, na jakiej podstawie oraz jakie prawa przysługują osobom kontaktującym się z nami.",
-      updatedAt: "23 marca 2026",
+        "Ponizej opisujemy, jakie dane osobowe przetwarzamy w ramach tej strony, w jakich celach, na jakiej podstawie oraz jakie prawa przysluguja osobom kontaktujacym sie z nami.",
+      updatedAt: "16 kwietnia 2026",
       sections: [
         {
           title: "1. Administrator danych",
           paragraphs: [
-            `${dataControllerName}, działający pod marką ${brandName}, jest administratorem danych osobowych przetwarzanych w związku z korzystaniem z tej strony i formularza kontaktowego.`,
-            `W sprawach dotyczących prywatności możesz skontaktować się z nami pod adresem ${contactEmail} lub telefonicznie: ${businessPhone}.`,
+            `${dataControllerName}, dzialajacy pod marka ${brandName}, jest administratorem danych osobowych przetwarzanych w zwiazku z korzystaniem z tej strony i formularza kontaktowego.`,
+            `W sprawach dotyczacych prywatnosci mozesz skontaktowac sie z nami pod adresem ${contactEmail} lub telefonicznie: ${businessPhone}.`,
           ],
         },
         {
           title: "2. Jakie dane zbieramy",
           paragraphs: [
-            "Przetwarzamy dane, które podajesz dobrowolnie w formularzu kontaktowym, w szczególności imię i nazwisko, adres e-mail oraz treść wiadomości.",
-            "Technicznie zapisujemy również preferencję języka strony w pamięci przeglądarki, a po próbie wysłania formularza możemy tymczasowo zapisać krótki znacznik antyspamowy ograniczający automatyczne ponowne zgłoszenia.",
-            "Jeżeli korzystasz ze strony z włączonymi skryptami analitycznymi, możemy również otrzymywać zagregowane informacje statystyczne o odsłonach, źródłach ruchu, urządzeniu, przeglądarce i przybliżonej lokalizacji, generowane przez Google Analytics.",
+            "Przetwarzamy dane, ktore podajesz dobrowolnie w formularzu kontaktowym, w szczegolnosci imie i nazwisko, adres e-mail oraz tresc wiadomosci.",
+            "Technicznie zapisujemy rowniez preferencje jezyka strony w pamieci przegladarki, a po probie wyslania formularza mozemy tymczasowo zapisac krotki znacznik antyspamowy ograniczajacy automatyczne ponowne zgloszenia.",
+            "Jezeli korzystasz ze strony z wlaczonymi skryptami analitycznymi, mozemy rowniez otrzymywac zagregowane informacje statystyczne o odslonach, zrodlach ruchu, urzadzeniu, przegladarce i przyblizonej lokalizacji generowane przez Google Analytics.",
           ],
         },
         {
           title: "3. Cele i podstawy prawne",
           paragraphs: [
-            "Dane z formularza przetwarzamy przede wszystkim w celu odpowiedzi na Twoją wiadomość, przygotowania wyceny, podjęcia działań przed zawarciem umowy albo prowadzenia dalszej korespondencji biznesowej.",
-            "Podstawą prawną przetwarzania jest art. 6 ust. 1 lit. b RODO, gdy kontakt dotyczy usługi lub działań przedumownych podejmowanych na Twoje żądanie, oraz art. 6 ust. 1 lit. f RODO, czyli nasz prawnie uzasadniony interes polegający na obsłudze korespondencji i ochronie przed nadużyciami.",
-            "W zakresie analityki internetowej podstawą przetwarzania jest Twoja zgoda na opcjonalne pliki cookies i technologie pomiarowe, zgodnie z art. 6 ust. 1 lit. a RODO.",
+            "Dane z formularza przetwarzamy przede wszystkim w celu odpowiedzi na Twoja wiadomosc, przygotowania wyceny, podjecia dzialan przed zawarciem umowy albo prowadzenia dalszej korespondencji biznesowej.",
+            "Podstawa prawna przetwarzania jest art. 6 ust. 1 lit. b RODO, gdy kontakt dotyczy uslugi lub dzialan przedumownych podejmowanych na Twoje zadanie, oraz art. 6 ust. 1 lit. f RODO, czyli nasz prawnie uzasadniony interes polegajacy na obsludze korespondencji i ochronie przed naduzyciami.",
+            "W zakresie analityki internetowej podstawa przetwarzania jest Twoja zgoda na opcjonalne pliki cookies i technologie pomiarowe zgodnie z art. 6 ust. 1 lit. a RODO.",
           ],
         },
         {
-          title: "4. Odbiorcy danych i podmioty przetwarzające",
+          title: "4. Odbiorcy danych i podmioty przetwarzajace",
           paragraphs: [
-            "Z danych mogą korzystać nasi dostawcy usług technicznych, hostingowych i pocztowych, wyłącznie w zakresie niezbędnym do działania strony i obsługi kontaktu.",
-            "Wiadomości wysyłane przez formularz są technicznie przekazywane przez zewnętrznego operatora FormSubmit, który działa jako narzędzie do obsługi formularzy. Przed uruchomieniem strony produkcyjnie warto potwierdzić aktualne warunki przetwarzania danych i transferów u tego dostawcy.",
-            "Jeżeli korzystamy z Google Analytics, odbiorcą części danych statystycznych może być również Google Ireland Limited oraz podmioty powiązane z Google odpowiedzialne za utrzymanie i rozwój usługi analitycznej.",
+            "Z danych moga korzystac nasi dostawcy uslug technicznych, hostingowych i pocztowych, wylacznie w zakresie niezbednym do dzialania strony i obslugi kontaktu.",
+            "Wiadomosci wysylane przez formularz sa technicznie przekazywane przez zewnetrznego operatora FormSubmit, ktory dziala jako narzedzie do obslugi formularzy.",
+            "Jezeli korzystamy z Google Analytics, odbiorca czesci danych statystycznych moze byc rowniez Google Ireland Limited oraz podmioty powiazane z Google odpowiedzialne za utrzymanie i rozwoj uslugi analitycznej.",
           ],
         },
         {
           title: "5. Okres przechowywania",
           paragraphs: [
-            "Dane z korespondencji przechowujemy przez czas potrzebny do obsługi sprawy, a następnie do czasu przedawnienia ewentualnych roszczeń lub do chwili, gdy dalsze przechowywanie przestanie być uzasadnione.",
-            "Jeżeli kontakt doprowadzi do zawarcia umowy, dane mogą być przechowywane dłużej w zakresie wymaganym przez przepisy prawa lub potrzebnym do realizacji współpracy.",
+            "Dane z korespondencji przechowujemy przez czas potrzebny do obslugi sprawy, a nastepnie do czasu przedawnienia ewentualnych roszczen lub do chwili, gdy dalsze przechowywanie przestanie byc uzasadnione.",
+            "Jezeli kontakt doprowadzi do zawarcia umowy, dane moga byc przechowywane dluzej w zakresie wymaganym przez przepisy prawa lub potrzebnym do realizacji wspolpracy.",
           ],
         },
         {
           title: "6. Twoje prawa",
           paragraphs: [
-            "Masz prawo żądać dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przeniesienia danych oraz wniesienia sprzeciwu wobec przetwarzania opartego na prawnie uzasadnionym interesie.",
-            "Jeżeli uznasz, że przetwarzanie narusza przepisy, masz również prawo złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych.",
+            "Masz prawo zadac dostepu do danych, ich sprostowania, usuniecia, ograniczenia przetwarzania, przeniesienia danych oraz wniesienia sprzeciwu wobec przetwarzania opartego na prawnie uzasadnionym interesie.",
+            "Jezeli uznasz, ze przetwarzanie narusza przepisy, masz rowniez prawo zlozyc skarge do Prezesa Urzedu Ochrony Danych Osobowych.",
           ],
         },
         {
-          title: "7. Dobrowolność podania danych",
+          title: "7. Dobrowolnosc podania danych",
           paragraphs: [
-            "Podanie danych w formularzu jest dobrowolne, ale bez podstawowych danych kontaktowych nie będziemy w stanie odpowiedzieć na wiadomość ani przygotować odpowiedzi na zapytanie.",
+            "Podanie danych w formularzu jest dobrowolne, ale bez podstawowych danych kontaktowych nie bedziemy w stanie odpowiedziec na wiadomosc ani przygotowac odpowiedzi na zapytanie.",
           ],
         },
         {
           title: "8. Zautomatyzowane decyzje",
           paragraphs: [
-            "Dane przesyłane przez formularz nie służą do podejmowania wobec Ciebie zautomatyzowanych decyzji ani do profilowania w rozumieniu RODO.",
+            "Dane przesylane przez formularz nie sluza do podejmowania wobec Ciebie zautomatyzowanych decyzji ani do profilowania w rozumieniu RODO.",
           ],
         },
       ],
     },
     cookies: {
       metaTitle: "Polityka cookies | NODE48",
-      metaDescription: "Informacje o cookies, pamięci przeglądarki i Google Analytics wykorzystywanych przez markę NODE48.",
+      metaDescription: "Informacje o cookies, pamieci przegladarki i Google Analytics wykorzystywanych przez marke NODE48.",
       title: "Polityka cookies",
-      intro:
-        "Ta strona korzysta z niezbędnych mechanizmów technicznych oraz z Google Analytics do analizy ruchu i działania serwisu.",
-      updatedAt: "23 marca 2026",
+      intro: "Ta strona korzysta z niezbednych mechanizmow technicznych oraz z Google Analytics do analizy ruchu i dzialania serwisu.",
+      updatedAt: "16 kwietnia 2026",
       sections: [
         {
-          title: "1. Czego używa ta strona",
+          title: "1. Czego uzywa ta strona",
           paragraphs: [
-            "Serwis zapisuje preferencję języka w pamięci przeglądarki (localStorage), aby po ponownej wizycie od razu wyświetlić wybraną wersję językową.",
-            "Po próbie wysłania formularza kontaktowego strona może tymczasowo zapisać w sessionStorage krótki znacznik antyspamowy ograniczający bardzo szybkie, powtarzalne zgłoszenia wyglądające na automatyczne.",
-            "Strona korzysta również z Google Analytics 4 (identyfikator pomiaru G-TKM0T56TB3), które może zapisywać analityczne pliki cookies i zbierać informacje statystyczne o korzystaniu z serwisu.",
+            "Serwis zapisuje preferencje jezyka w pamieci przegladarki (localStorage), aby po ponownej wizycie od razu wyswietlic wybrana wersje jezykowa.",
+            "Po probie wyslania formularza kontaktowego strona moze tymczasowo zapisac w sessionStorage krotki znacznik antyspamowy ograniczajacy bardzo szybkie, powtarzalne zgloszenia wygladajace na automatyczne.",
+            "Strona korzysta rowniez z Google Analytics 4 (identyfikator pomiaru G-TKM0T56TB3), ktore moze zapisywac analityczne pliki cookies i zbierac informacje statystyczne o korzystaniu z serwisu.",
           ],
           items: [
             "Klucz: node48-locale",
-            "Cel: zapamiętanie preferowanego języka strony",
-            "Zakres: wartość pl / en",
-            "Czas działania: do momentu usunięcia przez użytkownika lub wyczyszczenia danych przeglądarki",
+            "Cel: zapamietanie preferowanego jezyka strony",
+            "Zakres: wartosc pl / en",
+            "Czas dzialania: do momentu usuniecia przez uzytkownika lub wyczyszczenia danych przegladarki",
             "Klucz: node48-contact-cooldown",
-            "Cel: ograniczenie automatycznych, seryjnych wysyłek formularza",
-            "Zakres: znacznik czasu ostatniej próby wysłania formularza",
-            "Czas działania: sesyjnie, do zamknięcia karty lub wyczyszczenia danych sesji",
+            "Cel: ograniczenie automatycznych, seryjnych wysylek formularza",
+            "Zakres: znacznik czasu ostatniej proby wyslania formularza",
+            "Czas dzialania: sesyjnie, do zamkniecia karty lub wyczyszczenia danych sesji",
             "Cookie: _ga",
-            "Cel: rozróżnianie użytkowników na potrzeby statystyk Google Analytics",
+            "Cel: rozroznianie uzytkownikow na potrzeby statystyk Google Analytics",
             "Zakres: losowy identyfikator klienta",
-            "Czas działania: zwykle do 2 lat",
+            "Czas dzialania: zwykle do 2 lat",
             "Cookie: _ga_TKM0T56TB3",
             "Cel: utrzymanie stanu sesji i atrybucji pomiaru Google Analytics 4",
             "Zakres: identyfikator sesji i parametry pomiarowe",
-            "Czas działania: zwykle do 2 lat",
+            "Czas dzialania: zwykle do 2 lat",
           ],
         },
         {
-          title: "2. Podstawa korzystania z pamięci przeglądarki",
+          title: "2. Podstawa korzystania z pamieci przegladarki",
           paragraphs: [
-            "Niezbędne zapisy służą realizacji funkcji wybranej przez użytkownika oraz podstawowym zabezpieczeniom serwisu przed nadużyciami formularza kontaktowego.",
-            "Analityczne pliki cookies Google Analytics służą mierzeniu ruchu, ocenie skuteczności treści i ulepszaniu serwisu.",
+            "Niezbedne zapisy sluza realizacji funkcji wybranej przez uzytkownika oraz podstawowym zabezpieczeniom serwisu przed naduzyciami formularza kontaktowego.",
+            "Analityczne pliki cookies Google Analytics sluza mierzeniu ruchu, ocenie skutecznosci tresci i ulepszaniu serwisu.",
           ],
         },
         {
-          title: "3. Zarządzanie ustawieniami",
+          title: "3. Zarzadzanie ustawieniami",
           paragraphs: [
-            "W każdej chwili możesz usunąć zapisane dane strony w ustawieniach przeglądarki albo wyczyścić localStorage i sessionStorage dla tej domeny. Po usunięciu preferencji językowej serwis wróci do domyślnej wersji językowej.",
-            "Możesz także zablokować lub ograniczyć cookies analityczne Google w ustawieniach przeglądarki albo za pomocą narzędzi do blokowania skryptów śledzących.",
+            "W kazdej chwili mozesz usunac zapisane dane strony w ustawieniach przegladarki albo wyczyscic localStorage i sessionStorage dla tej domeny. Po usunieciu preferencji jezykowej serwis wroci do domyslnej wersji jezykowej.",
+            "Mozesz takze zablokowac lub ograniczyc cookies analityczne Google w ustawieniach przegladarki albo za pomoca narzedzi do blokowania skryptow sledzacych.",
           ],
         },
         {
           title: "4. Zmiany w polityce cookies",
           paragraphs: [
-            "Jeżeli zmieni się zakres wykorzystywanych technologii analitycznych lub marketingowych, zaktualizujemy tę politykę i odpowiednio opiszemy nowe narzędzia.",
+            "Jezeli zmieni sie zakres wykorzystywanych technologii analitycznych lub marketingowych, zaktualizujemy te polityke i odpowiednio opiszemy nowe narzedzia.",
           ],
         },
       ],
@@ -197,7 +196,7 @@ export const legalContent: Record<Locale, LegalContent> = {
       title: "Privacy Policy",
       intro:
         "Below we explain what personal data we process through this website, why we process it, what legal bases apply and what rights are available to people who contact us.",
-      updatedAt: "March 23, 2026",
+      updatedAt: "April 16, 2026",
       sections: [
         {
           title: "1. Data controller",
@@ -226,7 +225,7 @@ export const legalContent: Record<Locale, LegalContent> = {
           title: "4. Recipients and processors",
           paragraphs: [
             "Your data may be processed by our technical, hosting and email service providers, but only to the extent necessary to operate the website and handle contact requests.",
-            "Messages sent through the form are technically routed via FormSubmit, an external form handling tool. Before production use, it is worth confirming that provider's current data processing and transfer terms.",
+            "Messages sent through the form are technically routed via FormSubmit, an external form handling tool.",
             "If Google Analytics is active, some statistical data may also be received by Google Ireland Limited and related Google entities responsible for maintaining and operating the analytics service.",
           ],
         },
@@ -262,9 +261,8 @@ export const legalContent: Record<Locale, LegalContent> = {
       metaTitle: "Cookie Policy | NODE48",
       metaDescription: "Information about cookies, browser storage and Google Analytics used by the NODE48 brand.",
       title: "Cookie Policy",
-      intro:
-        "This website uses essential technical storage and Google Analytics to measure traffic and understand how the site performs.",
-      updatedAt: "March 23, 2026",
+      intro: "This website uses essential technical storage and Google Analytics to measure traffic and understand how the site performs.",
+      updatedAt: "April 16, 2026",
       sections: [
         {
           title: "1. What this website uses",

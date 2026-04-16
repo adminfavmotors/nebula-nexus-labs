@@ -681,10 +681,12 @@ describe("critical user flows", () => {
     expect(submittedFormData.get("_replyto")).toBe("jan@example.com");
     expect(submittedFormData.get("_template")).toBe("table");
     expect(submittedFormData.get("_url")).toBe("http://localhost:3000/");
-    expect(submittedFormData.get("_captcha")).toBeNull();
-    expect(submittedFormData.get("_cc")).toBeNull();
+    expect(submittedFormData.get("locale")).toBe("pl");
+    expect(submittedFormData.get("pageUrl")).toBe("http://localhost:3000/");
     expect(submittedFormData.get("_honey")).toBe("");
-    expect(requestConfig?.referrerPolicy).toBeUndefined();
+    expect(submittedFormData.get("website")).toBe("");
+    expect(submittedFormData.get("company")).toBe("");
+    expect(submittedFormData.get("startedAt")).toBe("10000");
 
     expect(await screen.findByRole("status")).toBeInTheDocument();
   });

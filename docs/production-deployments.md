@@ -1,6 +1,6 @@
 # Production Deployments
 
-Last updated: 2026-04-15
+Last updated: 2026-04-16
 
 ## What Changed
 
@@ -62,6 +62,12 @@ That build currently does all of the following from the deployed Git ref:
 
 The deploy job should therefore be treated as a static publish of the generated `dist/` directory, not as a runtime server release.
 
+## Contact Runtime Contract
+
+The contact form currently posts directly to `FormSubmit`.
+
+No deploy-time secrets or extra backend runtime steps are currently required for form delivery.
+
 ## Transport Contract
 
 Production deploys now use `rsync` over `SSH`, not plain `FTP`.
@@ -92,8 +98,10 @@ Recommended verification checklist after every production deploy or rollback:
 4. Confirm `canonical` and `hreflang` tags are correct on both locale variants.
 5. Open `/privacy-policy`, `/cookie-policy`, `/en/privacy-policy`, and `/en/cookie-policy` to confirm legal routes resolve through the prerendered route contract.
 6. Confirm the contact overlay opens and the mobile navigation behaves correctly on a narrow viewport.
-7. Confirm unknown routes now return the dedicated `404.html` response path rather than a soft 404 shell.
-8. Confirm the latest production tag is visible in GitHub after a successful deploy.
+7. Submit the contact form and confirm the `formsubmit.co` request succeeds.
+8. Confirm the contact email arrives correctly through the provider flow.
+9. Confirm unknown routes now return the dedicated `404.html` response path rather than a soft 404 shell.
+10. Confirm the latest production tag is visible in GitHub after a successful deploy.
 
 If any of these fail, rollback should be treated as a redeploy of the last known good `prod-*` tag rather than an ad hoc hotfix on production.
 

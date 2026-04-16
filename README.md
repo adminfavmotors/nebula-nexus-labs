@@ -39,7 +39,7 @@ Implemented and active:
 - shared `Reveal` primitive plus lightweight container-level reveal hooks for grouped card/list stagger where needed
 - latest header polish applied to the brand logo, contrast tokens, and selected section reveals
 
-Latest local verification recorded on `2026-04-15`:
+Latest local verification recorded on `2026-04-16`:
 
 - `npm run lint`
 - `npm run test`
@@ -49,6 +49,8 @@ Latest local verification recorded on `2026-04-15`:
 
 Current internal documentation:
 
+- [Current State - 2026-04-16](./docs/current-state-2026-04-16.md)
+- [Chat Report - 2026-04-16](./docs/chat-report-2026-04-16.md)
 - [Current State - 2026-04-15](./docs/current-state-2026-04-15.md)
 - [Chat Report - 2026-04-15](./docs/chat-report-2026-04-15.md)
 - [Project Improvement Report](./docs/project-improvement-report.md)
@@ -180,13 +182,14 @@ docs/
 
 - the homepage includes a shared contact section
 - internal pages use a reusable modal contact overlay
-- form submission currently uses `FormSubmit`
+- form submission uses `FormSubmit`
+- no backend runtime or provider secrets are required for the contact flow
 - Google Tag Manager is loaded client-side through [`src/lib/analytics.ts`](./src/lib/analytics.ts)
 
 ## Known Constraints
 
 - the site is statically deployed; indexed pages are prerendered, but there is no persistent SSR or application server runtime
-- form delivery still depends on a third-party endpoint instead of a private backend
+- contact delivery depends on a third-party form processor instead of a private backend
 - portfolio previews are static assets and should be refreshed when the live case sites change significantly
 - the current visual system is cleaner than earlier iterations, but it still benefits from deliberate cross-browser visual QA after strong header/motion changes
 - documentation drift is a real risk in this repo, so each meaningful implementation cycle should end with a new state/report update

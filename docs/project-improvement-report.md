@@ -846,6 +846,37 @@ Priority order for the next steps:
 - Follow-up:
   after the next production deploy, verify `/en` and a representative English service page directly in Search Console or another crawler-facing inspection tool to confirm the bilingual route family is being seen as intended.
 
+### Update 2026-04-16
+
+- Goal:
+  keep the contact flow on a truly free option and remove the unfinished server-side email/runtime complexity before it becomes part of the production contract.
+- Root cause addressed:
+  the first pass moved the form toward a `PHP + Resend` architecture, but that raised operational complexity, introduced provider/runtime setup work on SEOHOST, and did not match the actual product requirement for a fully free contact solution.
+- Files changed:
+  [src/lib/contact-config.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/contact-config.ts),
+  [src/components/contact/ContactFormPanel.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/contact/ContactFormPanel.tsx),
+  [public/.htaccess](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/public/.htaccess),
+  [vite.config.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/vite.config.ts),
+  [src/test/app.test.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/test/app.test.tsx),
+  [src/lib/legal-ui.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/legal-ui.ts),
+  [src/lib/legal-content.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/legal-content.ts),
+  [README.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/README.md),
+  [current-state-2026-04-16.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/current-state-2026-04-16.md),
+  [chat-report-2026-04-16.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/chat-report-2026-04-16.md),
+  [production-deployments.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/production-deployments.md),
+  [_deploy-seohost-reusable.yml](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.github/workflows/_deploy-seohost-reusable.yml),
+  [.gitignore](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/.gitignore)
+- Checks run:
+  `npm run check:text`,
+  `npm run lint`,
+  `npm run test`,
+  `npm run build`
+- Result:
+  the project is back on a lightweight free contact flow through `FormSubmit`, with no deploy-time secrets, no PHP dependency on the host, and no extra runtime layer beyond the static site itself.
+  The frontend request contract, CSP, legal copy, deploy notes, and current-state docs are aligned again with that simpler delivery model.
+- Follow-up:
+  after the next production deploy, verify one real submission on `https://node48.pl` and confirm the external provider flow still behaves correctly for both languages and current anti-spam heuristics.
+
 ## Sources Used So Far
 
 Official references used across the completed work:
