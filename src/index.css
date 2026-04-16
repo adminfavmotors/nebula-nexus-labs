@@ -91,11 +91,12 @@
     margin-inline: auto;
   }
 
-  .site-layout-root {
-    min-height: 100vh;
-    overflow-x: hidden;
-    background: hsl(var(--background));
-  }
+.site-layout-root {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: hsl(var(--background));
+}
 
   .app-shell {
     transition:

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type RefObject } from "react";
 import { ArrowUp } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
@@ -7,11 +7,35 @@ const buttonCopy = {
   en: "Scroll to top",
 } as const;
 
-const ScrollToTopButton = () => {
+type ScrollToTopButtonProps = {
+  sentinelRef: RefObject<Element | null>;
+};
+
+const ScrollToTopButton = ({ sentinelRef }: ScrollToTopButtonProps) => {
   const { locale } = useI18n();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    const sentinel = sentinelRef.current;
+
+    if (!sentinel) {
+      return;
+    }
+
+    if (typeof IntersectionObserver !== "undefined") {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setVisible(!entry.isIntersecting);
+        },
+        {
+          threshold: 0,
+        },
+      );
+
+      observer.observe(sentinel);
+      return () => observer.disconnect();
+    }
+
     const handleScroll = () => {
       setVisible(window.scrollY > 720);
     };
@@ -19,7 +43,7 @@ const ScrollToTopButton = () => {
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [sentinelRef]);
 
   const handleClick = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
