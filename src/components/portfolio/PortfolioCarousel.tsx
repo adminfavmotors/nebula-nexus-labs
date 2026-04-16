@@ -15,6 +15,8 @@ type PortfolioCarouselProps = {
   nextLabel: string;
 };
 
+const PORTFOLIO_PRELOAD_CARD_COUNT = 3;
+
 const PortfolioCarousel = ({
   items,
   collectionLabel,
@@ -71,9 +73,13 @@ const PortfolioCarousel = ({
 
         <div className="portfolio-carousel__viewport" ref={emblaRef}>
           <div className="portfolio-carousel__track">
-            {items.map((item) => (
+            {items.map((item, index) => (
               <div className="portfolio-carousel__slide" key={`${item.name}-${item.href}`}>
-                <PortfolioCaseCard item={item} openLabel={openLabel} />
+                <PortfolioCaseCard
+                  item={item}
+                  openLabel={openLabel}
+                  shouldPreload={index < PORTFOLIO_PRELOAD_CARD_COUNT}
+                />
               </div>
             ))}
           </div>

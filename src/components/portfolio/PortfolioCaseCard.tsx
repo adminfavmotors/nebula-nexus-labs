@@ -5,9 +5,13 @@ import type { ProjectCase } from "@/lib/project-cases";
 type PortfolioCaseCardProps = {
   item: ProjectCase;
   openLabel: string;
+  shouldPreload?: boolean;
 };
 
-const PortfolioCaseCard = ({ item, openLabel }: PortfolioCaseCardProps) => {
+const PORTFOLIO_PREVIEW_WIDTH = 1600;
+const PORTFOLIO_PREVIEW_HEIGHT = 845;
+
+const PortfolioCaseCard = ({ item, openLabel, shouldPreload = false }: PortfolioCaseCardProps) => {
   return (
     <a
       href={item.href}
@@ -29,9 +33,11 @@ const PortfolioCaseCard = ({ item, openLabel }: PortfolioCaseCardProps) => {
           alt={item.name}
           className="portfolio-card__image"
           style={{ objectPosition: item.preview.objectPosition ?? "center top" }}
-          loading="lazy"
+          width={PORTFOLIO_PREVIEW_WIDTH}
+          height={PORTFOLIO_PREVIEW_HEIGHT}
+          loading={shouldPreload ? "eager" : "lazy"}
           decoding="async"
-          fetchpriority="low"
+          fetchpriority={shouldPreload ? "high" : "low"}
           sizes="(max-width: 767px) calc(100vw - 2.8rem), (max-width: 1099px) calc(50vw - 2.5rem), calc(33vw - 2.6rem)"
           draggable="false"
         />
