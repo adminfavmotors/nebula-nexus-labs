@@ -173,10 +173,7 @@
   height: 100%;
   object-fit: cover;
   transform: scale(1.01);
-  filter: saturate(0.98) contrast(1.02) brightness(0.95);
-  transition:
-    transform calc(var(--structural-motion-slow) + 40ms) var(--structural-motion-ease-strong),
-    filter var(--structural-motion-slow) var(--structural-motion-ease);
+  transition: transform calc(var(--structural-motion-slow) + 40ms) var(--structural-motion-ease-strong);
 }
 
 .portfolio-card__image-tint {
@@ -328,7 +325,6 @@
 
   .portfolio-card:is(:hover, :focus-within) .portfolio-card__image {
     transform: scale(1.012);
-    filter: saturate(1) contrast(1.01) brightness(0.98);
   }
 
   .portfolio-card:is(:hover, :focus-within) .portfolio-card__cta {
@@ -403,7 +399,6 @@
 
   .portfolio-card__image {
     transform: none;
-    filter: saturate(0.94) contrast(1) brightness(0.96);
   }
 }
 

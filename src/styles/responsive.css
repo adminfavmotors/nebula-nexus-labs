@@ -307,7 +307,6 @@
 
   .hero-visual-image {
     transform: none;
-    filter: saturate(0.95) contrast(1) brightness(0.94);
   }
 
   .hero-visual-vignette {
