@@ -82,8 +82,8 @@
   height: 22rem;
   border-radius: 999px;
   background:
-    radial-gradient(circle at center, rgba(32, 107, 255, 0.24), rgba(32, 107, 255, 0) 68%);
-  filter: blur(82px);
+    radial-gradient(circle at center, rgba(32, 107, 255, 0.2) 0%, rgba(32, 107, 255, 0.08) 34%, rgba(32, 107, 255, 0) 68%);
+  opacity: 0.8;
   pointer-events: none;
 }
 
@@ -135,9 +135,8 @@
   inset: auto 12% -11% 12%;
   height: 24%;
   border-radius: 999px;
-  background: radial-gradient(circle at center, rgba(0, 89, 255, 0.28), transparent 74%);
-  filter: blur(24px);
-  opacity: 0.14;
+  background: radial-gradient(circle at center, rgba(0, 89, 255, 0.18) 0%, rgba(0, 89, 255, 0.07) 48%, transparent 74%);
+  opacity: 0.12;
   transition: opacity 0.32s ease;
 }
 
@@ -320,7 +319,7 @@
   }
 
   .portfolio-card:is(:hover, :focus-within)::after {
-    opacity: 0.22;
+    opacity: 0.18;
   }
 
   .portfolio-card:is(:hover, :focus-within) .portfolio-card__image {

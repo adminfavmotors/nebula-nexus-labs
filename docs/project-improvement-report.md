@@ -1,6 +1,6 @@
 # Project Improvement Report
 
-Last updated: 2026-04-15
+Last updated: 2026-04-16
 Workspace: `C:\Users\Admin\Desktop\project\nebula-nexus-labs`
 Status: in progress
 
@@ -876,6 +876,38 @@ Priority order for the next steps:
   The frontend request contract, CSP, legal copy, deploy notes, and current-state docs are aligned again with that simpler delivery model.
 - Follow-up:
   after the next production deploy, verify one real submission on `https://node48.pl` and confirm the external provider flow still behaves correctly for both languages and current anti-spam heuristics.
+
+### Update 2026-04-16
+
+- Goal:
+  start a system-level scroll and image-delivery cleanup so the homepage stops transferring work into the user's active scroll path.
+- Root cause addressed:
+  the jank pattern was no longer mainly about animation itself. Several individually reasonable optimizations had started to conflict:
+  `Projects` mounted at the viewport edge,
+  large hero and portfolio bitmaps still used runtime `filter`,
+  the scroll-to-top control maintained its own raw scroll listener,
+  portfolio previews shared the same late priority profile,
+  and some decorative glows still relied on blur-heavy layers despite being non-essential.
+- Files changed:
+  [src/components/Projects.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/Projects.tsx),
+  [src/styles/home.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/home.css),
+  [src/styles/responsive.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/styles/responsive.css),
+  [src/components/portfolio/portfolio-carousel.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/portfolio/portfolio-carousel.css),
+  [src/components/SiteLayout.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/SiteLayout.tsx),
+  [src/components/ScrollToTopButton.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/ScrollToTopButton.tsx),
+  [src/index.css](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/index.css),
+  [src/components/portfolio/PortfolioCarousel.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/portfolio/PortfolioCarousel.tsx),
+  [src/components/portfolio/PortfolioCaseCard.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/portfolio/PortfolioCaseCard.tsx),
+  [src/components/Navbar.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/components/Navbar.tsx),
+  [docs/current-state-2026-04-16.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/current-state-2026-04-16.md),
+  [docs/chat-report-2026-04-16.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/chat-report-2026-04-16.md),
+  [docs/project-improvement-report.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/project-improvement-report.md)
+- Checks run:
+  repeated local passes of `npm run lint`, `npm run test`, and `npm run build` after each sub-step
+- Result:
+  `Projects` now mounts eagerly instead of appearing late at the viewport edge; hero and portfolio images no longer pay runtime bitmap filter cost; scroll-top visibility now uses an observer sentinel; the first visible portfolio cards are prioritized for loading with explicit dimensions; the decorative hero PNG is no longer part of the first-screen runtime path; navbar scroll handling keeps one listener lifecycle; and the remaining portfolio glows are gradient-only instead of blur-heavy.
+- Follow-up:
+  continue the same discipline on the remaining decorative blur surfaces that are still live in shell-only areas, but keep the justified readability-related backdrop layers unless measurements or visual QA prove they are the next real bottleneck.
 
 ## Sources Used So Far
 

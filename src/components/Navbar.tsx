@@ -27,6 +27,8 @@ const Navbar = () => {
   const rafId = useRef<number | null>(null);
   const scrolledRef = useRef(false);
   const headerPinnedRef = useRef(true);
+  const menuOpenRef = useRef(menuOpen);
+  const updateHeaderStateRef = useRef<(() => void) | null>(null);
   const location = useLocation();
   const { locale, setLocale, isTransitioningLocale, t } = useI18n();
   const { openContactOverlay } = useContactOverlay();
@@ -49,7 +51,9 @@ const Navbar = () => {
 
   useEffect(() => {
     setVisible(true);
+  }, []);
 
+  useEffect(() => {
     const updateHeaderState = () => {
       const currentScrollY = window.scrollY;
       const scrollDelta = currentScrollY - lastScrollY.current;
@@ -61,7 +65,7 @@ const Navbar = () => {
         setScrolled(nextScrolled);
       }
 
-      if (menuOpen || currentScrollY <= HEADER_REVEAL_OFFSET) {
+      if (menuOpenRef.current || currentScrollY <= HEADER_REVEAL_OFFSET) {
         nextPinned = true;
       } else if (scrollDelta >= HEADER_SCROLL_DELTA && currentScrollY > HEADER_HIDE_OFFSET) {
         nextPinned = false;
@@ -78,12 +82,16 @@ const Navbar = () => {
       rafId.current = null;
     };
 
+    updateHeaderStateRef.current = updateHeaderState;
+
     const onScroll = () => {
       if (rafId.current !== null) {
         return;
       }
 
-      rafId.current = window.requestAnimationFrame(updateHeaderState);
+      rafId.current = window.requestAnimationFrame(() => {
+        updateHeaderStateRef.current?.();
+      });
     };
 
     lastScrollY.current = window.scrollY;
@@ -97,7 +105,21 @@ const Navbar = () => {
       if (rafId.current !== null) {
         window.cancelAnimationFrame(rafId.current);
       }
+
+      updateHeaderStateRef.current = null;
     };
+  }, []);
+
+  useEffect(() => {
+    menuOpenRef.current = menuOpen;
+
+    if (menuOpen) {
+      headerPinnedRef.current = true;
+      setHeaderPinned(true);
+      return;
+    }
+
+    updateHeaderStateRef.current?.();
   }, [menuOpen]);
 
   useEffect(() => {
