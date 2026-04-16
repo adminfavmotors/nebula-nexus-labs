@@ -1,7 +1,6 @@
 import { lazy, Suspense } from "react";
 import { useI18n } from "@/lib/i18n";
 import { Section, SectionHeader } from "@/components/primitives/Section";
-import { ViewportMount } from "@/components/primitives/ViewportMount";
 
 const PortfolioShowcase = lazy(() => import("@/components/portfolio/PortfolioShowcase"));
 
@@ -35,16 +34,14 @@ const Projects = () => {
       />
 
       <div className="projects-frame">
-        <ViewportMount fallback={<ProjectsFallback />}>
-          <Suspense fallback={<ProjectsFallback />}>
-            <PortfolioShowcase
-              collectionLabel={t.projects.collectionLabel}
-              openLabel={t.projects.openLabel}
-              previousLabel={t.projects.previousLabel}
-              nextLabel={t.projects.nextLabel}
-            />
-          </Suspense>
-        </ViewportMount>
+        <Suspense fallback={<ProjectsFallback />}>
+          <PortfolioShowcase
+            collectionLabel={t.projects.collectionLabel}
+            openLabel={t.projects.openLabel}
+            previousLabel={t.projects.previousLabel}
+            nextLabel={t.projects.nextLabel}
+          />
+        </Suspense>
       </div>
     </Section>
   );
