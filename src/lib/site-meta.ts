@@ -8,7 +8,7 @@ export const homePageMeta: Record<
   }
 > = {
   pl: {
-    title: "NODE48 | Strony i produkty cyfrowe",
+    title: "Tworzenie stron internetowych dla firm | NODE48",
     description:
       "Projektujemy szybkie strony internetowe, landing page'e i doświadczenia cyfrowe dla firm, które chcą wyglądać nowocześnie i sprzedawać skuteczniej.",
   },

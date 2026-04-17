@@ -55,3 +55,27 @@ All four checks passed locally.
 - anti-spam is still fundamentally limited by a browser-to-provider architecture
 - if volume or abuse grows later, the project should revisit a private backend or paid managed form flow
 - some blur-heavy shell surfaces still remain by design, so the next performance passes should distinguish between justified readability layers and purely decorative cost
+
+## Follow-up Update - 2026-04-17
+
+### SEO index-scope cleanup
+
+- removed `privacy-policy` and `cookie-policy` from the indexed route manifest and generated sitemap
+- kept those legal pages prerendered, but marked them `noindex,follow` so they stop competing for coverage without breaking the pages themselves
+- split the old single manifest responsibility into:
+  indexed routes for sitemap/index intent,
+  prerender routes for static HTML output
+
+### Low-risk homepage semantic hardening
+
+- updated the Polish homepage `<title>` from a brand-led label to a broader commercial search intent:
+  `Tworzenie stron internetowych dla firm | NODE48`
+- kept this pass deliberately narrow so no layout-sensitive homepage headings or service-grid text had to change yet
+
+### Verification
+
+- `npm run lint`
+- `npm run test`
+- `npm run build`
+
+All three passed locally.

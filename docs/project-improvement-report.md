@@ -1,6 +1,6 @@
 # Project Improvement Report
 
-Last updated: 2026-04-16
+Last updated: 2026-04-17
 Workspace: `C:\Users\Admin\Desktop\project\nebula-nexus-labs`
 Status: in progress
 
@@ -908,6 +908,37 @@ Priority order for the next steps:
   `Projects` now mounts eagerly instead of appearing late at the viewport edge; hero and portfolio images no longer pay runtime bitmap filter cost; scroll-top visibility now uses an observer sentinel; the first visible portfolio cards are prioritized for loading with explicit dimensions; the decorative hero PNG is no longer part of the first-screen runtime path; navbar scroll handling keeps one listener lifecycle; and the remaining portfolio glows are gradient-only instead of blur-heavy.
 - Follow-up:
   continue the same discipline on the remaining decorative blur surfaces that are still live in shell-only areas, but keep the justified readability-related backdrop layers unless measurements or visual QA prove they are the next real bottleneck.
+
+### Update 2026-04-17
+
+- Goal:
+  reduce non-essential indexation noise and start widening homepage commercial relevance with the lowest possible layout risk.
+- Root cause addressed:
+  legal policy pages were still being treated as indexed routes even though they are not valuable search-entry pages, which diluted the sitemap and Search Console picture. At the same time, the homepage still led with a brand-first title that under-signaled the main commercial intent around website creation for companies.
+- Files changed:
+  [src/lib/seo-routes.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/seo-routes.ts),
+  [scripts/prerender.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/scripts/prerender.ts),
+  [src/test/app.test.tsx](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/test/app.test.tsx),
+  [public/sitemap.xml](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/public/sitemap.xml),
+  [src/lib/site-meta.ts](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/src/lib/site-meta.ts),
+  [docs/current-state-2026-04-16.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/current-state-2026-04-16.md),
+  [docs/chat-report-2026-04-16.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/chat-report-2026-04-16.md),
+  [docs/project-improvement-report.md](/C:/Users/Admin/Desktop/project/nebula-nexus-labs/docs/project-improvement-report.md)
+- Checks run:
+  `npm run lint`,
+  `npm run test`,
+  `npm run build`
+- Result:
+  legal pages now remain available as prerendered documents but are excluded from the sitemap and explicitly marked `noindex,follow`, which keeps them accessible without asking Google to treat them as primary landing pages.
+  The homepage Polish title now targets a broader commercial query family:
+  `Tworzenie stron internetowych dla firm | NODE48`.
+  This was intentionally chosen as the first semantic pass because it improves relevance without touching layout-sensitive visible headings on the homepage.
+- Follow-up:
+  continue the homepage semantic expansion in low-risk layers next:
+  homepage meta description,
+  hero supporting paragraph,
+  FAQ/supporting copy,
+  and only then consider visible heading changes after a layout-safety pass.
 
 ## Sources Used So Far
 

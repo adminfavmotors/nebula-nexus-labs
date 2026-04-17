@@ -13,7 +13,7 @@
 
 ## Indexed Routes
 
-Current indexed and prerendered routes:
+Current indexed routes:
 
 - `/`
 - `/en`
@@ -29,6 +29,9 @@ Current indexed and prerendered routes:
 - `/en/uslugi/redesign-strony`
 - `/uslugi/opieka-techniczna`
 - `/en/uslugi/opieka-techniczna`
+
+Prerendered but intentionally non-indexed legal routes:
+
 - `/privacy-policy`
 - `/en/privacy-policy`
 - `/cookie-policy`
@@ -52,6 +55,7 @@ Current indexed and prerendered routes:
 - route-aware locale helpers in `src/lib/locale-routes.ts`
 - build-time prerender in `scripts/prerender.ts`
 - generated sitemap in `scripts/generate-sitemap.ts`
+- legal policy pages now stay prerendered but use `noindex,follow` and are excluded from the sitemap
 - real `404.html` delivery contract for unknown routes
 - route resolution, redirects, CSP, HSTS, and cache rules in `public/.htaccess`
 
@@ -101,3 +105,4 @@ All four passed locally.
 - contact delivery depends on a third-party form processor
 - portfolio previews are static assets that should be refreshed when live case sites drift
 - some shell-level blur surfaces are still intentionally present where they support readability or modal separation
+- homepage semantic coverage is still broader in metadata than in visible hero copy; the latest low-risk SEO pass started with the homepage title only
