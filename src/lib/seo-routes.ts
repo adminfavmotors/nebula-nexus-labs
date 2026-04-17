@@ -94,6 +94,7 @@ export function getLegalPageSeo(locale: Locale, documentKey: LegalDocumentKey): 
     title: documentContent.metaTitle,
     description: documentContent.metaDescription,
     path: getLocalizedLegalPath(locale, documentKey),
+    robots: "noindex,follow",
     locale,
     alternates: getLocalizedAlternates(getLegalPagePath(documentKey)),
   };
@@ -109,6 +110,12 @@ export function getIndexedRouteManifest(locale: Locale = "pl"): IndexedRouteEntr
       path: getLocalizedServicePath(locale, slug),
       seo: getServicePageSeo(locale, slug)!,
     })),
+  ];
+}
+
+export function getPrerenderRouteManifest(locale: Locale = "pl"): IndexedRouteEntry[] {
+  return [
+    ...getIndexedRouteManifest(locale),
     {
       path: getLocalizedLegalPath(locale, "privacy"),
       seo: getLegalPageSeo(locale, "privacy"),

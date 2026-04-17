@@ -9,6 +9,7 @@ import App from "@/App";
 import { I18nProvider } from "@/lib/i18n";
 import { getLocalizedAlternates } from "@/lib/locale-routes";
 import { brandIntroMotionTimings } from "@/lib/motion";
+import { getIndexedRouteManifest, getLegalPageSeo } from "@/lib/seo-routes";
 import { formEndpoint } from "@/lib/contact-config";
 import { applySeoSnapshot, createSeoSnapshot } from "@/lib/seo";
 import { BRAND_INTRO_STORAGE_KEY, useBrandIntro } from "@/lib/use-brand-intro";
@@ -458,6 +459,17 @@ describe("critical user flows", () => {
 
     expect(document.querySelector('meta[property="og:image"]')).toBeNull();
     expect(document.querySelector('meta[name="twitter:image"]')).toBeNull();
+  });
+
+  it("keeps legal pages out of the indexed route manifest and marks them noindex", () => {
+    const indexedPaths = getIndexedRouteManifest("pl").map(({ path }) => path);
+    const privacySeo = getLegalPageSeo("pl", "privacy");
+    const cookieSeo = getLegalPageSeo("pl", "cookies");
+
+    expect(indexedPaths).not.toContain("/privacy-policy");
+    expect(indexedPaths).not.toContain("/cookie-policy");
+    expect(privacySeo.robots).toBe("noindex,follow");
+    expect(cookieSeo.robots).toBe("noindex,follow");
   });
 
   it("syncs alternate hreflang links for localized pages", () => {

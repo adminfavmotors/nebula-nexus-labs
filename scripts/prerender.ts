@@ -46,10 +46,10 @@ const viteServer = await createServer({
 
 try {
   const { createSeoHeadMarkup, createSeoSnapshot } = await viteServer.ssrLoadModule("/src/lib/seo.ts");
-  const { getIndexedRouteManifest } = await viteServer.ssrLoadModule("/src/lib/seo-routes.ts");
+  const { getPrerenderRouteManifest } = await viteServer.ssrLoadModule("/src/lib/seo-routes.ts");
   const { translations } = await viteServer.ssrLoadModule("/src/lib/i18n-data.ts");
   const { renderPrerenderedRoute } = await viteServer.ssrLoadModule("/src/prerender/render-app.tsx");
-  const indexedRoutes = [...getIndexedRouteManifest("pl"), ...getIndexedRouteManifest("en")];
+  const indexedRoutes = [...getPrerenderRouteManifest("pl"), ...getPrerenderRouteManifest("en")];
 
   for (const route of indexedRoutes) {
     const appMarkup = renderPrerenderedRoute(route.path);
