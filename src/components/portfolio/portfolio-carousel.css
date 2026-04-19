@@ -22,7 +22,7 @@
   border-radius: 999px;
   background: rgba(0, 89, 255, 0.06);
   color: #0059ff;
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--font-body-family);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -197,7 +197,7 @@
 }
 
 .portfolio-card__cta {
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--font-body-family);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -228,7 +228,7 @@
   border-radius: 999px;
   background: rgba(0, 89, 255, 0.08);
   color: #9ec4ff;
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--font-body-family);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -236,7 +236,7 @@
 
 .portfolio-card__tag {
   color: rgba(186, 205, 237, 0.9);
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--font-body-family);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -252,7 +252,7 @@
 .portfolio-card__title {
   max-width: 16ch;
   color: #f4f8ff;
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--font-display-family);
   font-size: clamp(1.1rem, 1.1vw, 1.24rem);
   font-weight: 700;
   line-height: 1.12;
@@ -263,7 +263,7 @@
 .portfolio-card__summary {
   max-width: 31ch;
   color: rgba(216, 228, 248, 0.9);
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--font-body-family);
   font-size: 0.89rem;
   line-height: 1.56;
   text-wrap: pretty;

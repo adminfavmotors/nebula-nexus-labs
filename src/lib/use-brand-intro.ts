@@ -8,7 +8,7 @@ export const BRAND_INTRO_STORAGE_KEY = "node48-brand-intro-played";
 export const BRAND_INTRO_EXIT_DELAY_MS = brandIntroMotionTimings.exitDelayMs;
 export const BRAND_INTRO_FONT_READY_TIMEOUT_MS = brandIntroMotionTimings.fontReadyTimeoutMs;
 export const BRAND_INTRO_TOTAL_MS = brandIntroMotionTimings.totalDurationMs;
-const BRAND_INTRO_FONT = '700 1em "Space Grotesk"';
+const BRAND_INTRO_FONT = '700 1em "Manrope Variable"';
 
 type BrandIntroPhase = "done" | "preparing" | "running" | "exiting";
 
