@@ -696,9 +696,8 @@ describe("critical user flows", () => {
     expect(submittedFormData.get("locale")).toBe("pl");
     expect(submittedFormData.get("pageUrl")).toBe("http://localhost:3000/");
     expect(submittedFormData.get("_honey")).toBe("");
-    expect(submittedFormData.get("website")).toBe("");
-    expect(submittedFormData.get("company")).toBe("");
-    expect(submittedFormData.get("startedAt")).toBe("10000");
+    expect(submittedFormData.has("_captcha")).toBe(false);
+    expect(submittedFormData.has("_cc")).toBe(false);
 
     expect(await screen.findByRole("status")).toBeInTheDocument();
   });
@@ -810,7 +809,7 @@ describe("critical user flows", () => {
     fireEvent.change(textboxes[0], { target: { value: "Jan Kowalski" } });
     fireEvent.change(textboxes[1], { target: { value: "jan@example.com" } });
     fireEvent.change(textboxes[2], { target: { value: "https://spam.example www.example spam spam spam" } });
-    const trapInput = document.querySelector('input[name="website"]') as HTMLInputElement;
+    const trapInput = document.querySelector('input[name="_honey"]') as HTMLInputElement;
     trapInput.value = "https://bot.example";
 
     fireEvent.submit(screen.getByRole("button").closest("form")!);
@@ -822,8 +821,11 @@ describe("critical user flows", () => {
     expect(await screen.findByRole("alert")).toBeInTheDocument();
   });
 
-  it("blocks uppercase-heavy submissions with Polish diacritics before the network request is sent", async () => {
-    const fetchMock = vi.fn();
+  it("accepts uppercase inquiries with Polish diacritics", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ success: "true" }),
+    });
     const nowSpy = vi.spyOn(Date, "now");
 
     vi.stubGlobal("fetch", fetchMock);
@@ -842,9 +844,9 @@ describe("critical user flows", () => {
     fireEvent.submit(screen.getByRole("button").closest("form")!);
 
     await waitFor(() => {
-      expect(fetchMock).not.toHaveBeenCalled();
+      expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
-    expect(await screen.findByRole("alert")).toBeInTheDocument();
+    expect(await screen.findByRole("status")).toBeInTheDocument();
   });
 });

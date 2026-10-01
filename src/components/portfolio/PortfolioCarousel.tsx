@@ -5,7 +5,6 @@ import { cx } from "@/lib/cx";
 import type { ProjectCase } from "@/lib/project-cases";
 import { IconButton } from "@/components/primitives/Actions";
 import PortfolioCaseCard from "@/components/portfolio/PortfolioCaseCard";
-import "./portfolio-carousel.css";
 
 type PortfolioCarouselProps = {
   items: ProjectCase[];

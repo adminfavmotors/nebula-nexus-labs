@@ -52,7 +52,7 @@ try {
   const indexedRoutes = [...getPrerenderRouteManifest("pl"), ...getPrerenderRouteManifest("en")];
 
   for (const route of indexedRoutes) {
-    const appMarkup = renderPrerenderedRoute(route.path);
+    const appMarkup = await renderPrerenderedRoute(route.path);
     const snapshot = createSeoSnapshot(route.seo);
     const seoMarkup = createSeoHeadMarkup(snapshot);
     const html = injectAppMarkup(injectHtmlLang(injectSeoMarkup(template, seoMarkup), snapshot.locale), appMarkup);
@@ -63,7 +63,7 @@ try {
   }
 
   const notFoundCopy = translations.pl.notFound;
-  const notFoundMarkup = renderPrerenderedRoute("/404");
+  const notFoundMarkup = await renderPrerenderedRoute("/404");
   const notFoundSnapshot = createSeoSnapshot({
     title: `404 | ${notFoundCopy.title}`,
     description: notFoundCopy.body,

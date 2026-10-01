@@ -3,24 +3,20 @@ import { Link } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
 import { legalUiCopy } from "@/lib/legal-ui";
 import { getLocalizedLegalPath } from "@/lib/locale-routes";
-import { formEndpoint } from "@/lib/contact-config";
+import { contactEmail, formEndpoint } from "@/lib/contact-config";
 import { cx } from "@/lib/cx";
 import { ActionButton } from "@/components/primitives/Actions";
 import { FormInput, FormTextarea } from "@/components/primitives/FormFields";
 
 const CONTACT_FORM_COOLDOWN_KEY = "node48-contact-cooldown";
 const CONTACT_FORM_COOLDOWN_MS = 45_000;
-const CONTACT_FORM_MIN_COMPLETION_MS = 2_200;
-const CONTACT_FORM_MAX_LINKS = 2;
+const CONTACT_FORM_REQUEST_TIMEOUT_MS = 20_000;
 const CONTACT_FORM_NAME_MAX_LENGTH = 120;
 const CONTACT_FORM_EMAIL_MAX_LENGTH = 160;
 const CONTACT_FORM_MESSAGE_MIN_LENGTH = 1;
 const CONTACT_FORM_MESSAGE_MAX_LENGTH = 2_000;
 
-const markupPattern = /<[^>]+>/;
-const repeatedCharPattern = /(.)\1{6,}/;
-const nonLetterPattern = /[^\p{L}]/gu;
-const nonUppercaseLetterPattern = /[^\p{Lu}]/gu;
+type ContactFormStatus = "idle" | "submitting" | "success" | "error" | "timeout" | "cooldown" | "blocked" | "rateLimited";
 
 function isSuccessfulFormSubmitResponse(payload: unknown) {
   if (!payload || typeof payload !== "object") {
@@ -31,13 +27,17 @@ function isSuccessfulFormSubmitResponse(payload: unknown) {
   return success === true || success === "true";
 }
 
-function getFormSubmitMessage(payload: unknown) {
-  if (!payload || typeof payload !== "object") {
-    return null;
+function getContactFormCooldownSeconds() {
+  try {
+    const timestamp = Number(window.sessionStorage.getItem(CONTACT_FORM_COOLDOWN_KEY));
+    const elapsed = Date.now() - timestamp;
+    return Number.isFinite(timestamp) && timestamp > 0 && elapsed >= 0
+      ? Math.max(0, Math.ceil((CONTACT_FORM_COOLDOWN_MS - elapsed) / 1000))
+      : 0;
+  } catch {
+    // Storage is optional: privacy settings must not prevent an inquiry.
+    return 0;
   }
-
-  const message = (payload as { message?: unknown }).message;
-  return typeof message === "string" && message.trim().length > 0 ? message.trim() : null;
 }
 
 function setContactFormCooldown(timestamp: number) {
@@ -45,22 +45,11 @@ function setContactFormCooldown(timestamp: number) {
     return;
   }
 
-  window.sessionStorage.setItem(CONTACT_FORM_COOLDOWN_KEY, String(timestamp));
-}
-
-function countLinks(value: string) {
-  return (value.match(/https?:\/\/|www\./gi) ?? []).length;
-}
-
-function hasTooManyUppercase(value: string) {
-  const letters = value.replace(nonLetterPattern, "");
-
-  if (letters.length < 12) {
-    return false;
+  try {
+    window.sessionStorage.setItem(CONTACT_FORM_COOLDOWN_KEY, String(timestamp));
+  } catch {
+    // A provider-confirmed success must remain a success if storage is unavailable.
   }
-
-  const uppercaseLetters = letters.replace(nonUppercaseLetterPattern, "");
-  return uppercaseLetters.length / letters.length > 0.7;
 }
 
 type ContactFormPanelProps = ComponentPropsWithoutRef<"form"> & {
@@ -78,12 +67,41 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
 }, ref) {
   const { locale, t } = useI18n();
   const legal = legalUiCopy[locale];
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [statusMessage, setStatusMessage] = useState<string | null>(null);
-  const [hasInteracted, setHasInteracted] = useState(false);
-  const [hasAttemptedSubmission, setHasAttemptedSubmission] = useState(false);
-  const startedAtRef = useRef(Date.now());
+  const [isReady, setIsReady] = useState(false);
+  const [status, setStatus] = useState<ContactFormStatus>("idle");
+  const [cooldownSeconds, setCooldownSeconds] = useState(0);
+  const requestRef = useRef<AbortController | null>(null);
+  const successTimeoutRef = useRef<number | null>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
+  const isError = status !== "idle" && status !== "submitting" && status !== "success";
+
+  useEffect(() => {
+    setIsReady(true);
+  }, []);
+
+  useEffect(() => () => {
+    requestRef.current?.abort();
+    requestRef.current = null;
+    if (successTimeoutRef.current !== null) {
+      window.clearTimeout(successTimeoutRef.current);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (status !== "cooldown") {
+      return;
+    }
+
+    const intervalId = window.setInterval(() => {
+      const seconds = getContactFormCooldownSeconds();
+      setCooldownSeconds(seconds);
+      if (seconds === 0) {
+        setStatus("idle");
+      }
+    }, 1000);
+
+    return () => window.clearInterval(intervalId);
+  }, [status]);
 
   useEffect(() => {
     if (!autoFocus) {
@@ -100,51 +118,70 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const name = String(formData.get("name") ?? "").trim();
-    const email = String(formData.get("email") ?? "").trim().toLowerCase();
-    const message = String(formData.get("message") ?? "").trim();
-    const honeyValue = String(formData.get("_honey") ?? "").trim();
-    const websiteValue = String(formData.get("website") ?? "").trim();
-    const companyValue = String(formData.get("company") ?? "").trim();
-    const lastAttemptAt =
-      typeof window === "undefined" ? 0 : Number(window.sessionStorage.getItem(CONTACT_FORM_COOLDOWN_KEY) ?? 0);
-    const isCoolingDown = lastAttemptAt > 0 && Date.now() - lastAttemptAt < CONTACT_FORM_COOLDOWN_MS;
-    const isTooFast = Date.now() - startedAtRef.current < CONTACT_FORM_MIN_COMPLETION_MS;
-    const looksSuspicious =
-      (!hasInteracted && !hasAttemptedSubmission) ||
-      honeyValue.length > 0 ||
-      websiteValue.length > 0 ||
-      companyValue.length > 0 ||
-      isTooFast ||
-      name.length < 2 ||
-      name.length > CONTACT_FORM_NAME_MAX_LENGTH ||
-      email.length === 0 ||
-      email.length > CONTACT_FORM_EMAIL_MAX_LENGTH ||
-      message.length < CONTACT_FORM_MESSAGE_MIN_LENGTH ||
-      message.length > CONTACT_FORM_MESSAGE_MAX_LENGTH ||
-      countLinks(message) > CONTACT_FORM_MAX_LINKS ||
-      markupPattern.test(name) ||
-      markupPattern.test(message) ||
-      repeatedCharPattern.test(message) ||
-      hasTooManyUppercase(message);
-
-    if (isCoolingDown || looksSuspicious) {
-      setStatusMessage(null);
-      setStatus("error");
+    // State updates are asynchronous; this also covers repeated submit events.
+    if (requestRef.current) {
       return;
     }
 
-    setStatusMessage(null);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const name = String(formData.get("name") ?? "").trim();
+    const email = String(formData.get("email") ?? "").trim();
+    const message = String(formData.get("message") ?? "").trim();
+    const honeyValue = String(formData.get("_honey") ?? "").trim();
+
+    const fields = [
+      { key: "name", value: name, maxLength: CONTACT_FORM_NAME_MAX_LENGTH },
+      { key: "email", value: email, maxLength: CONTACT_FORM_EMAIL_MAX_LENGTH },
+      { key: "message", value: message, maxLength: CONTACT_FORM_MESSAGE_MAX_LENGTH },
+    ];
+    for (const field of fields) {
+      const input = form.elements.namedItem(field.key) as HTMLInputElement | HTMLTextAreaElement;
+      input.setCustomValidity(
+        !field.value
+          ? t.contact.validation.required
+          : field.value.length > field.maxLength
+            ? t.contact.validation.tooLong.replace("{limit}", String(field.maxLength))
+            : "",
+      );
+    }
+    if (!form.reportValidity()) {
+      setStatus("idle");
+      return;
+    }
+
+    // Only a filled provider honeypot blocks preflight. Writing style is not a bot signal.
+    if (honeyValue.length > 0) {
+      setStatus("blocked");
+      return;
+    }
+
+    const remainingSeconds = getContactFormCooldownSeconds();
+    if (remainingSeconds > 0) {
+      setCooldownSeconds(remainingSeconds);
+      setStatus("cooldown");
+      return;
+    }
+
+    const controller = new AbortController();
+    requestRef.current = controller;
+    const timeoutId = window.setTimeout(() => controller.abort(), CONTACT_FORM_REQUEST_TIMEOUT_MS);
     setStatus("submitting");
-    setHasAttemptedSubmission(true);
-    formData.append("_replyto", String(formData.get("email") ?? ""));
-    formData.append("_subject", `NODE48 inquiry (${locale.toUpperCase()})`);
-    formData.append("_template", "table");
-    formData.append("locale", locale);
-    formData.append("pageUrl", typeof window === "undefined" ? "https://node48.pl/" : window.location.href);
-    formData.append("_url", typeof window === "undefined" ? "https://node48.pl/" : window.location.href);
+
+    // Explicit payload: do not forward arbitrary fields or provider routing overrides.
+    const payload = new FormData();
+    payload.set("name", name);
+    payload.set("email", email);
+    payload.set("message", message);
+    payload.set("_honey", "");
+    payload.set("_replyto", email);
+    payload.set("_subject", `NODE48 inquiry (${locale.toUpperCase()})`);
+    payload.set("_template", "table");
+    payload.set("locale", locale);
+    // Query strings and hashes can contain private information unrelated to the inquiry.
+    const pageUrl = `${window.location.origin}${window.location.pathname}`;
+    payload.set("pageUrl", pageUrl);
+    payload.set("_url", pageUrl);
 
     try {
       const response = await fetch(formEndpoint, {
@@ -154,42 +191,63 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
         },
         cache: "no-store",
         credentials: "omit",
-        body: formData,
+        body: payload,
+        signal: controller.signal,
       });
 
       const responsePayload = await response.json().catch(() => null);
 
+      if (requestRef.current !== controller) {
+        return;
+      }
+
+      if (response.status === 429) {
+        setStatus("rateLimited");
+        return;
+      }
+
       if (!response.ok || !isSuccessfulFormSubmitResponse(responsePayload)) {
-        setStatusMessage(getFormSubmitMessage(responsePayload));
         throw new Error("Form submission was not accepted");
       }
 
       setContactFormCooldown(Date.now());
       form.reset();
-      startedAtRef.current = Date.now();
-      setHasInteracted(false);
-      setHasAttemptedSubmission(false);
-      setStatusMessage(null);
       setStatus("success");
 
       if (mode === "modal") {
-        window.setTimeout(() => {
+        successTimeoutRef.current = window.setTimeout(() => {
           setStatus("idle");
           onSuccess?.();
         }, 220);
       }
     } catch {
-      setStatus("error");
+      if (requestRef.current === controller) {
+        // An interrupted response cannot prove whether the provider accepted the request.
+        setStatus(controller.signal.aborted ? "timeout" : "error");
+      }
+    } finally {
+      window.clearTimeout(timeoutId);
+      if (requestRef.current === controller) {
+        requestRef.current = null;
+      }
     }
   };
 
   return (
     <form
       ref={ref}
+      method="post"
       className={cx("contact-form-panel", mode === "section" ? "contact-form-panel-section" : "contact-form-panel-modal", className)}
       onSubmit={handleSubmit}
-      onChangeCapture={() => setHasInteracted(true)}
-      onFocusCapture={() => setHasInteracted(true)}
+      onInputCapture={(event) => {
+        const input = event.target;
+        if (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement) {
+          input.setCustomValidity("");
+        }
+        if (status !== "submitting") {
+          setStatus("idle");
+        }
+      }}
       aria-busy={status === "submitting"}
       {...props}
     >
@@ -207,7 +265,8 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
           aria-label={t.contact.namePlaceholder}
           autoComplete="name"
           maxLength={CONTACT_FORM_NAME_MAX_LENGTH}
-          minLength={2}
+          minLength={1}
+          readOnly={status === "submitting"}
           required
         />
         <label className="visually-hidden" htmlFor={`${mode}-contact-email`}>
@@ -225,6 +284,7 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
           inputMode="email"
           maxLength={CONTACT_FORM_EMAIL_MAX_LENGTH}
           spellCheck={false}
+          readOnly={status === "submitting"}
           required
         />
       </div>
@@ -241,28 +301,19 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
         maxLength={CONTACT_FORM_MESSAGE_MAX_LENGTH}
         minLength={CONTACT_FORM_MESSAGE_MIN_LENGTH}
         rows={mode === "modal" ? 6 : 5}
+        readOnly={status === "submitting"}
         required
       />
 
-      <input type="hidden" name="startedAt" value={String(startedAtRef.current)} readOnly />
-
       <div className="contact-form-honeypot" aria-hidden="true">
-        <label htmlFor={`${mode}-contact-website`}>Website</label>
-        <input id={`${mode}-contact-website`} type="text" name="website" tabIndex={-1} autoComplete="off" />
+        <input type="text" name="_honey" tabIndex={-1} autoComplete="off" />
       </div>
-
-      <div className="contact-form-honeypot" aria-hidden="true">
-        <label htmlFor={`${mode}-contact-company`}>Company</label>
-        <input id={`${mode}-contact-company`} type="text" name="company" tabIndex={-1} autoComplete="off" />
-      </div>
-
-      <input type="text" name="_honey" className="contact-form-hidden-field" tabIndex={-1} autoComplete="off" />
 
       <div className="contact-form-actions">
         <ActionButton
           type="submit"
           className={cx(mode === "modal" ? "contact-form-submit-modal" : "contact-form-submit-section")}
-          disabled={status === "submitting"}
+          disabled={!isReady || status === "submitting"}
         >
           {status === "submitting" ? t.contact.status.submitting : t.contact.submit}
         </ActionButton>
@@ -276,15 +327,22 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
         </p>
       </div>
 
+      {!isReady ? (
+        <p className={mode === "modal" ? "contact-overlay-legal" : "contact-form-legal-copy-section"}>
+          {t.contact.emailFallback}{" "}
+          <a href={`mailto:${contactEmail}`} className="contact-form-legal-link">{contactEmail}</a>
+        </p>
+      ) : null}
+
       {status !== "idle" && !(mode === "modal" && status === "success") ? (
         <p
           aria-live="polite"
-          role={status === "error" ? "alert" : "status"}
+          role={isError ? "alert" : "status"}
           className={cx(
             "contact-form-status",
             status === "success"
               ? "contact-form-status-success"
-              : status === "error"
+              : isError
                 ? mode === "modal"
                   ? "contact-form-status-error-modal"
                   : "contact-form-status-error"
@@ -293,7 +351,15 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
                   : "contact-form-status-submitting",
           )}
         >
-          {status === "error" && statusMessage ? statusMessage : t.contact.status[status]}
+          {status === "cooldown"
+            ? t.contact.status.cooldown.replace("{seconds}", String(cooldownSeconds))
+            : t.contact.status[status]}
+          {isError && status !== "cooldown" ? (
+            <>
+              {" "}{t.contact.emailFallback}{" "}
+              <a href={`mailto:${contactEmail}`} className="contact-form-legal-link">{contactEmail}</a>
+            </>
+          ) : null}
         </p>
       ) : null}
     </form>

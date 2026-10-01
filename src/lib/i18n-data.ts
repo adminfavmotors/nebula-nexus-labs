@@ -75,10 +75,19 @@ export type TranslationSet = {
     emailPlaceholder: string;
     messagePlaceholder: string;
     submit: string;
+    emailFallback: string;
+    validation: {
+      required: string;
+      tooLong: string;
+    };
     status: {
       submitting: string;
       success: string;
       error: string;
+      timeout: string;
+      cooldown: string;
+      blocked: string;
+      rateLimited: string;
     };
   };
   cta: {
@@ -217,10 +226,19 @@ export const translations = {
       emailPlaceholder: "Adres e-mail",
       messagePlaceholder: "Krótko opisz cele i zakres projektu",
       submit: "Wyślij wiadomość",
+      emailFallback: "Możesz też napisać bezpośrednio:",
+      validation: {
+        required: "Uzupełnij to pole — nie może zawierać samych spacji.",
+        tooLong: "Skróć treść tego pola do {limit} znaków.",
+      },
       status: {
         submitting: "Wysyłamy zgłoszenie...",
-        success: "Dziękujemy. Zgłoszenie zostało wysłane pomyślnie.",
-        error: "Nie udało się wysłać formularza. Spróbuj ponownie za chwilę.",
+        success: "Dziękujemy. Zgłoszenie zostało przyjęte do wysyłki.",
+        error: "Nie udało się potwierdzić wysłania wiadomości. Zachowaliśmy wpisaną treść. Przed ponowieniem sprawdź połączenie; ponowna próba może wysłać duplikat.",
+        timeout: "Nie otrzymaliśmy potwierdzenia w wymaganym czasie. Wiadomość mogła zostać przyjęta. Zachowaliśmy treść; ponowna próba może wysłać duplikat.",
+        cooldown: "Poprzednie zgłoszenie zostało przyjęte. Kolejną wiadomość możesz wysłać za {seconds} s.",
+        blocked: "Formularz nie przeszedł weryfikacji. Skopiuj treść, odśwież stronę i spróbuj ponownie lub napisz e-mail.",
+        rateLimited: "Serwis wysyłki tymczasowo ograniczył liczbę zgłoszeń. Zachowaliśmy treść. Spróbuj później lub napisz e-mail.",
       },
     },
     cta: {
@@ -357,10 +375,19 @@ export const translations = {
       emailPlaceholder: "Email address",
       messagePlaceholder: "Briefly describe your goals and project scope",
       submit: "Send message",
+      emailFallback: "You can also email us directly:",
+      validation: {
+        required: "Complete this field — spaces alone are not enough.",
+        tooLong: "Shorten this field to {limit} characters.",
+      },
       status: {
         submitting: "Sending your request...",
-        success: "Thanks. Your request has been sent successfully.",
-        error: "We could not send the form. Please try again in a moment.",
+        success: "Thanks. Your request has been accepted for sending.",
+        error: "We could not confirm that your message was sent. Your text is still here. Check your connection before retrying; another attempt may send a duplicate.",
+        timeout: "We did not receive confirmation in time. Your message may have been accepted. Your text is still here; another attempt may send a duplicate.",
+        cooldown: "Your previous request was accepted. You can send another message in {seconds} s.",
+        blocked: "The form could not be verified. Copy your message, reload the page and try again, or email us.",
+        rateLimited: "The sending service has temporarily limited submissions. Your text is still here. Try later or email us.",
       },
     },
     cta: {

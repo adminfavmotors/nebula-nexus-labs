@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { StaticRouter } from "react-router-dom/server";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
@@ -30,17 +31,19 @@ export default function PrerenderedApp({ pathname }: PrerenderedAppProps) {
       <StaticRouter location={pathname}>
         <ContactOverlayProvider>
           <div className="app-shell">
-            <Routes>
-              <Route path="/" element={<Index heroReady useIntroTimings={false} />} />
-              <Route path="/en" element={<Index heroReady useIntroTimings={false} />} />
-              <Route path="/uslugi/:slug" element={<ServicePage />} />
-              <Route path="/en/uslugi/:slug" element={<ServicePage />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/en/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/cookie-policy" element={<CookiePolicy />} />
-              <Route path="/en/cookie-policy" element={<CookiePolicy />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={null}>
+              <Routes>
+                <Route path="/" element={<Index heroReady useIntroTimings={false} />} />
+                <Route path="/en" element={<Index heroReady useIntroTimings={false} />} />
+                <Route path="/uslugi/:slug" element={<ServicePage />} />
+                <Route path="/en/uslugi/:slug" element={<ServicePage />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/en/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/cookie-policy" element={<CookiePolicy />} />
+                <Route path="/en/cookie-policy" element={<CookiePolicy />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
           </div>
           <CookieConsentBanner />
         </ContactOverlayProvider>

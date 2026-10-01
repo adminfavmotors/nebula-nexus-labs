@@ -34,10 +34,13 @@ function readConsent(): ConsentState {
     return "unknown";
   }
 
-  const storedConsent = window.localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY);
-
-  if (storedConsent === "granted" || storedConsent === "denied") {
-    return storedConsent;
+  try {
+    const storedConsent = window.localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY);
+    if (storedConsent === "granted" || storedConsent === "denied") {
+      return storedConsent;
+    }
+  } catch {
+    // Unavailable storage is not consent to analytics.
   }
 
   return "unknown";
@@ -46,8 +49,13 @@ function readConsent(): ConsentState {
 const CookieConsentBanner = ({ isBlocked = false }: CookieConsentBannerProps) => {
   const { locale } = useI18n();
   const copy = consentCopy[locale];
-  const [consent, setConsent] = useState<ConsentState>(readConsent);
+  // Prerender and the first hydration render must agree before reading browser storage.
+  const [consent, setConsent] = useState<ConsentState | null>(null);
   const bannerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setConsent(readConsent());
+  }, []);
 
   useEffect(() => {
     if (consent === "granted") {
@@ -58,7 +66,7 @@ const CookieConsentBanner = ({ isBlocked = false }: CookieConsentBannerProps) =>
   useEffect(() => {
     const root = document.documentElement;
 
-    if (consent !== "unknown") {
+    if (consent !== "unknown" || isBlocked) {
       root.style.setProperty("--cookie-banner-offset", "0px");
       return;
     }
@@ -89,10 +97,14 @@ const CookieConsentBanner = ({ isBlocked = false }: CookieConsentBannerProps) =>
       window.removeEventListener("resize", updateOffset);
       root.style.setProperty("--cookie-banner-offset", "0px");
     };
-  }, [consent]);
+  }, [consent, isBlocked]);
 
   const updateConsent = (nextConsent: Exclude<ConsentState, "unknown">) => {
-    window.localStorage.setItem(COOKIE_CONSENT_STORAGE_KEY, nextConsent);
+    try {
+      window.localStorage.setItem(COOKIE_CONSENT_STORAGE_KEY, nextConsent);
+    } catch {
+      // Respect the current choice even when it cannot be persisted.
+    }
     setConsent(nextConsent);
   };
 

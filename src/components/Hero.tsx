@@ -5,6 +5,8 @@ import { ActionLink } from "@/components/primitives/Actions";
 
 const workspaceImage = "/hero/hero-workspace.jpg";
 const workspaceImageMobile = "/hero/hero-workspace-mobile.jpg";
+// React 18 forwards this DOM attribute in lowercase; camelCase warns at runtime.
+const imagePriority = { fetchpriority: "high" } as const;
 
 type HeroProps = {
   introReady?: boolean;
@@ -97,7 +99,7 @@ const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
                     height={1024}
                     loading="eager"
                     decoding="async"
-                    fetchpriority="high"
+                    {...imagePriority}
                   />
                   <div className="hero-visual-vignette" />
                 </div>

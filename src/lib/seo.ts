@@ -99,13 +99,13 @@ function syncStructuredData(structuredData: StructuredDataEntry[] = []) {
 
 function escapeHtml(value: string) {
   return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 function escapeAttribute(value: string) {
-  return escapeHtml(value).replaceAll('"', "&quot;");
+  return escapeHtml(value).replace(/"/g, "&quot;");
 }
 
 export function createSeoSnapshot({
@@ -156,7 +156,7 @@ export function createSeoHeadMarkup(snapshot: SeoSnapshot) {
   ];
 
   for (const { id, schema } of snapshot.structuredData) {
-    const serializedSchema = JSON.stringify(schema).replaceAll("<", "\\u003c");
+    const serializedSchema = JSON.stringify(schema).replace(/</g, "\\u003c");
 
     tags.push(
       `<script type="application/ld+json" data-managed-structured-data="true" data-structured-data-id="${escapeAttribute(id)}">${serializedSchema}</script>`,

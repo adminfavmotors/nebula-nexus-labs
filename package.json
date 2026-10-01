@@ -8,8 +8,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsx scripts/generate-sitemap.ts && vite build && tsx scripts/prerender.ts",
-    "build:dev": "vite build --mode development",
+    "build": "npm run check:types && tsx scripts/generate-sitemap.ts && vite build && tsx scripts/prerender.ts",
+    "build:dev": "npm run check:types && vite build --mode development",
+    "check:types": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.node.json --noEmit",
     "check:text": "node scripts/check-text-integrity.mjs",
     "check:styles": "node scripts/check-style-architecture.mjs",
     "lint": "node scripts/check-style-architecture.mjs && eslint src eslint.config.js",

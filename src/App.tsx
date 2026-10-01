@@ -5,6 +5,7 @@ import { ContactOverlayProvider } from "@/components/contact/ContactOverlay";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import { useBrandIntro } from "@/lib/use-brand-intro";
+import { cx } from "@/lib/cx";
 import Index from "./pages/Index.tsx";
 
 const ROUTER_FUTURE_FLAGS = {
@@ -117,9 +118,7 @@ const AppFrame = () => {
       <ContactOverlayProvider>
         <div
           ref={appShellRef}
-          className={`app-shell ${isTransitioningLocale ? "app-shell-transitioning" : ""} ${
-            introBlocking ? "app-shell-intro-blocked" : ""
-          }`}
+          className={cx("app-shell", isTransitioningLocale && "app-shell-transitioning", introBlocking && "app-shell-intro-blocked")}
           aria-hidden={introBlocking || undefined}
         >
           <Suspense fallback={null}>

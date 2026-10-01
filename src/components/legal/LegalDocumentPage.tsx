@@ -55,8 +55,8 @@ export default function LegalDocumentPage({ documentKey }: LegalDocumentPageProp
                   ))}
                   {section.items ? (
                     <ul className="legal-list">
-                      {section.items.map((item) => (
-                        <li key={item} className="legal-list-item">
+                      {section.items.map((item, index) => (
+                        <li key={`${index}-${item}`} className="legal-list-item">
                           {item}
                         </li>
                       ))}

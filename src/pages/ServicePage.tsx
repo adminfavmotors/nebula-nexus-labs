@@ -13,8 +13,6 @@ import { getServicePageDetail } from "@/lib/service-page-details";
 import { getServicePageSeo } from "@/lib/seo-routes";
 import { usePageSeo } from "@/lib/seo";
 import { useContactOverlay } from "@/components/contact/contact-overlay-context";
-import "@/styles/service-page.css";
-import "@/styles/service-page-responsive.css";
 
 const pageCopy = {
   pl: {

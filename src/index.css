@@ -897,6 +897,10 @@
     line-height: 1.75;
   }
 
+  .contact-form-status .contact-form-legal-link {
+    color: inherit;
+  }
+
   .contact-form-status-success {
     color: #0f7b0f;
   }
@@ -934,18 +938,6 @@
 
   .contact-form-panel-modal {
     gap: 1.25rem;
-  }
-
-  .contact-form-hidden-field {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
   }
 
   .contact-form-actions {

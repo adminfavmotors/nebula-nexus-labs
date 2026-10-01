@@ -7,6 +7,10 @@ import "./index.css";
 import "./styles/home.css";
 import "./styles/shell.css";
 import "./styles/responsive.css";
+// Prerendered content needs its CSS before lazy JavaScript loads or hydrates.
+import "./styles/service-page.css";
+import "./styles/service-page-responsive.css";
+import "./components/portfolio/portfolio-carousel.css";
 
 const BRAND_INTRO_PENDING_ATTRIBUTE = "data-brand-intro-pending";
 

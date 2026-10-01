@@ -12,6 +12,10 @@ const PORTFOLIO_PREVIEW_WIDTH = 1600;
 const PORTFOLIO_PREVIEW_HEIGHT = 845;
 
 const PortfolioCaseCard = ({ item, openLabel, shouldPreload = false }: PortfolioCaseCardProps) => {
+  // React 18 forwards this DOM attribute in lowercase; camelCase warns at runtime.
+  const imagePriority: { fetchpriority: "high" | "low" } = {
+    fetchpriority: shouldPreload ? "high" : "low",
+  };
   return (
     <a
       href={item.href}
@@ -37,7 +41,7 @@ const PortfolioCaseCard = ({ item, openLabel, shouldPreload = false }: Portfolio
           height={PORTFOLIO_PREVIEW_HEIGHT}
           loading={shouldPreload ? "eager" : "lazy"}
           decoding="async"
-          fetchpriority={shouldPreload ? "high" : "low"}
+          {...imagePriority}
           sizes="(max-width: 767px) calc(100vw - 2.8rem), (max-width: 1099px) calc(50vw - 2.5rem), calc(33vw - 2.6rem)"
           draggable="false"
         />
