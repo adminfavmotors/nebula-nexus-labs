@@ -5,10 +5,19 @@ import { hydrateRoot, type Root } from "react-dom/client";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import App from "@/App";
 import { BRAND_INTRO_STORAGE_KEY } from "@/lib/use-brand-intro";
+import { getServicePageDetail } from "@/lib/service-page-details";
+import { getCanonicalServiceSlugs } from "@/lib/service-catalog";
+import { getLocalizedServicePath } from "@/lib/locale-routes";
 
 vi.mock("@/lib/analytics", () => ({ loadGoogleTagManager: vi.fn() }));
 
 const paths = ["/", "/en", "/uslugi/strona-firmowa", "/en/uslugi/strona-firmowa", "/privacy-policy", "/en/cookie-policy", "/404"];
+for (const locale of ["pl", "en"] as const) {
+  for (const slug of getCanonicalServiceSlugs()) {
+    const path = getLocalizedServicePath(locale, slug);
+    if (!paths.includes(path)) paths.push(path);
+  }
+}
 
 describe("complete page hydration", () => {
   let root: Root | undefined;
@@ -78,6 +87,16 @@ describe("complete page hydration", () => {
       expect(name.form?.querySelector('a[href="mailto:contact@node48.pl"]')).not.toBeNull();
     }
     expect(heading).not.toBeNull();
+    if (path.includes("/uslugi/")) {
+      const slug = path.split("/").pop()!;
+      const detail = getServicePageDetail(path.startsWith("/en/") ? "en" : "pl", slug)!;
+      expect(heading?.textContent).toBe(detail.heroTitle);
+      expect(container.querySelectorAll(".service-page-deliverable-card")).toHaveLength(detail.deliverablesItems.length);
+      expect(container.querySelectorAll(".service-page-step-card")).toHaveLength(detail.processSteps.length);
+      for (const text of [detail.processDuration, detail.pricingPrice, ...detail.deliverablesItems.map((item) => item.body!), ...detail.processSteps.map((step) => step.body!)]) {
+        expect(container.textContent).toContain(text);
+      }
+    }
     expect(html).not.toContain("<!--$!-->");
     expect(html).not.toContain("projects-fallback");
     const recoverableError = vi.fn();

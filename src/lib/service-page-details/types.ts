@@ -1,3 +1,5 @@
+import type { Locale } from "@/lib/i18n-data";
+
 export type ServicePageFeature = {
   title: string;
   body?: string;
@@ -31,3 +33,4 @@ export type ServicePageDetail = {
   closingPrimaryCta: string;
   closingSecondaryCta?: string;
 };
+export type LocalizedServicePageDetail = Record<Locale, ServicePageDetail>;
