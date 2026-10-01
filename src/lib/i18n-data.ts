@@ -75,7 +75,9 @@ export type TranslationSet = {
     emailPlaceholder: string;
     messagePlaceholder: string;
     submit: string;
-    emailFallback: string;
+    directContact: string;
+    emailLabel: string;
+    phoneLabel: string;
     validation: {
       required: string;
       tooLong: string;
@@ -226,7 +228,9 @@ export const translations = {
       emailPlaceholder: "Adres e-mail",
       messagePlaceholder: "Krótko opisz cele i zakres projektu",
       submit: "Wyślij wiadomość",
-      emailFallback: "Możesz też napisać bezpośrednio:",
+      directContact: "Możesz też napisać e-mail lub zadzwonić:",
+      emailLabel: "E-mail",
+      phoneLabel: "Telefon",
       validation: {
         required: "Uzupełnij to pole — nie może zawierać samych spacji.",
         tooLong: "Skróć treść tego pola do {limit} znaków.",
@@ -375,7 +379,9 @@ export const translations = {
       emailPlaceholder: "Email address",
       messagePlaceholder: "Briefly describe your goals and project scope",
       submit: "Send message",
-      emailFallback: "You can also email us directly:",
+      directContact: "You can also email or call us directly:",
+      emailLabel: "Email",
+      phoneLabel: "Phone",
       validation: {
         required: "Complete this field — spaces alone are not enough.",
         tooLong: "Shorten this field to {limit} characters.",

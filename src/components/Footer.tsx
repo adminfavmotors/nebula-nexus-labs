@@ -3,6 +3,7 @@ import { useI18n } from "@/lib/i18n";
 import { legalUiCopy } from "@/lib/legal-ui";
 import { getLocalizedHashPath, getLocalizedLegalPath } from "@/lib/locale-routes";
 import { brandName, currentYear } from "@/lib/site-identity";
+import { businessPhone, businessPhoneHref, contactEmail, contactEmailHref } from "@/lib/contact-config";
 import BrandLogo from "@/components/BrandLogo";
 
 const Footer = () => {
@@ -16,28 +17,38 @@ const Footer = () => {
         <div className="glow-divider footer-divider-top" />
         <div className="footer-layout">
           <BrandLogo href={getLocalizedHashPath(locale, "#home")} className="footer-brand" />
-          <div className="footer-links-shell">
-            {t.nav.links.map((link) => (
+          <div className="footer-link-groups">
+            <div className="footer-links-shell">
+              <a href={contactEmailHref} className="footer-link contact-link">
+                {t.contact.emailLabel}: {contactEmail}
+              </a>
+              <a href={businessPhoneHref} className="footer-link contact-link">
+                {t.contact.phoneLabel}: {businessPhone}
+              </a>
+            </div>
+            <div className="footer-links-shell">
+              {t.nav.links.map((link) => (
+                <Link
+                  key={link.href}
+                  to={resolveSectionHref(link.href)}
+                  className="footer-link"
+                >
+                  {link.label}
+                </Link>
+              ))}
               <Link
-                key={link.href}
-                to={resolveSectionHref(link.href)}
+                to={getLocalizedLegalPath(locale, "privacy")}
                 className="footer-link"
               >
-                {link.label}
+                {legal.footer.privacy}
               </Link>
-            ))}
-            <Link
-              to={getLocalizedLegalPath(locale, "privacy")}
-              className="footer-link"
-            >
-              {legal.footer.privacy}
-            </Link>
-            <Link
-              to={getLocalizedLegalPath(locale, "cookies")}
-              className="footer-link"
-            >
-              {legal.footer.cookies}
-            </Link>
+              <Link
+                to={getLocalizedLegalPath(locale, "cookies")}
+                className="footer-link"
+              >
+                {legal.footer.cookies}
+              </Link>
+            </div>
           </div>
         </div>
         <div className="glow-divider footer-divider-bottom" />

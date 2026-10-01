@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
 import { legalUiCopy } from "@/lib/legal-ui";
 import { getLocalizedLegalPath } from "@/lib/locale-routes";
-import { contactEmail, formEndpoint } from "@/lib/contact-config";
+import { businessPhone, businessPhoneHref, contactEmail, contactEmailHref, formEndpoint } from "@/lib/contact-config";
 import { cx } from "@/lib/cx";
 import { ActionButton } from "@/components/primitives/Actions";
 import { FormInput, FormTextarea } from "@/components/primitives/FormFields";
@@ -251,6 +251,14 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
       aria-busy={status === "submitting"}
       {...props}
     >
+      <p className={mode === "modal" ? "contact-overlay-legal" : "contact-form-legal-copy-section"}>
+        {t.contact.directContact}
+        <span className="contact-links">
+          <a href={contactEmailHref} className="contact-link">{t.contact.emailLabel}: {contactEmail}</a>
+          <a href={businessPhoneHref} className="contact-link">{t.contact.phoneLabel}: {businessPhone}</a>
+        </span>
+      </p>
+
       <div className="contact-form-grid">
         <label className="visually-hidden" htmlFor={`${mode}-contact-name`}>
           {t.contact.namePlaceholder}
@@ -327,13 +335,6 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
         </p>
       </div>
 
-      {!isReady ? (
-        <p className={mode === "modal" ? "contact-overlay-legal" : "contact-form-legal-copy-section"}>
-          {t.contact.emailFallback}{" "}
-          <a href={`mailto:${contactEmail}`} className="contact-form-legal-link">{contactEmail}</a>
-        </p>
-      ) : null}
-
       {status !== "idle" && !(mode === "modal" && status === "success") ? (
         <p
           aria-live="polite"
@@ -354,12 +355,6 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
           {status === "cooldown"
             ? t.contact.status.cooldown.replace("{seconds}", String(cooldownSeconds))
             : t.contact.status[status]}
-          {isError && status !== "cooldown" ? (
-            <>
-              {" "}{t.contact.emailFallback}{" "}
-              <a href={`mailto:${contactEmail}`} className="contact-form-legal-link">{contactEmail}</a>
-            </>
-          ) : null}
         </p>
       ) : null}
     </form>

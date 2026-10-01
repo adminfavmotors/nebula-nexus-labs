@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { BrowserRouter } from "react-router-dom";
 import ContactFormPanel from "@/components/contact/ContactFormPanel";
 import { I18nProvider, translations } from "@/lib/i18n";
-import { contactEmail, formEndpoint } from "@/lib/contact-config";
+import { businessPhone, contactEmail, formEndpoint } from "@/lib/contact-config";
 
 const acceptedResponse = { ok: true, status: 200, json: async () => ({ success: true }) };
 
@@ -146,15 +146,21 @@ describe("contact form delivery and validation", () => {
     const fetchMock = vi.fn(() => new Promise<typeof acceptedResponse>((done) => { resolve = done; }));
     vi.stubGlobal("fetch", fetchMock);
     const controls = renderForm();
+    const emailLink = screen.getByRole("link", { name: `E-mail: ${contactEmail}` });
+    const phoneLink = screen.getByRole("link", { name: `Telefon: ${businessPhone}` });
     fillForm(controls);
     fireEvent.submit(controls.form);
     fireEvent.submit(controls.form);
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(screen.getByRole("button")).toBeDisabled();
     expect(controls.message.readOnly).toBe(true);
+    expect(emailLink).toHaveAttribute("href", `mailto:${contactEmail}`);
+    expect(phoneLink).toHaveAttribute("href", "tel:+48788554887");
     await act(async () => { resolve(acceptedResponse); });
     expect(screen.getByRole("status")).toHaveTextContent(translations.pl.contact.status.success);
     expect(controls.message.readOnly).toBe(false);
+    expect(screen.getByRole("link", { name: `E-mail: ${contactEmail}` })).toBe(emailLink);
+    expect(screen.getByRole("link", { name: `Telefon: ${businessPhone}` })).toBe(phoneLink);
   });
 
   it.each([
@@ -170,7 +176,8 @@ describe("contact form delivery and validation", () => {
     fireEvent.submit(controls.form);
     expect(await screen.findByRole("alert")).toHaveTextContent(translations.pl.contact.status[status]);
     expect(controls.message.value).toBe("Proszę o wycenę.");
-    expect(screen.getByRole("link", { name: contactEmail })).toHaveAttribute("href", `mailto:${contactEmail}`);
+    expect(screen.getByRole("link", { name: `E-mail: ${contactEmail}` })).toHaveAttribute("href", `mailto:${contactEmail}`);
+    expect(screen.getByRole("link", { name: `Telefon: ${businessPhone}` })).toHaveAttribute("href", "tel:+48788554887");
     expect(document.body).not.toHaveTextContent("provider-secret");
     expect(window.sessionStorage.getItem("node48-contact-cooldown")).toBeNull();
     fireEvent.submit(controls.form);
@@ -210,6 +217,7 @@ describe("contact form delivery and validation", () => {
     fillForm(controls, "Drugie zgłoszenie");
     fireEvent.submit(controls.form);
     expect(screen.getByRole("alert")).toHaveTextContent("45 s");
+    expect(screen.getByRole("link", { name: `Telefon: ${businessPhone}` })).toHaveAttribute("href", "tel:+48788554887");
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(controls.message.value).toBe("Drugie zgłoszenie");
     act(() => { vi.advanceTimersByTime(1000); });
@@ -241,6 +249,8 @@ describe("contact form delivery and validation", () => {
     fillForm(controls);
     fireEvent.submit(controls.form);
     expect(await screen.findByRole("alert")).toHaveTextContent(translations.en.contact.status.error);
+    expect(screen.getByRole("link", { name: `Email: ${contactEmail}` })).toHaveAttribute("href", `mailto:${contactEmail}`);
+    expect(screen.getByRole("link", { name: `Phone: ${businessPhone}` })).toHaveAttribute("href", "tel:+48788554887");
     expect(onSuccess).not.toHaveBeenCalled();
     expect(controls.message.value).toBe("Proszę o wycenę.");
   });

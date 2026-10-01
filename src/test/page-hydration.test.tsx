@@ -8,6 +8,7 @@ import { BRAND_INTRO_STORAGE_KEY } from "@/lib/use-brand-intro";
 import { getServicePageDetail } from "@/lib/service-page-details";
 import { getCanonicalServiceSlugs } from "@/lib/service-catalog";
 import { getLocalizedServicePath } from "@/lib/locale-routes";
+import { businessPhone, contactEmail } from "@/lib/contact-config";
 
 vi.mock("@/lib/analytics", () => ({ loadGoogleTagManager: vi.fn() }));
 
@@ -79,6 +80,17 @@ describe("complete page hydration", () => {
     document.body.append(container);
     const shell = container.querySelector(".app-shell");
     const heading = container.querySelector("h1");
+    const directLinks = Array.from(container.querySelectorAll<HTMLAnchorElement>('a[href^="mailto:"], a[href^="tel:"]'));
+    if (path === "/" || path === "/en" || path.includes("/uslugi/")) {
+      expect(directLinks).toHaveLength(4);
+    }
+    const footer = container.querySelector("footer");
+    for (const scope of [footer, container.querySelector(".contact-form-panel-section")].filter(Boolean)) {
+      const emailLink = scope!.querySelector(`a[href="mailto:${contactEmail}"]`);
+      const phoneLink = scope!.querySelector('a[href="tel:+48788554887"]');
+      expect(emailLink).toHaveTextContent(contactEmail);
+      expect(phoneLink).toHaveTextContent(businessPhone);
+    }
     const name = container.querySelector<HTMLInputElement>("#section-contact-name");
     if (name) {
       name.value = "Autofilled before JavaScript";
@@ -112,6 +124,10 @@ describe("complete page hydration", () => {
     expect(consoleError).not.toHaveBeenCalled();
     expect(container.querySelector(".app-shell")).toBe(shell);
     expect(container.querySelector("h1")).toBe(heading);
+    for (const link of directLinks) {
+      expect(container.contains(link)).toBe(true);
+      expect(link.closest('[hidden], [aria-hidden="true"]')).toBeNull();
+    }
     if (name) {
       expect(container.querySelector("#section-contact-name")).toBe(name);
       expect(name.value).toBe("Autofilled before JavaScript");
