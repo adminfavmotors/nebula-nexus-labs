@@ -56,11 +56,14 @@ describe("complete page hydration", () => {
     vi.restoreAllMocks();
   });
 
-  it.each(paths.flatMap((path) =>
-    [null, "denied", "granted"].map((consent) => ({ path, consent })),
-  ))("keeps the $path page and its form with consent $consent", async ({ path, consent }) => {
+  it.each([
+    ...paths.flatMap((path) =>
+      [null, "denied", "granted"].map((consent) => ({ path, consent, hash: "" })),
+    ),
+    ...paths.slice(0, 4).map((path) => ({ path, consent: "denied", hash: "#%E0%A4%A" })),
+  ])("keeps the $path$hash page and its form with consent $consent", async ({ path, consent, hash }) => {
     const html = serverMarkup[path];
-    window.history.replaceState({}, "", path);
+    window.history.replaceState({}, "", `${path}${hash}`);
     if (consent !== null) window.localStorage.setItem("node48-cookie-consent", consent);
     container = document.createElement("div");
     container.innerHTML = html;

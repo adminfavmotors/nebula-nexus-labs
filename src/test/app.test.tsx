@@ -570,14 +570,100 @@ describe("critical user flows", () => {
     });
   });
 
-  it("scrolls to the requested section when the route contains a hash", async () => {
-    window.history.pushState({}, "", "/#services");
+  it.each([
+    "/#%",
+    "/en#%E0%A4%A",
+    "/#%GG",
+    "/en#%C0%AF",
+    "/#%ED%A0%80",
+    "/en#%F4%90%80%80",
+    "/uslugi/strona-firmowa#%E0%A4%A",
+    "/en/uslugi/strona-firmowa#%E0%A4%A",
+  ])("keeps %s usable when its fragment cannot be decoded", async (path) => {
+    window.history.pushState({}, "", path);
+    const originalHash = window.location.hash;
+
+    renderApp();
+
+    expect(await screen.findByRole("heading", { level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("navigation")).toBeInTheDocument();
+    expect(window.location.hash).toBe(originalHash);
+    expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+
+    const locale = path.startsWith("/en") ? "en" : "pl";
+    const servicesLink = document.querySelector<HTMLAnchorElement>(`a[href="${locale === "en" ? "/en" : "/"}#services"]`);
+    expect(servicesLink).not.toBeNull();
+    fireEvent.click(servicesLink!);
+
+    await waitFor(() => {
+      expect(window.location.hash).toBe("#services");
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
+    });
+  });
+
+  it("preserves a malformed fragment and query when switching locales", async () => {
+    window.history.pushState({}, "", "/en?source=link#%E0%A4%A");
+
+    renderApp();
+    fireEvent.click(screen.getByRole("button", { name: "pl" }));
+
+    await waitFor(() => {
+      expect(window.location.pathname).toBe("/");
+      expect(document.documentElement.lang).toBe("pl");
+    });
+    expect(window.location.search).toBe("?source=link");
+    expect(window.location.hash).toBe("#%E0%A4%A");
+    expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
+    expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+  });
+
+  it.each(["#services", "#%73ervices"])("scrolls to the requested section with fragment %s", async (hash) => {
+    window.history.pushState({}, "", `/${hash}`);
 
     renderApp();
 
     await waitFor(() => {
       expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
     });
+  });
+
+  it.each(["Zażółć", "literal%2F", "section[a]"])("looks up encoded fragment %s as an exact ID after one decode", async (id) => {
+    const target = document.createElement("div");
+    target.id = id;
+    target.scrollIntoView = vi.fn();
+    document.body.append(target);
+    window.history.pushState({}, "", `/en#${encodeURIComponent(id)}`);
+
+    try {
+      renderApp();
+      await waitFor(() => {
+        expect(target.scrollIntoView).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
+      });
+    } finally {
+      target.remove();
+    }
+  });
+
+  it("keeps the page and a contact draft when history changes to a malformed fragment", async () => {
+    renderApp();
+    const heading = screen.getByRole("heading", { level: 1 });
+    const nameInput = document.querySelector<HTMLInputElement>("#section-contact-name");
+    expect(nameInput).not.toBeNull();
+    fireEvent.change(nameInput!, { target: { value: "Unsent customer draft" } });
+
+    window.history.pushState({}, "", "/#%E0%A4%A");
+    fireEvent.popState(window);
+
+    expect(screen.getByRole("heading", { level: 1 })).toBe(heading);
+    expect(nameInput).toHaveValue("Unsent customer draft");
+    expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+
+    fireEvent.click(document.querySelector<HTMLAnchorElement>('a[href="/#services"]')!);
+    await waitFor(() => {
+      expect(window.location.hash).toBe("#services");
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
+    });
+    expect(nameInput).toHaveValue("Unsent customer draft");
   });
 
   it("navigates from a service page back to the services section without a full reload", async () => {

@@ -39,7 +39,16 @@ const RouteHashScrollManager = () => {
       return;
     }
 
-    const hashId = decodeURIComponent(location.hash.slice(1));
+    let hashId: string;
+    try {
+      hashId = decodeURIComponent(location.hash.slice(1));
+    } catch (error) {
+      if (!(error instanceof URIError)) {
+        throw error;
+      }
+      // A malformed fragment must not unmount the page or rewrite its URL.
+      return;
+    }
 
     if (!hashId) {
       return;
