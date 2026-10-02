@@ -44,6 +44,8 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
   const [isMounted, setIsMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const backdropPointerDownRef = useRef(false);
   const bannerTimeoutRef = useRef<number | null>(null);
 
   usePageScrollLock(isOpen);
@@ -62,19 +64,19 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
   }, []);
 
   useEffect(() => {
-    if (!isOpen) {
+    const dialog = dialogRef.current;
+    if (!dialog) {
       return;
     }
 
-    const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        closeContactOverlay();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeydown);
-    return () => document.removeEventListener("keydown", handleKeydown);
-  }, [closeContactOverlay, isOpen]);
+    if (isOpen && !dialog.open) {
+      // Native modality makes the page inert and remembers the opening control.
+      dialog.showModal();
+      dialog.querySelector<HTMLInputElement>('input[name="name"]')?.focus({ preventScroll: true });
+    } else if (!isOpen && dialog.open) {
+      dialog.close();
+    }
+  }, [isMounted, isOpen]);
 
   useEffect(() => {
     setIsOpen(false);
@@ -116,21 +118,49 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
       {isMounted
         ? createPortal(
             <>
-              <div
-                className={`contact-overlay-root ${isOpen ? "contact-overlay-root-open" : ""}`}
-                aria-hidden={!isOpen}
+              <dialog
+                ref={dialogRef}
+                className="contact-overlay-root"
+                aria-labelledby="contact-overlay-title"
+                onCancel={(event) => {
+                  event.preventDefault();
+                  closeContactOverlay();
+                }}
+                onClose={(event) => {
+                  // A queued close event must not close an already reopened dialog.
+                  if (!event.currentTarget.open) {
+                    closeContactOverlay();
+                  }
+                }}
+                onKeyDown={(event) => {
+                  if (event.key !== "Tab") {
+                    return;
+                  }
+                  // Keep the keyboard cycle inside the dialog, including its boundaries.
+                  const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(
+                    'a[href], button, input, textarea, select, [tabindex]',
+                  )).filter((control) => control.tabIndex >= 0 && !control.matches(":disabled") && control.getClientRects().length > 0);
+                  const first = controls[0];
+                  const last = controls[controls.length - 1];
+                  if (event.shiftKey && document.activeElement === first) {
+                    event.preventDefault();
+                    last?.focus();
+                  } else if (!event.shiftKey && document.activeElement === last) {
+                    event.preventDefault();
+                    first?.focus();
+                  }
+                }}
+                onPointerDown={(event) => {
+                  backdropPointerDownRef.current = event.target === event.currentTarget;
+                }}
+                onClick={(event) => {
+                  if (backdropPointerDownRef.current && event.target === event.currentTarget) {
+                    closeContactOverlay();
+                  }
+                  backdropPointerDownRef.current = false;
+                }}
               >
-                <button
-                  type="button"
-                  className="contact-overlay-backdrop"
-                  onClick={closeContactOverlay}
-                  aria-label={copy.closeLabel}
-                />
-
                 <div
-                  role="dialog"
-                  aria-modal="true"
-                  aria-labelledby="contact-overlay-title"
                   className={`contact-overlay-panel neon-frame-soft ${isOpen ? "contact-overlay-panel-open" : ""}`}
                 >
                   <div className="contact-overlay-content-stack">
@@ -149,13 +179,13 @@ export function ContactOverlayProvider({ children }: ContactOverlayProviderProps
                         onClick={closeContactOverlay}
                         aria-label={copy.closeLabel}
                       >
-                        <X size={18} />
+                        <X size={18} aria-hidden="true" />
                       </button>
                     </div>
-                    <ContactFormPanel className="contact-overlay-form" mode="modal" autoFocus={isOpen} onSuccess={handleSuccess} />
+                    <ContactFormPanel className="contact-overlay-form" mode="modal" onSuccess={handleSuccess} />
                   </div>
                 </div>
-              </div>
+              </dialog>
 
               <div
                 className={`contact-success-banner ${showBanner ? "contact-success-banner-open" : ""}`}

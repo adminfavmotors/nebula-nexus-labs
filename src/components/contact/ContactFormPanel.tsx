@@ -55,13 +55,11 @@ function setContactFormCooldown(timestamp: number) {
 
 type ContactFormPanelProps = ComponentPropsWithoutRef<"form"> & {
   mode: "section" | "modal";
-  autoFocus?: boolean;
   onSuccess?: () => void;
 };
 
 const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(function ContactFormPanel({
   mode,
-  autoFocus = false,
   onSuccess,
   className,
   ...props
@@ -73,7 +71,6 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
   const [cooldownSeconds, setCooldownSeconds] = useState(0);
   const requestRef = useRef<AbortController | null>(null);
   const successTimeoutRef = useRef<number | null>(null);
-  const nameInputRef = useRef<HTMLInputElement>(null);
   const isError = status !== "idle" && status !== "submitting" && status !== "success";
 
   useEffect(() => {
@@ -103,18 +100,6 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
 
     return () => window.clearInterval(intervalId);
   }, [status]);
-
-  useEffect(() => {
-    if (!autoFocus) {
-      return;
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      nameInputRef.current?.focus();
-    }, 220);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [autoFocus]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -262,7 +247,6 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
           {t.contact.namePlaceholder}
         </label>
         <FormInput
-          ref={nameInputRef}
           id={`${mode}-contact-name`}
           name="name"
           type="text"

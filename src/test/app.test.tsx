@@ -371,7 +371,7 @@ describe("critical user flows", () => {
     fireEvent.click(screen.getByRole("button", { name: /open contact overlay/i }));
 
     await waitFor(() => {
-      expect(document.querySelector(".contact-overlay-root-open")).toBeInstanceOf(HTMLDivElement);
+      expect(document.querySelector(".contact-overlay-root[open]")).toBeInstanceOf(HTMLDialogElement);
       expect(document.querySelector(".contact-overlay-panel-open")).toBeInstanceOf(HTMLDivElement);
       expect(document.documentElement.style.overflow).toBe("hidden");
       expect(document.body.style.overflow).toBe("hidden");
@@ -380,7 +380,7 @@ describe("critical user flows", () => {
     fireEvent.click(screen.getAllByRole("button", { name: /zamknij okno kontaktowe|close contact dialog/i })[0]);
 
     await waitFor(() => {
-      expect(document.querySelector(".contact-overlay-root-open")).toBeNull();
+      expect(document.querySelector(".contact-overlay-root[open]")).toBeNull();
       expect(document.querySelector(".contact-overlay-panel-open")).toBeNull();
       expect(document.documentElement.style.overflow).toBe("");
       expect(document.body.style.overflow).toBe("");
@@ -399,6 +399,111 @@ describe("critical user flows", () => {
     expect(banner).toHaveAttribute("hidden");
     expect(banner).toHaveAttribute("aria-hidden", "true");
     expect(banner).not.toHaveClass("contact-success-banner-open");
+  });
+
+  it("opens a native modal, focuses the name immediately, and preserves drafts after Escape cancellation", () => {
+    const showModalSpy = vi.spyOn(HTMLDialogElement.prototype, "showModal");
+    const closeSpy = vi.spyOn(HTMLDialogElement.prototype, "close");
+    renderContactOverlayScrollLockHarness();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+
+    const opener = screen.getByRole("button", { name: /open contact overlay/i });
+    fireEvent.click(opener);
+    const dialog = screen.getByRole("dialog", { name: "Opowiedz nam o swoim projekcie" });
+    const nameInput = document.querySelector<HTMLInputElement>("#modal-contact-name")!;
+    expect(showModalSpy).toHaveBeenCalledTimes(1);
+    expect(nameInput).toHaveFocus();
+    fireEvent.change(nameInput, { target: { value: "Unsent inquiry" } });
+
+    fireEvent(dialog, new Event("cancel", { cancelable: true }));
+    expect(closeSpy).toHaveBeenCalledTimes(1);
+    expect(dialog).not.toHaveAttribute("open");
+    expect(document.body.style.overflow).toBe("");
+
+    fireEvent.click(opener);
+    expect(showModalSpy).toHaveBeenCalledTimes(2);
+    expect(nameInput).toHaveValue("Unsent inquiry");
+    expect(nameInput).toHaveFocus();
+  });
+
+  it("closes only for a click that starts and ends outside the contact panel", () => {
+    renderContactOverlayScrollLockHarness();
+    fireEvent.click(screen.getByRole("button", { name: /open contact overlay/i }));
+    const dialog = screen.getByRole("dialog");
+    const title = screen.getByRole("heading", { name: "Opowiedz nam o swoim projekcie" });
+
+    fireEvent.pointerDown(title);
+    fireEvent.click(title);
+    expect(dialog).toHaveAttribute("open");
+    fireEvent.pointerDown(title);
+    fireEvent.click(dialog);
+    expect(dialog).toHaveAttribute("open");
+
+    fireEvent.pointerDown(dialog);
+    fireEvent.click(dialog);
+    expect(dialog).not.toHaveAttribute("open");
+    expect(document.body.style.overflow).toBe("");
+  });
+
+  it("wraps Tab and Shift+Tab at the contact dialog boundaries", () => {
+    // JSDOM has no layout; actual sequential navigation is checked in the browser.
+    const rect = new DOMRect(0, 0, 100, 40);
+    vi.spyOn(HTMLElement.prototype, "getClientRects").mockReturnValue(Object.assign([rect], { item: () => rect }));
+    renderContactOverlayScrollLockHarness();
+    fireEvent.click(screen.getByRole("button", { name: /open contact overlay/i }));
+    const dialog = screen.getByRole("dialog");
+    const first = dialog.querySelector<HTMLButtonElement>(".contact-overlay-close")!;
+    const last = dialog.querySelector<HTMLAnchorElement>(".contact-form-legal-link")!;
+
+    last.focus();
+    expect(fireEvent.keyDown(last, { key: "Tab" })).toBe(false);
+    expect(first).toHaveFocus();
+    expect(fireEvent.keyDown(first, { key: "Tab", shiftKey: true })).toBe(false);
+    expect(last).toHaveFocus();
+    const nameInput = dialog.querySelector<HTMLInputElement>("#modal-contact-name")!;
+    nameInput.focus();
+    expect(fireEvent.keyDown(nameInput, { key: "Tab" })).toBe(true);
+  });
+
+  it("synchronizes native closing and ignores a queued close event after reopening", () => {
+    renderContactOverlayScrollLockHarness();
+    const opener = screen.getByRole("button", { name: /open contact overlay/i });
+    fireEvent.click(opener);
+    const dialog = screen.getByRole("dialog") as HTMLDialogElement;
+
+    act(() => dialog.close());
+    expect(dialog).not.toHaveAttribute("open");
+    expect(document.body.style.overflow).toBe("");
+    fireEvent.click(opener);
+    fireEvent(dialog, new Event("close"));
+    expect(dialog).toHaveAttribute("open");
+  });
+
+  it("closes the native contact dialog and unlocks scrolling when its legal link changes routes", () => {
+    renderContactOverlayScrollLockHarness();
+    fireEvent.click(screen.getByRole("button", { name: /open contact overlay/i }));
+    const dialog = screen.getByRole("dialog");
+    fireEvent.click(dialog.querySelector<HTMLAnchorElement>(".contact-form-legal-link")!);
+
+    expect(window.location.pathname).toBe("/privacy-policy");
+    expect(dialog).not.toHaveAttribute("open");
+    expect(document.body.style.overflow).toBe("");
+  });
+
+  it("closes the native contact dialog only after a provider-confirmed success", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ success: true }) }));
+    renderContactOverlayScrollLockHarness();
+    fireEvent.click(screen.getByRole("button", { name: /open contact overlay/i }));
+    const dialog = screen.getByRole("dialog");
+    const form = dialog.querySelector<HTMLFormElement>("form")!;
+    fireEvent.change(form.querySelector<HTMLInputElement>('[name="name"]')!, { target: { value: "Jan Kowalski" } });
+    fireEvent.change(form.querySelector<HTMLInputElement>('[name="email"]')!, { target: { value: "jan@example.com" } });
+    fireEvent.change(form.querySelector<HTMLTextAreaElement>('[name="message"]')!, { target: { value: "Project details" } });
+    fireEvent.submit(form);
+
+    await waitFor(() => expect(dialog).not.toHaveAttribute("open"));
+    expect(document.querySelector(".contact-success-banner")).not.toHaveAttribute("hidden");
+    expect(document.body.style.overflow).toBe("");
   });
 
   it("uses Polish by default and switches to English", async () => {

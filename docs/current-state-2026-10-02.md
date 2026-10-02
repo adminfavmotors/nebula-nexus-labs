@@ -2,13 +2,13 @@
 
 Updated: 2026-10-02 (Europe/Warsaw). This is the current documentation entry point; April snapshots retain their historical scope.
 
-Follow-up on October 2: item 4's contact presentation has been refined, verified and accepted by the user after mobile screenshot review. Commit and publication were explicitly authorized. Fresh checks and implementation details are recorded in [direct-contact design refinement](./direct-contact-design-2026-10-02.md); its workflow run and production tag record the release, while the table below retains the earlier published baseline.
+Follow-up on October 2: item 4's contact presentation was accepted after mobile screenshot review and published in `037ba8f`; its deployment and production smoke checks succeeded. Item 5's keyboard-focus correction is implemented, verified and accepted; the user explicitly authorized its commit and publication. Its Actions run and immutable production tag are the release record. Details are recorded in [direct-contact design refinement](./direct-contact-design-2026-10-02.md) and [contact-dialog keyboard focus](./contact-dialog-focus-fix-2026-10-02.md).
 
 ## Source and scope
 
 - Repository: [adminfavmotors/nebula-nexus-labs](https://github.com/adminfavmotors/nebula-nexus-labs).
 - Public brand and site: [NODE48 — node48.pl](https://node48.pl/).
-- Application baseline for this documentation update: `90fb5ee4da2ac78ea8e8f5a0c2c5cc8b294bb2a1`, synchronized with `origin/main` before documentation edits.
+- Published application baseline for the item 5 implementation: `037ba8f804b90d41101496e66f93bc7ff60ad464`.
 - Active checkout: `C:\Users\Admin\.codex\worktrees\6acd\nebula-nexus-labs`, branch `codex/contact-legitimate-inquiries`. Publication targets remote `main` through the existing workflow.
 - The separate desktop checkout contains an unpublished intro variant. It is not evidence of the production version and was not changed by this update.
 
@@ -16,7 +16,7 @@ The original documentation snapshot reconciled existing audit findings, implemen
 
 ## Published work
 
-All four runs below were independently confirmed `completed / success` during this documentation update. Tag timestamps are UTC. GitHub Actions and production tags are the release record; a successful upload does not prove mailbox receipt or design acceptance.
+Each run below was confirmed `completed / success` during its respective delivery or documentation verification. Tag timestamps are UTC. GitHub Actions and production tags are the release record; a successful upload does not prove mailbox receipt or design acceptance.
 
 | Audit item | Published result | Commit | Successful deployment | Production tag |
 |---|---|---|---|---|
@@ -24,6 +24,7 @@ All four runs below were independently confirmed `completed / success` during th
 | 2 | Malformed URL fragments no longer unmount React | [7a00b26](https://github.com/adminfavmotors/nebula-nexus-labs/commit/7a00b2625ea9b5fa1907cecc8553636c028cccc7) | [36863594901](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36863594901) | `prod-20261001-124311-7a00b26` |
 | 3 | All six service pages have complete explicit English content | [d809332](https://github.com/adminfavmotors/nebula-nexus-labs/commit/d80933202312c4b4d8249f97c96ec80314972855) | [36872540645](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36872540645) | `prod-20261001-135744-d809332` |
 | 4: original functional release | Persistent email/phone in section, dialog and footer; subsequent accepted design recorded separately | [90fb5ee](https://github.com/adminfavmotors/nebula-nexus-labs/commit/90fb5ee4da2ac78ea8e8f5a0c2c5cc8b294bb2a1) | [36883274320](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36883274320) | `prod-20261001-151923-90fb5ee` |
+| 4: accepted visual refinement | Shared channel labels/icons, prominent values and visible underlined keyboard focus | [037ba8f](https://github.com/adminfavmotors/nebula-nexus-labs/commit/037ba8f804b90d41101496e66f93bc7ff60ad464) | [36986280693](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36986280693) | `prod-20261002-085018-037ba8f` |
 
 Detailed evidence and historical verification counts:
 
@@ -72,7 +73,7 @@ Numbering is retained from the original 33-item audit. Related items 6, 11, 22 a
 | 2 | Malformed URL fragment throws and unmounts the application | Fixed and published in `7a00b26` |
 | 3 | English service pages omit scope, descriptions, timelines and correct process steps | Fixed and published in `d809332` |
 | 4 | Direct email/phone unavailable in the normal contact flow | Functional fix published in `90fb5ee`; visual refinement verified and accepted on October 2, release tracked by its Actions run/production tag |
-| 5 | Contact dialog does not trap keyboard focus or restore it to the opener | Open; next numbered task |
+| 5 | Contact dialog does not trap keyboard focus or restore it to the opener | Fixed, verified and accepted on October 2; release tracked by its Actions run/production tag |
 | 6 | Four TypeScript errors and no required type check before deployment build | Fixed with item 1; builds now run `check:types` |
 | 7 | Cookie banner covers roughly 44% of the mobile first screen in the original audit | Open |
 | 8 | Unpublished local intro adds blocking delays and timer complexity | Open; compare the separate local variant before adopting it; not a production change |
@@ -104,11 +105,13 @@ Numbering is retained from the original 33-item audit. Related items 6, 11, 22 a
 
 ## Pending work and user acceptance
 
-The user accepted **item 4** after reviewing mobile screenshots and authorized its commit/publication. The shared contact block is implemented and checked; successful deployment and production verification are the final release gates. The next numbered correction is **item 5**, covering contact-dialog focus entry, containment, Escape/close behavior and return to the opener across page layouts and routes. Item 5 has not been implemented.
+The user accepted **item 4** after reviewing mobile screenshots and authorized its commit/publication. Commit `037ba8f`, successful deployment and production verification completed that release.
+
+The user then requested **item 5**, accepted the verified correction and explicitly authorized its commit/publication on October 2. Its native contact dialog now focuses the name field immediately, blocks background interaction, wraps Tab/Shift+Tab at the boundaries and restores focus on closing. Browser checks covered PL/EN home/service pages at four widths, mobile-menu handoff, pending/error/success states and legal-route navigation. All 167 tests pass. Successful deployment and production verification confirm release completion. The next unresolved numbered finding is **item 7** (item 6 was resolved with item 1).
 
 The user explicitly rejected the first visual result of item 4 after publication. The accepted refinement separates channel labels from prominent values, introduces meaningful email/phone icons, shares the block across all three surfaces and replaces the rectangular focus outline with stronger underlining plus icon emphasis. Readable links, usable targets and visible keyboard focus are preserved. Acceptance came from the user's explicit response to the screenshots, independently of the passing checks.
 
-Other open findings retain their original scope and ordering. This local follow-up changes contact presentation; form delivery behavior and the separate intro variant are unchanged.
+Other open findings retain their original scope and ordering. The item 5 follow-up changes dialog interaction; the form-delivery contract and the separate intro variant retain their existing implementation.
 
 ## Delivery workflow
 

@@ -908,7 +908,15 @@
     position: fixed;
     inset: 0;
     z-index: var(--z-contact-overlay);
-    display: grid;
+    display: none;
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    color: inherit;
+    background: transparent;
     place-items: center;
     padding: 1rem;
     overflow: hidden;
@@ -920,23 +928,16 @@
       visibility var(--structural-motion-base) var(--structural-motion-ease-strong);
   }
 
-  .contact-overlay-root-open {
+  .contact-overlay-root[open] {
+    display: grid;
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
   }
 
-  .contact-overlay-backdrop {
-    position: absolute;
-    inset: 0;
+  .contact-overlay-root::backdrop {
     background: rgba(2, 8, 28, 0.72);
     backdrop-filter: blur(var(--overlay-backdrop-blur));
-    opacity: 0;
-    transition: opacity var(--structural-motion-base) var(--structural-motion-ease-strong);
-  }
-
-  .contact-overlay-root-open .contact-overlay-backdrop {
-    opacity: 1;
   }
 
   .contact-overlay-panel {
