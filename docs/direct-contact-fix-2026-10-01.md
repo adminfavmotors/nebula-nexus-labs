@@ -33,6 +33,8 @@ After publication, the user rejected the visual presentation of the contact link
 
 See [current state](./current-state-2026-10-02.md) for all 33 audit items and the next numbered task.
 
+Follow-up on 2026-10-02: the [revised contact design](./direct-contact-design-2026-10-02.md) was implemented, verified and explicitly accepted by the user after mobile screenshot review. The user authorized its commit and publication. The rejection and open-design state above describe the original October 1 release.
+
 ## Remaining audit scope
 
 The homepage's hero/header animations can still hide first-screen content when JavaScript is blocked; the direct contact section/footer are visible and usable by scrolling. That existing broader rendering issue remains item 12. Dialog focus trapping/restoration remains item 5. Form labels/placeholder contrast and legal-copy redaction retain their separate audit scope.

@@ -2,6 +2,8 @@
 
 Updated: 2026-10-02 (Europe/Warsaw). This is the current documentation entry point; April snapshots retain their historical scope.
 
+Follow-up on October 2: item 4's contact presentation has been refined, verified and accepted by the user after mobile screenshot review. Commit and publication were explicitly authorized. Fresh checks and implementation details are recorded in [direct-contact design refinement](./direct-contact-design-2026-10-02.md); its workflow run and production tag record the release, while the table below retains the earlier published baseline.
+
 ## Source and scope
 
 - Repository: [adminfavmotors/nebula-nexus-labs](https://github.com/adminfavmotors/nebula-nexus-labs).
@@ -10,7 +12,7 @@ Updated: 2026-10-02 (Europe/Warsaw). This is the current documentation entry poi
 - Active checkout: `C:\Users\Admin\.codex\worktrees\6acd\nebula-nexus-labs`, branch `codex/contact-legitimate-inquiries`. Publication targets remote `main` through the existing workflow.
 - The separate desktop checkout contains an unpublished intro variant. It is not evidence of the production version and was not changed by this update.
 
-This snapshot reconciles existing audit findings, implementation reports, source/workflow configuration and four successful deployment records. It is not a fresh exhaustive site audit on October 2. Measurements below that originate in the original audit are historical findings, not newly repeated measurements. This update changes documentation only. Its own release identity belongs to Git history and the deployment run created by the push; the baseline above identifies the application work being documented.
+The original documentation snapshot reconciled existing audit findings, implementation reports, source/workflow configuration and four successful deployment records. It was not a fresh exhaustive site audit on October 2. Measurements below that originate in the original audit are historical findings, not newly repeated measurements. The subsequent local item 4 follow-up is identified above and in its own report. The baseline above identifies the published application work being documented.
 
 ## Published work
 
@@ -21,7 +23,7 @@ All four runs below were independently confirmed `completed / success` during th
 | 1, including React/TypeScript follow-up | Legitimate inquiries accepted; request/result handling, hydration and type checks corrected | [a3ac0a2](https://github.com/adminfavmotors/nebula-nexus-labs/commit/a3ac0a2af7f7e5cf6bcd47f8caf0f49b0b0bd739) | [36844441191](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36844441191) | `prod-20261001-094252-a3ac0a2` |
 | 2 | Malformed URL fragments no longer unmount React | [7a00b26](https://github.com/adminfavmotors/nebula-nexus-labs/commit/7a00b2625ea9b5fa1907cecc8553636c028cccc7) | [36863594901](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36863594901) | `prod-20261001-124311-7a00b26` |
 | 3 | All six service pages have complete explicit English content | [d809332](https://github.com/adminfavmotors/nebula-nexus-labs/commit/d80933202312c4b4d8249f97c96ec80314972855) | [36872540645](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36872540645) | `prod-20261001-135744-d809332` |
-| 4 | Persistent email/phone in section, dialog and footer; visual follow-up open | [90fb5ee](https://github.com/adminfavmotors/nebula-nexus-labs/commit/90fb5ee4da2ac78ea8e8f5a0c2c5cc8b294bb2a1) | [36883274320](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36883274320) | `prod-20261001-151923-90fb5ee` |
+| 4: original functional release | Persistent email/phone in section, dialog and footer; subsequent accepted design recorded separately | [90fb5ee](https://github.com/adminfavmotors/nebula-nexus-labs/commit/90fb5ee4da2ac78ea8e8f5a0c2c5cc8b294bb2a1) | [36883274320](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36883274320) | `prod-20261001-151923-90fb5ee` |
 
 Detailed evidence and historical verification counts:
 
@@ -44,7 +46,7 @@ No inquiry content is logged or stored in application browser storage. Client-si
 
 ## Verification and its limits
 
-Latest application checks completed on October 1 after item 4:
+Published-baseline application checks completed on October 1 after item 4 (fresh local follow-up checks are in the linked October 2 design report):
 
 | Check | Recorded result |
 |---|---|
@@ -58,7 +60,7 @@ Latest application checks completed on October 1 after item 4:
 | Static/no-JavaScript HTML | Home/service PL/EN contacts remain visible; form submission disabled before hydration |
 | Production smoke checks after item 4 | PL mobile and EN desktop contacts verified after successful deployment |
 
-Earlier fixes also verified malformed fragments/back-forward navigation, complete service-page content in 24 viewport checks, provider failure/success/timeout contracts, cookie consent, full-page hydration and preservation of drafts/SSR nodes. Their reports describe the exact coverage. Passing these checks does not establish complete accessibility, visual quality or real provider delivery. No new application test run is claimed for the documentation-only October 2 update.
+Earlier fixes also verified malformed fragments/back-forward navigation, complete service-page content in 24 viewport checks, provider failure/success/timeout contracts, cookie consent, full-page hydration and preservation of drafts/SSR nodes. Their reports describe the exact coverage. Passing these checks does not establish complete accessibility, visual quality or real provider delivery. The original documentation-only October 2 update made no fresh application test claim; the later item 4 design report records its own verification.
 
 ## Audit checklist: original order of importance
 
@@ -69,7 +71,7 @@ Numbering is retained from the original 33-item audit. Related items 6, 11, 22 a
 | 1 | Form rejects legitimate uppercase inquiries, multiple links and autofill | Fixed and published in `a3ac0a2` |
 | 2 | Malformed URL fragment throws and unmounts the application | Fixed and published in `7a00b26` |
 | 3 | English service pages omit scope, descriptions, timelines and correct process steps | Fixed and published in `d809332` |
-| 4 | Direct email/phone unavailable in the normal contact flow | Functionally fixed and published in `90fb5ee`; visual refinement remains open after user rejection |
+| 4 | Direct email/phone unavailable in the normal contact flow | Functional fix published in `90fb5ee`; visual refinement verified and accepted on October 2, release tracked by its Actions run/production tag |
 | 5 | Contact dialog does not trap keyboard focus or restore it to the opener | Open; next numbered task |
 | 6 | Four TypeScript errors and no required type check before deployment build | Fixed with item 1; builds now run `check:types` |
 | 7 | Cookie banner covers roughly 44% of the mobile first screen in the original audit | Open |
@@ -102,11 +104,11 @@ Numbering is retained from the original 33-item audit. Related items 6, 11, 22 a
 
 ## Pending work and user acceptance
 
-The next numbered correction is **item 5**, covering contact-dialog focus entry, containment, Escape/close behavior and return to the opener across page layouts and routes. It has not been implemented in this documentation task.
+The user accepted **item 4** after reviewing mobile screenshots and authorized its commit/publication. The shared contact block is implemented and checked; successful deployment and production verification are the final release gates. The next numbered correction is **item 5**, covering contact-dialog focus entry, containment, Escape/close behavior and return to the opener across page layouts and routes. Item 5 has not been implemented.
 
-The user explicitly rejected the visual result of item 4 after publication. The screenshot shows ordinary underlined contact text above the fields and a rectangular outline around focused email. Contact typography, hierarchy, spacing and integration with the form need refinement. A redesign must preserve readable links, usable targets and a visible keyboard focus indicator; removing focus visibility is not an acceptable response to that feedback. Functional completion of item 4 must not be reported as visual approval.
+The user explicitly rejected the first visual result of item 4 after publication. The accepted refinement separates channel labels from prominent values, introduces meaningful email/phone icons, shares the block across all three surfaces and replaces the rectangular focus outline with stronger underlining plus icon emphasis. Readable links, usable targets and visible keyboard focus are preserved. Acceptance came from the user's explicit response to the screenshots, independently of the passing checks.
 
-Other open findings retain their original scope and ordering. No code, styles, form behavior or intro variant is changed by this documentation update.
+Other open findings retain their original scope and ordering. This local follow-up changes contact presentation; form delivery behavior and the separate intro variant are unchanged.
 
 ## Delivery workflow
 

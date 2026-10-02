@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
 import { legalUiCopy } from "@/lib/legal-ui";
 import { getLocalizedLegalPath } from "@/lib/locale-routes";
-import { businessPhone, businessPhoneHref, contactEmail, contactEmailHref, formEndpoint } from "@/lib/contact-config";
+import { formEndpoint } from "@/lib/contact-config";
 import { cx } from "@/lib/cx";
 import { ActionButton } from "@/components/primitives/Actions";
 import { FormInput, FormTextarea } from "@/components/primitives/FormFields";
+import ContactLinks from "@/components/contact/ContactLinks";
 
 const CONTACT_FORM_COOLDOWN_KEY = "node48-contact-cooldown";
 const CONTACT_FORM_COOLDOWN_MS = 45_000;
@@ -251,13 +252,10 @@ const ContactFormPanel = forwardRef<HTMLFormElement, ContactFormPanelProps>(func
       aria-busy={status === "submitting"}
       {...props}
     >
-      <p className={mode === "modal" ? "contact-overlay-legal" : "contact-form-legal-copy-section"}>
-        {t.contact.directContact}
-        <span className="contact-links">
-          <a href={contactEmailHref} className="contact-link">{t.contact.emailLabel}: {contactEmail}</a>
-          <a href={businessPhoneHref} className="contact-link">{t.contact.phoneLabel}: {businessPhone}</a>
-        </span>
-      </p>
+      <div className="contact-direct">
+        <p className="contact-direct-copy">{t.contact.directContact}</p>
+        <ContactLinks />
+      </div>
 
       <div className="contact-form-grid">
         <label className="visually-hidden" htmlFor={`${mode}-contact-name`}>

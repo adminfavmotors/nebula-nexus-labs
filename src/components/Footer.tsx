@@ -3,8 +3,8 @@ import { useI18n } from "@/lib/i18n";
 import { legalUiCopy } from "@/lib/legal-ui";
 import { getLocalizedHashPath, getLocalizedLegalPath } from "@/lib/locale-routes";
 import { brandName, currentYear } from "@/lib/site-identity";
-import { businessPhone, businessPhoneHref, contactEmail, contactEmailHref } from "@/lib/contact-config";
 import BrandLogo from "@/components/BrandLogo";
+import ContactLinks from "@/components/contact/ContactLinks";
 
 const Footer = () => {
   const { locale, t } = useI18n();
@@ -18,14 +18,7 @@ const Footer = () => {
         <div className="footer-layout">
           <BrandLogo href={getLocalizedHashPath(locale, "#home")} className="footer-brand" />
           <div className="footer-link-groups">
-            <div className="footer-links-shell">
-              <a href={contactEmailHref} className="footer-link contact-link">
-                {t.contact.emailLabel}: {contactEmail}
-              </a>
-              <a href={businessPhoneHref} className="footer-link contact-link">
-                {t.contact.phoneLabel}: {businessPhone}
-              </a>
-            </div>
+            <ContactLinks />
             <div className="footer-links-shell">
               {t.nav.links.map((link) => (
                 <Link
