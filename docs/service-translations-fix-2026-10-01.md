@@ -33,7 +33,11 @@ SEO titles, descriptions and structured data continue to read the same selected 
 - All six English pages checked with JavaScript requests blocked: first-screen content visible, complete features/steps/timeline already in HTML, form POST and submission disabled until hydration.
 - Screenshots and browser results saved locally under ignored `.codex/service-content-verification`. Vite preview used directory URLs with trailing slashes to load each route's actual prerendered HTML. Tests use the canonical paths.
 
-No form messages were sent. Build-generated sitemap dates were restored. No commit or production publication was performed during this fix.
+No form messages were sent. Build-generated sitemap dates were restored.
+
+## Publication
+
+Published on 2026-10-01 in [commit d809332](https://github.com/adminfavmotors/nebula-nexus-labs/commit/d80933202312c4b4d8249f97c96ec80314972855). [Deploy SEOHOST run 36872540645](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36872540645) completed successfully; production tag: `prod-20261001-135744-d809332` (UTC). See [current state](./current-state-2026-10-02.md) for the complete audit checklist.
 
 ## Remaining audit scope
 

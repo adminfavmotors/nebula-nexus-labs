@@ -1,6 +1,8 @@
 # Production Deployments
 
-Last updated: 2026-04-16
+Last updated: 2026-10-02
+
+Production: [node48.pl](https://node48.pl/). Source: [adminfavmotors/nebula-nexus-labs](https://github.com/adminfavmotors/nebula-nexus-labs). The four verified October 1 releases are recorded in [Current State - 2026-10-02](./current-state-2026-10-02.md#published-work).
 
 ## What Changed
 
@@ -16,7 +18,7 @@ Every successful production deployment now creates an immutable Git tag in this 
 prod-YYYYMMDD-HHMMSS-<short-sha>
 ```
 
-That tag is the rollback anchor. It marks exactly what was deployed to `https://node48.pl`.
+The timestamp is UTC. The tag is created after the upload succeeds and identifies the Git source used to build the deployed artifact. It is the rollback anchor; it does not independently prove every browser flow or email delivery works.
 
 ## Fast Rollback
 
@@ -34,10 +36,12 @@ This redeploys the tagged version to production and creates a new immutable `pro
 
 Recommended deployment flow before shipping UI changes:
 
-1. Merge approved work to `main` only when ready for production.
+1. Commit verified work and push or merge it to `main` when ready for production.
 2. Let `Deploy SEOHOST` run automatically, or manually deploy a specific ref if needed.
 3. Verify the production site.
-4. If something is wrong, run `Rollback SEOHOST` with the last known good `prod-*` tag.
+4. If a deployment introduces a regression that warrants rollback, run `Rollback SEOHOST` with the last known good `prod-*` tag.
+
+The `verify` job runs `npm ci` and `npm run build` on Node 22. The reusable deploy workflow builds the same source again before upload. Lint, tests and text checks are not separate workflow gates; run them before publishing relevant application changes. Deployment concurrency cancels an older in-progress production run when a newer run starts. A push alone does not establish successful publication: check the run conclusion and the resulting production tag.
 
 ## Why This Matches Current Practice
 
@@ -56,17 +60,22 @@ Production deploys ship the output of `npm run build`.
 
 That build currently does all of the following from the deployed Git ref:
 
-1. regenerate `public/sitemap.xml`
-2. build the client bundle with Vite
-3. prerender indexed routes into `dist/**/index.html`
+1. check application and Vite configuration types with `npm run check:types`
+2. regenerate `public/sitemap.xml` from the 14 indexed routes
+3. build the client bundle with Vite
+4. prerender 18 PL/EN routes into `dist/**/index.html` and generate `dist/404.html`
 
-The deploy job should therefore be treated as a static publish of the generated `dist/` directory, not as a runtime server release.
+The four legal routes are prerendered with `noindex,follow` and excluded from the sitemap. React's static renderer waits for lazy components; render errors or a 30-second stall fail the build.
+
+The deploy job publishes the generated `dist/` directory to static hosting. Repository Markdown documentation is published in GitHub, not copied into the public website. A documentation-only push to `main` still triggers the existing site build/deployment workflow.
 
 ## Contact Runtime Contract
 
 The contact form currently posts directly to `FormSubmit`.
 
 No deploy-time secrets or extra backend runtime steps are currently required for form delivery.
+
+The shared form accepts legitimate free-form inquiries, waits at most 20 seconds, requires an explicit provider success result and preserves drafts on failure. Its submit button is disabled before hydration, and static markup declares POST. Email and phone are always available in the section, dialog and footer. Client validation, the honeypot and the success cooldown are not server-enforced abuse controls. Provider-account activation, filtering/CAPTCHA behavior and inbox delivery remain outside the documented simulated-response checks.
 
 ## Transport Contract
 
@@ -90,20 +99,20 @@ This keeps deployment traffic encrypted in transit while matching the SSH contra
 
 ## Post-Deploy Verification
 
-Recommended verification checklist after every production deploy or rollback:
+Scale verification to the change. For documentation-only releases, confirm the workflow/tag and basic site availability; no application flow changed. For UI, routing or contact changes and rollbacks, check the relevant flows below:
 
-1. Open `/` in a clean browser session and confirm the first-visit intro no longer triggers CSP or hydration errors.
+1. Open `/` in a clean browser session and inspect CSP/hydration errors and first-screen visibility. Homepage intro visibility without JavaScript remains open audit item 12; do not treat that known issue as resolved.
 2. Open `/en` and confirm the English homepage resolves as a prerendered route with the correct locale metadata.
 3. Open at least one Polish and one English service page such as `/uslugi/strona-firmowa` and `/en/uslugi/strona-firmowa` and confirm prerendered HTML resolves correctly before hydration.
 4. Confirm `canonical` and `hreflang` tags are correct on both locale variants.
-5. Open `/privacy-policy`, `/cookie-policy`, `/en/privacy-policy`, and `/en/cookie-policy` to confirm legal routes resolve through the prerendered route contract.
+5. Open `/privacy-policy`, `/cookie-policy`, `/en/privacy-policy`, and `/en/cookie-policy` to confirm prerendered HTML, `noindex,follow` and sitemap exclusion.
 6. Confirm the contact overlay opens and the mobile navigation behaves correctly on a narrow viewport.
-7. Submit the contact form and confirm the `formsubmit.co` request succeeds.
-8. Confirm the contact email arrives correctly through the provider flow.
+7. Test contact success, error, timeout and duplicate-submit behavior with intercepted provider responses. Confirm drafts survive failures, native email/phone links remain available and no real inquiry is sent by these checks.
+8. If actual provider delivery verification is explicitly requested, send a controlled test inquiry and independently confirm receipt. A simulated response or successful deployment does not establish inbox delivery.
 9. Confirm unknown routes now return the dedicated `404.html` response path rather than a soft 404 shell.
 10. Confirm the latest production tag is visible in GitHub after a successful deploy.
 
-If any of these fail, rollback should be treated as a redeploy of the last known good `prod-*` tag rather than an ad hoc hotfix on production.
+When a release regression requires rollback, redeploy the last known good `prod-*` tag and verify the affected behavior. Space production requests to avoid hosting rate limits; an HTTP 429 after repeated automated navigation is not proof of a deployment failure.
 
 ## Optional Hardening In GitHub Settings
 

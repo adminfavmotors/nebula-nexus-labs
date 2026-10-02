@@ -68,6 +68,12 @@ Local preview detail: Vite preview returns the SPA homepage fallback for an inte
 
 The original build also rejected `PROSZĘ O WYCENĘ STRONY DLA FIRMY` with zero requests. The corrected production build accepts uppercase inquiries through the same submit boundary. Static HTML still contains the hero and form fields; the existing intro bootstrap can hide the first screen, as already noted in the earlier audit. This change introduces no new first-screen animation or hidden initial content.
 
-Build-generated changes to the tracked sitemap were restored. The patch includes the contact correction, runtime/type fixes, prerender completion, existing CSS import relocation, regression tests and this report. No production deployment, real form submission, email receipt confirmation or provider-account configuration was performed.
+Build-generated changes to the tracked sitemap were restored. The patch includes the contact correction, runtime/type fixes, prerender completion, existing CSS import relocation, regression tests and this report. No real form submission, email receipt confirmation or provider-account configuration was performed during the documented checks.
 
 The comparison copy remains in the ignored `.codex/contact-baseline` directory because automatic command review rejected its cleanup with `blocked by policy`. It is not part of the tracked patch; both preview servers and browser sessions were stopped.
+
+## Publication and subsequent state
+
+Published on 2026-10-01 in [commit a3ac0a2](https://github.com/adminfavmotors/nebula-nexus-labs/commit/a3ac0a2af7f7e5cf6bcd47f8caf0f49b0b0bd739). [Deploy SEOHOST run 36844441191](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36844441191) completed successfully; production tag: `prod-20261001-094252-a3ac0a2` (UTC).
+
+The later [item 4 fix](./direct-contact-fix-2026-10-01.md) makes both email and phone persistent, replacing the conditional email fallback described above. The 94-test count records this fix's verification; the suite reached 161 tests after subsequent work. See [current state and all audit statuses](./current-state-2026-10-02.md).

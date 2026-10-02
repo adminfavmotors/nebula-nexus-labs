@@ -23,7 +23,15 @@ The form's direct email link was conditional: visible in prerendered HTML before
 - With all external JavaScript requests blocked, both homepages and PL/EN company pages retained visible email/phone links in their contact sections and footers. The static form remained disabled; native links need no React handler. First-screen and contact screenshots were inspected.
 - React review: no new hooks, conditional state-dependent contacts, client-only contact markup, unnecessary memoization or added bundles. The form's request/data boundary is unchanged.
 
-Browser results and screenshot references are saved in the ignored `.codex/direct-contact-verification/results.json`. Build-generated sitemap dates were restored. No messages or calls were sent, and mailbox/phone delivery was not tested. No commit or production publication was performed during this fix.
+Browser results and screenshot references are saved in the ignored `.codex/direct-contact-verification/results.json`. Build-generated sitemap dates were restored. No messages or calls were sent, and mailbox/phone delivery was not tested.
+
+## Publication and user review
+
+Published on 2026-10-01 in [commit 90fb5ee](https://github.com/adminfavmotors/nebula-nexus-labs/commit/90fb5ee4da2ac78ea8e8f5a0c2c5cc8b294bb2a1). [Deploy SEOHOST run 36883274320](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36883274320) completed successfully; production tag: `prod-20261001-151923-90fb5ee` (UTC).
+
+After publication, the user rejected the visual presentation of the contact links. The supplied screenshot shows plain underlined email/phone text above the fields and a rectangular focus outline around email. Functional availability and passing layout checks do not establish visual acceptance. Contact typography, hierarchy, spacing and integration with the form still need design refinement while preserving a visible keyboard focus indicator. No redesign is included in this documentation update. Item 4 is functionally fixed and published; its visual follow-up remains open.
+
+See [current state](./current-state-2026-10-02.md) for all 33 audit items and the next numbered task.
 
 ## Remaining audit scope
 

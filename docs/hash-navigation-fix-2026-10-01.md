@@ -28,4 +28,8 @@ Only the URL decoding boundary in `src/App.tsx` changes. Existing app-flow and f
 - Screenshots inspected at 375×812, 768×1024, 1366×768, and 1920×1080. Content visible; no horizontal overflow.
 - Service-page reload with JavaScript requests blocked: styled first-screen content visible, form still POST and submit disabled until hydration. Existing homepage intro behavior is outside this audit item and unchanged.
 
-Vite preview checks use directory URLs with trailing slashes to load each route's actual prerendered index. Integration tests use the exact canonical paths, including `/en#%E0%A4%A`. Browser checks sent no real inquiries. Build-generated sitemap date changes were restored. This patch has not been committed or published.
+Vite preview checks use directory URLs with trailing slashes to load each route's actual prerendered index. Integration tests use the exact canonical paths, including `/en#%E0%A4%A`. Browser checks sent no real inquiries. Build-generated sitemap date changes were restored.
+
+## Publication
+
+Published on 2026-10-01 in [commit 7a00b26](https://github.com/adminfavmotors/nebula-nexus-labs/commit/7a00b2625ea9b5fa1907cecc8553636c028cccc7). [Deploy SEOHOST run 36863594901](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36863594901) completed successfully; production tag: `prod-20261001-124311-7a00b26` (UTC). The 112-test count describes verification at this release; see [current state](./current-state-2026-10-02.md) for subsequent work.
