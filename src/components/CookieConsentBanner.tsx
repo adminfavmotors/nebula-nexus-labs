@@ -15,14 +15,14 @@ type CookieConsentBannerProps = {
 const consentCopy = {
   pl: {
     title: "Cookies analityczne",
-    body: "Ładujemy Google Tag Manager i narzędzia analityczne dopiero po Twojej zgodzie. Dzięki temu możemy mierzyć ruch i ulepszać stronę bez domyślnego śledzenia.",
+    body: "Opcjonalne cookies służą do analizy ruchu. Włączamy je tylko za Twoją zgodą.",
     accept: "Akceptuję",
     decline: "Odrzucam",
     policy: "Polityka cookies",
   },
   en: {
     title: "Analytics cookies",
-    body: "We load Google Tag Manager and analytics tools only after your consent. This lets us measure traffic and improve the website without enabling tracking by default.",
+    body: "Optional cookies help us measure traffic. We use them only with your consent.",
     accept: "Accept",
     decline: "Decline",
     policy: "Cookie policy",
@@ -116,11 +116,19 @@ const CookieConsentBanner = ({ isBlocked = false }: CookieConsentBannerProps) =>
     <div
       ref={bannerRef}
       className="cookie-consent-layer cookie-consent-banner"
+      role="region"
+      aria-labelledby="cookie-consent-title"
     >
-      <div className="neon-frame-soft cookie-consent-panel">
-        <p className="cookie-consent-title">
+      <div className="cookie-consent-panel">
+        <p id="cookie-consent-title" className="cookie-consent-title">
           {copy.title}
         </p>
+        <Link
+          to={getLocalizedLegalPath(locale, "cookies")}
+          className="cookie-consent-link"
+        >
+          {copy.policy}
+        </Link>
         <p className="cookie-consent-copy">
           {copy.body}
         </p>
@@ -131,12 +139,6 @@ const CookieConsentBanner = ({ isBlocked = false }: CookieConsentBannerProps) =>
           <ActionButton type="button" variant="ghost" className="cookie-consent-button" onClick={() => updateConsent("denied")}>
             {copy.decline}
           </ActionButton>
-          <Link
-            to={getLocalizedLegalPath(locale, "cookies")}
-            className="cookie-consent-link"
-          >
-            {copy.policy}
-          </Link>
         </div>
       </div>
     </div>

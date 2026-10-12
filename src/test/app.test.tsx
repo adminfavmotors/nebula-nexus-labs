@@ -598,7 +598,7 @@ describe("critical user flows", () => {
 
     expect(document.getElementById("node48-gtm-script")).toBeNull();
     expect(window.localStorage.getItem(COOKIE_CONSENT_KEY)).toBeNull();
-    expect(screen.getByText(/Ładujemy Google Tag Manager/i)).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Cookies analityczne" })).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Akceptuję" }));
 

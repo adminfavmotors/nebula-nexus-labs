@@ -232,63 +232,79 @@
 }
 
 .cookie-consent-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  max-height: calc(100dvh - var(--floating-layer-bottom) - 1rem);
   overflow: hidden;
+  overflow-y: auto;
   border: 1px solid var(--light-interactive-border);
   border-radius: 1.5rem;
   background:
     radial-gradient(circle at top right, var(--light-ambient-soft), transparent 28%),
     linear-gradient(180deg, rgba(7, 18, 56, 0.98), rgba(4, 12, 38, 1));
-  padding: 1.25rem;
+  padding: 1rem;
   box-shadow: 0 24px 70px rgba(0, 10, 34, 0.42);
 }
 
 .cookie-consent-title {
-  margin-bottom: 0.5rem;
+  flex: 1 1 8rem;
   color: white;
   font-family: var(--font-display-family);
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
+  line-height: 1.35;
   letter-spacing: -0.03em;
 }
 
 .cookie-consent-copy {
-  margin-bottom: 1rem;
+  flex-basis: 100%;
   max-width: 44ch;
   color: #9cb8e9;
   font-family: var(--font-body-family);
   font-size: 0.95rem;
-  line-height: 1.75;
+  line-height: 1.5;
 }
 
 .cookie-consent-actions {
+  flex-basis: 100%;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 0.75rem;
 }
 
 .cookie-consent-button {
+  flex: 1 1 6.5rem;
   justify-content: center;
+  min-height: 44px;
+  padding-inline: 1rem;
 }
 
 .cookie-consent-link {
-  text-align: center;
+  flex: 0 1 auto;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
   color: #8fb4ff;
   font-family: var(--font-body-family);
-  font-size: 0.92rem;
+  font-size: 0.875rem;
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 4px;
   outline: none;
   transition:
     color var(--structural-motion-quick) var(--structural-motion-ease),
-    opacity var(--structural-motion-quick) var(--structural-motion-ease),
     text-decoration-color var(--structural-motion-quick) var(--structural-motion-ease);
 }
 
 .cookie-consent-link:is(:hover, :focus-visible) {
   color: #dcecff;
-  opacity: 0.8;
   text-decoration-color: rgb(var(--light-line-rgb) / 0.78);
+}
+
+.cookie-consent-link:focus-visible {
+  text-decoration-thickness: 2px;
 }
 
 .brand-intro-backdrop {
@@ -856,21 +872,10 @@
 }
 
 @media (min-width: 640px) {
-  .cookie-consent-actions {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
   .cookie-consent-banner {
     inset-inline: auto;
     right: 1.25rem;
     width: min(30rem, calc(100vw - 2.5rem));
-  }
-
-  .cookie-consent-link {
-    margin-left: auto;
-    text-align: left;
   }
 
   .header-shell {
