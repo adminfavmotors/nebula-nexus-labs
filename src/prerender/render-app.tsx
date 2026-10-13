@@ -1,7 +1,13 @@
 /// <reference types="node" />
 import { PassThrough } from "node:stream";
-import { renderToPipeableStream } from "react-dom/server";
+import { renderToPipeableStream, renderToStaticMarkup } from "react-dom/server";
 import PrerenderedApp from "@/prerender/PrerenderedApp";
+import BrandIntroOverlay from "@/components/BrandIntroOverlay";
+import type { Locale } from "@/lib/i18n-data";
+
+export function renderBrandIntroMarkup(locale: Locale) {
+  return renderToStaticMarkup(<BrandIntroOverlay locale={locale} />);
+}
 
 export function renderPrerenderedRoute(pathname: string) {
   // Wait for every lazy/Suspense boundary before writing static, hydratable HTML.

@@ -1,8 +1,10 @@
-import { StrictMode, Suspense, type ReactNode } from "react";
+import { StrictMode, type ReactNode } from "react";
 import { act, cleanup, render, renderHook, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { brandIntroMotionTimings } from "@/lib/motion";
 import { BRAND_INTRO_STORAGE_KEY, BRAND_INTRO_STORAGE_VALUE, useBrandIntro } from "@/lib/use-brand-intro";
+import { startBrandIntro } from "@/lib/brand-intro-controller";
+import { bootIntro, createIntroOptions, finishIntroEntry, resetIntro } from "@/test/brand-intro-fixture";
 import App from "@/App";
 
 function finishIntro() {
@@ -11,193 +13,164 @@ function finishIntro() {
   act(() => vi.advanceTimersByTime(brandIntroMotionTimings.exitDurationMs));
 }
 
-describe("intro lifecycle under browser and React failures", () => {
+describe("early intro ownership and React handoff", () => {
   beforeEach(() => {
     vi.useFakeTimers();
+    window.history.replaceState({}, "", "/");
     window.sessionStorage.clear();
   });
-
   afterEach(() => {
     cleanup();
+    resetIntro();
     vi.restoreAllMocks();
     vi.useRealTimers();
   });
 
   it.each(["getter", "read"] as const)("plays once when the storage %s is denied", (failure) => {
-    const denyStorage = () => { throw new DOMException("Storage disabled", "SecurityError"); };
-    if (failure === "getter") vi.spyOn(window, "sessionStorage", "get").mockImplementation(denyStorage);
-    else vi.spyOn(Storage.prototype, "getItem").mockImplementation(denyStorage);
+    const deny = () => { throw new DOMException("Storage disabled", "SecurityError"); };
+    if (failure === "getter") vi.spyOn(window, "sessionStorage", "get").mockImplementation(deny);
+    else vi.spyOn(Storage.prototype, "getItem").mockImplementation(deny);
+    bootIntro();
     const { result, rerender } = renderHook(({ path }) => useBrandIntro(path), { initialProps: { path: "/" } });
     expect(result.current.overlayPhase).toBe("running");
-    act(() => result.current.completeEntry());
+    act(finishIntroEntry);
     expect(result.current.overlayPhase).toBe("holding");
-    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.settleDelayMs));
-    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.exitDurationMs));
+    finishIntro();
     expect(result.current.overlayPhase).toBeNull();
-    expect(result.current.heroReady).toBe(true);
-    expect(document.body.style.overflow).toBe("");
     rerender({ path: "/uslugi/strona-wizytowka" });
     rerender({ path: "/en" });
     expect(result.current.overlayPhase).toBeNull();
   });
 
-  it("keeps the page and cookie choices available when both storage APIs are denied", () => {
-    window.history.replaceState({}, "", "/");
+  it("keeps page and cookie choices available after both storage APIs fail", () => {
     for (const property of ["sessionStorage", "localStorage"] as const) {
-      vi.spyOn(window, property, "get").mockImplementation(() => {
-        throw new DOMException("Storage disabled", "SecurityError");
-      });
+      vi.spyOn(window, property, "get").mockImplementation(() => { throw new DOMException("Disabled", "SecurityError"); });
     }
-    render(<App />);
+    const { container } = bootIntro();
+    render(<App />, { container });
     expect(screen.getByRole("button", { name: "Pomiń intro" })).toBeInTheDocument();
-    expect(document.querySelector(".app-shell")).toHaveAttribute("inert");
+    expect(container).toHaveAttribute("inert");
     finishIntro();
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Pomiń intro" })).toBeNull();
     expect(screen.getByRole("button", { name: "Odrzucam" })).toBeInTheDocument();
-    expect(document.querySelector(".app-shell")).not.toHaveAttribute("inert");
+    expect(container).not.toHaveAttribute("inert");
   });
 
-  it("respects reduced motion even when storage is unavailable", () => {
-    const matchMedia = window.matchMedia;
-    vi.spyOn(window, "matchMedia").mockImplementation((query) => ({ ...matchMedia(query), matches: true }));
-    vi.spyOn(window, "sessionStorage", "get").mockImplementation(() => {
-      throw new DOMException("Storage disabled", "SecurityError");
-    });
-    const { result } = renderHook(() => useBrandIntro("/"));
-    expect(result.current.overlayPhase).toBeNull();
-    expect(result.current.heroReady).toBe(true);
-    expect(document.body.style.overflow).toBe("");
+  it("respects reduced motion when storage is unavailable", () => {
+    const media = window.matchMedia;
+    vi.spyOn(window, "matchMedia").mockImplementation((query) => ({ ...media(query), matches: true }));
+    vi.spyOn(window, "sessionStorage", "get").mockImplementation(() => { throw new DOMException("Disabled", "SecurityError"); });
+    bootIntro();
+    expect(renderHook(() => useBrandIntro("/")).result.current.overlayPhase).toBeNull();
+    expect(document.documentElement).not.toHaveAttribute("data-brand-intro-phase");
   });
 
-  it("completes the intro when persisting its session flag fails", () => {
-    const storage = window.sessionStorage;
-    vi.spyOn(Storage.prototype, "setItem").mockImplementation(function (this: Storage) {
-      if (this === storage) throw new DOMException("Storage full", "QuotaExceededError");
-    });
-    const { result, rerender } = renderHook(({ path }) => useBrandIntro(path), { initialProps: { path: "/" } });
-    expect(result.current.overlayPhase).toBe("running");
+  it("completes even when saving the playback mark fails", () => {
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => { throw new DOMException("Full", "QuotaExceededError"); });
+    const { controller } = bootIntro();
     finishIntro();
-    expect(result.current.overlayPhase).toBeNull();
-    expect(result.current.heroReady).toBe(true);
-    expect(document.body.style.overflow).toBe("");
-    rerender({ path: "/uslugi/strona-wizytowka" });
-    rerender({ path: "/" });
-    expect(result.current.overlayPhase).toBeNull();
+    expect(controller.getSnapshot().phase).toBe("done");
+    expect(startBrandIntro(createIntroOptions())).toBe(controller);
+    expect(document.querySelector(".brand-intro-overlay")).toBeNull();
   });
 
-  it("keeps the initial intro running when StrictMode repeats mount effects", () => {
+  it("keeps the same DOM and native timeline through StrictMode effect replay", () => {
+    const { controller } = bootIntro();
+    const overlay = document.querySelector(".brand-intro-overlay");
     const { result } = renderHook(() => useBrandIntro("/"), {
       wrapper: ({ children }: { children: ReactNode }) => <StrictMode>{children}</StrictMode>,
     });
     expect(result.current.overlayPhase).toBe("running");
-    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBeNull();
+    expect(document.querySelector(".brand-intro-overlay")).toBe(overlay);
+    expect(window.__node48BrandIntro).toBe(controller);
     finishIntro();
     expect(result.current.overlayPhase).toBeNull();
-    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe(BRAND_INTRO_STORAGE_VALUE);
-    expect(document.body.style.overflow).toBe("");
   });
 
-  it("starts on client navigation from a service and does not replay on returning home", () => {
-    const { result, rerender } = renderHook(({ path }) => useBrandIntro(path), {
-      initialProps: { path: "/uslugi/strona-wizytowka" },
-    });
-    expect(result.current.overlayPhase).toBeNull();
+  it("does not introduce a late intro on navigation from a service", () => {
+    window.history.replaceState({}, "", "/uslugi/strona-wizytowka");
+    bootIntro();
+    const { result, rerender } = renderHook(({ path }) => useBrandIntro(path), { initialProps: { path: window.location.pathname } });
     rerender({ path: "/" });
-    expect(result.current.overlayPhase).toBe("running");
-    act(() => result.current.skipIntro());
-    rerender({ path: "/en/uslugi/strona-wizytowka" });
-    rerender({ path: "/en" });
     expect(result.current.overlayPhase).toBeNull();
-    expect(document.body.style.overflow).toBe("");
+    expect(document.querySelector(".brand-intro-overlay")).toBeNull();
   });
 
-  it("cancels an active intro and releases scrolling when leaving the homepage", () => {
-    const { result, rerender } = renderHook(({ path }) => useBrandIntro(path), {
-      initialProps: { path: "/" },
-    });
-    expect(document.body.style.overflow).toBe("hidden");
+  it("cancels and releases the page on route departure", () => {
+    bootIntro();
+    const { result, rerender } = renderHook(({ path }) => useBrandIntro(path), { initialProps: { path: "/" } });
     rerender({ path: "/uslugi/strona-wizytowka" });
     expect(result.current.overlayPhase).toBeNull();
-    act(() => vi.advanceTimersByTime(10_000));
-    expect(result.current.overlayPhase).toBeNull();
-    expect(document.body.style.overflow).toBe("");
-  });
-
-  it("ignores a deferred homepage intro after navigation changes the route", async () => {
-    let resolveGate!: () => void;
-    const gate = new Promise<void>((resolve) => { resolveGate = resolve; });
-    let holdPlayback = true;
-    const { result, rerender } = renderHook(({ path }) => {
-      const intro = useBrandIntro(path);
-      if (holdPlayback && intro.overlayPhase === "running") throw gate;
-      return intro;
-    }, {
-      initialProps: { path: "/" },
-      wrapper: ({ children }: { children: ReactNode }) => <Suspense fallback={null}>{children}</Suspense>,
-    });
-    expect(result.current.overlayPhase).toBeNull();
-    expect(document.body.style.overflow).toBe("");
-    rerender({ path: "/uslugi/strona-wizytowka" });
-    await act(async () => {
-      holdPlayback = false;
-      resolveGate();
-      await gate;
-    });
-    act(() => vi.advanceTimersByTime(10_000));
-    expect(result.current.overlayPhase).toBeNull();
-    expect(document.body.style.overflow).toBe("");
+    expect(document.getElementById("root")).not.toHaveAttribute("inert");
     expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBeNull();
   });
 
-  it("releases scrolling and cancels pending timers when unmounted during playback", () => {
+  it("finishes independently when React has not loaded or unmounts", () => {
+    const { controller, container } = bootIntro();
     const { unmount } = renderHook(() => useBrandIntro("/"));
-    expect(document.body.style.overflow).toBe("hidden");
     unmount();
-    // Drain jsdom's zero-delay storage event, leaving any leaked phase timer.
+    expect(controller.getSnapshot().phase).toBe("running");
+    finishIntro();
+    expect(controller.getSnapshot().phase).toBe("done");
+    expect(container).not.toHaveAttribute("inert");
+    expect(document.querySelector(".brand-intro-overlay")).toBeNull();
+  });
+
+  it.each(["1", "editor-v2"])("plays the restored wordmark after old mark %s", (oldMark) => {
+    window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, oldMark);
+    const { controller } = bootIntro();
+    expect(document.querySelector(".brand-intro-word")).toHaveTextContent("NODE48");
+    expect(document.querySelector(".brand-intro-editor-tabs")).toBeNull();
+    act(finishIntroEntry);
+    finishIntro();
+    expect(controller.getSnapshot().phase).toBe("done");
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe(BRAND_INTRO_STORAGE_VALUE);
+    delete window.__node48BrandIntro;
+    expect(startBrandIntro(createIntroOptions()).getSnapshot().didPlayIntro).toBe(false);
+  });
+
+  it("waits for the final letter and uses a bounded missing-event fallback", () => {
+    const { controller } = bootIntro();
+    const first = document.querySelector(".brand-intro-letter")!;
+    first.dispatchEvent(Object.assign(new Event("animationend", { bubbles: true }), { animationName: "brand-intro-letter-print" }));
+    expect(controller.getSnapshot().phase).toBe("running");
+    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.entryTimeoutMs - 1));
+    expect(controller.getSnapshot().phase).toBe("running");
+    act(() => vi.advanceTimersByTime(1));
+    expect(controller.getSnapshot().phase).toBe("holding");
+    finishIntro();
+    expect(controller.getSnapshot().phase).toBe("done");
+  });
+
+  it("ignores a late animation event after skip", () => {
+    const { controller } = bootIntro();
+    const last = document.querySelector(".brand-intro-letter:last-child");
+    act(() => controller.skip());
+    last?.dispatchEvent(new AnimationEvent("animationend", { bubbles: true, animationName: "brand-intro-letter-print" }));
+    finishIntro();
+    expect(controller.getSnapshot().phase).toBe("done");
+    expect(document.querySelector(".brand-intro-overlay")).toBeNull();
+  });
+
+  it("binds the page as soon as its root arrives, before React", async () => {
+    const controller = startBrandIntro(createIntroOptions());
+    expect(controller.getSnapshot().phase).toBe("running");
+    const container = document.createElement("div");
+    container.id = "root";
+    document.body.append(container);
+    await Promise.resolve();
+    expect(container).toHaveAttribute("inert");
+    controller.cancel();
+    expect(container).not.toHaveAttribute("inert");
+    expect(document.documentElement).not.toHaveAttribute("data-brand-intro-phase");
+  });
+
+  it("cancels on pagehide without recording unseen playback", () => {
+    const { controller } = bootIntro();
+    window.dispatchEvent(new Event("pagehide"));
+    expect(controller.getSnapshot().phase).toBe("done");
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBeNull();
     act(() => vi.advanceTimersByTime(0));
     expect(vi.getTimerCount()).toBe(0);
-    act(() => vi.advanceTimersByTime(10_000));
-    expect(document.body.style.overflow).toBe("");
-    expect(document.documentElement.style.overflow).toBe("");
-  });
-
-  it.each(["/", "/en"])("plays the corrected intro once on %s when an older release was viewed", (path) => {
-    window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, "1");
-    const first = renderHook(() => useBrandIntro(path));
-    expect(first.result.current.overlayPhase).toBe("running");
-    act(() => first.result.current.completeEntry());
-    expect(first.result.current.overlayPhase).toBe("holding");
-    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe(BRAND_INTRO_STORAGE_VALUE);
-    first.unmount();
-    const next = renderHook(() => useBrandIntro(path));
-    expect(next.result.current.overlayPhase).toBeNull();
-  });
-
-  it("reveals and holds the word through a bounded fallback when animationend never arrives", () => {
-    const { result } = renderHook(() => useBrandIntro("/"));
-    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.entryTimeoutMs - 1));
-    expect(result.current.overlayPhase).toBe("running");
-    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBeNull();
-    act(() => vi.advanceTimersByTime(1));
-    expect(result.current.overlayPhase).toBe("holding");
-    expect(result.current.heroReady).toBe(false);
-    expect(document.body.style.overflow).toBe("hidden");
-    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.settleDelayMs));
-    expect(result.current.overlayPhase).toBe("exiting");
-    expect(document.body.style.overflow).toBe("");
-    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.exitDurationMs));
-    expect(result.current.overlayPhase).toBeNull();
-  });
-
-  it("ignores late animation completion after the user skips", () => {
-    const { result } = renderHook(() => useBrandIntro("/"));
-    const completeEntry = result.current.completeEntry;
-    act(() => result.current.skipIntro());
-    act(() => completeEntry());
-    act(() => vi.advanceTimersByTime(10_000));
-    expect(result.current.overlayPhase).toBeNull();
-    expect(document.body.style.overflow).toBe("");
-    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe(BRAND_INTRO_STORAGE_VALUE);
   });
 });

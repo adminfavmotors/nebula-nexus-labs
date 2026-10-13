@@ -1,3 +1,5 @@
+import { brandName } from "@/lib/site-identity";
+
 export const localeMotionTimings = {
   changeDelayMs: 110,
   settleDelayMs: 240,
@@ -12,24 +14,19 @@ export const structuralMotionTimings = {
 } as const;
 
 const rawBrandIntroMotionTimings = {
-  codeDurationMs: 600,
-  rowTypingDurationMs: 260,
-  brandTypingDelayMs: 200,
-  brandTypingDurationMs: 400,
-  // Bound entry when a browser does not deliver the word's animationend event.
-  entryTimeoutMs: 1200,
-  settleDelayMs: 200,
-  exitDurationMs: 240,
+  letterDurationMs: 760,
+  letterStaggerMs: 64,
+  settleDelayMs: 260,
+  exitDurationMs: 460,
 } as const;
 
-const brandIntroEntryDurationMs = Math.max(
-  rawBrandIntroMotionTimings.codeDurationMs,
-  rawBrandIntroMotionTimings.brandTypingDelayMs + rawBrandIntroMotionTimings.brandTypingDurationMs,
-);
+const brandIntroEntryDurationMs = rawBrandIntroMotionTimings.letterDurationMs +
+  rawBrandIntroMotionTimings.letterStaggerMs * Math.max(0, brandName.length - 1);
 
 export const brandIntroMotionTimings = {
   ...rawBrandIntroMotionTimings,
   entryDurationMs: brandIntroEntryDurationMs,
+  entryTimeoutMs: brandIntroEntryDurationMs + 1000,
 } as const;
 
 export const heroMotionDelays = {

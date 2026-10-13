@@ -1,6 +1,21 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { createBrandIntroBoot, injectBrandIntroBoot } from "./scripts/brand-intro-html";
+
+function earlyBrandIntro(): Plugin {
+  let server: ViteDevServer;
+  return {
+    name: "early-brand-intro",
+    apply: "serve",
+    configureServer(value) { server = value; },
+    async transformIndexHtml(html) {
+      const boot = await createBrandIntroBoot(server, __dirname);
+      const styles = ["fonts.css", "../index.css", "shell.css"].map((file) => `<link rel="stylesheet" href="/src/styles/${file}?direct">`).join("\n");
+      return injectBrandIntroBoot(html.replace("</head>", `${styles}\n</head>`), boot.script);
+    },
+  };
+}
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
@@ -11,7 +26,7 @@ export default defineConfig(() => ({
       overlay: false,
     },
   },
-  plugins: [react()],
+  plugins: [react(), earlyBrandIntro()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

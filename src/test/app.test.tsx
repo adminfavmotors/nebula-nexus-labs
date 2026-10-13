@@ -1,7 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import BrandIntroOverlay from "@/components/BrandIntroOverlay";
 import ContactForm from "@/components/ContactForm";
 import { ContactOverlayProvider } from "@/components/contact/ContactOverlay";
 import { useContactOverlay } from "@/components/contact/contact-overlay-context";
@@ -12,7 +11,9 @@ import { brandIntroMotionTimings } from "@/lib/motion";
 import { getIndexedRouteManifest, getLegalPageSeo } from "@/lib/seo-routes";
 import { formEndpoint } from "@/lib/contact-config";
 import { applySeoSnapshot, createSeoSnapshot } from "@/lib/seo";
-import { BRAND_INTRO_STORAGE_KEY, BRAND_INTRO_STORAGE_VALUE, useBrandIntro } from "@/lib/use-brand-intro";
+import { BRAND_INTRO_STORAGE_KEY, BRAND_INTRO_STORAGE_VALUE } from "@/lib/use-brand-intro";
+
+import { bootIntro, finishIntroEntry, resetIntro } from "@/test/brand-intro-fixture";
 
 const COOKIE_CONSENT_KEY = "node48-cookie-consent";
 const BRAND_INTRO_DIALOG_NAME = /node48.*intro|intro.*node48/i;
@@ -30,16 +31,15 @@ function renderWithI18n(component: React.ReactElement) {
 }
 
 function renderApp() {
-  return render(<App />);
+  const { container } = bootIntro();
+  return render(<App />, { container });
 }
 
 function ContactOverlayScrollLockHarness() {
-  const { overlayPhase, skipIntro, completeEntry } = useBrandIntro("/");
   const { openContactOverlay } = useContactOverlay();
 
   return (
     <>
-      {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} onSkip={skipIntro} onEntryComplete={completeEntry} /> : null}
       <button type="button" onClick={openContactOverlay}>
         Open contact overlay
       </button>
@@ -48,6 +48,7 @@ function ContactOverlayScrollLockHarness() {
 }
 
 function renderContactOverlayScrollLockHarness() {
+  const { container } = bootIntro();
   return render(
     <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
       <I18nProvider>
@@ -56,6 +57,7 @@ function renderContactOverlayScrollLockHarness() {
         </ContactOverlayProvider>
       </I18nProvider>
     </BrowserRouter>,
+    { container },
   );
 }
 
@@ -114,7 +116,7 @@ function advanceBrandIntroToExit() {
   act(() => {
     vi.advanceTimersByTime(brandIntroMotionTimings.entryDurationMs);
   });
-  fireEvent(document.querySelector(".brand-intro-word")!, Object.assign(new Event("animationend", { bubbles: true }), { animationName: "brand-intro-word-type" }));
+  act(finishIntroEntry)
   act(() => vi.advanceTimersByTime(brandIntroMotionTimings.settleDelayMs));
 }
 
@@ -150,11 +152,19 @@ describe("critical user flows", () => {
   });
 
   afterEach(() => {
+    act(resetIntro);
     removeAnalyticsArtifacts();
     document.documentElement.style.removeProperty("--cookie-banner-offset");
     vi.useRealTimers();
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
+  });
+
+  it("does not create a late overlay when no early initializer ran", () => {
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+    render(<App />);
+    expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
+    expect(document.querySelector(".brand-intro-overlay")).toBeNull();
   });
 
   it("renders the homepage intro immediately and makes the app shell inert", () => {
@@ -163,7 +173,7 @@ describe("critical user flows", () => {
     renderApp();
 
     const introDialog = screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME });
-    const appShell = document.querySelector(".app-shell");
+    const appShell = document.querySelector("#root");
 
     expect(introDialog).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Pomiń intro" })).toHaveFocus();
@@ -204,7 +214,7 @@ describe("critical user flows", () => {
 
     renderApp();
 
-    const appShell = document.querySelector(".app-shell");
+    const appShell = document.querySelector("#root");
     expect(appShell).toHaveAttribute("inert");
 
     finishBrandIntro();
@@ -214,27 +224,27 @@ describe("critical user flows", () => {
     expect(appShell).not.toHaveAttribute("inert");
   });
 
-  it("waits for the word animation before holding the full statement and exiting", () => {
+  it("waits for the word animation before holding the full wordmark and exiting", () => {
     vi.useFakeTimers();
     window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
     renderApp();
     // The browser may start CSS animation later than React's mount effect.
     act(() => vi.advanceTimersByTime(brandIntroMotionTimings.entryDurationMs + brandIntroMotionTimings.settleDelayMs));
     expect(document.querySelector(".brand-intro-overlay-running")).not.toBeNull();
-    expect(document.querySelector(".app-shell")).toHaveAttribute("inert");
+    expect(document.querySelector("#root")).toHaveAttribute("inert");
     expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBeNull();
 
-    fireEvent(document.querySelector(".brand-intro-code-line")!, Object.assign(new Event("animationend", { bubbles: true }), { animationName: "brand-intro-type-line" }));
+    fireEvent(document.querySelector(".brand-intro-letter")!, Object.assign(new Event("animationend", { bubbles: true }), { animationName: "brand-intro-letter-print" }));
     expect(document.querySelector(".brand-intro-overlay-running")).not.toBeNull();
-    fireEvent(document.querySelector(".brand-intro-word")!, Object.assign(new Event("animationend", { bubbles: true }), { animationName: "brand-intro-word-type" }));
+    act(finishIntroEntry);
     expect(document.querySelector(".brand-intro-overlay-running")).toBeNull();
     expect(document.querySelector(".brand-intro-overlay-exiting")).toBeNull();
-    expect(document.querySelector(".app-shell")).toHaveAttribute("inert");
+    expect(document.querySelector("#root")).toHaveAttribute("inert");
     act(() => vi.advanceTimersByTime(brandIntroMotionTimings.settleDelayMs - 1));
     expect(document.querySelector(".brand-intro-overlay-exiting")).toBeNull();
     act(() => vi.advanceTimersByTime(1));
     expect(document.querySelector(".brand-intro-overlay-exiting")).not.toBeNull();
-    expect(document.querySelector(".app-shell")).not.toHaveAttribute("inert");
+    expect(document.querySelector("#root")).not.toHaveAttribute("inert");
     act(() => vi.advanceTimersByTime(brandIntroMotionTimings.exitDurationMs));
     expect(document.querySelector(".brand-intro-overlay")).toBeNull();
   });
@@ -257,7 +267,7 @@ describe("critical user flows", () => {
 
     renderApp();
 
-    const appShell = document.querySelector(".app-shell");
+    const appShell = document.querySelector("#root");
 
     expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
     expect(appShell).not.toHaveAttribute("aria-hidden");
@@ -289,7 +299,7 @@ describe("critical user flows", () => {
     fireEvent.click(skipButton);
 
     expect(document.querySelector(".brand-intro-overlay")).toBeNull();
-    expect(document.querySelector(".app-shell")).not.toHaveAttribute("inert");
+    expect(document.querySelector("#root")).not.toHaveAttribute("inert");
     expect(document.body.style.overflow).toBe("");
     expect(document.querySelector(".app-shell a[href]")).toHaveFocus();
     expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe(BRAND_INTRO_STORAGE_VALUE);
@@ -325,7 +335,7 @@ describe("critical user flows", () => {
 
     renderApp();
 
-    const appShell = document.querySelector(".app-shell");
+    const appShell = document.querySelector("#root");
 
     expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
     expect(appShell).not.toHaveAttribute("aria-hidden");
@@ -345,6 +355,7 @@ describe("critical user flows", () => {
     expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe(BRAND_INTRO_STORAGE_VALUE);
 
     firstRender.unmount();
+    document.getElementById("root")?.remove();
     renderApp();
 
     expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
@@ -373,10 +384,9 @@ describe("critical user flows", () => {
 
     renderApp();
 
-    const appShell = document.querySelector(".app-shell");
+    const appShell = document.querySelector("#root");
 
-    expect(document.documentElement.style.overflow).toBe("hidden");
-    expect(document.body.style.overflow).toBe("hidden");
+    expect(document.documentElement).toHaveAttribute("data-brand-intro-phase", "running");
     expect(appShell).toHaveAttribute("inert");
 
     advanceBrandIntroToExit();
@@ -395,8 +405,7 @@ describe("critical user flows", () => {
 
     renderContactOverlayScrollLockHarness();
 
-    expect(document.documentElement.style.overflow).toBe("hidden");
-    expect(document.body.style.overflow).toBe("hidden");
+    expect(document.documentElement).toHaveAttribute("data-brand-intro-phase", "running");
 
     finishBrandIntro();
     vi.useRealTimers();

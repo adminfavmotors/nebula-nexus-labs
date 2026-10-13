@@ -1,216 +1,9 @@
-import { useLayoutEffect, useRef, type CSSProperties } from "react";
-import { brandName } from "@/lib/site-identity";
-import { cx } from "@/lib/cx";
-import { useI18n } from "@/lib/i18n";
-import { brandIntroMotionTimings } from "@/lib/motion";
+import type { CSSProperties } from "react";
 import { ActionButton } from "@/components/primitives/Actions";
+import { brandName } from "@/lib/site-identity";
+import { brandIntroMotionTimings } from "@/lib/motion";
+import type { Locale } from "@/lib/i18n-data";
 
-type BrandIntroOverlayProps = {
-  phase: "running" | "holding" | "exiting";
-  onSkip: () => void;
-  onEntryComplete: () => void;
-};
-
-type CodeTokenTone =
-  | "plain"
-  | "keyword"
-  | "binding"
-  | "function"
-  | "string"
-  | "property"
-  | "type"
-  | "comment";
-
-type CodeToken = {
-  text: string;
-  tone?: CodeTokenTone;
-};
-
-type CodeRow = {
-  tokens: CodeToken[];
-};
-
-const digitPattern = /\d/;
-const brandStatementPrefix = 'const brand = "';
-const brandStatementSuffix = '";';
-const brandStatement = `${brandStatementPrefix}${brandName}${brandStatementSuffix}`;
-const codeRows: CodeRow[] = [
-  {
-    tokens: [
-      { text: "import", tone: "keyword" },
-      { text: " { strategy, design, code } " },
-      { text: "from", tone: "keyword" },
-      { text: " " },
-      { text: "'@node48/studio'", tone: "string" },
-      { text: ";" },
-    ],
-  },
-  {
-    tokens: [
-      { text: "type", tone: "keyword" },
-      { text: " ProjectSignal", tone: "type" },
-      { text: " = " },
-      { text: "ReturnType", tone: "type" },
-      { text: "<" },
-      { text: "typeof", tone: "keyword" },
-      { text: " design.compose>;" },
-    ],
-  },
-  {
-    tokens: [
-      { text: "const", tone: "keyword" },
-      { text: " route", tone: "binding" },
-      { text: " = " },
-      { text: "resolveLocale", tone: "function" },
-      { text: "(window." },
-      { text: "location", tone: "property" },
-      { text: "." },
-      { text: "pathname", tone: "property" },
-      { text: ");" },
-    ],
-  },
-  {
-    tokens: [
-      { text: "const", tone: "keyword" },
-      { text: " canvas", tone: "binding" },
-      { text: " = " },
-      { text: "createExperience", tone: "function" },
-      { text: "({ " },
-      { text: "intent", tone: "property" },
-      { text: ": " },
-      { text: "'growth'", tone: "string" },
-      { text: " });" },
-    ],
-  },
-  {
-    tokens: [
-      { text: "await", tone: "keyword" },
-      { text: " " },
-      { text: "preloadCriticalAssets", tone: "function" },
-      { text: "([" },
-      { text: "'hero'", tone: "string" },
-      { text: ", " },
-      { text: "'portfolio'", tone: "string" },
-      { text: ", " },
-      { text: "'seo'", tone: "string" },
-      { text: "]);" },
-    ],
-  },
-  {
-    tokens: [
-      { text: "const", tone: "keyword" },
-      { text: " signal", tone: "binding" },
-      { text: " = " },
-      { text: "compose", tone: "function" },
-      { text: "(strategy, design, code)." },
-      { text: "ship", tone: "function" },
-      { text: "();" },
-    ],
-  },
-  {
-    tokens: [
-      { text: "if", tone: "keyword" },
-      { text: " (visitor." },
-      { text: "ready", tone: "property" },
-      { text: ") cursor." },
-      { text: "openWorkspace", tone: "function" },
-      { text: "(" },
-      { text: "'NODE'", tone: "string" },
-      { text: ");" },
-    ],
-  },
-  {
-    tokens: [
-      { text: "render", tone: "function" },
-      { text: "(<" },
-      { text: "Hero", tone: "type" },
-      { text: " " },
-      { text: "locale", tone: "property" },
-      { text: "={route.locale} " },
-      { text: "priority", tone: "property" },
-      { text: "=" },
-      { text: "\"first-screen\"", tone: "string" },
-      { text: " />);" },
-    ],
-  },
-  {
-    tokens: [
-      { text: "pipeline", tone: "binding" },
-      { text: "." },
-      { text: "measure", tone: "function" },
-      { text: "({ " },
-      { text: "ux", tone: "property" },
-      { text: ": " },
-      { text: "'sharp'", tone: "string" },
-      { text: ", " },
-      { text: "speed", tone: "property" },
-      { text: ": " },
-      { text: "'clean'", tone: "string" },
-      { text: " });" },
-    ],
-  },
-  {
-    tokens: [
-      { text: "route", tone: "binding" },
-      { text: "." },
-      { text: "prefetch", tone: "function" },
-      { text: "(" },
-      { text: "'/en'", tone: "string" },
-      { text: ")." },
-      { text: "then", tone: "function" },
-      { text: "(syncLocalizedSlugs);" },
-    ],
-  },
-  {
-    tokens: [
-      { text: "deploy", tone: "binding" },
-      { text: "." },
-      { text: "preview", tone: "function" },
-      { text: "({ " },
-      { text: "checks", tone: "property" },
-      { text: ": [" },
-      { text: "'lint'", tone: "string" },
-      { text: ", " },
-      { text: "'test'", tone: "string" },
-      { text: ", " },
-      { text: "'build'", tone: "string" },
-      { text: "] });" },
-    ],
-  },
-  {
-    tokens: [
-      { text: "const", tone: "keyword" },
-      { text: " product", tone: "binding" },
-      { text: " = " },
-      { text: "launch", tone: "function" },
-      { text: "({ " },
-      { text: "brand", tone: "property" },
-      { text: ": " },
-      { text: `'${brandName}'`, tone: "string" },
-      { text: ", " },
-      { text: "stack", tone: "property" },
-      { text: ": signal });" },
-    ],
-  },
-  {
-    tokens: [
-      { text: "return", tone: "keyword" },
-      { text: " product." },
-      { text: "with", tone: "function" },
-      { text: "({ " },
-      { text: "trust", tone: "property" },
-      { text: ": true, " },
-      { text: "motion", tone: "property" },
-      { text: ": " },
-      { text: "'disciplined'", tone: "string" },
-      { text: " });" },
-    ],
-  },
-  {
-    tokens: [{ text: `// ${brandName} compiles strategy into a faster first impression`, tone: "comment" }],
-  },
-] as const;
-const brandSeedRows = codeRows.map((row) => row.tokens.map((token) => token.text).join(""));
 const introCopy = {
   pl: {
     title: `${brandName} - intro strony głównej`,
@@ -224,119 +17,29 @@ const introCopy = {
   },
 } as const;
 
-const BrandIntroOverlay = ({ phase, onSkip, onEntryComplete }: BrandIntroOverlayProps) => {
-  const { locale } = useI18n();
+// The sole presentation, serialized for the early controller. React never
+// mounts a second overlay after the homepage is already visible.
+export default function BrandIntroOverlay({ locale }: { locale: Locale }) {
   const copy = introCopy[locale];
-  const skipRef = useRef<HTMLButtonElement>(null);
-  const introMotionStyle = {
-    "--brand-intro-row-duration": `${brandIntroMotionTimings.rowTypingDurationMs}ms`,
-    "--brand-intro-row-stagger": `${(brandIntroMotionTimings.codeDurationMs - brandIntroMotionTimings.rowTypingDurationMs) / Math.max(1, codeRows.length - 1)}ms`,
-    "--brand-intro-brand-delay": `${brandIntroMotionTimings.brandTypingDelayMs}ms`,
-    "--brand-intro-brand-duration": `${brandIntroMotionTimings.brandTypingDurationMs}ms`,
+  const motionStyle = {
+    "--brand-intro-letter-duration": `${brandIntroMotionTimings.letterDurationMs}ms`,
+    "--brand-intro-letter-stagger": `${brandIntroMotionTimings.letterStaggerMs}ms`,
     "--brand-intro-exit-duration": `${brandIntroMotionTimings.exitDurationMs}ms`,
-    "--brand-intro-brand-statement-length": brandStatement.length,
   } as CSSProperties;
-
-  useLayoutEffect(() => {
-    skipRef.current?.focus({ preventScroll: true });
-  }, []);
-
   return (
-    <div
-      className={cx(
-        "brand-intro-overlay",
-        phase === "running" && "brand-intro-overlay-running",
-        phase === "exiting" && "brand-intro-overlay-exiting",
-      )}
-      role="dialog"
-      aria-modal={phase !== "exiting"}
-      aria-hidden={phase === "exiting" || undefined}
-      aria-labelledby="brand-intro-title"
-      aria-describedby="brand-intro-description"
-      tabIndex={-1}
-      style={introMotionStyle}
-      onKeyDown={(event) => {
-        if (phase === "exiting") return;
-        if (event.key === "Escape") {
-          event.preventDefault();
-          onSkip();
-        } else if (event.key === "Tab") {
-          event.preventDefault();
-          skipRef.current?.focus();
-        }
-      }}
-    >
-      <p id="brand-intro-title" className="visually-hidden">
-        {copy.title}
-      </p>
-      <p id="brand-intro-description" className="visually-hidden">
-        {copy.description}
-      </p>
-      <div className="brand-intro-terminal" aria-hidden="true">
-        <div className="brand-intro-editor-tabs">
-            <span className="brand-intro-editor-tab brand-intro-editor-tab-active">App.tsx</span>
-            <span className="brand-intro-editor-tab">motion.ts</span>
-            <span className="brand-intro-editor-tab">seo-routes.ts</span>
-        </div>
-        <div className="brand-intro-code-stream">
-          {codeRows.map((row, index) => (
-            <span
-              className="brand-intro-code-row"
-              key={brandSeedRows[index]}
-              style={
-                {
-                  "--brand-intro-row-index": index,
-                  "--brand-intro-line-length": brandSeedRows[index].length,
-                } as CSSProperties
-              }
-            >
-              <span className="brand-intro-line-number">{index + 1}</span>
-              <span className="brand-intro-code-line">
-                {row.tokens.map((token, tokenIndex) => (
-                  <span
-                    className={cx("brand-intro-token", token.tone && `brand-intro-token-${token.tone}`)}
-                    key={`${token.text}-${tokenIndex}`}
-                  >
-                    {token.text}
-                  </span>
-                ))}
-              </span>
-            </span>
-          ))}
-        </div>
-        <div className="brand-intro-word" onAnimationEnd={(event) => {
-          if (phase === "running" && event.target === event.currentTarget && event.animationName === "brand-intro-word-type") {
-            onEntryComplete();
-          }
-        }}>
-          <code className="brand-intro-statement">
-            <span className="brand-intro-token-keyword">const</span>
-            {" brand = \""}
-            <span className="brand-intro-statement-brand">
-              {Array.from(brandName).map((character, index) => (
-                <span
-                  className={digitPattern.test(character) ? "brand-intro-letter-accent" : undefined}
-                  key={`${character}-${index}`}
-                >
-                  {character}
-                </span>
-              ))}
-            </span>
-            {"\";"}
-          </code>
-        </div>
+    <div className="brand-intro-overlay brand-intro-overlay-running" role="dialog" aria-modal="true"
+      aria-labelledby="brand-intro-title" aria-describedby="brand-intro-description" tabIndex={-1} style={motionStyle}>
+      <p id="brand-intro-title" className="visually-hidden">{copy.title}</p>
+      <p id="brand-intro-description" className="visually-hidden">{copy.description}</p>
+      <div className="brand-intro-word" aria-hidden="true">
+        {Array.from(brandName).map((character, index) => (
+          <span className="brand-intro-slot" key={`${character}-${index}`}>
+            <span className={`brand-intro-letter${/\d/.test(character) ? " brand-intro-letter-accent" : ""}`}
+              style={{ "--brand-intro-index": index } as CSSProperties}>{character}</span>
+          </span>
+        ))}
       </div>
-      <ActionButton
-        ref={skipRef}
-        variant="ghost"
-        className="brand-intro-skip"
-        onClick={onSkip}
-        disabled={phase === "exiting"}
-      >
-        {copy.skip}
-      </ActionButton>
+      <ActionButton variant="ghost" className="brand-intro-skip">{copy.skip}</ActionButton>
     </div>
   );
-};
-
-export default BrandIntroOverlay;
+}

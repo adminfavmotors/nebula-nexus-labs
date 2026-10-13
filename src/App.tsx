@@ -1,6 +1,5 @@
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { BrowserRouter, Route, Routes, useLocation, useNavigationType } from "react-router-dom";
-import BrandIntroOverlay from "@/components/BrandIntroOverlay";
 import { ContactOverlayProvider } from "@/components/contact/ContactOverlay";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 import { I18nProvider, useI18n } from "@/lib/i18n";
@@ -89,47 +88,28 @@ const RouteHashScrollManager = () => {
   return null;
 };
 
-const AppFrame = () => {
+// Keep optional intro updates outside the route's hydrating Suspense boundary.
+const IntroAwareCookies = () => {
   const location = useLocation();
-  const { isTransitioningLocale } = useI18n();
-  const { didPlayIntro, heroReady, overlayPhase, skipIntro, completeEntry } = useBrandIntro(location.pathname);
-  const appShellRef = useRef<HTMLDivElement>(null);
-  const wasIntroBlockingRef = useRef(false);
+  const { overlayPhase } = useBrandIntro(location.pathname);
   const introBlocking = overlayPhase === "running" || overlayPhase === "holding";
+  return <CookieConsentBanner isBlocked={introBlocking} />;
+};
 
-  useLayoutEffect(() => {
-    const shellElement = appShellRef.current;
-
-    if (!shellElement) {
-      return;
-    }
-
-    if (introBlocking) {
-      wasIntroBlockingRef.current = true;
-      shellElement.setAttribute("inert", "");
-      return;
-    }
-
-    shellElement.removeAttribute("inert");
-    if (wasIntroBlockingRef.current) {
-      wasIntroBlockingRef.current = false;
-      shellElement.querySelector<HTMLAnchorElement>("a[href]")?.focus({ preventScroll: true });
-    }
-  }, [introBlocking]);
+const AppFrame = () => {
+  const { isTransitioningLocale } = useI18n();
 
   return (
     <>
       <RouteHashScrollManager />
       <ContactOverlayProvider>
         <div
-          ref={appShellRef}
           className={cx("app-shell", isTransitioningLocale && "app-shell-transitioning")}
-          aria-hidden={introBlocking || undefined}
         >
           <Suspense fallback={null}>
             <Routes>
-              <Route path="/" element={<Index heroReady={heroReady} useIntroTimings={didPlayIntro} />} />
-              <Route path="/en" element={<Index heroReady={heroReady} useIntroTimings={didPlayIntro} />} />
+              <Route path="/" element={<Index />} />
+              <Route path="/en" element={<Index />} />
               <Route path="/uslugi/:slug" element={<ServicePage />} />
               <Route path="/en/uslugi/:slug" element={<ServicePage />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -140,8 +120,7 @@ const AppFrame = () => {
             </Routes>
           </Suspense>
         </div>
-        {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} onSkip={skipIntro} onEntryComplete={completeEntry} /> : null}
-        <CookieConsentBanner isBlocked={introBlocking} />
+        <IntroAwareCookies />
       </ContactOverlayProvider>
     </>
   );

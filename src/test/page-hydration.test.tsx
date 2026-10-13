@@ -9,6 +9,7 @@ import { getServicePageDetail } from "@/lib/service-page-details";
 import { getCanonicalServiceSlugs } from "@/lib/service-catalog";
 import { getLocalizedServicePath } from "@/lib/locale-routes";
 import { businessPhone, contactEmail } from "@/lib/contact-config";
+import { bootIntro, resetIntro } from "@/test/brand-intro-fixture";
 
 vi.mock("@/lib/analytics", () => ({ loadGoogleTagManager: vi.fn() }));
 
@@ -59,6 +60,7 @@ describe("complete page hydration", () => {
   afterEach(() => {
     if (root) act(() => root!.unmount());
     root = undefined;
+    resetIntro();
     container?.remove();
     container = undefined;
     cleanup();
@@ -71,6 +73,7 @@ describe("complete page hydration", () => {
     window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
     container = document.createElement("div");
     container.innerHTML = serverMarkup[path];
+    container.id = "root";
     document.body.append(container);
     const shell = container.querySelector(".app-shell");
     const heading = container.querySelector("h1");
@@ -82,11 +85,15 @@ describe("complete page hydration", () => {
     const recoverableError = vi.fn();
     const consoleError = vi.spyOn(console, "error");
 
+    bootIntro();
+    expect(container).toHaveAttribute("inert");
+    const earlyOverlay = document.querySelector(".brand-intro-overlay");
+
     await act(async () => { root = hydrateRoot(container!, <App />, { onRecoverableError: recoverableError }); });
-    await waitFor(() => { expect(container!.querySelector(".brand-intro-skip")).not.toBeNull(); });
-    const skipButton = container.querySelector<HTMLButtonElement>(".brand-intro-skip")!;
+    const skipButton = document.querySelector<HTMLButtonElement>(".brand-intro-skip")!;
     expect(skipButton).not.toBeNull();
-    expect(shell).toHaveAttribute("inert");
+    expect(container).toHaveAttribute("inert");
+    expect(document.querySelector(".brand-intro-overlay")).toBe(earlyOverlay);
     expect(container.querySelector("h1")).toBe(heading);
     expect(container.querySelector("#section-contact-name")).toBe(name);
     expect(name.value).toBe("First visit draft before JavaScript");
@@ -99,6 +106,7 @@ describe("complete page hydration", () => {
     expect(container.querySelector("h1")).toBe(heading);
     expect(name.value).toBe("First visit draft before JavaScript");
     expect(shell).not.toHaveAttribute("inert");
+    expect(container).not.toHaveAttribute("inert");
     expect(container.querySelector(".brand-intro-overlay")).toBeNull();
   });
 

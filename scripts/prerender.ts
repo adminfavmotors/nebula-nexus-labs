@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { createServer } from "vite";
+import { createBrandIntroBoot, injectBrandIntroBoot } from "./brand-intro-html";
 
 const workspaceRoot = path.resolve(import.meta.dirname, "..");
 const distDir = path.join(workspaceRoot, "dist");
@@ -45,6 +46,12 @@ const viteServer = await createServer({
 });
 
 try {
+  const introBoot = await createBrandIntroBoot(viteServer, workspaceRoot);
+  // Permit this exact initializer without enabling arbitrary inline scripts.
+  const headersPath = path.join(distDir, ".htaccess");
+  const headers = await readFile(headersPath, "utf8");
+  if (!headers.includes("script-src 'self' ")) throw new Error("Intro CSP insertion point is missing.");
+  await writeFile(headersPath, headers.replace("script-src 'self' ", `script-src 'self' '${introBoot.hash}' `), "utf8");
   const { createSeoHeadMarkup, createSeoSnapshot } = await viteServer.ssrLoadModule("/src/lib/seo.ts");
   const { getPrerenderRouteManifest } = await viteServer.ssrLoadModule("/src/lib/seo-routes.ts");
   const { translations } = await viteServer.ssrLoadModule("/src/lib/i18n-data.ts");
@@ -55,7 +62,7 @@ try {
     const appMarkup = await renderPrerenderedRoute(route.path);
     const snapshot = createSeoSnapshot(route.seo);
     const seoMarkup = createSeoHeadMarkup(snapshot);
-    const html = injectAppMarkup(injectHtmlLang(injectSeoMarkup(template, seoMarkup), snapshot.locale), appMarkup);
+    const html = injectBrandIntroBoot(injectAppMarkup(injectHtmlLang(injectSeoMarkup(template, seoMarkup), snapshot.locale), appMarkup), introBoot.script);
     const outputPath = resolveRouteHtmlPath(route.path);
 
     await mkdir(path.dirname(outputPath), { recursive: true });
