@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-13
 
-Production: [node48.pl](https://node48.pl/). Source: [adminfavmotors/nebula-nexus-labs](https://github.com/adminfavmotors/nebula-nexus-labs). Verified releases through October 13 are recorded in [Current State - 2026-10-02](./current-state-2026-10-02.md#published-work). Latest application release: `7c8bb22`, covering the short skippable intro and visible static first screen, successfully deployed by run `38372086448` and tagged `prod-20261013-085217-7c8bb22`.
+Production: [node48.pl](https://node48.pl/). Source: [adminfavmotors/nebula-nexus-labs](https://github.com/adminfavmotors/nebula-nexus-labs). Verified releases through October 13 are recorded in [Current State - 2026-10-02](./current-state-2026-10-02.md#published-work). Latest application release: `a063669`, correcting word-animation completion and old session marks, successfully deployed by run `38396902325` and tagged `prod-20261013-122448-a063669`. The earlier `7c8bb22` first-screen/hydration correction is preserved.
 
 ## What Changed
 
@@ -101,7 +101,7 @@ This keeps deployment traffic encrypted in transit while matching the SSH contra
 
 Scale verification to the change. For documentation-only releases, confirm the workflow/tag and basic site availability; no application flow changed. For UI, routing or contact changes and rollbacks, check the relevant flows below:
 
-1. Open `/` in a clean browser session and inspect CSP/hydration errors and first-screen visibility. Items 8/12 are resolved in the October 13 release: abort application scripts and confirm the styled header, heading, body and actions remain visible; with scripts enabled, confirm intro skip/completion releases the page and first-visit hydration preserves markup/form values.
+1. Open `/` in a clean browser session and inspect CSP/hydration errors and first-screen visibility. Abort application scripts and confirm the styled header, heading, body and actions remain visible. With scripts enabled, check that the complete intro word is painted during the holding phase before fade, not just that its layout bounds fit; confirm skip/completion releases the page and first-visit hydration preserves markup/form values. Verify an old `"1"` session mark plays the corrected version once and the current `editor-v2` mark skips repeat playback.
 2. Open `/en` and confirm the English homepage resolves as a prerendered route with the correct locale metadata.
 3. Open at least one Polish and one English service page such as `/uslugi/strona-firmowa` and `/en/uslugi/strona-firmowa` and confirm prerendered HTML resolves correctly before hydration.
 4. Confirm `canonical` and `hreflang` tags are correct on both locale variants.
@@ -116,7 +116,7 @@ When a release regression requires rollback, redeploy the last known good `prod-
 
 ### Documentation-only release records
 
-The October 13 production outcome is recorded in a subsequent documentation-only commit with `[skip ci]`. GitHub's [skip-workflow instruction](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs) suppresses the push-triggered run for that commit. Its changes are limited to Markdown outside `dist/`; the application and workflow files match the successfully deployed `7c8bb22` artifact. The immutable production tag continues to identify that application source. Ordinary documentation pushes without a skip instruction still trigger the existing workflow.
+October 13 production outcomes are recorded in subsequent documentation-only commits with `[skip ci]`. GitHub's [skip-workflow instruction](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs) suppresses the push-triggered run for those commits. Their changes are limited to Markdown outside `dist/`; the latest record's application and workflow files match the successfully deployed `a063669` artifact. Immutable production tags continue to identify each application source. Ordinary documentation pushes without a skip instruction still trigger the existing workflow.
 
 ## Optional Hardening In GitHub Settings
 
