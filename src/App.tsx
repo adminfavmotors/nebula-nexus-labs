@@ -92,10 +92,10 @@ const RouteHashScrollManager = () => {
 const AppFrame = () => {
   const location = useLocation();
   const { isTransitioningLocale } = useI18n();
-  const { didPlayIntro, heroReady, overlayPhase, skipIntro } = useBrandIntro(location.pathname);
+  const { didPlayIntro, heroReady, overlayPhase, skipIntro, completeEntry } = useBrandIntro(location.pathname);
   const appShellRef = useRef<HTMLDivElement>(null);
   const wasIntroBlockingRef = useRef(false);
-  const introBlocking = overlayPhase === "running";
+  const introBlocking = overlayPhase === "running" || overlayPhase === "holding";
 
   useLayoutEffect(() => {
     const shellElement = appShellRef.current;
@@ -140,7 +140,7 @@ const AppFrame = () => {
             </Routes>
           </Suspense>
         </div>
-        {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} onSkip={skipIntro} /> : null}
+        {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} onSkip={skipIntro} onEntryComplete={completeEntry} /> : null}
         <CookieConsentBanner isBlocked={introBlocking} />
       </ContactOverlayProvider>
     </>

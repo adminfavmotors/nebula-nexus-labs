@@ -1,5 +1,16 @@
 import "@testing-library/jest-dom";
 
+// React selects animation event names during import. JSDOM needs the standard
+// constructor present so the tests exercise the browser's animationend path.
+class MockAnimationEvent extends Event {
+  readonly animationName: string;
+  constructor(type: string, init: AnimationEventInit = {}) {
+    super(type, init);
+    this.animationName = init.animationName ?? "";
+  }
+}
+Object.defineProperty(window, "AnimationEvent", { writable: true, value: MockAnimationEvent });
+
 Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: (query: string) => ({

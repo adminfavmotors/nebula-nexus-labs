@@ -2,11 +2,12 @@ import { StrictMode, Suspense, type ReactNode } from "react";
 import { act, cleanup, render, renderHook, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { brandIntroMotionTimings } from "@/lib/motion";
-import { BRAND_INTRO_STORAGE_KEY, useBrandIntro } from "@/lib/use-brand-intro";
+import { BRAND_INTRO_STORAGE_KEY, BRAND_INTRO_STORAGE_VALUE, useBrandIntro } from "@/lib/use-brand-intro";
 import App from "@/App";
 
 function finishIntro() {
-  act(() => vi.advanceTimersByTime(brandIntroMotionTimings.exitDelayMs));
+  act(() => vi.advanceTimersByTime(brandIntroMotionTimings.entryTimeoutMs));
+  act(() => vi.advanceTimersByTime(brandIntroMotionTimings.settleDelayMs));
   act(() => vi.advanceTimersByTime(brandIntroMotionTimings.exitDurationMs));
 }
 
@@ -67,9 +68,10 @@ describe("intro lifecycle under browser and React failures", () => {
       wrapper: ({ children }: { children: ReactNode }) => <StrictMode>{children}</StrictMode>,
     });
     expect(result.current.overlayPhase).toBe("running");
-    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe("1");
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBeNull();
     finishIntro();
     expect(result.current.overlayPhase).toBeNull();
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe(BRAND_INTRO_STORAGE_VALUE);
     expect(document.body.style.overflow).toBe("");
   });
 
@@ -135,5 +137,44 @@ describe("intro lifecycle under browser and React failures", () => {
     act(() => vi.advanceTimersByTime(10_000));
     expect(document.body.style.overflow).toBe("");
     expect(document.documentElement.style.overflow).toBe("");
+  });
+
+  it.each(["/", "/en"])("plays the corrected intro once on %s when an older release was viewed", (path) => {
+    window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, "1");
+    const first = renderHook(() => useBrandIntro(path));
+    expect(first.result.current.overlayPhase).toBe("running");
+    act(() => first.result.current.completeEntry());
+    expect(first.result.current.overlayPhase).toBe("holding");
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe(BRAND_INTRO_STORAGE_VALUE);
+    first.unmount();
+    const next = renderHook(() => useBrandIntro(path));
+    expect(next.result.current.overlayPhase).toBeNull();
+  });
+
+  it("reveals and holds the word through a bounded fallback when animationend never arrives", () => {
+    const { result } = renderHook(() => useBrandIntro("/"));
+    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.entryTimeoutMs - 1));
+    expect(result.current.overlayPhase).toBe("running");
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBeNull();
+    act(() => vi.advanceTimersByTime(1));
+    expect(result.current.overlayPhase).toBe("holding");
+    expect(result.current.heroReady).toBe(false);
+    expect(document.body.style.overflow).toBe("hidden");
+    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.settleDelayMs));
+    expect(result.current.overlayPhase).toBe("exiting");
+    expect(document.body.style.overflow).toBe("");
+    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.exitDurationMs));
+    expect(result.current.overlayPhase).toBeNull();
+  });
+
+  it("ignores late animation completion after the user skips", () => {
+    const { result } = renderHook(() => useBrandIntro("/"));
+    const completeEntry = result.current.completeEntry;
+    act(() => result.current.skipIntro());
+    act(() => completeEntry());
+    act(() => vi.advanceTimersByTime(10_000));
+    expect(result.current.overlayPhase).toBeNull();
+    expect(document.body.style.overflow).toBe("");
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe(BRAND_INTRO_STORAGE_VALUE);
   });
 });

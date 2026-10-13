@@ -6,8 +6,9 @@ import { brandIntroMotionTimings } from "@/lib/motion";
 import { ActionButton } from "@/components/primitives/Actions";
 
 type BrandIntroOverlayProps = {
-  phase: "running" | "exiting";
+  phase: "running" | "holding" | "exiting";
   onSkip: () => void;
+  onEntryComplete: () => void;
 };
 
 type CodeTokenTone =
@@ -223,7 +224,7 @@ const introCopy = {
   },
 } as const;
 
-const BrandIntroOverlay = ({ phase, onSkip }: BrandIntroOverlayProps) => {
+const BrandIntroOverlay = ({ phase, onSkip, onEntryComplete }: BrandIntroOverlayProps) => {
   const { locale } = useI18n();
   const copy = introCopy[locale];
   const skipRef = useRef<HTMLButtonElement>(null);
@@ -303,7 +304,11 @@ const BrandIntroOverlay = ({ phase, onSkip }: BrandIntroOverlayProps) => {
             </span>
           ))}
         </div>
-        <div className="brand-intro-word">
+        <div className="brand-intro-word" onAnimationEnd={(event) => {
+          if (phase === "running" && event.target === event.currentTarget && event.animationName === "brand-intro-word-type") {
+            onEntryComplete();
+          }
+        }}>
           <code className="brand-intro-statement">
             <span className="brand-intro-token-keyword">const</span>
             {" brand = \""}

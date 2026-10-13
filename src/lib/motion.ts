@@ -16,6 +16,8 @@ const rawBrandIntroMotionTimings = {
   rowTypingDurationMs: 260,
   brandTypingDelayMs: 200,
   brandTypingDurationMs: 400,
+  // Bound entry when a browser does not deliver the word's animationend event.
+  entryTimeoutMs: 1200,
   settleDelayMs: 200,
   exitDurationMs: 240,
 } as const;
@@ -24,13 +26,10 @@ const brandIntroEntryDurationMs = Math.max(
   rawBrandIntroMotionTimings.codeDurationMs,
   rawBrandIntroMotionTimings.brandTypingDelayMs + rawBrandIntroMotionTimings.brandTypingDurationMs,
 );
-const brandIntroExitDelayMs = brandIntroEntryDurationMs + rawBrandIntroMotionTimings.settleDelayMs;
 
 export const brandIntroMotionTimings = {
   ...rawBrandIntroMotionTimings,
   entryDurationMs: brandIntroEntryDurationMs,
-  exitDelayMs: brandIntroExitDelayMs,
-  totalDurationMs: brandIntroExitDelayMs + rawBrandIntroMotionTimings.exitDurationMs,
 } as const;
 
 export const heroMotionDelays = {

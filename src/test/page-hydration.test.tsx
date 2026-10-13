@@ -4,7 +4,7 @@ import { promisify } from "node:util";
 import { hydrateRoot, type Root } from "react-dom/client";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import App from "@/App";
-import { BRAND_INTRO_STORAGE_KEY } from "@/lib/use-brand-intro";
+import { BRAND_INTRO_STORAGE_KEY, BRAND_INTRO_STORAGE_VALUE } from "@/lib/use-brand-intro";
 import { getServicePageDetail } from "@/lib/service-page-details";
 import { getCanonicalServiceSlugs } from "@/lib/service-catalog";
 import { getLocalizedServicePath } from "@/lib/locale-routes";
@@ -46,7 +46,7 @@ describe("complete page hydration", () => {
     window.localStorage.clear();
     document.title = "";
     window.sessionStorage.clear();
-    window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, "1");
+    window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, BRAND_INTRO_STORAGE_VALUE);
     window.scrollTo = vi.fn();
     Element.prototype.scrollIntoView = vi.fn();
     vi.stubGlobal("ResizeObserver", class ResizeObserver {

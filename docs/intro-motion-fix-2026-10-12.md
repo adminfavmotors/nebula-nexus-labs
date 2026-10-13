@@ -2,7 +2,7 @@
 
 Implemented and verified locally on 2026-10-12 (Europe/Warsaw), against published baseline `bcb7e218cc4934d3afcdf9e8bc70df8a3cbaa2eb`. Accepted and published on October 13 in `7c8bb22`, together with item 12. Deployment and production verification succeeded; the release record below supersedes the earlier pending states.
 
-This report records the item 8 implementation and successive review stages. The subsequently authorized [item 12 follow-up](./first-screen-fix-2026-10-12.md) supersedes the early-boot/pending-marker behavior described below and corrects the recorded first-screen blocker. The latest local candidate has 180 passing tests and preserves the visible prerendered page on first visits. The final review below also covers enlarged intro text and deferred route changes.
+This report records the item 8 implementation and successive review stages. The subsequently authorized [item 12 follow-up](./first-screen-fix-2026-10-12.md) supersedes the early-boot/pending-marker behavior described below and corrects the recorded first-screen blocker. A post-release report that the word was missing exposed a separate paint/clock race, detailed in the final section. The corrective candidate has 185 passing tests and preserves the visible prerendered page.
 
 ## Story and scope
 
@@ -84,3 +84,17 @@ Production returned HTTP 200 with the verified application assets. The PL 375×8
 PL mobile and EN desktop script-aborted homepage checks kept the styled first screen visible before hydration and without an overlay or entrance animation. The browser session recorded no application exceptions or CSP violations. Requests were spaced to avoid the hosting rate limit encountered during the preceding release. No real inquiry or consent grant was sent.
 
 Production records and the mobile screenshot are in the ignored `.codex/item8-publication-2026-10-13/` directory. The separate desktop checkout and its unrelated edits were preserved. A documentation-only follow-up records this outcome without changing or redeploying the verified application artifact.
+
+## Post-release correction: wait for the painted word
+
+The user reported that the NODE48 animation was absent on first load. A new production probe opened the plain homepage in an empty session without a forced flag reset and sampled animation frames. React's running phase began around 574 ms, but the first CSS animation frame did not arrive until about 790 ms; the animation clock was still zero around 814 ms. The 800 ms mount-based exit timer fired around 1,415 ms before word typing completed. None of the running frames contained the unclipped full statement: it appeared only after the exit class removed the typing animation. An ordinary reload also bypassed playback because the old `"1"` flag had already been saved.
+
+The earlier range/geometry checks established layout fit and lifecycle completion but did not establish that the full word was painted before fading. This review adds that missing boundary instead of extending the old mount-based timer.
+
+The existing state machine now runs `running → holding → exiting → done`. The word's actual `animationend` moves it into a 200 ms hold; only then does the 240 ms fade begin. Background row animation events cannot finish the word phase. Each phase still owns one timer. Entry's 1,200 ms timeout is a bounded fallback: if the event never arrives, removing the running class reveals the complete statement, then the same hold/exit phases release the page. Page interaction and scrolling remain locked through the hold. Skip works in either blocking phase and late completion cannot restart playback. No hiding bootstrap or new CSS layer was added.
+
+The existing session-storage slot now records `editor-v2` when the full statement is reached or the user explicitly skips. The legacy `"1"` value does not suppress the corrected playback; after that one playback, the current value suppresses repeats. Optional storage failure, reduced-motion bypass and deferred hydration retain their guards. The obsolete nominal `exitDelayMs`/`totalDurationMs` timing exports were removed.
+
+Build/prerender, lint/style architecture, type checks and all 185 tests across six files passed. The new delayed-completion regression test failed on the preceding logic before implementation. The tests cover holding/access release, row-event filtering, missing-event fallback, legacy-version playback, late completion after skip, storage failures, StrictMode and preserved hydration. JSDOM's animation-event constructor is defined in the existing test setup so React uses the standard browser event name rather than a vendor fallback.
+
+Eight normal PL/EN viewport cases and two phone cases with 200% text retained the full statement, usable skip control and original heading. Animation-frame samples contained 11–13 fully visible holding frames before fading, spanning roughly 179–199 ms. A ten-second simulated word animation exercised the bounded fallback and still displayed the full statement before release. Legacy `"1"` playback, current-version repeat bypass, EN Escape, reduced motion and PL/EN script-aborted first screens passed without application/CSP exceptions. Five captured frames were visually reviewed. Evidence is in `.codex/item8-missing-intro-2026-10-13/`; publication of this correction is pending.

@@ -12,7 +12,7 @@ import { brandIntroMotionTimings } from "@/lib/motion";
 import { getIndexedRouteManifest, getLegalPageSeo } from "@/lib/seo-routes";
 import { formEndpoint } from "@/lib/contact-config";
 import { applySeoSnapshot, createSeoSnapshot } from "@/lib/seo";
-import { BRAND_INTRO_STORAGE_KEY, useBrandIntro } from "@/lib/use-brand-intro";
+import { BRAND_INTRO_STORAGE_KEY, BRAND_INTRO_STORAGE_VALUE, useBrandIntro } from "@/lib/use-brand-intro";
 
 const COOKIE_CONSENT_KEY = "node48-cookie-consent";
 const BRAND_INTRO_DIALOG_NAME = /node48.*intro|intro.*node48/i;
@@ -34,12 +34,12 @@ function renderApp() {
 }
 
 function ContactOverlayScrollLockHarness() {
-  const { overlayPhase, skipIntro } = useBrandIntro("/");
+  const { overlayPhase, skipIntro, completeEntry } = useBrandIntro("/");
   const { openContactOverlay } = useContactOverlay();
 
   return (
     <>
-      {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} onSkip={skipIntro} /> : null}
+      {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} onSkip={skipIntro} onEntryComplete={completeEntry} /> : null}
       <button type="button" onClick={openContactOverlay}>
         Open contact overlay
       </button>
@@ -112,8 +112,10 @@ function finishBrandIntro() {
 
 function advanceBrandIntroToExit() {
   act(() => {
-    vi.advanceTimersByTime(brandIntroMotionTimings.exitDelayMs);
+    vi.advanceTimersByTime(brandIntroMotionTimings.entryDurationMs);
   });
+  fireEvent(document.querySelector(".brand-intro-word")!, Object.assign(new Event("animationend", { bubbles: true }), { animationName: "brand-intro-word-type" }));
+  act(() => vi.advanceTimersByTime(brandIntroMotionTimings.settleDelayMs));
 }
 
 describe("critical user flows", () => {
@@ -121,7 +123,7 @@ describe("critical user flows", () => {
     window.history.pushState({}, "", "/");
     window.localStorage.clear();
     window.sessionStorage.clear();
-    window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, "1");
+    window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, BRAND_INTRO_STORAGE_VALUE);
     resetDocumentFonts();
     removeAnalyticsArtifacts();
     document.head.innerHTML = '<meta name="description" content="" />';
@@ -212,6 +214,31 @@ describe("critical user flows", () => {
     expect(appShell).not.toHaveAttribute("inert");
   });
 
+  it("waits for the word animation before holding the full statement and exiting", () => {
+    vi.useFakeTimers();
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+    renderApp();
+    // The browser may start CSS animation later than React's mount effect.
+    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.entryDurationMs + brandIntroMotionTimings.settleDelayMs));
+    expect(document.querySelector(".brand-intro-overlay-running")).not.toBeNull();
+    expect(document.querySelector(".app-shell")).toHaveAttribute("inert");
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBeNull();
+
+    fireEvent(document.querySelector(".brand-intro-code-line")!, Object.assign(new Event("animationend", { bubbles: true }), { animationName: "brand-intro-type-line" }));
+    expect(document.querySelector(".brand-intro-overlay-running")).not.toBeNull();
+    fireEvent(document.querySelector(".brand-intro-word")!, Object.assign(new Event("animationend", { bubbles: true }), { animationName: "brand-intro-word-type" }));
+    expect(document.querySelector(".brand-intro-overlay-running")).toBeNull();
+    expect(document.querySelector(".brand-intro-overlay-exiting")).toBeNull();
+    expect(document.querySelector(".app-shell")).toHaveAttribute("inert");
+    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.settleDelayMs - 1));
+    expect(document.querySelector(".brand-intro-overlay-exiting")).toBeNull();
+    act(() => vi.advanceTimersByTime(1));
+    expect(document.querySelector(".brand-intro-overlay-exiting")).not.toBeNull();
+    expect(document.querySelector(".app-shell")).not.toHaveAttribute("inert");
+    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.exitDurationMs));
+    expect(document.querySelector(".brand-intro-overlay")).toBeNull();
+  });
+
   it("skips the homepage intro when reduced motion is preferred", () => {
     window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
     vi.stubGlobal(
@@ -265,7 +292,7 @@ describe("critical user flows", () => {
     expect(document.querySelector(".app-shell")).not.toHaveAttribute("inert");
     expect(document.body.style.overflow).toBe("");
     expect(document.querySelector(".app-shell a[href]")).toHaveFocus();
-    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe("1");
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe(BRAND_INTRO_STORAGE_VALUE);
     expect(document.querySelector(".cookie-consent-layer")).not.toBeNull();
     act(() => vi.advanceTimersByTime(10_000));
     expect(document.querySelector(".brand-intro-overlay")).toBeNull();
@@ -315,7 +342,7 @@ describe("critical user flows", () => {
 
     finishBrandIntro();
 
-    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe("1");
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe(BRAND_INTRO_STORAGE_VALUE);
 
     firstRender.unmount();
     renderApp();
