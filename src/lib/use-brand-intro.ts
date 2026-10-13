@@ -24,11 +24,16 @@ type BrandIntroSnapshot = {
 function shouldPlayBrandIntro(pathname: string) {
   if (typeof window === "undefined" || !isHomePath(pathname)) return false;
   try {
-    return !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-      window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY) !== BRAND_INTRO_STORAGE_VALUE;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
   } catch {
-    // Optional intro persistence must never prevent the page from starting.
     return false;
+  }
+  try {
+    return window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY) !== BRAND_INTRO_STORAGE_VALUE;
+  } catch {
+    // Storage is an optional record of earlier playback, not permission to
+    // animate. The mounted hook still prevents replay when this record fails.
+    return true;
   }
 }
 

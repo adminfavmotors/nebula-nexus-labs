@@ -23,14 +23,22 @@ describe("intro lifecycle under browser and React failures", () => {
     vi.useRealTimers();
   });
 
-  it("bypasses the intro when access to session storage is denied", () => {
-    vi.spyOn(window, "sessionStorage", "get").mockImplementation(() => {
-      throw new DOMException("Storage disabled", "SecurityError");
-    });
-    const { result } = renderHook(() => useBrandIntro("/"));
+  it.each(["getter", "read"] as const)("plays once when the storage %s is denied", (failure) => {
+    const denyStorage = () => { throw new DOMException("Storage disabled", "SecurityError"); };
+    if (failure === "getter") vi.spyOn(window, "sessionStorage", "get").mockImplementation(denyStorage);
+    else vi.spyOn(Storage.prototype, "getItem").mockImplementation(denyStorage);
+    const { result, rerender } = renderHook(({ path }) => useBrandIntro(path), { initialProps: { path: "/" } });
+    expect(result.current.overlayPhase).toBe("running");
+    act(() => result.current.completeEntry());
+    expect(result.current.overlayPhase).toBe("holding");
+    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.settleDelayMs));
+    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.exitDurationMs));
     expect(result.current.overlayPhase).toBeNull();
     expect(result.current.heroReady).toBe(true);
     expect(document.body.style.overflow).toBe("");
+    rerender({ path: "/uslugi/strona-wizytowka" });
+    rerender({ path: "/en" });
+    expect(result.current.overlayPhase).toBeNull();
   });
 
   it("keeps the page and cookie choices available when both storage APIs are denied", () => {
@@ -41,10 +49,25 @@ describe("intro lifecycle under browser and React failures", () => {
       });
     }
     render(<App />);
+    expect(screen.getByRole("button", { name: "Pomiń intro" })).toBeInTheDocument();
+    expect(document.querySelector(".app-shell")).toHaveAttribute("inert");
+    finishIntro();
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Pomiń intro" })).toBeNull();
     expect(screen.getByRole("button", { name: "Odrzucam" })).toBeInTheDocument();
     expect(document.querySelector(".app-shell")).not.toHaveAttribute("inert");
+  });
+
+  it("respects reduced motion even when storage is unavailable", () => {
+    const matchMedia = window.matchMedia;
+    vi.spyOn(window, "matchMedia").mockImplementation((query) => ({ ...matchMedia(query), matches: true }));
+    vi.spyOn(window, "sessionStorage", "get").mockImplementation(() => {
+      throw new DOMException("Storage disabled", "SecurityError");
+    });
+    const { result } = renderHook(() => useBrandIntro("/"));
+    expect(result.current.overlayPhase).toBeNull();
+    expect(result.current.heroReady).toBe(true);
+    expect(document.body.style.overflow).toBe("");
   });
 
   it("completes the intro when persisting its session flag fails", () => {
