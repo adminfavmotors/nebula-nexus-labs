@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-13
 
-Production: [node48.pl](https://node48.pl/). Source: [adminfavmotors/nebula-nexus-labs](https://github.com/adminfavmotors/nebula-nexus-labs). Verified releases through October 13 are recorded in [Current State - 2026-10-02](./current-state-2026-10-02.md#published-work). Latest application release: `1532358`, allowing intro playback when optional browser storage is unavailable, successfully deployed by run `38401189114` and tagged `prod-20261013-125841-1532358`. Production Chrome incognito and controlled storage-denial checks passed; the user's phone-specific report remains open pending device/browser/URL details. The earlier `a063669` word-completion and `7c8bb22` first-screen/hydration corrections are preserved.
+Production: [node48.pl](https://node48.pl/). Source: [adminfavmotors/nebula-nexus-labs](https://github.com/adminfavmotors/nebula-nexus-labs). Verified releases through October 13 are recorded in [Current State - 2026-10-02](./current-state-2026-10-02.md#published-work). Latest application release: `12a9f61`, restoring the requested NODE48 wordmark with letters appearing from above, successfully deployed by run `38464815125` and tagged `prod-20261013-204311-12a9f61`. A generated early controller starts before first page paint and completes independently of React. PL/EN production Chrome checks verified ordering, complete-word visibility, preserved hydration and repeat bypass without application/CSP errors; physical-phone/Safari behavior and user visual confirmation remain separate.
 
 ## What Changed
 
@@ -64,6 +64,7 @@ That build currently does all of the following from the deployed Git ref:
 2. regenerate `public/sitemap.xml` from the 14 indexed routes
 3. build the client bundle with Vite
 4. prerender 18 PL/EN routes into `dist/**/index.html` and generate `dist/404.html`
+5. generate one early intro controller from the shared presentation/motion source, inject it before the prerendered root, and allow its exact SHA-256 hash in generated `dist/.htaccess`
 
 The four legal routes are prerendered with `noindex,follow` and excluded from the sitemap. React's static renderer waits for lazy components; render errors or a 30-second stall fail the build.
 
@@ -101,7 +102,7 @@ This keeps deployment traffic encrypted in transit while matching the SSH contra
 
 Scale verification to the change. For documentation-only releases, confirm the workflow/tag and basic site availability; no application flow changed. For UI, routing or contact changes and rollbacks, check the relevant flows below:
 
-1. Open `/` in a clean browser session and inspect CSP/hydration errors and first-screen visibility. Abort application scripts and confirm the styled header, heading, body and actions remain visible. With scripts enabled, check that the complete intro word is painted during the holding phase before fade, not just that its layout bounds fit; confirm skip/completion releases the page and first-visit hydration preserves markup/form values. Verify an old `"1"` session mark plays the corrected version once and the current `editor-v2` mark skips repeat playback.
+1. Open `/` in a clean browser session and inspect CSP/hydration errors and first-screen visibility. With scripts enabled, verify that the native intro already covers the first styled frame before the root/application hydrates, letters enter from above and the complete word is painted during the holding phase before fade. Confirm skip/completion releases root access and first-visit hydration preserves markup/form values. Verify old `"1"` and `editor-v2` session marks play the restored version once and the current `wordmark-v1` mark skips repeat playback. Delay/abort the main application script and confirm independent intro completion followed by visible static content; separately disable all JavaScript and confirm the styled header, heading, body and actions are immediately available without an overlay. Verify the served early script's hash matches the actual CSP header.
    If startup/storage policy changes, separately verify unreadable storage still permits playback and releases the page, while reduced motion bypasses it. Ordinary private browsing and controlled storage denial are different checks; record the actual browser and do not equate a Chrome viewport with a physical phone or Safari.
 2. Open `/en` and confirm the English homepage resolves as a prerendered route with the correct locale metadata.
 3. Open at least one Polish and one English service page such as `/uslugi/strona-firmowa` and `/en/uslugi/strona-firmowa` and confirm prerendered HTML resolves correctly before hydration.
@@ -117,7 +118,7 @@ When a release regression requires rollback, redeploy the last known good `prod-
 
 ### Documentation-only release records
 
-October 13 production outcomes are recorded in subsequent documentation-only commits with `[skip ci]`. GitHub's [skip-workflow instruction](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs) suppresses the push-triggered run for those commits. Their changes are limited to Markdown outside `dist/`; the latest record's application and workflow files match the successfully deployed `1532358` artifact. Immutable production tags continue to identify each application source. Ordinary documentation pushes without a skip instruction still trigger the existing workflow.
+October 13 production outcomes are recorded in subsequent documentation-only commits with `[skip ci]`. GitHub's [skip-workflow instruction](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs) suppresses the push-triggered run for those commits. Their changes are limited to Markdown outside `dist/`; the latest record's application and workflow files match the successfully deployed `12a9f61` artifact. Immutable production tags continue to identify each application source. Ordinary documentation pushes without a skip instruction still trigger the existing workflow.
 
 ## Optional Hardening In GitHub Settings
 
