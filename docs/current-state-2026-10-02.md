@@ -2,13 +2,14 @@
 
 Updated: 2026-10-13 (Europe/Warsaw). This is the current documentation entry point; April snapshots retain their historical scope.
 
-Follow-up on October 2: item 4's contact presentation was accepted after mobile screenshot review and published in `037ba8f`; its deployment and production smoke checks succeeded. Item 5's accepted keyboard-focus correction was published in `7f8e34f`, with a successful deployment and production verification. Item 7 was accepted and published on October 12 in `bcb7e21`, with successful deployment and PL/EN production checks. After the final review and phone screenshot, the user accepted the combined item 8/item 12 correction and authorized commit/publication on October 13. Deployment confirmation is pending. Details are recorded in [direct-contact design refinement](./direct-contact-design-2026-10-02.md), [contact-dialog keyboard focus](./contact-dialog-focus-fix-2026-10-02.md), [compact cookie banner](./cookie-banner-fix-2026-10-02.md) and [short editor intro](./intro-motion-fix-2026-10-12.md).
+Follow-up on October 2: item 4's contact presentation was accepted after mobile screenshot review and published in `037ba8f`; its deployment and production smoke checks succeeded. Item 5's accepted keyboard-focus correction was published in `7f8e34f`, with a successful deployment and production verification. Item 7 was accepted and published on October 12 in `bcb7e21`, with successful deployment and PL/EN production checks. After the final review and phone screenshot, the user accepted the combined item 8/item 12 correction on October 13. Commit `7c8bb22`, successful deployment and PL/EN production verification completed that release. Details are recorded in [direct-contact design refinement](./direct-contact-design-2026-10-02.md), [contact-dialog keyboard focus](./contact-dialog-focus-fix-2026-10-02.md), [compact cookie banner](./cookie-banner-fix-2026-10-02.md) and [short editor intro](./intro-motion-fix-2026-10-12.md).
 
 ## Source and scope
 
 - Repository: [adminfavmotors/nebula-nexus-labs](https://github.com/adminfavmotors/nebula-nexus-labs).
 - Public brand and site: [NODE48 — node48.pl](https://node48.pl/).
 - Published application baseline for the item 8 implementation: `bcb7e218cc4934d3afcdf9e8bc70df8a3cbaa2eb`.
+- Latest published application commit: `7c8bb220a339eef733dea71de174b2077d33f2c7`, covering items 8 and 12. The documentation-only release record does not change its application artifact.
 - Active checkout: `C:\Users\Admin\.codex\worktrees\6acd\nebula-nexus-labs`, branch `codex/contact-legitimate-inquiries`. Publication targets remote `main` through the existing workflow.
 - The separate desktop checkout contains the original unpublished intro variant and unrelated edits. It was preserved; the corrected editor presentation is prepared in the active checkout on the latest published baseline.
 
@@ -27,6 +28,7 @@ Each run below was confirmed `completed / success` during its respective deliver
 | 4: accepted visual refinement | Shared channel labels/icons, prominent values and visible underlined keyboard focus | [037ba8f](https://github.com/adminfavmotors/nebula-nexus-labs/commit/037ba8f804b90d41101496e66f93bc7ff60ad464) | [36986280693](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36986280693) | `prod-20261002-085018-037ba8f` |
 | 5 | Native contact dialog contains keyboard focus and restores it to the opener | [7f8e34f](https://github.com/adminfavmotors/nebula-nexus-labs/commit/7f8e34f86568ebc0b294472728e150f023880a3a) | [36991683019](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/36991683019) | `prod-20261002-094642-7f8e34f` |
 | 7 | Compact PL/EN cookie banner with explicit accept/decline choices | [bcb7e21](https://github.com/adminfavmotors/nebula-nexus-labs/commit/bcb7e218cc4934d3afcdf9e8bc70df8a3cbaa2eb) | [38259078677](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/38259078677) | `prod-20261012-135630-bcb7e21` |
+| 8 and 12 | Short skippable editor intro; visible static first screen and preserved first-visit hydration | [7c8bb22](https://github.com/adminfavmotors/nebula-nexus-labs/commit/7c8bb220a339eef733dea71de174b2077d33f2c7) | [38372086448](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/38372086448) | `prod-20261013-085217-7c8bb22` |
 
 Detailed evidence and historical verification counts:
 
@@ -37,9 +39,9 @@ Detailed evidence and historical verification counts:
 
 ## Current implementation
 
-React 18, Vite 8, TypeScript, React Router 6 and Tailwind-backed split CSS produce a static site. There is no persistent application server or private form backend. Polish is the default locale; English has its own routes under `/en`. The latest local candidate also resolves item 12's hidden first screen; see [first-screen correction](./first-screen-fix-2026-10-12.md). That correction and item 8 are not yet published.
+React 18, Vite 8, TypeScript, React Router 6 and Tailwind-backed split CSS produce a static site. There is no persistent application server or private form backend. Polish is the default locale; English has its own routes under `/en`. The October 13 release also resolves item 12's hidden first screen; see [first-screen correction](./first-screen-fix-2026-10-12.md). That correction and item 8 are published in `7c8bb22`.
 
-The build checks application/configuration types, generates the sitemap, builds the client and prerenders HTML. There are 14 indexed routes: two homepages and six services per locale. Four legal routes are also prerendered, marked `noindex,follow` and excluded from the sitemap. The build additionally emits `404.html`; Apache rules resolve canonical paths to their prerendered files. Static rendering waits for lazy components and fails on errors or a 30-second stall. In the latest local candidate, first/repeat visits both hydrate existing markup and preserve DOM/form values. The prerendered header and hero are visible before application JavaScript; optional intro playback starts after hydration.
+The build checks application/configuration types, generates the sitemap, builds the client and prerenders HTML. There are 14 indexed routes: two homepages and six services per locale. Four legal routes are also prerendered, marked `noindex,follow` and excluded from the sitemap. The build additionally emits `404.html`; Apache rules resolve canonical paths to their prerendered files. Static rendering waits for lazy components and fails on errors or a 30-second stall. First/repeat visits both hydrate existing markup and preserve DOM/form values. The prerendered header and hero are visible before application JavaScript; optional intro playback starts after hydration.
 
 Canonical service keys/slugs live in `src/lib/service-catalog.ts`; short localized catalog entries live in `src/lib/service-pages.ts`. Detailed PL/EN content lives in the existing `src/lib/service-page-details` modules, with completeness enforced by TypeScript. Full English translation does not validate the offer's commercial or SEO claims, and it does not consolidate all duplicate catalog data.
 
@@ -78,11 +80,11 @@ Numbering is retained from the original 33-item audit. Related items 6, 11, 22 a
 | 5 | Contact dialog does not trap keyboard focus or restore it to the opener | Fixed, accepted and published in `7f8e34f`; deployment and production checks succeeded |
 | 6 | Four TypeScript errors and no required type check before deployment build | Fixed with item 1; builds now run `check:types` |
 | 7 | Cookie banner covers roughly 44% of the mobile first screen in the original audit | Fixed, accepted and published in `bcb7e21`; 364 → 186 px at 375×812 |
-| 8 | Unpublished local intro adds blocking delays and timer complexity | Verified and accepted on October 13: phase timers, skip, deferred route changes and enlarged-text fit; publication authorized and deployment pending. Related first-screen failure corrected with item 12 |
+| 8 | Unpublished local intro adds blocking delays and timer complexity | Fixed, accepted and published in `7c8bb22`; phase timers, skip, deferred route changes and enlarged-text fit verified; deployment and production checks succeeded |
 | 9 | Premium service mobile layout has an excessively long heading and unused space | Open |
 | 10 | Starting prices and net-price qualifications are inconsistent across the catalog | Open; full bilingual detail content alone does not resolve catalog consistency |
 | 11 | A stalled contact request can leave submission pending indefinitely | Fixed with item 1; 20-second abort and recoverable UI |
-| 12 | First-visit intro hides prerendered first-screen content and depends on JavaScript | Corrected, verified and accepted: visible static first screen, first-visit hydration and deferred optional intro; publication authorized with item 8, deployment pending |
+| 12 | First-visit intro hides prerendered first-screen content and depends on JavaScript | Fixed, accepted and published with item 8 in `7c8bb22`; static first screen and preserved hydration verified in production |
 | 13 | Service, trust and SEO data have duplicate sources | Open; detailed locale registry changed, broader consolidation not done |
 | 14 | “See steps” action leads to contact rather than the process | Open |
 | 15 | Portfolio case names and destination sites do not consistently match | Open |
@@ -105,7 +107,7 @@ Numbering is retained from the original 33-item audit. Related items 6, 11, 22 a
 | 32 | Uneven PL/EN editorial quality across the site | Open; six complete English service details resolve item 3 only |
 | 33 | CSS/motion patches, obsolete intro variables and overlapping timelines | Open |
 
-## Pending work and user acceptance
+## Audit history and user acceptance
 
 The user accepted **item 4** after reviewing mobile screenshots and authorized its commit/publication. Commit `037ba8f`, successful deployment and production verification completed that release.
 
@@ -127,7 +129,7 @@ The subsequent item 8 review found and corrected clipped central text at 200% te
 
 Other open findings retain their original scope and ordering. Items 8/12 change intro presentation, lifecycle and first-screen startup; the separate desktop edits, form delivery, consent authorization and deployment workflows retain their existing implementation.
 
-On October 13, after the final correctness review and enlarged-text screenshot, the user explicitly requested commit and publication. This accepts the reviewed combined item 8/item 12 candidate. The release will use the existing `main` deployment workflow; successful completion, production tag and site verification must still be confirmed before calling publication complete.
+On October 13, after the final correctness review and enlarged-text screenshot, the user explicitly requested commit and publication, accepting the reviewed combined item 8/item 12 candidate. Commit `7c8bb22` was pushed to `main`; `Deploy SEOHOST` run `38372086448` completed successfully, including both Ubuntu build verification and upload/tag jobs. Tag `prod-20261013-085217-7c8bb22` identifies the deployed source. Production served the expected new JS/CSS files. PL mobile and EN desktop homepages kept their first screen visible with scripts aborted; normal PL first-visit hydration preserved the shell, heading, input and pre-script draft. Automatic completion, EN Escape, repeat-visit bypass, PL mobile navigation/contact-dialog handoff, PL/EN company-service pages, locale/canonical metadata and the 185.59 px cookie banner passed without application or CSP exceptions. No real inquiry or analytics-consent request was sent. The release record is a documentation-only follow-up; the deployed application artifact remains at `7c8bb22`.
 
 ## Delivery workflow
 

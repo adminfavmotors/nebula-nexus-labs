@@ -1,6 +1,6 @@
 # Item 8: short editor intro with immediate skip
 
-Implemented and verified locally on 2026-10-12 (Europe/Warsaw), against published baseline `bcb7e218cc4934d3afcdf9e8bc70df8a3cbaa2eb`. The user accepted the reviewed candidate and authorized commit/publication on October 13. Deployment confirmation is pending.
+Implemented and verified locally on 2026-10-12 (Europe/Warsaw), against published baseline `bcb7e218cc4934d3afcdf9e8bc70df8a3cbaa2eb`. Accepted and published on October 13 in `7c8bb22`, together with item 12. Deployment and production verification succeeded; the release record below supersedes the earlier pending states.
 
 This report records the item 8 implementation and successive review stages. The subsequently authorized [item 12 follow-up](./first-screen-fix-2026-10-12.md) supersedes the early-boot/pending-marker behavior described below and corrects the recorded first-screen blocker. The latest local candidate has 180 passing tests and preserves the visible prerendered page on first visits. The final review below also covers enlarged intro text and deferred route changes.
 
@@ -74,3 +74,13 @@ Two additional lifecycle tests cover a home intro deferred by Suspense while nav
 - The geometry/lifecycle matrices and a clean service-navigation/reduced-motion/static-page browser session reported no application exceptions. An earlier helper opened a nested URL without its trailing slash: Vite preview served homepage HTML there and triggered hydration recovery. Checking the response titles identified that preview limitation; the corrected helper requests the nested prerendered HTML. The existing Apache rewrite handles the production URL through its `index.html`. This review did not change routing or deployment configuration.
 
 Latest evidence is in the ignored `.codex/item8-final-review/` directory. Browser geometry uses Chromium at the recorded viewport/root-font settings; it is not a real-device or Safari audit. Item 12's earlier blocker remains corrected locally. After this review and the phone screenshot, the user explicitly requested commit/publication on October 13, accepting the combined candidate. The existing deployment workflow and production checks will confirm the release outcome.
+
+## Accepted production release on October 13
+
+The accepted correction was committed as [7c8bb22](https://github.com/adminfavmotors/nebula-nexus-labs/commit/7c8bb220a339eef733dea71de174b2077d33f2c7) and pushed to `main`. [Deploy SEOHOST run 38372086448](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/38372086448) completed successfully, including both build verification and deployment jobs. The immutable release tag is `prod-20261013-085217-7c8bb22`.
+
+Production returned HTTP 200 with the verified application assets. The PL 375×812 homepage completed the intro automatically and preserved the original shell, heading, input and draft entered by the pre-script probe; page access and scrolling were released. Its captured statement fit completely, with a 46 px skip button, and the overlay was removed about 1.20 seconds after running began in this instrumented production check. EN 1920×1080 Escape removed it immediately. A repeat PL document visit bypassed playback. The PL mobile menu opened/closed, and service-menu handoff opened the native contact dialog with focus in its name field, then released scrolling on Escape. Both company-service locales retained their original markup and correct locale/canonical metadata without an intro. The cookie banner remained 185.59 px high, with no analytics script inserted.
+
+PL mobile and EN desktop script-aborted homepage checks kept the styled first screen visible before hydration and without an overlay or entrance animation. The browser session recorded no application exceptions or CSP violations. Requests were spaced to avoid the hosting rate limit encountered during the preceding release. No real inquiry or consent grant was sent.
+
+Production records and the mobile screenshot are in the ignored `.codex/item8-publication-2026-10-13/` directory. The separate desktop checkout and its unrelated edits were preserved. A documentation-only follow-up records this outcome without changing or redeploying the verified application artifact.

@@ -1,6 +1,6 @@
 # Item 12: visible first screen before JavaScript
 
-Implemented and verified locally on 2026-10-12 (Europe/Warsaw), on the item 8 candidate based on published commit `bcb7e21`. The user accepted the reviewed combined correction and authorized commit/publication on October 13. Deployment confirmation is pending.
+Implemented and verified locally on 2026-10-12 (Europe/Warsaw), on the item 8 candidate based on published commit `bcb7e21`. The user accepted the reviewed combined correction on October 13. Published in `7c8bb22`, with successful deployment and production verification recorded below.
 
 ## Problem and resulting behavior
 
@@ -33,4 +33,12 @@ Local browser records and screenshots are in the ignored `.codex/item12-verifica
 
 ## Scope and limits
 
-Item 12's application-bundle failure and hidden first screen are corrected in the local candidate. This verifies critical static content and initial attachment, not every interactive feature without JavaScript or recovery from arbitrary later application exceptions. The user accepted the reviewed correction and short editor presentation on October 13 and requested their commit/publication. Successful deployment and production verification remain to be confirmed. The separate desktop checkout and its unrelated edits were preserved.
+Item 12's application-bundle failure and hidden first screen are corrected in the published release. This verifies critical static content and initial attachment, not every interactive feature without JavaScript or recovery from arbitrary later application exceptions. The user accepted the reviewed correction and short editor presentation on October 13 and requested their commit/publication. The separate desktop checkout and its unrelated edits were preserved.
+
+## Production verification on October 13
+
+Commit [7c8bb22](https://github.com/adminfavmotors/nebula-nexus-labs/commit/7c8bb220a339eef733dea71de174b2077d33f2c7) was published through successful [Deploy SEOHOST run 38372086448](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/38372086448), producing tag `prod-20261013-085217-7c8bb22`. The site served the expected new client/CSS assets without the removed early bootstrap or pending marker.
+
+With application script requests aborted, the styled PL mobile and EN desktop homepages showed their header, heading/words, body and actions before hydration, with no entrance animation or intro overlay. The first-screen probes ran at approximately 235/88 ms in this session; they establish visibility/order, not a production latency bound. Forms remained disabled before hydration. Normal PL first-visit startup preserved the same shell, heading, input and pre-script draft, then enabled the form. EN skip and both company-service pages also preserved their original nodes, released page access and retained correct locale/canonical metadata. No application exception or CSP violation was recorded.
+
+Browser records and the mobile screenshot are saved locally in `.codex/item8-publication-2026-10-13/`. No real form submission or analytics-consent grant was sent. The documentation-only release record does not alter the deployed application artifact.
