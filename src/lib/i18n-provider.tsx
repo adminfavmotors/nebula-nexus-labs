@@ -40,7 +40,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, locale);
+    try {
+      window.localStorage.setItem(STORAGE_KEY, locale);
+    } catch {
+      // The route still defines the language when browser storage is unavailable.
+    }
     document.documentElement.lang = locale;
   }, [locale]);
 

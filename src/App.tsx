@@ -12,7 +12,6 @@ const ROUTER_FUTURE_FLAGS = {
   v7_relativeSplatPath: true,
   v7_startTransition: true,
 } as const;
-const BRAND_INTRO_PENDING_ATTRIBUTE = "data-brand-intro-pending";
 
 const ServicePage = lazy(() => import("./pages/ServicePage.tsx"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.tsx"));
@@ -93,9 +92,10 @@ const RouteHashScrollManager = () => {
 const AppFrame = () => {
   const location = useLocation();
   const { isTransitioningLocale } = useI18n();
-  const { didPlayIntro, heroReady, overlayPhase } = useBrandIntro(location.pathname);
+  const { didPlayIntro, heroReady, overlayPhase, skipIntro } = useBrandIntro(location.pathname);
   const appShellRef = useRef<HTMLDivElement>(null);
-  const introBlocking = overlayPhase === "preparing" || overlayPhase === "running";
+  const wasIntroBlockingRef = useRef(false);
+  const introBlocking = overlayPhase === "running";
 
   useLayoutEffect(() => {
     const shellElement = appShellRef.current;
@@ -105,20 +105,16 @@ const AppFrame = () => {
     }
 
     if (introBlocking) {
+      wasIntroBlockingRef.current = true;
       shellElement.setAttribute("inert", "");
       return;
     }
 
     shellElement.removeAttribute("inert");
-  }, [introBlocking]);
-
-  useLayoutEffect(() => {
-    if (introBlocking) {
-      document.documentElement.setAttribute(BRAND_INTRO_PENDING_ATTRIBUTE, "");
-      return;
+    if (wasIntroBlockingRef.current) {
+      wasIntroBlockingRef.current = false;
+      shellElement.querySelector<HTMLAnchorElement>("a[href]")?.focus({ preventScroll: true });
     }
-
-    document.documentElement.removeAttribute(BRAND_INTRO_PENDING_ATTRIBUTE);
   }, [introBlocking]);
 
   return (
@@ -127,7 +123,7 @@ const AppFrame = () => {
       <ContactOverlayProvider>
         <div
           ref={appShellRef}
-          className={cx("app-shell", isTransitioningLocale && "app-shell-transitioning", introBlocking && "app-shell-intro-blocked")}
+          className={cx("app-shell", isTransitioningLocale && "app-shell-transitioning")}
           aria-hidden={introBlocking || undefined}
         >
           <Suspense fallback={null}>
@@ -144,7 +140,7 @@ const AppFrame = () => {
             </Routes>
           </Suspense>
         </div>
-        {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} /> : null}
+        {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} onSkip={skipIntro} /> : null}
         <CookieConsentBanner isBlocked={introBlocking} />
       </ContactOverlayProvider>
     </>

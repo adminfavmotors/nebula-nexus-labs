@@ -34,12 +34,12 @@ function renderApp() {
 }
 
 function ContactOverlayScrollLockHarness() {
-  const { overlayPhase } = useBrandIntro("/");
+  const { overlayPhase, skipIntro } = useBrandIntro("/");
   const { openContactOverlay } = useContactOverlay();
 
   return (
     <>
-      {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} /> : null}
+      {overlayPhase ? <BrandIntroOverlay phase={overlayPhase} onSkip={skipIntro} /> : null}
       <button type="button" onClick={openContactOverlay}>
         Open contact overlay
       </button>
@@ -104,8 +104,9 @@ function createDeferredPromise<T>() {
 }
 
 function finishBrandIntro() {
+  advanceBrandIntroToExit();
   act(() => {
-    vi.advanceTimersByTime(brandIntroMotionTimings.totalDurationMs);
+    vi.advanceTimersByTime(brandIntroMotionTimings.exitDurationMs);
   });
 }
 
@@ -163,79 +164,34 @@ describe("critical user flows", () => {
     const appShell = document.querySelector(".app-shell");
 
     expect(introDialog).toBeInTheDocument();
-    expect(introDialog).toHaveFocus();
+    expect(screen.getByRole("button", { name: "Pomiń intro" })).toHaveFocus();
     expect(appShell).toHaveAttribute("aria-hidden", "true");
     expect(appShell).toHaveAttribute("inert");
   });
 
-  it("waits for the wordmark font before starting the homepage intro timers", async () => {
-    vi.useFakeTimers();
-    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
-    const loadDeferred = createDeferredPromise<unknown[]>();
-    const readyDeferred = createDeferredPromise<unknown>();
-
-    Object.defineProperty(document, "fonts", {
-      configurable: true,
-      writable: true,
-      value: {
-        ready: readyDeferred.promise,
-        load: () => loadDeferred.promise,
-        check: () => false,
-      },
-    });
-
-    renderApp();
-
-    act(() => {
-      vi.advanceTimersByTime(brandIntroMotionTimings.totalDurationMs);
-    });
-
-    expect(screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).toBeInTheDocument();
-
-    await act(async () => {
-      loadDeferred.resolve([]);
-      readyDeferred.resolve(undefined);
-      await Promise.resolve();
-    });
-
-    act(() => {
-      vi.advanceTimersByTime(brandIntroMotionTimings.totalDurationMs);
-    });
-
-    expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
-  });
-
-  it("falls back to starting the homepage intro when font readiness takes too long", async () => {
+  it("starts and finishes the intro without waiting for site fonts", () => {
     vi.useFakeTimers();
     window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
     const never = new Promise<unknown>(() => {});
+    const loadFont = vi.fn(() => never);
+    const checkFont = vi.fn(() => false);
 
     Object.defineProperty(document, "fonts", {
       configurable: true,
       writable: true,
       value: {
         ready: never,
-        load: () => never,
-        check: () => false,
+        load: loadFont,
+        check: checkFont,
       },
     });
 
     renderApp();
 
-    act(() => {
-      vi.advanceTimersByTime(brandIntroMotionTimings.totalDurationMs);
-    });
-
-    expect(screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).toBeInTheDocument();
-
-    await act(async () => {
-      vi.advanceTimersByTime(brandIntroMotionTimings.fontReadyTimeoutMs);
-      await Promise.resolve();
-    });
-
-    act(() => {
-      vi.advanceTimersByTime(brandIntroMotionTimings.totalDurationMs);
-    });
+    expect(screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).toHaveClass("brand-intro-overlay-running");
+    expect(loadFont).not.toHaveBeenCalled();
+    expect(checkFont).not.toHaveBeenCalled();
+    finishBrandIntro();
 
     expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
   });
@@ -249,9 +205,7 @@ describe("critical user flows", () => {
     const appShell = document.querySelector(".app-shell");
     expect(appShell).toHaveAttribute("inert");
 
-    act(() => {
-      vi.advanceTimersByTime(brandIntroMotionTimings.totalDurationMs);
-    });
+    finishBrandIntro();
 
     expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
     expect(appShell).not.toHaveAttribute("aria-hidden");
@@ -281,6 +235,61 @@ describe("critical user flows", () => {
     expect(screen.queryByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).not.toBeInTheDocument();
     expect(appShell).not.toHaveAttribute("aria-hidden");
     expect(appShell).not.toHaveAttribute("inert");
+  });
+
+  it("removes the intro after its exit duration without restarting the full timeline", () => {
+    vi.useFakeTimers();
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+    renderApp();
+
+    advanceBrandIntroToExit();
+    expect(document.querySelector(".brand-intro-overlay-exiting")).not.toBeNull();
+    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.exitDurationMs - 1));
+    expect(document.querySelector(".brand-intro-overlay")).not.toBeNull();
+    act(() => vi.advanceTimersByTime(1));
+    expect(document.querySelector(".brand-intro-overlay")).toBeNull();
+  });
+
+  it.each([["/", "Pomiń intro"], ["/en", "Skip intro"]])("allows skipping the intro on %s and restores access and focus", (path, label) => {
+    vi.useFakeTimers();
+    window.history.pushState({}, "", path);
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+    renderApp();
+    const skipButton = screen.getByRole("button", { name: label });
+    expect(skipButton).toHaveFocus();
+    fireEvent.keyDown(skipButton, { key: "Tab" });
+    expect(skipButton).toHaveFocus();
+    fireEvent.click(skipButton);
+
+    expect(document.querySelector(".brand-intro-overlay")).toBeNull();
+    expect(document.querySelector(".app-shell")).not.toHaveAttribute("inert");
+    expect(document.body.style.overflow).toBe("");
+    expect(document.querySelector(".app-shell a[href]")).toHaveFocus();
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe("1");
+    expect(document.querySelector(".cookie-consent-layer")).not.toBeNull();
+    act(() => vi.advanceTimersByTime(10_000));
+    expect(document.querySelector(".brand-intro-overlay")).toBeNull();
+  });
+
+  it("allows Escape while fonts are pending and ignores their later completion", async () => {
+    vi.useFakeTimers();
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+    const fontReady = createDeferredPromise<unknown[]>();
+    Object.defineProperty(document, "fonts", {
+      configurable: true,
+      writable: true,
+      value: { ready: fontReady.promise, load: () => fontReady.promise, check: () => false },
+    });
+    renderApp();
+    fireEvent.keyDown(screen.getByRole("button", { name: "Pomiń intro" }), { key: "Escape" });
+    expect(document.querySelector(".brand-intro-overlay")).toBeNull();
+    await act(async () => {
+      fontReady.resolve([]);
+      await Promise.resolve();
+    });
+    act(() => vi.advanceTimersByTime(10_000));
+    expect(document.querySelector(".brand-intro-overlay")).toBeNull();
+    expect(document.body.style.overflow).toBe("");
   });
 
   it("shows the homepage intro only on the root route", () => {
@@ -326,7 +335,7 @@ describe("critical user flows", () => {
 
     advanceBrandIntroToExit();
 
-    expect(screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).toBeInTheDocument();
+    expect(document.querySelector(".brand-intro-overlay-exiting")).not.toBeNull();
     expect(document.querySelector(".cookie-consent-layer")).toBeInstanceOf(HTMLDivElement);
   });
 
@@ -345,7 +354,7 @@ describe("critical user flows", () => {
 
     advanceBrandIntroToExit();
 
-    expect(screen.getByRole("dialog", { name: BRAND_INTRO_DIALOG_NAME })).toBeInTheDocument();
+    expect(document.querySelector(".brand-intro-overlay-exiting")).not.toBeNull();
     expect(document.documentElement.style.overflow).toBe("");
     expect(document.body.style.overflow).toBe("");
     expect(appShell).not.toHaveAttribute("inert");
@@ -641,19 +650,15 @@ describe("critical user flows", () => {
     expect(mobileLinks).toHaveLength(4);
   });
 
-  it("clears the prerender intro-hiding attribute once the intro starts exiting", () => {
+  it("preserves page content when the intro starts exiting", () => {
     vi.useFakeTimers();
     window.localStorage.removeItem(COOKIE_CONSENT_KEY);
     window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
-    document.documentElement.setAttribute("data-brand-intro-pending", "");
-
     renderApp();
-
-    expect(document.documentElement).toHaveAttribute("data-brand-intro-pending");
-
+    const heading = document.querySelector("h1");
+    expect(heading).not.toBeNull();
     advanceBrandIntroToExit();
-
-    expect(document.documentElement).not.toHaveAttribute("data-brand-intro-pending");
+    expect(document.querySelector("h1")).toBe(heading);
   });
 
   it("closes the mobile navigation menu when Escape is pressed", async () => {

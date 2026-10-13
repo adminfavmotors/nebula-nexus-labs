@@ -15,8 +15,8 @@ type HeroProps = {
 
 const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
   const { t } = useI18n();
-  const heroDelays = useIntroTimings ? heroMotionDelays.intro : heroMotionDelays.default;
-  const heroDelayStyle = (delayMs: number) => ({ animationDelay: `${delayMs}ms` });
+  const heroDelays = heroMotionDelays;
+  const heroDelayStyle = (delayMs: number) => useIntroTimings ? { animationDelay: `${delayMs}ms` } : undefined;
 
   return (
     <section id="home" className="hero-section">
@@ -30,7 +30,7 @@ const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
       <div className="site-shell hero-layout hero-shell">
         <div className="hero-content-stack">
           <div
-            className={cx("hero-enter hero-badge-shell", !introReady && "hero-enter-pending")}
+            className={cx("hero-badge-shell", useIntroTimings && "hero-enter", useIntroTimings && !introReady && "hero-enter-pending")}
             style={heroDelayStyle(heroDelays.badge)}
           >
             <span className="hero-badge">{t.hero.badge}</span>
@@ -41,7 +41,7 @@ const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
               {t.hero.words.map((word, i) => (
                 <span
                   key={i}
-                  className={cx("hero-enter-word hero-title-word", !introReady && "hero-enter-word-pending")}
+                  className={cx("hero-title-word", useIntroTimings && "hero-enter-word", useIntroTimings && !introReady && "hero-enter-word-pending")}
                   style={heroDelayStyle(heroDelays.wordStart + i * heroDelays.wordStep)}
                 >
                   {i === 1 ? <span className="hero-title-accent">{word}</span> : word}
@@ -50,7 +50,7 @@ const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
             </h1>
 
             <p
-              className={cx("hero-body hero-enter", !introReady && "hero-enter-pending")}
+              className={cx("hero-body", useIntroTimings && "hero-enter", useIntroTimings && !introReady && "hero-enter-pending")}
               style={heroDelayStyle(heroDelays.body)}
             >
               {t.hero.body}
@@ -58,7 +58,7 @@ const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
           </div>
 
           <div
-            className={cx("hero-actions hero-enter", !introReady && "hero-enter-pending")}
+            className={cx("hero-actions", useIntroTimings && "hero-enter", useIntroTimings && !introReady && "hero-enter-pending")}
             style={heroDelayStyle(heroDelays.actions)}
           >
             <ActionLink href="#contact" className="hero-primary-cta">
@@ -70,7 +70,7 @@ const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
           </div>
 
           <p
-            className={cx("hero-support-line hero-enter", !introReady && "hero-enter-pending")}
+            className={cx("hero-support-line", useIntroTimings && "hero-enter", useIntroTimings && !introReady && "hero-enter-pending")}
             style={heroDelayStyle(heroDelays.support)}
           >
             {t.hero.imageLabel}
@@ -78,7 +78,7 @@ const Hero = ({ introReady = true, useIntroTimings = false }: HeroProps) => {
         </div>
 
         <div
-          className={cx("hero-visual-column hero-enter-visual", !introReady && "hero-enter-visual-pending")}
+          className={cx("hero-visual-column", useIntroTimings && "hero-enter-visual", useIntroTimings && !introReady && "hero-enter-visual-pending")}
           style={heroDelayStyle(heroDelays.visual)}
         >
           <div className="hero-visual-stage">

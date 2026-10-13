@@ -1,21 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
+import { startTransition, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { isHomePath } from "@/lib/locale-routes";
 import { brandIntroMotionTimings } from "@/lib/motion";
-import { brandName } from "@/lib/site-identity";
 import { usePageScrollLock } from "@/lib/page-scroll-lock";
 
 export const BRAND_INTRO_STORAGE_KEY = "node48-brand-intro-played";
-export const BRAND_INTRO_EXIT_DELAY_MS = brandIntroMotionTimings.exitDelayMs;
-export const BRAND_INTRO_FONT_READY_TIMEOUT_MS = brandIntroMotionTimings.fontReadyTimeoutMs;
-export const BRAND_INTRO_TOTAL_MS = brandIntroMotionTimings.totalDurationMs;
-const BRAND_INTRO_FONT = '700 1em "Manrope Variable"';
 
-type BrandIntroPhase = "done" | "preparing" | "running" | "exiting";
+type BrandIntroPhase = "done" | "running" | "exiting";
 
 type BrandIntroState = {
   didPlayIntro: boolean;
   heroReady: boolean;
   overlayPhase: Exclude<BrandIntroPhase, "done"> | null;
+  skipIntro: () => void;
 };
 
 type BrandIntroSnapshot = {
@@ -24,154 +20,69 @@ type BrandIntroSnapshot = {
 };
 
 function shouldPlayBrandIntro(pathname: string) {
-  if (typeof window === "undefined" || !isHomePath(pathname)) {
+  if (typeof window === "undefined" || !isHomePath(pathname)) return false;
+  try {
+    return !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+      window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY) !== "1";
+  } catch {
+    // Optional intro persistence must never prevent the page from starting.
     return false;
   }
-
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const hasPlayed = window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY) === "1";
-
-  return !prefersReducedMotion && !hasPlayed;
-}
-
-function isBrandIntroFontReady() {
-  if (typeof document === "undefined" || !("fonts" in document)) {
-    return true;
-  }
-
-  return typeof document.fonts.check !== "function"
-    ? true
-    : document.fonts.check(BRAND_INTRO_FONT, brandName);
-}
-
-function createBrandIntroSnapshot(pathname: string): BrandIntroSnapshot {
-  const playIntro = shouldPlayBrandIntro(pathname);
-
-  return {
-    didPlayIntro: playIntro,
-    phase: playIntro ? (isBrandIntroFontReady() ? "running" : "preparing") : "done",
-  };
 }
 
 export function useBrandIntro(pathname: string): BrandIntroState {
-  const [introState, setIntroState] = useState<BrandIntroSnapshot>(() => createBrandIntroSnapshot(pathname));
+  // Match the visible server markup on the first client render. Playback is
+  // progressive enhancement after React has attached to that existing page.
+  const [introState, setIntroState] = useState<BrandIntroSnapshot>({ didPlayIntro: false, phase: "done" });
   const { didPlayIntro, phase } = introState;
+  const previousPathnameRef = useRef<string | null>(null);
+  const hasPlayedIntroRef = useRef(didPlayIntro);
 
   useEffect(() => {
-    if (!shouldPlayBrandIntro(pathname)) {
-      setIntroState((currentState) =>
-        currentState.phase === "done" && !currentState.didPlayIntro
-          ? currentState
-          : { didPlayIntro: false, phase: "done" },
-      );
-      return;
+    // Repeated mount effects must not mistake our own session flag for an
+    // earlier visit and cancel the playback that this mount just requested.
+    if (previousPathnameRef.current === pathname) return;
+    previousPathnameRef.current = pathname;
+    const playIntro = !hasPlayedIntroRef.current && shouldPlayBrandIntro(pathname);
+    hasPlayedIntroRef.current ||= playIntro;
+    if (playIntro) {
+      // Lazy Suspense boundaries may still be hydrating. Optional playback must
+      // wait for them rather than force replacement of the existing page.
+      startTransition(() => setIntroState((current) => previousPathnameRef.current === pathname
+        ? { didPlayIntro: true, phase: "running" } : current));
+    } else {
+      setIntroState((current) => current.phase === "done" && !current.didPlayIntro
+        ? current : { didPlayIntro: false, phase: "done" });
     }
-
-    setIntroState((currentState) =>
-      currentState.phase === "done"
-        ? { didPlayIntro: true, phase: isBrandIntroFontReady() ? "running" : "preparing" }
-        : currentState,
-    );
   }, [pathname]);
 
   useEffect(() => {
-    if (phase !== "preparing" || typeof window === "undefined") {
-      return;
-    }
-
-    window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, "1");
-
-    if (typeof document === "undefined" || !("fonts" in document)) {
-      setIntroState((currentState) =>
-        currentState.phase === "preparing"
-          ? { ...currentState, phase: "running" }
-          : currentState,
-      );
-      return;
-    }
-
-    let cancelled = false;
-    let timeoutId: number | null = null;
-
-    const loadPromise =
-      typeof document.fonts.load === "function"
-        ? document.fonts.load(BRAND_INTRO_FONT, brandName).catch(() => undefined)
-        : Promise.resolve(undefined);
-
-    const readyPromise = Promise.resolve(document.fonts.ready).catch(() => undefined);
-    const timeoutPromise = new Promise<void>((resolve) => {
-      timeoutId = window.setTimeout(resolve, BRAND_INTRO_FONT_READY_TIMEOUT_MS);
-    });
-
-    void Promise.race([
-      Promise.allSettled([loadPromise, readyPromise]).then(() => undefined),
-      timeoutPromise,
-    ]).then(() => {
-      if (cancelled) {
-        return;
+    if (phase === "done") return;
+    if (phase === "running") {
+      try {
+        window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, "1");
+      } catch {
+        // The mounted hook remembers playback even when storage cannot save it.
       }
-
-      setIntroState((currentState) =>
-        currentState.phase === "preparing"
-          ? { ...currentState, phase: "running" }
-          : currentState,
-      );
-    });
-
-    return () => {
-      cancelled = true;
-
-      if (timeoutId !== null) {
-        window.clearTimeout(timeoutId);
-      }
-    };
+    }
+    // System monospace needs no font readiness gate. Each phase owns one timer.
+    const timeoutId = window.setTimeout(() => {
+      setIntroState((current) => current.phase === phase
+        ? { ...current, phase: phase === "running" ? "exiting" : "done" } : current);
+    }, phase === "running" ? brandIntroMotionTimings.exitDelayMs : brandIntroMotionTimings.exitDurationMs);
+    return () => window.clearTimeout(timeoutId);
   }, [phase]);
 
-  useEffect(() => {
-    if ((phase !== "running" && phase !== "exiting") || typeof window === "undefined") {
-      return;
-    }
+  const skipIntro = useCallback(() => {
+    setIntroState((current) => ({ ...current, phase: "done" }));
+  }, []);
 
-    let exitTimeoutId: number | null = null;
-    let doneTimeoutId: number | null = null;
+  usePageScrollLock(phase === "running");
 
-    window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, "1");
-
-    exitTimeoutId = window.setTimeout(() => {
-      setIntroState((currentState) =>
-        currentState.phase === "running"
-          ? { ...currentState, phase: "exiting" }
-          : currentState,
-      );
-    }, BRAND_INTRO_EXIT_DELAY_MS);
-
-    doneTimeoutId = window.setTimeout(() => {
-      setIntroState((currentState) =>
-        currentState.phase === "done"
-          ? currentState
-          : { didPlayIntro: currentState.didPlayIntro, phase: "done" },
-      );
-    }, BRAND_INTRO_TOTAL_MS);
-
-    return () => {
-      if (exitTimeoutId !== null) {
-        window.clearTimeout(exitTimeoutId);
-      }
-
-      if (doneTimeoutId !== null) {
-        window.clearTimeout(doneTimeoutId);
-      }
-    };
-  }, [phase]);
-
-  usePageScrollLock(phase === "preparing" || phase === "running");
-
-  return useMemo(
-    () => ({
-      didPlayIntro,
-      heroReady: phase === "exiting" || phase === "done",
-      overlayPhase: phase === "done" ? null : phase,
-    }),
-    [didPlayIntro, phase],
-  );
+  return useMemo(() => ({
+    didPlayIntro,
+    heroReady: phase !== "running",
+    overlayPhase: phase === "done" ? null : phase,
+    skipIntro,
+  }), [didPlayIntro, phase, skipIntro]);
 }

@@ -95,13 +95,13 @@
 .hero-enter,
 .hero-enter-word,
 .hero-enter-visual {
-  opacity: 0;
-  animation-fill-mode: forwards;
+  opacity: 1;
+  animation-fill-mode: both;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-enter {
-  animation-name: hero-fade-up;
+  animation-name: hero-content-settle;
   animation-duration: 0.92s;
 }
 
@@ -119,20 +119,7 @@
 .hero-enter-pending,
 .hero-enter-word-pending,
 .hero-enter-visual-pending {
-  opacity: 0;
   animation: none;
-}
-
-.hero-enter-pending {
-  transform: translateY(34px);
-}
-
-.hero-enter-word-pending {
-  transform: translateY(112%);
-}
-
-.hero-enter-visual-pending {
-  transform: translateY(40px) scale(0.985);
 }
 
   .trust-strip-section {
@@ -1579,38 +1566,32 @@
   }
 }
 
-@keyframes hero-fade-up {
+@keyframes hero-content-settle {
   0% {
-    opacity: 0;
     transform: translate3d(0, var(--structural-motion-distance-lg), 0);
   }
 
   100% {
-    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes hero-word-rise {
   0% {
-    opacity: 0;
     transform: translate3d(0, calc(var(--structural-motion-distance-lg) + 6px), 0);
   }
 
   100% {
-    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes hero-visual-settle {
   0% {
-    opacity: 0;
     transform: translate3d(0, calc(var(--structural-motion-distance-lg) + 6px), 0);
   }
 
   100% {
-    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }

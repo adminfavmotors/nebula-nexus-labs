@@ -19,7 +19,6 @@ const mobileNavigationLabel = {
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [headerPinned, setHeaderPinned] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const mobileDialogRef = useRef<HTMLDialogElement>(null);
@@ -48,10 +47,6 @@ const Navbar = () => {
     closeMenu();
     openContactOverlay();
   };
-
-  useEffect(() => {
-    setVisible(true);
-  }, []);
 
   useEffect(() => {
     const updateHeaderState = () => {
@@ -192,7 +187,6 @@ const Navbar = () => {
         data-header-visibility={headerPinned ? "visible" : "hidden"}
         className={cx(
           "header-root header-shell",
-          visible ? "header-shell-visible" : "header-shell-hidden",
           headerPinned ? "header-shell-pinned" : "header-shell-unpinned",
           menuOpen && "header-shell-menu-open",
         )}

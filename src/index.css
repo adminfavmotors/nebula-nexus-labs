@@ -145,13 +145,6 @@
     transform: translateY(2px) scale(0.998);
   }
 
-  .app-shell-intro-blocked {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    user-select: none;
-  }
-
   .section-spacing {
     padding-block: var(--section-space-y);
   }

@@ -1,4 +1,4 @@
-import { act, cleanup, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { hydrateRoot, type Root } from "react-dom/client";
@@ -64,6 +64,42 @@ describe("complete page hydration", () => {
     cleanup();
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
+  });
+
+  it.each(["/", "/en"])("hydrates a first visit to %s without replacing the page or its draft", async (path) => {
+    window.history.replaceState({}, "", path);
+    window.sessionStorage.removeItem(BRAND_INTRO_STORAGE_KEY);
+    container = document.createElement("div");
+    container.innerHTML = serverMarkup[path];
+    document.body.append(container);
+    const shell = container.querySelector(".app-shell");
+    const heading = container.querySelector("h1");
+    const name = container.querySelector<HTMLInputElement>("#section-contact-name")!;
+    name.value = "First visit draft before JavaScript";
+    expect(shell).not.toHaveAttribute("inert");
+    expect(shell).not.toHaveAttribute("aria-hidden");
+    expect(container.querySelector(".brand-intro-overlay")).toBeNull();
+    const recoverableError = vi.fn();
+    const consoleError = vi.spyOn(console, "error");
+
+    await act(async () => { root = hydrateRoot(container!, <App />, { onRecoverableError: recoverableError }); });
+    await waitFor(() => { expect(container!.querySelector(".brand-intro-skip")).not.toBeNull(); });
+    const skipButton = container.querySelector<HTMLButtonElement>(".brand-intro-skip")!;
+    expect(skipButton).not.toBeNull();
+    expect(shell).toHaveAttribute("inert");
+    expect(container.querySelector("h1")).toBe(heading);
+    expect(container.querySelector("#section-contact-name")).toBe(name);
+    expect(name.value).toBe("First visit draft before JavaScript");
+    fireEvent.click(skipButton);
+    await waitFor(() => { expect(name.form?.querySelector('button[type="submit"]')).toBeEnabled(); });
+
+    expect(recoverableError).not.toHaveBeenCalled();
+    expect(consoleError).not.toHaveBeenCalled();
+    expect(container.querySelector(".app-shell")).toBe(shell);
+    expect(container.querySelector("h1")).toBe(heading);
+    expect(name.value).toBe("First visit draft before JavaScript");
+    expect(shell).not.toHaveAttribute("inert");
+    expect(container.querySelector(".brand-intro-overlay")).toBeNull();
   });
 
   it.each([
