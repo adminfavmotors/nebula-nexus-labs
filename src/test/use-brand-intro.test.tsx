@@ -13,6 +13,11 @@ function finishIntro() {
   act(() => vi.advanceTimersByTime(brandIntroMotionTimings.exitDurationMs));
 }
 
+function setVisibility(state: DocumentVisibilityState) {
+  vi.spyOn(document, "visibilityState", "get").mockReturnValue(state);
+  document.dispatchEvent(new Event("visibilitychange"));
+}
+
 describe("early intro ownership and React handoff", () => {
   beforeEach(() => {
     vi.useFakeTimers();
@@ -116,7 +121,7 @@ describe("early intro ownership and React handoff", () => {
     expect(document.querySelector(".brand-intro-overlay")).toBeNull();
   });
 
-  it.each(["1", "editor-v2"])("plays the restored wordmark after old mark %s", (oldMark) => {
+  it.each(["1", "editor-v2", "wordmark-v1"])("plays the restored wordmark after old mark %s", (oldMark) => {
     window.sessionStorage.setItem(BRAND_INTRO_STORAGE_KEY, oldMark);
     const { controller } = bootIntro();
     expect(document.querySelector(".brand-intro-word")).toHaveTextContent("NODE48");
@@ -171,6 +176,69 @@ describe("early intro ownership and React handoff", () => {
     expect(controller.getSnapshot().phase).toBe("done");
     expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBeNull();
     act(() => vi.advanceTimersByTime(0));
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("waits for a background-loaded page to become visible before spending its entry time", () => {
+    setVisibility("hidden");
+    const { controller } = bootIntro();
+    const overlay = document.querySelector(".brand-intro-overlay");
+    act(() => vi.advanceTimersByTime(60_000));
+    expect(controller.getSnapshot().phase).toBe("running");
+    expect(overlay).toHaveAttribute("data-brand-intro-paused");
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBeNull();
+    act(() => setVisibility("visible"));
+    expect(overlay).not.toHaveAttribute("data-brand-intro-paused");
+    expect(document.querySelector(".brand-intro-overlay")).toBe(overlay);
+    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.entryTimeoutMs - 1));
+    expect(controller.getSnapshot().phase).toBe("running");
+    act(() => vi.advanceTimersByTime(1));
+    expect(controller.getSnapshot().phase).toBe("holding");
+    finishIntro();
+    expect(controller.getSnapshot().phase).toBe("done");
+  });
+
+  it("preserves the remaining entry timeout across a hidden interval", () => {
+    const { controller } = bootIntro();
+    act(() => vi.advanceTimersByTime(500));
+    act(() => setVisibility("hidden"));
+    act(() => vi.advanceTimersByTime(60_000));
+    expect(controller.getSnapshot().phase).toBe("running");
+    act(() => setVisibility("visible"));
+    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.entryTimeoutMs - 501));
+    expect(controller.getSnapshot().phase).toBe("running");
+    act(() => vi.advanceTimersByTime(1));
+    expect(controller.getSnapshot().phase).toBe("holding");
+  });
+
+  it("records playback only after the full word has spent its hold time in a visible tab", () => {
+    const { controller } = bootIntro();
+    act(finishIntroEntry);
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBeNull();
+    act(() => vi.advanceTimersByTime(100));
+    act(() => setVisibility("hidden"));
+    act(() => vi.advanceTimersByTime(60_000));
+    expect(controller.getSnapshot().phase).toBe("holding");
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBeNull();
+    act(() => setVisibility("visible"));
+    act(() => vi.advanceTimersByTime(brandIntroMotionTimings.settleDelayMs - 101));
+    expect(controller.getSnapshot().phase).toBe("holding");
+    act(() => vi.advanceTimersByTime(1));
+    expect(controller.getSnapshot().phase).toBe("exiting");
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBe(BRAND_INTRO_STORAGE_VALUE);
+  });
+
+  it("does not record an interrupted full-word hold and cannot restart after pagehide", () => {
+    const { controller, container } = bootIntro();
+    act(finishIntroEntry);
+    act(() => setVisibility("hidden"));
+    window.dispatchEvent(new Event("pagehide"));
+    act(() => setVisibility("visible"));
+    finishIntro();
+    expect(controller.getSnapshot().phase).toBe("done");
+    expect(document.querySelector(".brand-intro-overlay")).toBeNull();
+    expect(container).not.toHaveAttribute("inert");
+    expect(window.sessionStorage.getItem(BRAND_INTRO_STORAGE_KEY)).toBeNull();
     expect(vi.getTimerCount()).toBe(0);
   });
 });

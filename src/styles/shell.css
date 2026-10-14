@@ -360,6 +360,10 @@ html[data-brand-intro-phase] body {
   animation-delay: calc(var(--brand-intro-index) * var(--brand-intro-letter-stagger));
 }
 
+.brand-intro-overlay[data-brand-intro-paused] .brand-intro-letter {
+  animation-play-state: paused;
+}
+
 .brand-intro-skip {
   position: absolute;
   inset-inline-end: 1rem;

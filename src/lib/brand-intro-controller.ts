@@ -30,6 +30,8 @@ export function startBrandIntro(options: BrandIntroBootOptions): BrandIntroContr
   let snapshot: BrandIntroSnapshot = { phase: "done", didPlayIntro: false };
   const listeners = new Set<() => void>();
   let timer: number | undefined;
+  let remainingMs = 0;
+  let timerStartedAt = 0;
   let overlay: HTMLElement | undefined;
   let skipButton: HTMLButtonElement | null = null;
   let root: HTMLElement | null = null;
@@ -39,6 +41,35 @@ export function startBrandIntro(options: BrandIntroBootOptions): BrandIntroContr
 
   function rememberPlayback() {
     try { window.sessionStorage.setItem(options.storageKey, options.storageValue); } catch { /* Optional persistence. */ }
+  }
+  function syncVisibility() {
+    const blocking = snapshot.phase === "running" || snapshot.phase === "holding";
+    const paused = blocking && document.visibilityState === "hidden";
+    overlay?.toggleAttribute("data-brand-intro-paused", paused);
+    if (paused) {
+      if (timer !== undefined) {
+        remainingMs = Math.max(0, remainingMs - (performance.now() - timerStartedAt));
+        window.clearTimeout(timer);
+        timer = undefined;
+      }
+      return;
+    }
+    if (snapshot.phase === "done" || timer !== undefined) return;
+    timerStartedAt = performance.now();
+    timer = window.setTimeout(() => {
+      timer = undefined;
+      remainingMs = 0;
+      // A visibility event may still be queued when the timeout becomes due.
+      if (document.visibilityState === "hidden" && snapshot.phase !== "exiting") {
+        syncVisibility();
+        return;
+      }
+      if (snapshot.phase === "running") finishEntry();
+      else if (snapshot.phase === "holding") {
+        rememberPlayback();
+        setPhase("exiting");
+      } else if (snapshot.phase === "exiting") setPhase("done");
+    }, remainingMs);
   }
   function bindRoot() {
     if (rootState) return;
@@ -62,6 +93,8 @@ export function startBrandIntro(options: BrandIntroBootOptions): BrandIntroContr
   }
   function setPhase(phase: BrandIntroSnapshot["phase"]) {
     window.clearTimeout(timer);
+    timer = undefined;
+    remainingMs = phase === "running" ? options.entryTimeoutMs : phase === "holding" ? options.settleDelayMs : options.exitDurationMs;
     snapshot = { phase, didPlayIntro: snapshot.didPlayIntro };
     const blocking = phase === "running" || phase === "holding";
     if (blocking) {
@@ -81,17 +114,15 @@ export function startBrandIntro(options: BrandIntroBootOptions): BrandIntroContr
         overlay.remove();
         overlay = undefined;
         window.removeEventListener("pagehide", cancel);
+        document.removeEventListener("visibilitychange", syncVisibility);
       }
     }
     listeners.forEach((listener) => listener());
-    if (phase === "running") timer = window.setTimeout(finishEntry, options.entryTimeoutMs);
-    else if (phase === "holding") timer = window.setTimeout(() => setPhase("exiting"), options.settleDelayMs);
-    else if (phase === "exiting") timer = window.setTimeout(() => setPhase("done"), options.exitDurationMs);
+    syncVisibility();
   }
   function finishEntry() {
     if (snapshot.phase !== "running") return;
     // Removing the running class reveals all letters, even on fallback timeout.
-    rememberPlayback();
     setPhase("holding");
   }
   function skip() {
@@ -132,6 +163,7 @@ export function startBrandIntro(options: BrandIntroBootOptions): BrandIntroContr
   document.body.prepend(overlay);
   snapshot = { phase: "running", didPlayIntro: true };
   rootObserver.observe(document.body, { childList: true, subtree: true });
+  document.addEventListener("visibilitychange", syncVisibility);
   setPhase("running");
   skipButton?.focus({ preventScroll: true });
   window.addEventListener("pagehide", cancel, { once: true });

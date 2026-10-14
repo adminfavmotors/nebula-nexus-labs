@@ -1,2 +1,3 @@
 export const BRAND_INTRO_STORAGE_KEY = "node48-brand-intro-played";
-export const BRAND_INTRO_STORAGE_VALUE = "wordmark-v1";
+// The previous version could record playback before a background tab was seen.
+export const BRAND_INTRO_STORAGE_VALUE = "wordmark-visible-v1";
