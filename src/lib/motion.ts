@@ -14,10 +14,10 @@ export const structuralMotionTimings = {
 } as const;
 
 const rawBrandIntroMotionTimings = {
-  letterDurationMs: 760,
-  letterStaggerMs: 64,
-  settleDelayMs: 260,
-  exitDurationMs: 460,
+  letterDurationMs: 560,
+  letterStaggerMs: 48,
+  settleDelayMs: 200,
+  exitDurationMs: 320,
 } as const;
 
 const brandIntroEntryDurationMs = rawBrandIntroMotionTimings.letterDurationMs +
