@@ -80,3 +80,25 @@ files blocked, their font faces reported `error`, but the word's width remained
 frames and finished in about 1,370 ms from the first sampled frame. With all
 JavaScript disabled, the heading remained visible and there was no overlay or
 inert root. The generated sitemap was restored after building.
+
+## Publication and production verification
+
+Published application commit: `3482ff13b67c8f50259d8499e94a408c33ebb74f`.
+[Deployment run 38852516260](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/38852516260)
+completed successfully; production tag `prod-20261016-045014-3482ff1` resolves
+to that commit. The deployed assets are `index-DllNgTeQ.css` and
+`index-CpnPwGlf.js`.
+
+On Windows, headless Chrome 155 checked the Polish homepage and Edge 155
+checked `/en`, both at 1366×768 with an initially absent session marker.
+Both recorded a constant 578.328125 px word width throughout entry and holding,
+coverage before the first page reveal, entry from above, preserved heading and
+input nodes, released root access and no application or CSP errors. Chrome
+recorded 13 complete holding frames and about 1,367 ms until release; Edge
+recorded six and about 1,365 ms. These samples verify geometry and lifecycle,
+not compositor frame rate or perceived smoothness on the user's computer.
+
+The first concurrent Chrome production attempt received HTTP 429 from the
+host. A spaced retry succeeded; the failed and successful diagnostic outputs
+are retained locally as `production-chrome.json` and
+`production-chrome-retry.json`. Edge's result is in `production-edge.json`.

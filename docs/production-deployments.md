@@ -1,8 +1,8 @@
 # Production Deployments
 
-Last updated: 2026-10-14
+Last updated: 2026-10-16
 
-Production: [node48.pl](https://node48.pl/). Source: [adminfavmotors/nebula-nexus-labs](https://github.com/adminfavmotors/nebula-nexus-labs). Verified releases through October 14 are recorded in [Current State - 2026-10-02](./current-state-2026-10-02.md#published-work). Latest application release: `4354763`, successfully deployed by run `38532345803` and tagged `prod-20261014-080335-4354763`. The early wordmark controller now pauses entry/holding while hidden and records playback after the completed visible hold. The same affected production Chrome tab replayed after becoming visible without clearing its old storage mark; an empty-session Edge visit also passed. Both preserved hydration and root access without application/CSP errors. Confirmation of the user's precise Windows browsing sequence remains separate.
+Production: [node48.pl](https://node48.pl/). Source: [adminfavmotors/nebula-nexus-labs](https://github.com/adminfavmotors/nebula-nexus-labs). Latest application release: `3482ff1`, successfully deployed by run `38852516260` and tagged `prod-20261016-045014-3482ff1`. It removes font swapping from the intro by rendering the original Manrope glyphs as inline paths, with softer entry easing and the 1,320 ms timeline from `99eb258`. Lifecycle, background-tab pause, session policy and static-page visibility remain intact. See [smoothness verification](./intro-smoothness-2026-10-15.md) for browser evidence and limitations.
 
 ## What Changed
 
@@ -118,7 +118,7 @@ When a release regression requires rollback, redeploy the last known good `prod-
 
 ### Documentation-only release records
 
-October 13–14 production outcomes are recorded in subsequent documentation-only commits with `[skip ci]`. GitHub's [skip-workflow instruction](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs) suppresses the push-triggered run for those commits. Their changes are limited to Markdown outside `dist/`; the latest record's application and workflow files match the successfully deployed `4354763` artifact. Immutable production tags continue to identify each application source. Ordinary documentation pushes without a skip instruction still trigger the existing workflow.
+October 13–16 production outcomes are recorded in subsequent documentation-only commits with `[skip ci]`. GitHub's [skip-workflow instruction](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs) suppresses the push-triggered run for those commits. Their changes are limited to Markdown outside `dist/`; the latest record's application and workflow files match the successfully deployed `3482ff1` artifact. Immutable production tags continue to identify each application source. Ordinary documentation pushes without a skip instruction still trigger the existing workflow.
 
 ## Optional Hardening In GitHub Settings
 

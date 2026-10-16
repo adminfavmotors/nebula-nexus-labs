@@ -1,6 +1,6 @@
 # NODE48: current state and audit progress
 
-Updated: 2026-10-14 (Europe/Warsaw). This is the current documentation entry point; April snapshots retain their historical scope.
+Updated: 2026-10-16 (Europe/Warsaw). This is the current documentation entry point; April snapshots retain their historical scope.
 
 Follow-up on October 2: item 4's contact presentation was accepted after mobile screenshot review and published in `037ba8f`; its deployment and production smoke checks succeeded. Item 5's accepted keyboard-focus correction was published in `7f8e34f`, with a successful deployment and production verification. Item 7 was accepted and published on October 12 in `bcb7e21`, with successful deployment and PL/EN production checks. The combined item 8/item 12 correction was published on October 13 in `7c8bb22`; subsequent timing and storage corrections are recorded below. The user then explicitly rejected the substituted editor design and clarified the original wordmark's entry from above. The requested restoration and startup before first page paint were published in `12a9f61`, with successful deployment and PL/EN production verification. Details are recorded in [direct-contact design refinement](./direct-contact-design-2026-10-02.md), [contact-dialog keyboard focus](./contact-dialog-focus-fix-2026-10-02.md), [compact cookie banner](./cookie-banner-fix-2026-10-02.md) and [wordmark intro restoration](./intro-motion-fix-2026-10-12.md).
 
@@ -9,7 +9,7 @@ Follow-up on October 2: item 4's contact presentation was accepted after mobile 
 - Repository: [adminfavmotors/nebula-nexus-labs](https://github.com/adminfavmotors/nebula-nexus-labs).
 - Public brand and site: [NODE48 — node48.pl](https://node48.pl/).
 - Published application baseline for the item 8 implementation: `bcb7e218cc4934d3afcdf9e8bc70df8a3cbaa2eb`.
-- Latest published application commit: `4354763b7a5c6efe130acd65720bf54c1ef434d2`, pausing intro entry/holding while the tab is hidden and recording playback after a visible full-word hold. It preserves the requested NODE48 appearance and early startup from `12a9f61`. Old `wordmark-v1` records retry once; the new value is `wordmark-visible-v1`. Real background-tab, Chrome/Edge production and all 194 tests passed. The user's particular Windows browsing sequence still needs their confirmation. Documentation-only release records do not change the application artifact.
+- Latest published application commit: `3482ff13b67c8f50259d8499e94a408c33ebb74f`. After the user confirmed playback, `99eb258` shortened the timeline to 1,320 ms. The subsequent jerky-entry report reproduced a font-swap geometry jump; the current release uses inline outlines of the same Manrope 700 glyphs and gentler entry easing. The early controller, hidden-tab handling and `wordmark-visible-v1` session policy remain intact. All 194 tests passed. See [smoothness verification and its limits](./intro-smoothness-2026-10-15.md). Documentation-only records do not change the application artifact.
 - Active checkout: `C:\Users\Admin\.codex\worktrees\6acd\nebula-nexus-labs`, branch `codex/contact-legitimate-inquiries`. Publication targets remote `main` through the existing workflow.
 - The separate desktop checkout contains an unpublished editor intro variant and unrelated edits. It remains preserved; the active checkout contains the restored published wordmark presentation requested by the user.
 
@@ -33,6 +33,8 @@ Each run below was confirmed `completed / success` during its respective deliver
 | 8: optional storage correction | Denied storage no longer suppresses playback; Chrome incognito and controlled storage failures verified; user's device cause remains open | [1532358](https://github.com/adminfavmotors/nebula-nexus-labs/commit/1532358d67f5b6f053a9eefd16ada6b6ca130678) | [38401189114](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/38401189114) | `prod-20261013-125841-1532358` |
 | 8: original wordmark restoration | NODE48 letters enter from above before first page paint; one independent controller preserves static content and hydration | [12a9f61](https://github.com/adminfavmotors/nebula-nexus-labs/commit/12a9f61bc8a2cdb9efa2dce08e6fae3ff91f4b41) | [38464815125](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/38464815125) | `prod-20261013-204311-12a9f61` |
 | 8: background playback | Entry and full-word hold pause while hidden; unseen playback cannot suppress the next visible visit | [4354763](https://github.com/adminfavmotors/nebula-nexus-labs/commit/4354763b7a5c6efe130acd65720bf54c1ef434d2) | [38532345803](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/38532345803) | `prod-20261014-080335-4354763` |
+| 8: shorter tempo | Nominal duration reduced from 1,800 to 1,320 ms | [99eb258](https://github.com/adminfavmotors/nebula-nexus-labs/commit/99eb258ed4d73aae4b1f8d4d956762ca5aedb3d6) | [38788549489](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/38788549489) | `prod-20261015-184857-99eb258` |
+| 8: stable letter geometry | Same Manrope glyph outlines remove font swapping during entry; softer initial acceleration | [3482ff1](https://github.com/adminfavmotors/nebula-nexus-labs/commit/3482ff13b67c8f50259d8499e94a408c33ebb74f) | [38852516260](https://github.com/adminfavmotors/nebula-nexus-labs/actions/runs/38852516260) | `prod-20261016-045014-3482ff1` |
 
 Detailed evidence and historical verification counts:
 
@@ -84,7 +86,7 @@ Numbering is retained from the original 33-item audit. Related items 6, 11, 22 a
 | 5 | Contact dialog does not trap keyboard focus or restore it to the opener | Fixed, accepted and published in `7f8e34f`; deployment and production checks succeeded |
 | 6 | Four TypeScript errors and no required type check before deployment build | Fixed with item 1; builds now run `check:types` |
 | 7 | Cookie banner covers roughly 44% of the mobile first screen in the original audit | Fixed, accepted and published in `bcb7e21`; 364 → 186 px at 375×812 |
-| 8 | Unpublished local intro adds blocking delays and timer complexity | Original wordmark restored; hidden-tab playback defect corrected in `4354763`. All 194 tests and Chrome/Edge production checks passed. User confirmation of their Windows case remains pending |
+| 8 | Unpublished local intro adds blocking delays and timer complexity | Original wordmark restored and playback confirmed by user; shortened in `99eb258`, font-swap jump corrected in `3482ff1`. All 194 tests pass; user confirmation of perceived smoothness remains separate |
 | 9 | Premium service mobile layout has an excessively long heading and unused space | Open |
 | 10 | Starting prices and net-price qualifications are inconsistent across the catalog | Open; full bilingual detail content alone does not resolve catalog consistency |
 | 11 | A stalled contact request can leave submission pending indefinitely | Fixed with item 1; 20-second abort and recoverable UI |
