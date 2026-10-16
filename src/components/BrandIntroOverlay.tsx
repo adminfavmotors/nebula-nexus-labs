@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { ActionButton } from "@/components/primitives/Actions";
 import { brandName } from "@/lib/site-identity";
+import { brandWordmarkGlyphs } from "@/lib/brand-wordmark";
 import { brandIntroMotionTimings } from "@/lib/motion";
 import type { Locale } from "@/lib/i18n-data";
 
@@ -32,12 +33,20 @@ export default function BrandIntroOverlay({ locale }: { locale: Locale }) {
       <p id="brand-intro-title" className="visually-hidden">{copy.title}</p>
       <p id="brand-intro-description" className="visually-hidden">{copy.description}</p>
       <div className="brand-intro-word" aria-hidden="true">
-        {Array.from(brandName).map((character, index) => (
-          <span className="brand-intro-slot" key={`${character}-${index}`}>
-            <span className={`brand-intro-letter${/\d/.test(character) ? " brand-intro-letter-accent" : ""}`}
-              style={{ "--brand-intro-index": index } as CSSProperties}>{character}</span>
-          </span>
-        ))}
+        {Array.from(brandName).map((character, index) => {
+          const glyph = brandWordmarkGlyphs[character];
+          return (
+            <span className="brand-intro-slot" key={`${character}-${index}`}>
+              <span className={`brand-intro-letter${/\d/.test(character) ? " brand-intro-letter-accent" : ""}`}
+                style={{ "--brand-intro-index": index } as CSSProperties}>
+                <svg viewBox={`0 0 ${glyph.advance} 1800`} width={`${glyph.advance / 2000}em`} height="0.9em" aria-hidden="true" focusable="false">
+                  <title>{character}</title>
+                  <path d={glyph.path} />
+                </svg>
+              </span>
+            </span>
+          );
+        })}
       </div>
       <ActionButton variant="ghost" className="brand-intro-skip">{copy.skip}</ActionButton>
     </div>
